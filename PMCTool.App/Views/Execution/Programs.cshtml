@@ -1,0 +1,223 @@
+﻿@model List<PMCTool.Models.Environment.Program>
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <form name="frmMain" method="post">
+                @Html.Hidden("sortID")
+                <div class="container-fluid flex-grow-1 container-p-y">
+                    <div class="card mt-2">
+                        <div class="row justify-content-md-center mb-4">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-12 text-left pl-0 pr-0">
+                                        <h4 class="d-flex flex-wrap justify-content-between align-items-center w-100 font-weight-bold">  @Localizer["Programs"]  </h4>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                @{
+                                                    if (ViewBag.Sort == 0)
+                                                    {
+                                                        @Localizer["Sort"];
+                                                    }
+                                                    else
+                                                    {
+                                                        @Localizer["EnumExecProjectSort_" + ViewBag.Sort];
+                                                    }
+                                                }
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="javascript:sortData(1);">@Localizer["EnumExecProgramSort_1"]</a>
+                                                <a class="dropdown-item" href="javascript:sortData(2);">@Localizer["EnumExecProgramSort_2"]</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @{
+
+                                    int pages = 1;
+                                    int ipp = 5;
+                                    double parse = Model.Count / 5.00;
+
+                                    if (parse > 0)
+                                    {
+                                        pages = (int)parse;
+                                        if ((parse - pages) > 0)
+                                        {
+                                            pages++;
+                                        }
+                                    }
+
+                                    @Html.Hidden("TotalPages", pages)
+
+                                    for (int i = 1; i <= pages; i++)
+                                    {
+                                        string id = "dvPage_" + i.ToString();
+                                        int finish = (ipp * i) - 1;
+                                        int start = 0;
+
+                                        if (i > 1)
+                                        {
+                                            start = (finish + 1) - ipp;
+                                        }
+
+                                        <div id="@id" style="display:none;">
+
+                                            @for (int x = start; x <= finish; x++)
+                                            {
+                                                try
+                                                {
+                                                    if (Model[x].ProgramID != null)
+                                                    {
+
+                                                        string startDate = "---- -- --",
+                                                            endDate = "---- -- --",
+                                                            barColor = "";
+
+                                                        double realProgress = Math.Round(Model[x].Progress * 100, 2),
+                                                            expectedProgress = Math.Round(Model[x].PlannedProgress * 100, 2),
+                                                            Deviation = Math.Round(Model[x].Deviation * 100, 2);
+
+                                                        string sRealProgress = Math.Round(Model[x].Progress * 100, 2).ToString("N2") + "%",
+                                                            sExpectedProgress = Math.Round(Model[x].PlannedProgress * 100, 2).ToString("N2") + "%";
+
+                                                        if (Model[x].StartDate != null)
+                                                        {
+                                                            startDate = Model[x].StartDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        if (Model[x].EndDate != null)
+                                                        {
+                                                            endDate = Model[x].EndDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        switch (Model[x].Status)
+                                                        {
+                                                            case 1:
+                                                                barColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 2:
+                                                                barColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 3:
+                                                                barColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 4:
+                                                                barColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            default:
+                                                                break;
+                                                        }
+
+                                                        <div class="row no-gutters align-items-center pb-2 pt-2  border row-single">
+                                                            <div class="col-md-12  px-4 pt-2">
+                                                                <a href="/Execution/Program?id=@Model[x].ProgramID">@Model[x].Name</a><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                @Localizer["Projects"]: <span class="underline-link">@Model[x].Projects.ToList().Count</span> <br>
+                                                                                @for (int y = 0; y < Model[x].Projects.ToList().Count; y++)
+                                                                                {
+                                                                                    string pp = Math.Round((Model[x].Projects.ToList()[y].Progress * 100), 2).ToString();
+
+                                                                                    <div class="row" style=" font-size: .8em;">
+                                                                                        <div class="col-md-9">
+                                                                                            <a href="/Execution/Project?id=@Model[x].Projects.ToList()[y].ProjectID">@Model[x].Projects.ToList()[y].Name</a>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <span class="@Localizer["EnumProjectElementStatusClass_" + Model[x].Projects.ToList()[y].Status]">@pp %</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 text-center">
+                                                                        <div class="text-muted"><small><i class="fas fa-traffic-light"></i> @Localizer["Status"]: <span class="@Localizer["EnumProjectElementStatusClass_" + Model[x].Status]">@Localizer["EnumProjectElementStatus_" + Model[x].Status]</span></small></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+
+                                                                <strong class="txt-blue">% @Localizer["RealProgress"]</strong>
+                                                                <br>@realProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="@barColor" style="width:@sRealProgress;"></div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4 text-center">
+                                                                <strong class="txt-blue">% @Localizer["ExpectedProgress"]</strong>
+                                                                <br> @expectedProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="progress-bar bg-default progress-bar-striped progress-bar-animated" style="width:@sExpectedProgress;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+                                                                <strong class="txt-blue pb-4">% @Localizer["Deviation"]</strong> <br> @Deviation.ToString("N2") %<br><br><br>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+
+                                                }
+                                            }
+
+                                        </div>
+                                    }
+                                }
+
+                                <hr>
+                                <div id="show_paginator"></div>
+
+                                @*<nav>
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item">
+                                                <a class="page-link" href="javascript:goToPage(1);">«</a>
+                                            </li>
+
+                                            @for (int i = 1; i <= pages; i++)
+                                            {
+                                                string id = "pagelink_" + i.ToString();
+
+                                                if (i == 1)
+                                                {
+                                                    <li class="page-item active" id="@id">
+                                                        <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="page-item" id="@id">
+                                                        <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                                                    </li>
+                                                }
+                                            }
+
+                                            <li class="page-item">
+                                                <a class="page-link" href="javascript:goToPage(@pages);">»</a>
+                                            </li>
+                                        </ul>
+                                    </nav>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/plugins/jquery.bootpag.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/core/vExecutePrograms.js" asp-append-version="true"></script>
+}

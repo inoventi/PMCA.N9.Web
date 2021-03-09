@@ -1,0 +1,385 @@
+﻿@model PMCTool.App.Models.ProjectViewModel
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+@Html.HiddenFor(m => m.Project.ProjectID, new { @id = "idProject" })
+@Html.HiddenFor(m => m.ProjectAcquiredValueStartDate)
+@Html.HiddenFor(m => m.ProjectAcquiredValueEndDate)
+@Html.Hidden("m4025", Localizer["4025"].ToString())
+
+<link href="~/css/desempenoProyecto-Detalle.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="content bg-whitebg-white">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="row">
+                <div class="col-md-10 pt-4 mb-4">
+                    <small class="font-weight-normal subtitle-detalle">@Localizer["Analytics1_001"]</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="txt-blue"> @Model.Project.Name	</span>
+                    </h4>
+                </div>
+                <div class="col-md-2 text-right pt-2">
+                    <a href="/Analytics/Projects" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-arrow-left"></i> @Localizer["Back"]</a> <br><br>
+                    <!-- <a type="submit" class="btn  btn-sm btn-default" onclick="window.print();">Imprimir</a> -->
+                </div>
+                <div class=" col-12 mt-4">
+                    <!-- uno .-->
+                    <div class="row  justify-content-center pt-0">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12 pb-4">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_007"]</h6>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">@Localizer["Responsible"]</th>
+                                                <th scope="col">@Localizer["Role"]</th>
+                                                <th scope="col">@Localizer["Contact"]</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="text-center">1</th>
+                                                <td class="text-left"><a href="#" onClick="getParticipantInfoModal('@Model.Project.SponsorID'); return false;">@Model.Project.SponsorName</a></td>
+                                                <td class="text-left">@Localizer["Sponsor"]</td>
+                                                @if (ViewBag.ContactSponsor.Contact.Value != null)
+                                                {
+                                                    <td class="text-left"><a href="tel:3312701862">@ViewBag.ContactSponsor.Contact.Value</a></td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-left"><a href="#">-- ---- ----</a></td>
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="text-center">2</th>
+                                                <td class="text-left"><a href="#" onClick="getParticipantInfoModal('@Model.Project.LeaderID'); return false;">@Model.Project.LeaderName</a></td>
+                                                <td class="text-left">@Localizer["Leader"]</td>
+                                                @if (ViewBag.ContactLeader.Contact.Value != null)
+                                                {
+                                                    <td class="text-left"><a href="tel:@ViewBag.ContactLeader.Contact.Value">@ViewBag.ContactLeader.Contact.Value</a></td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-left"><a href="#">-- ---- ----</a></td>
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" class="text-center">3</th>
+                                                <td class="text-left"><a href="#" onClick="getParticipantInfoModal('@Model.Project.ProjectManagerID'); return false;">@Model.Project.ProjectManagerName</a></td>
+                                                <td class="text-left">@Localizer["ProjectManager"]</td>
+                                                @if (ViewBag.ContactProjectManager.Contact.Value != null)
+                                                {
+                                                    <td class="text-left"><a href="tel:3312701862">@ViewBag.ContactProjectManager.Contact.Value</a></td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-left"><a href="#">-- ---- ----</a></td>
+                                                }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_008"]</h6>
+                                    <div class="row">
+                                        <div class="col-12 text-center pt-2 mb-4">
+                                            <button class="btn btn-round btn-sm btn-outline btn-round" onclick="getProjectProgressHistory(1);"><i class="fas fa-chart-line"></i> @Localizer["Progress"]</button>
+                                            <button class="btn btn-round btn-sm btn-outline btn-round" onclick="getProjectWorkHours();"><i class="far fa-clock"></i>@Localizer["Hours"]</button>
+                                        </div>
+
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="aesperado"></div>
+                                        <div id="hours"></div>
+                                    </figure>
+                                </div>
+                                <div class="col-md-12">
+                                    <!-- TIMELINE-->
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_009"]</h6>
+                                    <div class="container py-2 scroll scroll-slim">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="pendings"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- AND TIMELINE-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-12">
+                                <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_010"]</h6>
+                                <figure class="highcharts-figure">
+                                    <div id="chartCseguimiento"></div>
+                                </figure>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["FactSheet"]</h6>
+                                </div>
+                                <div class="card card-plain table-plain-bg">
+                                    <div id="factsheetHolder"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"></div>
+                    </div>
+                    <!-- -->
+                    <div class="card-body">
+
+                        <div class="accordions" id="accordion">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">
+                                        <a data-target="#collapseTwo" href="#" data-toggle="collapse">
+                                            <i class="fas fa-clipboard-check"></i> @Localizer["Analytics1_011"]
+                                            <b class="caret"></b>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="card-collapse collapse">
+                                    <div class="card-body">
+                                        <div class="row h-100 justify-content-center align-items-center">
+                                            <div class="col-md-12 mb-4 pt-3 pb-2">
+                                                <form class="form-inline" action="/action_page.php">
+                                                    <div class="form-group">
+                                                        <label for="finicio">@Localizer["EnumExecProjectSort_3"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="StartDate" name="StartDate">
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <label for="pwd">@Localizer["EnumExecProjectSort_4"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="EndDate" name="EndDate">
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <button type="button" onclick="refresh();" class="btn btn-default">@Localizer["Search"]</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pb-4">
+                                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_015"]</h6>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">@Localizer["Analytics1_013"]</th>
+                                                                <th scope="col">@Localizer["Description"]</th>
+                                                                <th scope="col">@Localizer["PlannedEndDate"]</th>
+                                                                <th scope="col">@Localizer["Status"]</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tProjectElementsCheck1">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pb-4">
+                                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_016"]</h6>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">@Localizer["Analytics1_013"]</th>
+                                                                <th scope="col">@Localizer["Description"]</th>
+                                                                <th scope="col">@Localizer["PlannedEndDate"]</th>
+                                                                <th scope="col">@Localizer["Status"]</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tProjectElementsCheck2">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pb-4">
+                                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_020"]</h6>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">@Localizer["Analytics1_013"]</th>
+                                                                <th scope="col">@Localizer["Description"]</th>
+                                                                <th scope="col">@Localizer["PlannedStartDate"]</th>
+                                                                <th scope="col">@Localizer["Status"]</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tProjectElementsCheck3">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">
+                                        <a data-target="#collapseThree" href="#" data-toggle="collapse">
+                                            <i class="fas fa-exchange-alt"></i> @Localizer["Analytics1_012"]
+                                            <b class="caret"></b>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="card-collapse collapse">
+                                    <div class="card-body">
+                                        <div class="row h-100 justify-content-center align-items-center">
+                                            <div class="col-md-12 mb-4 pt-3 pb-2">
+                                                <form class="form-inline" action="/action_page.php">
+                                                    <div class="form-group">
+                                                        <label for="finicio">@Localizer["EnumExecProjectSort_3"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="StartDateCC" name="StartDateCC">
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <label for="pwd">@Localizer["EnumExecProjectSort_4"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="EndDateCC" name="EndDateCC">
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <button type="button" onclick="refreshCC();" class="btn btn-default">@Localizer["Search"]</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pb-4">
+                                                    @*<h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-pulple  col-12">NOTA: Todos los cambios realizados en el proyecto de todos sus elementos</h6>*@
+                                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_017"]</h6>
+                                                    <table class="table" id="datatablesE">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">@Localizer["Analytics1_013"]</th>
+                                                                <th scope="col">@Localizer["Description"]</th>
+                                                                <th scope="col">@Localizer["Analytics1_014"]</th>
+                                                                <th scope="col">@Localizer["ReasonToChange"]</th>
+                                                                <th scope="col">@Localizer["User"]</th>
+                                                                <th scope="col">@Localizer["DateRegistry"]</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tProjectControlChange">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">
+                                        <a data-target="#collapseFive" href="#" data-toggle="collapse">
+                                            <i class="fas fa-business-time"></i> @Localizer["Analytics1_018"]
+                                            <b class="caret"></b>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFive" class="card-collapse collapse">
+                                    <div class="card-body">
+                                        <div class="row h-100 justify-content-center align-items-center">
+                                            <div class="col-md-12 mb-4 pt-3 pb-2">
+                                                <form class="form-inline" action="/action_page.php">
+                                                    <div class="form-group">
+                                                        <label for="finicio">@Localizer["EnumExecProjectSort_3"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="StartDateRP" name="StartDateRP" required>
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <label for="pwd">@Localizer["EnumExecProjectSort_4"]:</label>
+                                                        <input type="text" class="form-control datepicker" id="EndDateRP" name="EndDateRP" required>
+                                                    </div>
+                                                    <div class="form-group pl-3">
+                                                        <button type="button" onclick="refreshAH();" class="btn btn-default">@Localizer["Search"]</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="pb-4">
+                                                     <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_019"]</h6>
+                                                    <table class="table" id="datatablesE">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">@Localizer["Activity"]</th>
+                                                                <th scope="col">@Localizer["PlannedTime"]</th>
+                                                                <th scope="col">@Localizer["HorasReales"]</th>
+                                                                <th scope="col">@Localizer["PlannedStartDate"]</th>
+                                                                <th scope="col">@Localizer["PlannedEndDate"]</th>
+                                                                <th scope="col">@Localizer["Participants"]</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tProjectHours">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="qualityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-4"> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card strpied-tabled-with-hover">
+                            <div class="card-header ">
+                                <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                    <span class="txt-blue" id="_titleElement"></span>
+                                </h4>
+                            </div>
+                            <div class="card-body table-full-width table-responsive">
+                                <div id="rules"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right pr-5 mb-4">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- highcharts -->
+    <script src="~/js/plugins/highcharts/highcharts.js"></script>
+    <script src="~/js/plugins/highcharts/modules/timeline.js"></script>
+    <script src="~/js/plugins/highcharts/highcharts-more.js"></script>
+    <script src="~/js/plugins/highcharts/modules/export-data.js"></script>
+    <script src="~/js/plugins/highcharts/modules/exporting.js"></script>
+    <script src="~/js/plugins/highcharts/modules/solid-gauge.js"></script>
+    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/js/core/vAnalyticsProject.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}
+

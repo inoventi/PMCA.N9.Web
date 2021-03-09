@@ -1,0 +1,111 @@
+﻿@model PMCTool.Models.Environment.FactSheet
+@if (ViewBag.IsNew != true)
+{
+    @Html.Hidden("FactID", Model.FactSheetID)
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmMain" class="form" method="" action="">
+                    @Html.HiddenFor(m => m.FactSheetID)
+                    <div class="card ">
+                        <div class="card-header ">
+                            <div class="card-header">
+                                @{
+                                    if (ViewBag.IsNew == true)
+                                    {
+                                        <h4 class="card-title">@Localizer["Create"] @Localizer["ViewTitleFactSheet"]</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="card-title">@Localizer["Update"] @Localizer["ViewTitleFactSheet"]</h4>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Code"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50 })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Name"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "", @required = "required", @maxlength = 150 })
+                                    </div>
+                                </div>
+                            </div>
+
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Description"]</label><star class="star">*</star>
+                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @required = "required", @style = "", @maxlength = 1500 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-md-9 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Description"]</label><star class="star">*</star>
+                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @required = "required", @style = "", @maxlength = 1500 })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 px-2">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        @Html.CheckBoxFor(m => m.IsActive, new { @id = "IsActive", @class = "form-check-input" })
+                                                        <span class="form-check-sign"></span>
+                                                        @Localizer["Active"]
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="button" onclick="cancel(); return false;" class="btn btn-info btn-fill">@Localizer["Cancel"]</button>
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <button type="button" id="btnCreate" onclick="createRecord('factSheets'); return false;" class="btn btn-default btn-fill">@Localizer["Create"]</button>
+                                }
+                                else
+                                {
+                                    <button type="button" id="btnUpdate" onclick="updateRecord('factSheets'); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @{
+            if (ViewBag.IsNew != true)
+            {
+
+                @await Html.PartialAsync("_FactSheetDetails", new PMCTool.Models.Environment.FactSheetDetail())
+
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vFactSheetsEditor.js" asp-append-version="true"></script>
+}

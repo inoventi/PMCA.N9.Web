@@ -1,0 +1,403 @@
+﻿
+@{
+    ViewData["Title"] = "Kpis";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="row  justify-content-center">
+                <div class="col-md-12 mt-0 pt-0">
+                    <div class="header-text">
+                        <div class="row">
+                            <div class="col-md-10 pt-2">
+                                <small class="font-weight-normal bold"><b> Dashboard </b></small>
+                                <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                    <span class="txt-blue"> KPI'S</span>
+                                </h4>
+                            </div>
+                            <div class="col-md-2 text-right pt-2">
+                                <a href="#" onclick="window.history.back();" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Return"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="row  justify-content-center pt-0 mt-4">
+                    <div class="col-md-12">
+                        <ul role="tablist" class="nav nav-tabs">
+                            <li role="presentation" class="nav-item show active">
+                                <a class="nav-link" id="account-tab" href="#Participantes" data-toggle="tab">@Localizer["Participants"]</a>
+                            </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link" id="account-tab" href="#Empresas" data-toggle="tab">Empresas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="account-tab" href="#Áreas" data-toggle="tab">Áreas</a>
+                            </li>*@
+                        </ul>
+                        <div class="tab-content">
+                            <div id="Participantes" class="tab-pane fade show active" role="tabpanel" aria-labelledby="account-tab">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-9 text-center">
+                                                <h6 class="tx-normal">@Localizer["Participants"]</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-md-9">
+                                                <select id="selectParticipantsKpis" multiple data-max-options="4" data-title="@Localizer["Analytics2_027"]" name="currency" class="selectpicker" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <h6 class="ml-3 txt-normal">@Localizer["Analytics2_031"]:</h6>
+                                                    <input type="text" id="datestart" name="datestart" class="form-control mx-sm-3 datepicker" aria-describedby="passwordHelpInline">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <h6 class="ml-3 txt-normal">@Localizer["Analytics2_032"]:</h6>
+                                                    <input type="text" id="dateend" name="dateend" class="form-control mx-sm-3 datepicker" aria-describedby="passwordHelpInline">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <button class="btn btn-default btn-wd btn-participants _btnSearch">@Localizer["Search"]</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div id="Empresas" class="tab-pane fade" role="tabpanel" aria-labelledby="account-tab" style="">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-9 text-center">
+                                                <h6 class="tx-normal">Empresas</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-md-9">
+                                                <div class="btn-group bootstrap-select show-tick">
+                                                     
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <button class="btn btn-default btn-wd">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="Áreas" class="tab-pane fade" role="tabpanel" aria-labelledby="account-tab">
+                                <div class="row justify-content-center">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-pulple  col-12">
+                                        Seleccionar una empresa y mostrar en el selector de areas, las areas de la empresa que seleccionaste.
+                                    </h6>
+                                    <div class="col-md-4">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-9 text-center">
+                                                <h6 class="tx-normal">Empresas</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-md-9">
+                                                <div class="btn-group bootstrap-select">
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-9 text-center">
+                                                <h6 class="tx-normal">Áreas</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-md-8">
+                                                <div class="btn-group bootstrap-select show-tick">
+                                                     
+                                                     
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mt-3">
+                                    <button class="btn btn-default btn-wd">Buscar</button>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 pt-3">
+                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12 text-center"> @Localizer["Analytics3_001"] </h6>
+                </div>
+
+                <div class="col-md-12 mt-1 text-center pb-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Localizer["Participants"]</th>
+                                <th scope="col">@Localizer["Analytics3_003"]</th>
+                                <th scope="col">@Localizer["Analytics3_004"]</th>
+                                <th scope="col">@Localizer["Analytics3_005"]</th>
+                            </tr>
+                        </thead>
+                        <tbody class="_bodyTable">
+                            @*<tr>
+                                <td>
+                                    <div class="ws"> 
+                                        <a href="http://pmc-tool.com.mx/doc/pmctool./Ac/user-detail.php">RRHH</a> 
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-pulple  col-12">NOTA: Elementos cerrados a tiempo</h6>
+                                    <figure class="highcharts-figure">
+                                        <div id="container-speed" class="chart-container" data-highcharts-chart="1" role="region" aria-label="Chart. Highcharts interactive chart." aria-hidden="false" style="overflow: hidden;"> </figure>
+                                </td>
+                                <td>
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-pulple  col-12">NOTA: Elementos con avance menor al planeado</h6>
+
+                                    <figure class="highcharts-figure">
+                                        <div id="container-rpm" class="chart-container" data-highcharts-chart="3" role="region" aria-label="Chart. Highcharts interactive chart." aria-hidden="false" style="overflow: hidden;"> </figure>
+                                </td>
+                                <td>
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-pulple  col-12">NOTA: Elementos atrasados</h6>
+
+                                    <figure class="highcharts-figure">
+                                        <div id="container-speed-2" class="chart-container" data-highcharts-chart="2" role="region" aria-label="Chart. Highcharts interactive chart." aria-hidden="false" style="overflow: hidden;"> </figure>
+                                </td>
+                            </tr>*@
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- allow-->
+
+
+            <div class="container-fluid pl-0 ml-0">
+                <div class="card card-register card-plain text-center">
+                    <div class="card-header ">
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- end allow-->
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <link href="~/css/analytics-kpis.css" rel="stylesheet" asp-append-version="true" />
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+     <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/js/core/vAnalyticsKpis.js?v=1.0.0" asp-append-version="true"></script>
+    <script src="~/js/plugins/bootstrap-selectpicker.js"></script>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //var gaugeOptions = {
+        //    chart: {
+        //        type: 'solidgauge'
+        //    },
+
+        //    title: null,
+
+        //    pane: {
+        //        center: ['50%', '85%'],
+        //        size: '100%',
+        //        startAngle: -90,
+        //        endAngle: 90,
+        //        background: {
+        //            backgroundColor:
+        //                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+        //            innerRadius: '60%',
+        //            outerRadius: '100%',
+        //            shape: 'arc'
+        //        }
+        //    },
+
+        //    exporting: {
+        //        enabled: false
+        //    },
+
+        //    tooltip: {
+        //        enabled: false
+        //    },
+
+        //    // the value axis
+        //    yAxis: {
+        //        stops: [
+        //            [0.1, '#55BF3B'], // green
+        //            [0.5, '#DDDF0D'], // yellow
+        //            [0.9, '#DF5353'] // red
+        //        ],
+        //        lineWidth: 0,
+        //        tickWidth: 0,
+        //        minorTickInterval: null,
+        //        tickAmount: 2,
+        //        title: {
+        //            y: -70
+        //        },
+        //        labels: {
+        //            y: 16
+        //        }
+        //    },
+
+        //    plotOptions: {
+        //        solidgauge: {
+        //            dataLabels: {
+        //                y: 5,
+        //                borderWidth: 0,
+        //                useHTML: true
+        //            }
+        //        }
+        //    }
+        //};
+
+        // The speed gauge
+        //var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+        //    yAxis: {
+        //        min: 0,
+        //        max: 100,
+        //        title: {
+        //            text: 'CIERRES A TIEMPO'
+        //        }
+        //    },
+
+        //    credits: {
+        //        enabled: false
+        //    },
+
+        //    series: [{
+        //        name: 'CIERRES A TIEMPO',
+        //        data: [80],
+        //        dataLabels: {
+        //            format:
+        //                '<div style="text-align:center">' +
+        //                '<span style="font-size:25px">{y}</span><br/>' +
+        //                '<span style="font-size:12px;opacity:0.4">Porcentaje</span>' +
+        //                '</div>'
+        //        },
+        //        tooltip: {
+        //            valueSuffix: ' km/h'
+        //        }
+        //    }]
+
+        //}));
+        // The speed gauge
+        //var chartSpeed = Highcharts.chart('container-speed-2', Highcharts.merge(gaugeOptions, {
+        //    yAxis: {
+        //        min: 0,
+        //        max: 100,
+        //        title: {
+        //            text: 'AVANCE MENOR AL PLANEADO'
+        //        }
+        //    },
+
+        //    credits: {
+        //        enabled: false
+        //    },
+
+        //    series: [{
+        //        name: 'AVANCE MENOR AL PLANEADO',
+        //        data: [80],
+        //        dataLabels: {
+        //            format:
+        //                '<div style="text-align:center">' +
+        //                '<span style="font-size:25px">{y}</span><br/>' +
+        //                '<span style="font-size:12px;opacity:0.4">Porcentaje</span>' +
+        //                '</div>'
+        //        },
+        //        tooltip: {
+        //            valueSuffix: ' km/h'
+        //        }
+        //    }]
+
+        //}));        //var chartSpeed = Highcharts.chart('container-speed-2', Highcharts.merge(gaugeOptions, {
+        //    yAxis: {
+        //        min: 0,
+        //        max: 100,
+        //        title: {
+        //            text: 'AVANCE MENOR AL PLANEADO'
+        //        }
+        //    },
+
+        //    credits: {
+        //        enabled: false
+        //    },
+
+        //    series: [{
+        //        name: 'AVANCE MENOR AL PLANEADO',
+        //        data: [80],
+        //        dataLabels: {
+        //            format:
+        //                '<div style="text-align:center">' +
+        //                '<span style="font-size:25px">{y}</span><br/>' +
+        //                '<span style="font-size:12px;opacity:0.4">Porcentaje</span>' +
+        //                '</div>'
+        //        },
+        //        tooltip: {
+        //            valueSuffix: ' km/h'
+        //        }
+        //    }]
+
+        //}));
+
+        // The RPM gauge
+        //var chartRpm = Highcharts.chart('container-rpm', Highcharts.merge(gaugeOptions, {
+        //    yAxis: {
+        //        min: 0,
+        //        max: 5,
+        //        title: {
+        //            text: 'ATRASOS'
+        //        }
+        //    },
+
+        //    series: [{
+        //        name: 'ATRASOS',
+        //        data: [1],
+        //        dataLabels: {
+        //            format:
+        //                '<div style="text-align:center">' +
+        //                '<span style="font-size:25px">{y}</span><br/>' +
+        //                '<span style="font-size:12px;opacity:0.4">' +
+        //                'Porcentaje' +
+        //                '</span>' +
+        //                '</div>'
+        //        },
+        //        tooltip: {
+        //            valueSuffix: ' revolutions/min'
+        //        }
+        //    }]
+
+        //}));
+
+
+    });
+
+</script>
+ 
+

@@ -1,0 +1,185 @@
+﻿@model PMCTool.Models.Environment.Participant
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/xd.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/mi-tablero.css" asp-append-version="true" />
+
+@Html.HiddenFor(m => m.ParticipantID)
+
+@{
+    if (ViewBag.ParticipantID == null || ViewBag.ParticipantID == Guid.Empty)
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Notifications"].ToString().ToUpper()</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Notifications"].ToString().ToUpper() </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-2 pb-3">
+                                            <div class="card-header d-sm-flex align-items-start justify-content-between">
+                                                <h6 class="lh-5 mg-b-0">@Localizer["Notifications"].ToString().ToUpper()  </h6>
+                                            </div><!-- card-header -->
+                                        </div><!-- card-header -->
+                                    </div><!-- card-header -->
+                                    <div class="col-md-12 pb-4">
+                                        <div class="fresh-datatables">
+                                            <table id="datatables" class="table table-hover dataTables_wrapper table-notificaciones" width="100%" cellpadding="0" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@Localizer["From"]</th>
+                                                        <th>@Localizer["Title"]</th>
+                                                        <th>@Localizer["Project"]</th>
+                                                        <th>@Localizer["Type"]</th>
+                                                        <th>@Localizer["Date"]</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="tbody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <button id="btnLoadMore" onclick="getHistoricalNotifications(); return false;" class="btn btn-round btn-wd">@Localizer["LoadMore"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title bold txt-blue"><i class="nc-icon nc-bell-55"></i> @Localizer["Notification"]</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bd-comment">
+                                    <div class="row" id="noti-2010">
+                                        <div class="col-md-1 text-center">
+                                            <img id="notificationModal_image" class="mr-3 mr-2" data-src="holder.js/64x64" alt="64x64" src="" data-holder-rendered="true" style="width: 64px; height: 64px;border-radius: 100px;">
+                                        </div>
+                                        <div class="col-md-11 pl-4">
+                                            <div class="media-body font8em color-black1">
+                                                <div class="row" data-notificacion="2010">
+                                                    <div class="col-md-7" id="notificationModal_participant">
+                                                        <div class="mt-0 mb-1 bold"><a href="#" class="underline-link"></a><span class="bag-area"></span></div>
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        <div class="col-md-12 txt-blue pr-0">
+                                                            <span id="notificationModal_date" class="bag-date-comment"><i class="far fa-calendar-alt"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 lh-15px font8em">
+                                                    <div class="row">
+                                                        <div class="col-md-12   pl-0 mb-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="pr-1 pl-1 noti-in-left-atr">
+                                                                        <strong> <i class="fas fa-copy"></i> @Localizer["Project"]:</strong> <span id="notificationModal_project"></span>
+                                                                    </div>
+                                                                    <div class="pr-1 pl-1 noti-in-left-enti">
+                                                                        <strong><i class="fas fa-adjust"></i> <span id="notificationModal_element"></span>: </strong> <span id="notificationModal_source"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 pl-0 mb-0 pt-1 pb-1"> <strong>@Localizer["From"]:</strong> <span class="subjet-notificacion"><a id="notificationModal_from" href="#"> </a><a></a></span><a> </a></div>
+                                                        <div class="col-md-12 pl-0 mb-0"><strong>@Localizer["Title"]:</strong> <span id="notificationModal_title"></span></div><br /><br />
+                                                    </div>
+                                                    <div class="row" id="notificationModal_message">
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                        @*<a id="notificationModal_viewed" href="#" class="btn-view btn-round btn-sm btn-small hideNotification" data-idnotification="2010"><i class="fas fa-check-double"></i>  @Localizer["Viewed"]</a>*@
+                                                        <a id="notificationModal_go" href="#" class="btn btn-round btn-sm btn-small"><i class="fas fa-link"></i> @Localizer["Go"]</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right pr-5 mb-4">
+                            @*<button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMyDashboardNotifications.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

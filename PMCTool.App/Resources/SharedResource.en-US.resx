@@ -1,0 +1,2929 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="4001" xml:space="preserve">
+    <value>Username is empty</value>
+  </data>
+  <data name="4002" xml:space="preserve">
+    <value>Password is empty</value>
+  </data>
+  <data name="4003" xml:space="preserve">
+    <value>Unexpected error on password recover, please contact your administrator</value>
+  </data>
+  <data name="4004" xml:space="preserve">
+    <value>Bad request</value>
+  </data>
+  <data name="4005" xml:space="preserve">
+    <value>Confirmation is empty</value>
+  </data>
+  <data name="4006" xml:space="preserve">
+    <value>Password and confirmation must be the same</value>
+  </data>
+  <data name="4007" xml:space="preserve">
+    <value>Password must be 8 to 15 characters</value>
+  </data>
+  <data name="4008" xml:space="preserve">
+    <value>Access not allowed</value>
+  </data>
+  <data name="4009" xml:space="preserve">
+    <value>Field code cannot be empty</value>
+  </data>
+  <data name="4010" xml:space="preserve">
+    <value>Field name cannot be empty</value>
+  </data>
+  <data name="4011" xml:space="preserve">
+    <value>Field {0} cannot be longer than {1} characters</value>
+  </data>
+  <data name="4012" xml:space="preserve">
+    <value>Field {0} is required</value>
+  </data>
+  <data name="4013" xml:space="preserve">
+    <value>Invalid format of field {0}</value>
+  </data>
+  <data name="4014" xml:space="preserve">
+    <value>This is not a valid ip address</value>
+  </data>
+  <data name="5001" xml:space="preserve">
+    <value>Invalid Username or Password</value>
+  </data>
+  <data name="5002" xml:space="preserve">
+    <value>Invalid Login Format</value>
+  </data>
+  <data name="5003" xml:space="preserve">
+    <value>Password does not match</value>
+  </data>
+  <data name="5004" xml:space="preserve">
+    <value>Existing User</value>
+  </data>
+  <data name="5005" xml:space="preserve">
+    <value>The password length is invalid</value>
+  </data>
+  <data name="5006" xml:space="preserve">
+    <value>Timezone and Language are required</value>
+  </data>
+  <data name="5007" xml:space="preserve">
+    <value>The membership is required</value>
+  </data>
+  <data name="5008" xml:space="preserve">
+    <value>The license type is required</value>
+  </data>
+  <data name="5009" xml:space="preserve">
+    <value>The environment  is required</value>
+  </data>
+  <data name="5010" xml:space="preserve">
+    <value>The user was created but the participant creation failed</value>
+  </data>
+  <data name="5011" xml:space="preserve">
+    <value>User status is not valid</value>
+  </data>
+  <data name="5012" xml:space="preserve">
+    <value>User status is inactive</value>
+  </data>
+  <data name="5013" xml:space="preserve">
+    <value>User status is locked</value>
+  </data>
+  <data name="5014" xml:space="preserve">
+    <value>Invalid IP for connection</value>
+  </data>
+  <data name="5015" xml:space="preserve">
+    <value>User membership does not exist</value>
+  </data>
+  <data name="5016" xml:space="preserve">
+    <value>User membership expired</value>
+  </data>
+  <data name="5017" xml:space="preserve">
+    <value>Invalid password, failed attempts:</value>
+  </data>
+  <data name="5018" xml:space="preserve">
+    <value>Invalid Username</value>
+  </data>
+  <data name="5019" xml:space="preserve">
+    <value>Invalid Password</value>
+  </data>
+  <data name="5020" xml:space="preserve">
+    <value>The token is not valid</value>
+  </data>
+  <data name="5021" xml:space="preserve">
+    <value>The link has expired</value>
+  </data>
+  <data name="5022" xml:space="preserve">
+    <value>The recovery token is not valid</value>
+  </data>
+  <data name="5023" xml:space="preserve">
+    <value>Unexpected error on password update</value>
+  </data>
+  <data name="5024" xml:space="preserve">
+    <value>The Token does not belong to the requested login</value>
+  </data>
+  <data name="5025" xml:space="preserve">
+    <value>The old and new password cannot be the same</value>
+  </data>
+  <data name="5026" xml:space="preserve">
+    <value>The record cannot be deleted, It's in use</value>
+  </data>
+  <data name="5027" xml:space="preserve">
+    <value>The record already exist in database</value>
+  </data>
+  <data name="6001" xml:space="preserve">
+    <value>Null Request</value>
+  </data>
+  <data name="6002" xml:space="preserve">
+    <value>Internal server error</value>
+  </data>
+  <data name="6003" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="6004" xml:space="preserve">
+    <value>Invalid login format</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="AllRightsReserved" xml:space="preserve">
+    <value>All rights reserved</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Connectivity" xml:space="preserve">
+    <value>Connectivity</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Controller" xml:space="preserve">
+    <value>Controller</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created by</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailExist" xml:space="preserve">
+    <value>Email already registered</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="EnterUserOrEmail" xml:space="preserve">
+    <value>Enter user or email</value>
+  </data>
+  <data name="Executive" xml:space="preserve">
+    <value>Executive</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Paternal surname</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participant</value>
+  </data>
+  <data name="ParticipantPlus" xml:space="preserve">
+    <value>Participant Plus</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordEnter" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="PasswordRecover" xml:space="preserve">
+    <value>Password recover</value>
+  </data>
+  <data name="PasswordRecoverSuccessMsg" xml:space="preserve">
+    <value>An email was sent with password reset instructions</value>
+  </data>
+  <data name="PasswordUpdateSuccessMsg" xml:space="preserve">
+    <value>Password was updated successfully</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProjectManager" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Recover</value>
+  </data>
+  <data name="RequiredFields" xml:space="preserve">
+    <value>Required fields</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="SelectEnvironment" xml:space="preserve">
+    <value>Select an environment</value>
+  </data>
+  <data name="SelectListNullItem" xml:space="preserve">
+    <value>-- Select an option --</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SuccessMsg" xml:space="preserve">
+    <value>Successfully completed</value>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Maternal surname</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms and conditions</value>
+  </data>
+  <data name="TimeZone" xml:space="preserve">
+    <value>Time Zone</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserEnter" xml:space="preserve">
+    <value>Enter user</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UsernameExist" xml:space="preserve">
+    <value>Username already registered</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="ViewTitleCompany" xml:space="preserve">
+    <value>Company  Management</value>
+  </data>
+  <data name="ViewTitleCompanyArea" xml:space="preserve">
+    <value>Company Area  Management</value>
+  </data>
+  <data name="ViewTitleCurrencies" xml:space="preserve">
+    <value>Currencies  Management</value>
+  </data>
+  <data name="ViewTitleHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="ViewTitleRole" xml:space="preserve">
+    <value>Roles Management</value>
+  </data>
+  <data name="ViewTitleUpdatePassword" xml:space="preserve">
+    <value>Update password</value>
+  </data>
+  <data name="ViewTitleUserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>Assigned</value>
+  </data>
+  <data name="LicenseType" xml:space="preserve">
+    <value>License type</value>
+  </data>
+  <data name="Licensing" xml:space="preserve">
+    <value>Licensing</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="LicenseNoAvailable" xml:space="preserve">
+    <value>No licenses available</value>
+  </data>
+  <data name="LicenseSelect" xml:space="preserve">
+    <value>Choose a license</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="ViewTitleHoliday" xml:space="preserve">
+    <value>Holidays  Management</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="5028" xml:space="preserve">
+    <value>No license available</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="AreYouSureDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this record?</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Updated</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="WithoutRestriction" xml:space="preserve">
+    <value>Without restriction</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="ExtNum" xml:space="preserve">
+    <value>Exterior number</value>
+  </data>
+  <data name="IntNum" xml:space="preserve">
+    <value>Interior number</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip code</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="EscalationAreaName" xml:space="preserve">
+    <value>Escalation area name</value>
+  </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="4015" xml:space="preserve">
+    <value>Sorry, your access was denied. Contact your administrator.</value>
+  </data>
+  <data name="ViewTitleFactSheet" xml:space="preserve">
+    <value>Fact Sheets  Management</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Tooltip" xml:space="preserve">
+    <value>Advice</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ViewTitleFunction" xml:space="preserve">
+    <value>Functions Management</value>
+  </data>
+  <data name="5029" xml:space="preserve">
+    <value>Environment is not available</value>
+  </data>
+  <data name="5030" xml:space="preserve">
+    <value>It is not possible to reduce the number of licenses {0} the assignment is greater.</value>
+  </data>
+  <data name="ViewTitleParticipant" xml:space="preserve">
+    <value>Participants  Management</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Function</value>
+  </data>
+  <data name="CodeExist" xml:space="preserve">
+    <value>Code already registered</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="UploadFiles" xml:space="preserve">
+    <value>Upload Template</value>
+  </data>
+  <data name="Companies" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ViewTitleEvidenceType" xml:space="preserve">
+    <value>Evidence Type  Management</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Parity</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="CostType" xml:space="preserve">
+    <value>Cost Type</value>
+  </data>
+  <data name="EnumCostType_1" xml:space="preserve">
+    <value>By hour</value>
+  </data>
+  <data name="EnumCostType_2" xml:space="preserve">
+    <value>By Day</value>
+  </data>
+  <data name="EnumCostType_3" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="Escalation" xml:space="preserve">
+    <value>Escalation</value>
+  </data>
+  <data name="Fields" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="4016" xml:space="preserve">
+    <value>Invalid format</value>
+  </data>
+  <data name="ImageSuggestedSize" xml:space="preserve">
+    <value>Suggested image size</value>
+  </data>
+  <data name="ImageFormatAllowed" xml:space="preserve">
+    <value>Only formats are allowed: jpeg, jpg, png, gif, bmp</value>
+  </data>
+  <data name="EnumUserLicenseType_1" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="EnumUserLicenseType_2" xml:space="preserve">
+    <value>Guest Plus</value>
+  </data>
+  <data name="EnumUserLicenseType_3" xml:space="preserve">
+    <value>Participant</value>
+  </data>
+  <data name="EnumUserLicenseType_4" xml:space="preserve">
+    <value>Participant Plus</value>
+  </data>
+  <data name="EnumUserLicenseType_5" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="5031" xml:space="preserve">
+    <value>A File is required.</value>
+  </data>
+  <data name="5032" xml:space="preserve">
+    <value>A file load error occured</value>
+  </data>
+  <data name="5033" xml:space="preserve">
+    <value>Incomplete Information. Some fields are required</value>
+  </data>
+  <data name="5034" xml:space="preserve">
+    <value>There is a field that exceeds the max length</value>
+  </data>
+  <data name="BulkLoadResultTitle" xml:space="preserve">
+    <value>RESULTS : Some lines have errors</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line </value>
+  </data>
+  <data name="ViewTitleDashboard" xml:space="preserve">
+    <value>Dashboards Management</value>
+  </data>
+  <data name="ViewTitlePortfolio" xml:space="preserve">
+    <value>Portfolio Management</value>
+  </data>
+  <data name="ViewTitleProgram" xml:space="preserve">
+    <value>Programs Management</value>
+  </data>
+  <data name="ViewTitleProject" xml:space="preserve">
+    <value>Projects Management</value>
+  </data>
+  <data name="ChangeManagement" xml:space="preserve">
+    <value>Change management</value>
+  </data>
+  <data name="FactSheet" xml:space="preserve">
+    <value>Fact Sheet</value>
+  </data>
+  <data name="ManagementType" xml:space="preserve">
+    <value>Management type</value>
+  </data>
+  <data name="WeighingManagement" xml:space="preserve">
+    <value>Progress configuration</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="EnumProjectChangeManagement_1" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="EnumProjectChangeManagement_2" xml:space="preserve">
+    <value>Mandatory</value>
+  </data>
+  <data name="EnumProjectChangeManagement_3" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="EnumProjectManagementType_1" xml:space="preserve">
+    <value>By elements</value>
+  </data>
+  <data name="EnumProjectManagementType_2" xml:space="preserve">
+    <value>By effort</value>
+  </data>
+  <data name="EnumProjectWeighingManagement_1" xml:space="preserve">
+    <value>By time</value>
+  </data>
+  <data name="EnumProjectWeighingManagement_2" xml:space="preserve">
+    <value>By evidence</value>
+  </data>
+  <data name="EnumProjectWeighingManagement_3" xml:space="preserve">
+    <value>By closed activity</value>
+  </data>
+  <data name="Portfolio" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ProgramOrPortfolio" xml:space="preserve">
+    <value>Program or Portfolio</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Grouping" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
+  <data name="ProjectConfiguration" xml:space="preserve">
+    <value>Project configuration</value>
+  </data>
+  <data name="4017" xml:space="preserve">
+    <value>Value of field {0} is already registered</value>
+  </data>
+  <data name="EnumProjectStatus_1" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="EnumProjectStatus_2" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="ProgramManager" xml:space="preserve">
+    <value>Program Manager</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="CreateParticipant" xml:space="preserve">
+    <value>Create participant</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="SelectRole" xml:space="preserve">
+    <value>Select role</value>
+  </data>
+  <data name="EnumParticipantRole_1" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="EnumParticipantRole_2" xml:space="preserve">
+    <value>Guest Plus</value>
+  </data>
+  <data name="EnumParticipantRole_3" xml:space="preserve">
+    <value>Participant</value>
+  </data>
+  <data name="EnumParticipantRole_4" xml:space="preserve">
+    <value>Participant Plus</value>
+  </data>
+  <data name="EnumParticipantRole_5" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="DownloadBulk" xml:space="preserve">
+    <value>Download template</value>
+  </data>
+  <data name="5041" xml:space="preserve">
+    <value>User is linked to a participant which has higher assigned roles in projects than the new license allows.</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Weighing" xml:space="preserve">
+    <value>Weighing</value>
+  </data>
+  <data name="EnumProjectType_1" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="EnumProjectType_2" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="EnumProjectType_3" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="EnumProjectType_4" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="4018" xml:space="preserve">
+    <value>Field {0} has to be greater than zero</value>
+  </data>
+  <data name="5042" xml:space="preserve">
+    <value>The sum of values ​​exceeds 100 percent</value>
+  </data>
+  <data name="ProgramOrProject" xml:space="preserve">
+    <value>Program or Project</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="DragDrop" xml:space="preserve">
+    <value>Drag and drop</value>
+  </data>
+  <data name="CalendarType" xml:space="preserve">
+    <value>Calendar type</value>
+  </data>
+  <data name="DelayBasedPlannedProgress" xml:space="preserve">
+    <value>Delay based on planned progress</value>
+  </data>
+  <data name="EnumProjectCalendarType_1" xml:space="preserve">
+    <value>Monday to Friday</value>
+  </data>
+  <data name="EnumProjectCalendarType_2" xml:space="preserve">
+    <value>Monday to Saturday</value>
+  </data>
+  <data name="EnumProjectCalendarType_3" xml:space="preserve">
+    <value>Monday to Sunday</value>
+  </data>
+  <data name="AgreementCheck" xml:space="preserve">
+    <value>I have read and accept the Privacy Policy and Terms of Use of PMC-Tool</value>
+  </data>
+  <data name="AgreementVerification" xml:space="preserve">
+    <value>Click the checkbox to accept privacy policy and terms of use</value>
+  </data>
+  <data name="PrivacyPolicyAndTerms" xml:space="preserve">
+    <value>Privacy policy and terms of use</value>
+  </data>
+  <data name="5043" xml:space="preserve">
+    <value>The code already exists in database</value>
+  </data>
+  <data name="5044" xml:space="preserve">
+    <value>Invalid format</value>
+  </data>
+  <data name="DownloadCatalog" xml:space="preserve">
+    <value>Download catalog</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>Catalog</value>
+  </data>
+  <data name="Catalogs" xml:space="preserve">
+    <value>Catalogs</value>
+  </data>
+  <data name="5035" xml:space="preserve">
+    <value>The country code is invalid</value>
+  </data>
+  <data name="5036" xml:space="preserve">
+    <value>The state code is invalid</value>
+  </data>
+  <data name="5037" xml:space="preserve">
+    <value>The city code is invalid</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="ViewTitleTemplate" xml:space="preserve">
+    <value>Project Templates</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Gantt" xml:space="preserve">
+    <value>Gantt</value>
+  </data>
+  <data name="EnumProjectPhase_1" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="EnumProjectPhase_2" xml:space="preserve">
+    <value>Execution</value>
+  </data>
+  <data name="EnumProjectPhase_3" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="EnumProjectPhase_4" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
+  <data name="EnumProjectPhase_5" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Phase" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ViewTitleProjectExecution" xml:space="preserve">
+    <value>Project Execution</value>
+  </data>
+  <data name="WorkAreas" xml:space="preserve">
+    <value>Work areas</value>
+  </data>
+  <data name="ProjectPhase" xml:space="preserve">
+    <value>Project phase</value>
+  </data>
+  <data name="LoadTemplate" xml:space="preserve">
+    <value>Load template</value>
+  </data>
+  <data name="ProjectStartDate" xml:space="preserve">
+    <value>Project start date</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="SelectListNotAssignedItem" xml:space="preserve">
+    <value>Not assigned</value>
+  </data>
+  <data name="EnumExecProjectSort_1" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EnumExecProjectSort_2" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="EnumExecProjectSort_3" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="EnumExecProjectSort_4" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="AgreementDate" xml:space="preserve">
+    <value>Agreement date</value>
+  </data>
+  <data name="CostPlanned" xml:space="preserve">
+    <value>Planned cost</value>
+  </data>
+  <data name="CostReal" xml:space="preserve">
+    <value>Real cost</value>
+  </data>
+  <data name="EnumProjectRiskImpact_1" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="EnumProjectRiskImpact_2" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="EnumProjectRiskImpact_3" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="EnumProjectRiskProbability_1" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="EnumProjectRiskProbability_2" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="EnumProjectRiskProbability_3" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Impact" xml:space="preserve">
+    <value>Impact</value>
+  </data>
+  <data name="Probability" xml:space="preserve">
+    <value>Probability</value>
+  </data>
+  <data name="Risk" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="Risks" xml:space="preserve">
+    <value>Risks</value>
+  </data>
+  <data name="Agreement" xml:space="preserve">
+    <value>Commitment</value>
+  </data>
+  <data name="Agreements" xml:space="preserve">
+    <value>Commitments</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="DateAgreementPlanned" xml:space="preserve">
+    <value>Agreement planned date</value>
+  </data>
+  <data name="DateAgreementReal" xml:space="preserve">
+    <value>Agreement real date</value>
+  </data>
+  <data name="DateRegistry" xml:space="preserve">
+    <value>Registry date</value>
+  </data>
+  <data name="DetailedRiskReport" xml:space="preserve">
+    <value>Detailed risk report</value>
+  </data>
+  <data name="Involved" xml:space="preserve">
+    <value>Involved</value>
+  </data>
+  <data name="Mention" xml:space="preserve">
+    <value>Mention</value>
+  </data>
+  <data name="Notify" xml:space="preserve">
+    <value>Notify</value>
+  </data>
+  <data name="PercentageOfCompletion" xml:space="preserve">
+    <value>Percentage of completion</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="PlanContingency" xml:space="preserve">
+    <value>Contingency plan</value>
+  </data>
+  <data name="PlanMitigation" xml:space="preserve">
+    <value>Mitigation plan</value>
+  </data>
+  <data name="PlannedEndDate" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="PlannedStartDate" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="RealEndDate" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="RealStartDate" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="StatusIndicators" xml:space="preserve">
+    <value>Status indicators</value>
+  </data>
+  <data name="EnumProjectElementStatus_1" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="EnumProjectElementStatus_2" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="EnumProjectElementStatus_3" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="EnumProjectElementStatus_4" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="EnumProjectElementStatus_5" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="ElementEdit" xml:space="preserve">
+    <value>Element Edit</value>
+  </data>
+  <data name="PlannedProgress" xml:space="preserve">
+    <value>Planned progress</value>
+  </data>
+  <data name="RealProgress" xml:space="preserve">
+    <value>Real progress</value>
+  </data>
+  <data name="WithImpact" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="AreYouSureCancel" xml:space="preserve">
+    <value>Are you sure you want to cancel?</value>
+  </data>
+  <data name="Incident" xml:space="preserve">
+    <value>Issues</value>
+  </data>
+  <data name="Incidents" xml:space="preserve">
+    <value>Issues</value>
+  </data>
+  <data name="Activities" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="Element" xml:space="preserve">
+    <value>Element</value>
+  </data>
+  <data name="EnumProjectElementType_1" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="EnumProjectElementType_2" xml:space="preserve">
+    <value>Milestone</value>
+  </data>
+  <data name="EnumProjectElementType_3" xml:space="preserve">
+    <value>Evidence</value>
+  </data>
+  <data name="EnumProjectElementType_4" xml:space="preserve">
+    <value>Incident</value>
+  </data>
+  <data name="EnumProjectElementType_5" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="EnumProjectElementType_6" xml:space="preserve">
+    <value>Commitmen</value>
+  </data>
+  <data name="Evidence" xml:space="preserve">
+    <value>Facts</value>
+  </data>
+  <data name="Evidences" xml:space="preserve">
+    <value>Work products</value>
+  </data>
+  <data name="ActionPlan" xml:space="preserve">
+    <value>Action plan</value>
+  </data>
+  <data name="DetailedIncidentReport" xml:space="preserve">
+    <value>Detailed incident report</value>
+  </data>
+  <data name="DetailedActivityReport" xml:space="preserve">
+    <value>Detailed activity report</value>
+  </data>
+  <data name="PlannedCost" xml:space="preserve">
+    <value>Planned cost</value>
+  </data>
+  <data name="RealCost" xml:space="preserve">
+    <value>Real cost</value>
+  </data>
+  <data name="Milestone" xml:space="preserve">
+    <value>Milestone</value>
+  </data>
+  <data name="Milestones" xml:space="preserve">
+    <value>Milestones</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="DetailedMilestoneReport" xml:space="preserve">
+    <value>Detailed milestone report</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Recipient</value>
+  </data>
+  <data name="Recipients" xml:space="preserve">
+    <value>Recipients</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="4019" xml:space="preserve">
+    <value>Field {0} cannot be less than zero</value>
+  </data>
+  <data name="5045" xml:space="preserve">
+    <value>The sum of values ​​must be equal to 100 percent</value>
+  </data>
+  <data name="Layer" xml:space="preserve">
+    <value>Layer</value>
+  </data>
+  <data name="Layers" xml:space="preserve">
+    <value>Layers</value>
+  </data>
+  <data name="CreateChildLayer" xml:space="preserve">
+    <value>Create child layer</value>
+  </data>
+  <data name="CreateParentLayer" xml:space="preserve">
+    <value>Create parent layer</value>
+  </data>
+  <data name="EvidenceType" xml:space="preserve">
+    <value>Evidence type</value>
+  </data>
+  <data name="OrderChildLayer" xml:space="preserve">
+    <value>Order children layers</value>
+  </data>
+  <data name="OrderParentLayer" xml:space="preserve">
+    <value>Order parent layers</value>
+  </data>
+  <data name="ResponsibleApproval" xml:space="preserve">
+    <value>Responsible of approval</value>
+  </data>
+  <data name="ResponsibleElaboration" xml:space="preserve">
+    <value>Responsible of elaboration</value>
+  </data>
+  <data name="SubLayer" xml:space="preserve">
+    <value>Sub layer</value>
+  </data>
+  <data name="SubLayers" xml:space="preserve">
+    <value>Sub layers</value>
+  </data>
+  <data name="UpdateChildLayer" xml:space="preserve">
+    <value>Update child layer</value>
+  </data>
+  <data name="ControlPoint" xml:space="preserve">
+    <value>Control point</value>
+  </data>
+  <data name="ControlPoints" xml:space="preserve">
+    <value>Control points</value>
+  </data>
+  <data name="DateApprovalPlanned" xml:space="preserve">
+    <value>Approval planned date</value>
+  </data>
+  <data name="DateApprovalReal" xml:space="preserve">
+    <value>Approval real date</value>
+  </data>
+  <data name="DetailedEvidenceReport" xml:space="preserve">
+    <value>Detailed evidence report</value>
+  </data>
+  <data name="ExpectedProgress" xml:space="preserve">
+    <value>Expected progress</value>
+  </data>
+  <data name="LayerChild" xml:space="preserve">
+    <value>Child layer</value>
+  </data>
+  <data name="LayerChildren" xml:space="preserve">
+    <value>Children layer</value>
+  </data>
+  <data name="LayerParent" xml:space="preserve">
+    <value>Parent layer</value>
+  </data>
+  <data name="ManualWeighing" xml:space="preserve">
+    <value>Manual Weighing</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ProyectProgress" xml:space="preserve">
+    <value>Project Progress</value>
+  </data>
+  <data name="WorkingPlan" xml:space="preserve">
+    <value>Working plan</value>
+  </data>
+  <data name="Meeting" xml:space="preserve">
+    <value>Meeting</value>
+  </data>
+  <data name="Meetings" xml:space="preserve">
+    <value>Meetings</value>
+  </data>
+  <data name="4020" xml:space="preserve">
+    <value>Select a participant</value>
+  </data>
+  <data name="4021" xml:space="preserve">
+    <value>Name and email are required</value>
+  </data>
+  <data name="4022" xml:space="preserve">
+    <value>Topic is required</value>
+  </data>
+  <data name="4023" xml:space="preserve">
+    <value>Description is required</value>
+  </data>
+  <data name="Attended" xml:space="preserve">
+    <value>Attended</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="MeetingGuests" xml:space="preserve">
+    <value>Meeting guests</value>
+  </data>
+  <data name="MeetingTopics" xml:space="preserve">
+    <value>Meeting topics</value>
+  </data>
+  <data name="NotRegistered" xml:space="preserve">
+    <value>Not registered</value>
+  </data>
+  <data name="Objetive" xml:space="preserve">
+    <value>Objetive</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="ParticipantList" xml:space="preserve">
+    <value>Participant list</value>
+  </data>
+  <data name="Place" xml:space="preserve">
+    <value>Place</value>
+  </data>
+  <data name="ScheduledDate" xml:space="preserve">
+    <value>Scheduled date</value>
+  </data>
+  <data name="ScheduledTime" xml:space="preserve">
+    <value>Scheduled time</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Topic</value>
+  </data>
+  <data name="TopicDescription" xml:space="preserve">
+    <value>Topic description</value>
+  </data>
+  <data name="TopicList" xml:space="preserve">
+    <value>Topic list</value>
+  </data>
+  <data name="4024" xml:space="preserve">
+    <value>Note is required</value>
+  </data>
+  <data name="AgreementList" xml:space="preserve">
+    <value>Commitment list</value>
+  </data>
+  <data name="ElementDescription" xml:space="preserve">
+    <value>Element description</value>
+  </data>
+  <data name="ElementType" xml:space="preserve">
+    <value>Element Type</value>
+  </data>
+  <data name="MeetingNotes" xml:space="preserve">
+    <value>Notes of the meeting</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="IsLink" xml:space="preserve">
+    <value>Is link</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationOrLink" xml:space="preserve">
+    <value>Location or link</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>References</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FileExtensionNotAllowed" xml:space="preserve">
+    <value>File extension not allowed</value>
+  </data>
+  <data name="FileSizeNotAllowed" xml:space="preserve">
+    <value>File size not allowed (Max 15 MB)</value>
+  </data>
+  <data name="SendMeetingInvitation" xml:space="preserve">
+    <value>Send invitation</value>
+  </data>
+  <data name="DoYouWantToSendMeetingInvitation" xml:space="preserve">
+    <value>Do you want to send meeting invitaction by email?</value>
+  </data>
+  <data name="ViewTitleMeetingNoteTemplate" xml:space="preserve">
+    <value>Meeting Note Template Management</value>
+  </data>
+  <data name="ViewTitleProjectManager" xml:space="preserve">
+    <value>Projects Management</value>
+  </data>
+  <data name="Deviation" xml:space="preserve">
+    <value>Deviation</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_1" xml:space="preserve">
+    <value>bold st-entiempo ws</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_2" xml:space="preserve">
+    <value>bold st-atrasado ws</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_3" xml:space="preserve">
+    <value>bold st-cimpacto ws</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_4" xml:space="preserve">
+    <value>bold st-cerrado ws</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_5" xml:space="preserve">
+    <value>bold st-cancelado ws</value>
+  </data>
+  <data name="EnumProjectElementStatusClass_6" xml:space="preserve">
+    <value>bold st-cancelado ws</value>
+  </data>
+  <data name="EnumProjectElementStatus_6" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="EnumProjectElementBadgeStatusClass_1" xml:space="preserve">
+    <value>badge badge-success</value>
+  </data>
+  <data name="EnumProjectElementBadgeStatusClass_2" xml:space="preserve">
+    <value>badge badge-warning</value>
+  </data>
+  <data name="EnumProjectElementBadgeStatusClass_3" xml:space="preserve">
+    <value>badge badge-danger</value>
+  </data>
+  <data name="EnumProjectElementBadgeStatusClass_4" xml:space="preserve">
+    <value>badge badge-secondary</value>
+  </data>
+  <data name="CountIndicator_Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="CountIndicator_Delayed" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="CountIndicator_OnTime" xml:space="preserve">
+    <value>Ont time</value>
+  </data>
+  <data name="CountIndicator_WithImpact" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="DateApproval" xml:space="preserve">
+    <value>Approval date</value>
+  </data>
+  <data name="LinkedActivity" xml:space="preserve">
+    <value>Linked activity</value>
+  </data>
+  <data name="IncidentSource" xml:space="preserve">
+    <value>Incident source</value>
+  </data>
+  <data name="5038" xml:space="preserve">
+    <value>The state selected is not related to the selected country</value>
+  </data>
+  <data name="5039" xml:space="preserve">
+    <value>The state selected is not related to the city selected</value>
+  </data>
+  <data name="5040" xml:space="preserve">
+    <value>The participant code is invalid</value>
+  </data>
+  <data name="BlukLoadFormatAllowed" xml:space="preserve">
+    <value>Allowed extensions</value>
+  </data>
+  <data name="5046" xml:space="preserve">
+    <value>The company code is invalid</value>
+  </data>
+  <data name="5047" xml:space="preserve">
+    <value>The company area code is invalid</value>
+  </data>
+  <data name="5048" xml:space="preserve">
+    <value>The function code is invalid</value>
+  </data>
+  <data name="5049" xml:space="preserve">
+    <value>The currency code is invalid</value>
+  </data>
+  <data name="DeleteImage" xml:space="preserve">
+    <value>Delete Image</value>
+  </data>
+  <data name="DocumentChanges" xml:space="preserve">
+    <value>Document changes</value>
+  </data>
+  <data name="ReasonToChange" xml:space="preserve">
+    <value>Reason to change</value>
+  </data>
+  <data name="ResponsibleAuthorizer" xml:space="preserve">
+    <value>Responsible of authorizing</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="WeighingCalculated" xml:space="preserve">
+    <value>Weighing calculated</value>
+  </data>
+  <data name="DefaultWeights" xml:space="preserve">
+    <value>Default weights</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid email format</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="MeetingTemplate" xml:space="preserve">
+    <value>Meeting Template</value>
+  </data>
+  <data name="ViewTitleMyDashboard" xml:space="preserve">
+    <value>My Dashboard</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="Delayed" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="OnTime" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="Pendings" xml:space="preserve">
+    <value>Pendings</value>
+  </data>
+  <data name="ProjectStatus" xml:space="preserve">
+    <value>Project status</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Timesheet" xml:space="preserve">
+    <value>Timesheet</value>
+  </data>
+  <data name="ViewTitleMyDashboardLabel_01" xml:space="preserve">
+    <value>Element count by status</value>
+  </data>
+  <data name="ViewTitleMyDashboardLabel_02" xml:space="preserve">
+    <value>Elements with participation</value>
+  </data>
+  <data name="ViewTitleMyDashboardLabel_03" xml:space="preserve">
+    <value>Captured hours</value>
+  </data>
+  <data name="Workload" xml:space="preserve">
+    <value>Workload</value>
+  </data>
+  <data name="FilterByElement" xml:space="preserve">
+    <value>Filter by element</value>
+  </data>
+  <data name="HoursRecord" xml:space="preserve">
+    <value>HoursRecord</value>
+  </data>
+  <data name="IdWBS" xml:space="preserve">
+    <value>ID WBS</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registration Date</value>
+  </data>
+  <data name="SelectPendingStates" xml:space="preserve">
+    <value>Select the status you want to view</value>
+  </data>
+  <data name="ActivityDesctiption" xml:space="preserve">
+    <value>Activity desctiption</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="HoursCapturedPerDay" xml:space="preserve">
+    <value>Hours captured per day</value>
+  </data>
+  <data name="HoursPerProject" xml:space="preserve">
+    <value>Hours per project</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Load more</value>
+  </data>
+  <data name="NextMeetings" xml:space="preserve">
+    <value>Next meetings</value>
+  </data>
+  <data name="PlannedTime" xml:space="preserve">
+    <value>Hours planned</value>
+  </data>
+  <data name="RegisterHours" xml:space="preserve">
+    <value>Record hours</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TotalPlannedTime" xml:space="preserve">
+    <value>Total hours planned</value>
+  </data>
+  <data name="TotalRealTime" xml:space="preserve">
+    <value>Total real hours</value>
+  </data>
+  <data name="Viewed" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="ViewTitleMyDashboardLabel_04" xml:space="preserve">
+    <value>List of topics</value>
+  </data>
+  <data name="AcquiredValue" xml:space="preserve">
+    <value>Acquired value</value>
+  </data>
+  <data name="NoProjectParticipants" xml:space="preserve">
+    <value>There are no participants in the project yet</value>
+  </data>
+  <data name="Pareto" xml:space="preserve">
+    <value>Pareto</value>
+  </data>
+  <data name="ProjectParticipants" xml:space="preserve">
+    <value>Project participants</value>
+  </data>
+  <data name="AreYouSureDeleteLayers" xml:space="preserve">
+    <value>Deleting this layer will delete al the child layers assigned. Are you sure you want to delete this record? </value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="StartDateGreaterThanEndDate" xml:space="preserve">
+    <value>Planned start date cannot be greater than planned end date</value>
+  </data>
+  <data name="5050" xml:space="preserve">
+    <value>The email already exists in the database</value>
+  </data>
+  <data name="ControlPointsWeighing" xml:space="preserve">
+    <value>Control Points Weighing</value>
+  </data>
+  <data name="EvidencesWeighing" xml:space="preserve">
+    <value>Evidences Weighing</value>
+  </data>
+  <data name="CreateLayer" xml:space="preserve">
+    <value>Create layer</value>
+  </data>
+  <data name="CreateSubLayer" xml:space="preserve">
+    <value>Create sub layer</value>
+  </data>
+  <data name="OrderLayers" xml:space="preserve">
+    <value>Order layers</value>
+  </data>
+  <data name="OrderSubLayer" xml:space="preserve">
+    <value>Order sub layers</value>
+  </data>
+  <data name="UpdateSubLayer" xml:space="preserve">
+    <value>Update sub layer</value>
+  </data>
+  <data name="4025" xml:space="preserve">
+    <value>End date must be greater than the start date</value>
+  </data>
+  <data name="5051" xml:space="preserve">
+    <value>The maximum hours allowed per day are 24</value>
+  </data>
+  <data name="ResponsiblePercentage" xml:space="preserve">
+    <value>Responsible percentage</value>
+  </data>
+  <data name="AreYouSureArchive" xml:space="preserve">
+    <value>Are you sure you want to archive this record?</value>
+  </data>
+  <data name="ElementRelationship" xml:space="preserve">
+    <value>Elements relationship</value>
+  </data>
+  <data name="CustomizedReports" xml:space="preserve">
+    <value>Customized reports</value>
+  </data>
+  <data name="ElementAssignment" xml:space="preserve">
+    <value>Element assignment</value>
+  </data>
+  <data name="TableView" xml:space="preserve">
+    <value>Table view</value>
+  </data>
+  <data name="ReportName" xml:space="preserve">
+    <value>Report name</value>
+  </data>
+  <data name="E01" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="E02" xml:space="preserve">
+    <value>Milestone</value>
+  </data>
+  <data name="E03" xml:space="preserve">
+    <value>Evidence</value>
+  </data>
+  <data name="E04" xml:space="preserve">
+    <value>Incident</value>
+  </data>
+  <data name="E05" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="E06" xml:space="preserve">
+    <value>Commitmen</value>
+  </data>
+  <data name="E07" xml:space="preserve">
+    <value>Action plan</value>
+  </data>
+  <data name="E08" xml:space="preserve">
+    <value>Mitigation plan</value>
+  </data>
+  <data name="E09" xml:space="preserve">
+    <value>Contingency plan</value>
+  </data>
+  <data name="E10" xml:space="preserve">
+    <value>Control points</value>
+  </data>
+  <data name="AvailableModules" xml:space="preserve">
+    <value>Available modules</value>
+  </data>
+  <data name="ChooseColumns" xml:space="preserve">
+    <value>Choose columns</value>
+  </data>
+  <data name="E01-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E01-02" xml:space="preserve">
+    <value>Base start date</value>
+  </data>
+  <data name="E01-03" xml:space="preserve">
+    <value>Base end date</value>
+  </data>
+  <data name="E01-04" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="E01-05" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E01-06" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="E01-07" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E01-08" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="E01-09" xml:space="preserve">
+    <value>Planned progress percentage</value>
+  </data>
+  <data name="E01-10" xml:space="preserve">
+    <value>Real progress percentage</value>
+  </data>
+  <data name="E01-11" xml:space="preserve">
+    <value>Main responsible</value>
+  </data>
+  <data name="E01-12" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E01-13" xml:space="preserve">
+    <value>Planned cost</value>
+  </data>
+  <data name="E01-14" xml:space="preserve">
+    <value>Real cost</value>
+  </data>
+  <data name="E01-15" xml:space="preserve">
+    <value>Weighing</value>
+  </data>
+  <data name="E01-16" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="E01-17" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="E02-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E02-02" xml:space="preserve">
+    <value>Base start date</value>
+  </data>
+  <data name="E02-03" xml:space="preserve">
+    <value>Base end date</value>
+  </data>
+  <data name="E02-04" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="E02-05" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E02-06" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="E02-07" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E02-08" xml:space="preserve">
+    <value>Planned progress percentage</value>
+  </data>
+  <data name="E02-09" xml:space="preserve">
+    <value>Real progress percentage</value>
+  </data>
+  <data name="E02-10" xml:space="preserve">
+    <value>Main responsible</value>
+  </data>
+  <data name="E02-11" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E02-12" xml:space="preserve">
+    <value>Weighing</value>
+  </data>
+  <data name="E02-13" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="E02-14" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="F01-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F01-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F01-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F01-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F01-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="F02-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F02-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F02-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F02-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F02-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="GeneralInfo" xml:space="preserve">
+    <value>General information</value>
+  </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="ReportDescription" xml:space="preserve">
+    <value>Report description</value>
+  </data>
+  <data name="SelectedModules" xml:space="preserve">
+    <value>Selected modules</value>
+  </data>
+  <data name="SelectReportColumns" xml:space="preserve">
+    <value>Select the report columns</value>
+  </data>
+  <data name="Step" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="E03-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E03-02" xml:space="preserve">
+    <value>Layer</value>
+  </data>
+  <data name="E03-03" xml:space="preserve">
+    <value>Sub layer</value>
+  </data>
+  <data name="E03-04" xml:space="preserve">
+    <value>Related activity</value>
+  </data>
+  <data name="E03-05" xml:space="preserve">
+    <value>Planned approval date</value>
+  </data>
+  <data name="E03-06" xml:space="preserve">
+    <value>Real approval date</value>
+  </data>
+  <data name="E03-07" xml:space="preserve">
+    <value>Elaboration responsible</value>
+  </data>
+  <data name="E03-08" xml:space="preserve">
+    <value>Approval responsible</value>
+  </data>
+  <data name="E03-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E03-10" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E03-11" xml:space="preserve">
+    <value>Evidence type</value>
+  </data>
+  <data name="E03-12" xml:space="preserve">
+    <value>Planned cost</value>
+  </data>
+  <data name="E03-13" xml:space="preserve">
+    <value>Real cost</value>
+  </data>
+  <data name="E03-14" xml:space="preserve">
+    <value>Control points number</value>
+  </data>
+  <data name="E03-15" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="E03-16" xml:space="preserve">
+    <value>Weighing</value>
+  </data>
+  <data name="E03-17" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="F03-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F03-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F03-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F03-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F03-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E04-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E04-02" xml:space="preserve">
+    <value>Element (activity, evidence)</value>
+  </data>
+  <data name="E04-03" xml:space="preserve">
+    <value>Incident source (element description)</value>
+  </data>
+  <data name="E04-04" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E04-05" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="E04-06" xml:space="preserve">
+    <value>Planned commitment date</value>
+  </data>
+  <data name="E04-07" xml:space="preserve">
+    <value>Real closure date</value>
+  </data>
+  <data name="E04-08" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E04-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E04-10" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="E04-11" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="F04-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F04-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F04-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F04-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F04-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E05-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E05-02" xml:space="preserve">
+    <value>Planned commitment date</value>
+  </data>
+  <data name="E05-03" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="E05-04" xml:space="preserve">
+    <value>Real closure date</value>
+  </data>
+  <data name="E05-05" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E05-06" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E05-07" xml:space="preserve">
+    <value>Impact</value>
+  </data>
+  <data name="E05-08" xml:space="preserve">
+    <value>Probability</value>
+  </data>
+  <data name="E05-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E05-10" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="E05-11" xml:space="preserve">
+    <value>Planned cost</value>
+  </data>
+  <data name="E05-12" xml:space="preserve">
+    <value>Real cost</value>
+  </data>
+  <data name="E05-13" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="F05-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F05-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F05-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F05-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F05-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E06-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E06-02" xml:space="preserve">
+    <value>Meeting (meeting objective)</value>
+  </data>
+  <data name="E06-03" xml:space="preserve">
+    <value>Topic</value>
+  </data>
+  <data name="E06-04" xml:space="preserve">
+    <value>Planned commitment date</value>
+  </data>
+  <data name="E06-05" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E06-06" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E06-07" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="E06-08" xml:space="preserve">
+    <value>Change control number</value>
+  </data>
+  <data name="F06-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F06-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F06-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F06-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F06-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E07-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E07-02" xml:space="preserve">
+    <value>Incident description</value>
+  </data>
+  <data name="E07-03" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="E07-04" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E07-05" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="E07-06" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E07-07" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E07-08" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E07-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E07-10" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="F07-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F07-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F07-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F07-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F07-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E08-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E08-02" xml:space="preserve">
+    <value>Risk description</value>
+  </data>
+  <data name="E08-03" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="E08-04" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E08-05" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="E08-06" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E08-07" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E08-08" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E08-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E08-10" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="F08-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F08-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F08-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F08-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F08-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E09-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E09-02" xml:space="preserve">
+    <value>Risk description</value>
+  </data>
+  <data name="E09-03" xml:space="preserve">
+    <value>Planned start date</value>
+  </data>
+  <data name="E09-04" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E09-05" xml:space="preserve">
+    <value>Real start date</value>
+  </data>
+  <data name="E09-06" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E09-07" xml:space="preserve">
+    <value>Responsible</value>
+  </data>
+  <data name="E09-08" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E09-09" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E09-10" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="F09-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F09-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F09-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F09-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F09-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="E10-01" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="E10-02" xml:space="preserve">
+    <value>Evidence description</value>
+  </data>
+  <data name="E10-03" xml:space="preserve">
+    <value>Planned end date</value>
+  </data>
+  <data name="E10-04" xml:space="preserve">
+    <value>Real end date</value>
+  </data>
+  <data name="E10-05" xml:space="preserve">
+    <value>Progress percentage</value>
+  </data>
+  <data name="E10-06" xml:space="preserve">
+    <value>Weighing</value>
+  </data>
+  <data name="E10-07" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="E10-08" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="F10-01" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="F10-02" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="F10-03" xml:space="preserve">
+    <value>With impact</value>
+  </data>
+  <data name="F10-04" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="F10-05" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="HoursPerActivity" xml:space="preserve">
+    <value>Hours per activity</value>
+  </data>
+  <data name="HoursPerDay" xml:space="preserve">
+    <value>Hours per day</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="ActivitiesTable" xml:space="preserve">
+    <value>Activities table</value>
+  </data>
+  <data name="ParetoSubTitle" xml:space="preserve">
+    <value>Only shows activities with x impact</value>
+  </data>
+  <data name="ParetoTitle" xml:space="preserve">
+    <value>Pareto impact on Earned Value</value>
+  </data>
+  <data name="DetailedAgreementReport" xml:space="preserve">
+    <value>Detailed agreement report</value>
+  </data>
+  <data name="SeeMore" xml:space="preserve">
+    <value>See more</value>
+  </data>
+  <data name="TopicDetail" xml:space="preserve">
+    <value>Topic detail</value>
+  </data>
+  <data name="XActivity" xml:space="preserve">
+    <value>x activity</value>
+  </data>
+  <data name="XDay" xml:space="preserve">
+    <value>x day</value>
+  </data>
+  <data name="Activated" xml:space="preserve">
+    <value>Activated</value>
+  </data>
+  <data name="BaseLine" xml:space="preserve">
+    <value>Base line</value>
+  </data>
+  <data name="CirticalPath" xml:space="preserve">
+    <value>Cirtical path</value>
+  </data>
+  <data name="Deactivated" xml:space="preserve">
+    <value>Deactivated</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="Holidays" xml:space="preserve">
+    <value>Holidays</value>
+  </data>
+  <data name="Error404Body" xml:space="preserve">
+    <value>Please, verify the introduced link and try again or</value>
+  </data>
+  <data name="Error404Subtitle" xml:space="preserve">
+    <value>Sorry, but the page you are looking for does not exist!</value>
+  </data>
+  <data name="Error404Title" xml:space="preserve">
+    <value>Ooops! Error 404</value>
+  </data>
+  <data name="Error500Body1" xml:space="preserve">
+    <value>There was an error and we are working to solve this problem. If you need immediate help from our tech support team send us an email to</value>
+  </data>
+  <data name="Error500Body2" xml:space="preserve">
+    <value>or contact us.</value>
+  </data>
+  <data name="Error500Body3" xml:space="preserve">
+    <value>Thanks for your patience!</value>
+  </data>
+  <data name="Error500Subtitle" xml:space="preserve">
+    <value>This is a 500 error</value>
+  </data>
+  <data name="Error500Title" xml:space="preserve">
+    <value>Something unexpected happened!</value>
+  </data>
+  <data name="GoHomePage" xml:space="preserve">
+    <value>Go to the home page</value>
+  </data>
+  <data name="DashboardProgress" xml:space="preserve">
+    <value>Dashboard progress</value>
+  </data>
+  <data name="Dashboards" xml:space="preserve">
+    <value>Dashboards</value>
+  </data>
+  <data name="EnumExecProgramSort_1" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EnumExecProgramSort_2" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Portfolios" xml:space="preserve">
+    <value>Portfolios</value>
+  </data>
+  <data name="ProgramEndDate" xml:space="preserve">
+    <value>Program end date</value>
+  </data>
+  <data name="ProgramProgress" xml:space="preserve">
+    <value>Program progress</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="ProgramStartDate" xml:space="preserve">
+    <value>Program start date</value>
+  </data>
+  <data name="TotalPrograms" xml:space="preserve">
+    <value>Total programs</value>
+  </data>
+  <data name="TotalProjects" xml:space="preserve">
+    <value>Total projects</value>
+  </data>
+  <data name="ViewTitleDashboardExecution" xml:space="preserve">
+    <value>Dashboard Execution</value>
+  </data>
+  <data name="ViewTitlePortfolioExecution" xml:space="preserve">
+    <value>Portfolio Execution</value>
+  </data>
+  <data name="ViewTitleProgramExecution" xml:space="preserve">
+    <value>Program Execution</value>
+  </data>
+  <data name="PortfolioProgress" xml:space="preserve">
+    <value>Portfolio progress</value>
+  </data>
+  <data name="VerifyNumericField" xml:space="preserve">
+    <value>Verify that all fields contain valid numeric values</value>
+  </data>
+  <data name="RecordExist" xml:space="preserve">
+    <value>The record is already added </value>
+  </data>
+  <data name="WeighingZero" xml:space="preserve">
+    <value>There are records with zero weight</value>
+  </data>
+  <data name="AreYouSureCancelActivity" xml:space="preserve">
+    <value>Canceling this item will cancel the following related items:
+&lt;br/&gt;- Evidences
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Incidents
+&lt;br/&gt;- Action plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureCancelEvidence" xml:space="preserve">
+    <value>Canceling this item will cancel the following related items:
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Incidents
+&lt;br/&gt;- Action plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureCancelIncident" xml:space="preserve">
+    <value>Canceling this item will cancel the following related items:
+&lt;br/&gt;- Action plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureCancelMilestone" xml:space="preserve">
+    <value>Canceling this item will cancel the following related items:
+&lt;br/&gt;- Evidences
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureCancelProject" xml:space="preserve">
+    <value>Canceling this project will cancel all of its related elements. Are you sure you want to cancel this record?</value>
+  </data>
+  <data name="AreYouSureCancelRisk" xml:space="preserve">
+    <value>Canceling this item will cancel the following related items:
+&lt;br/&gt;- Mitigation plans
+&lt;br/&gt;- Contingency plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureDeleteActivity" xml:space="preserve">
+    <value>Deleting this item will delete the following related items:
+&lt;br/&gt;- Evidences
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Incidents
+&lt;br/&gt;- Action plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureDeleteEvidence" xml:space="preserve">
+    <value>Deleting this item will delete the following related items:
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Incidents
+&lt;br/&gt;- Action plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureDeleteIncident" xml:space="preserve">
+    <value>Deleting this item will delete the following related items:
+&lt;br/&gt;- Actions plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureDeleteMilestone" xml:space="preserve">
+    <value>Deleting this item will delete the following related items:
+&lt;br/&gt;- Evidences
+&lt;br/&gt;- Control points
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="AreYouSureDeleteRisk" xml:space="preserve">
+    <value>Deleting this item will delete the following related items:
+&lt;br/&gt;- Mitigation plans
+&lt;br/&gt;- Contingency plans
+&lt;br/&gt;- Agreements</value>
+  </data>
+  <data name="Reopen" xml:space="preserve">
+    <value>Reopen</value>
+  </data>
+  <data name="Error401Body" xml:space="preserve">
+    <value>Sorry, but you are not allowed to access this route</value>
+  </data>
+  <data name="Error401Subtitle" xml:space="preserve">
+    <value>Inaccessible route</value>
+  </data>
+  <data name="Error401Title" xml:space="preserve">
+    <value>Unauthorized</value>
+  </data>
+  <data name="April" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="August" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="December" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="DownloadImage" xml:space="preserve">
+    <value>Download image</value>
+  </data>
+  <data name="ExitFullScreen" xml:space="preserve">
+    <value>Exit fullscreen</value>
+  </data>
+  <data name="February" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="January" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="July" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="June" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="March" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="May" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="November" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="October" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="September" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="ViewFullScreen" xml:space="preserve">
+    <value>View in fullscreen</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="YTD" xml:space="preserve">
+    <value>YTD</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="EnumProjectElementType_99" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Analytics2_001" xml:space="preserve">
+    <value>Select timeframe to check</value>
+  </data>
+  <data name="Analytics2_002" xml:space="preserve">
+    <value>GENERATE</value>
+  </data>
+  <data name="Analytics2_003" xml:space="preserve">
+    <value>TEAM MEMBERS' PERFORMANCE</value>
+  </data>
+  <data name="Analytics2_004" xml:space="preserve">
+    <value>Key elements allocation</value>
+  </data>
+  <data name="Analytics2_005" xml:space="preserve">
+    <value>Allocated time by project</value>
+  </data>
+  <data name="Analytics2_006" xml:space="preserve">
+    <value>Time planned vs recorded</value>
+  </data>
+  <data name="HorasReales" xml:space="preserve">
+    <value>Time recoded</value>
+  </data>
+  <data name="ReporteDeDisponibilidad" xml:space="preserve">
+    <value>Avaliability report</value>
+  </data>
+  <data name="Analytics1_001" xml:space="preserve">
+    <value>Project performance</value>
+  </data>
+  <data name="Analytics1_002" xml:space="preserve">
+    <value>Project changes</value>
+  </data>
+  <data name="Analytics1_003" xml:space="preserve">
+    <value>Project key elements statistics</value>
+  </data>
+  <data name="Analytics1_004" xml:space="preserve">
+    <value>Concluded projects statistics</value>
+  </data>
+  <data name="Analytics1_005" xml:space="preserve">
+    <value>Planned</value>
+  </data>
+  <data name="Analytics1_006" xml:space="preserve">
+    <value>Real</value>
+  </data>
+  <data name="Analytics1_007" xml:space="preserve">
+    <value>Project main rolls</value>
+  </data>
+  <data name="Analytics1_008" xml:space="preserve">
+    <value>Earned value graphic</value>
+  </data>
+  <data name="Analytics1_009" xml:space="preserve">
+    <value>To-do list of the week</value>
+  </data>
+  <data name="Analytics1_010" xml:space="preserve">
+    <value>Update quality</value>
+  </data>
+  <data name="Analytics1_011" xml:space="preserve">
+    <value>Key elements to check</value>
+  </data>
+  <data name="Analytics1_012" xml:space="preserve">
+    <value>Changes control record</value>
+  </data>
+  <data name="Analytics1_013" xml:space="preserve">
+    <value>Control element</value>
+  </data>
+  <data name="Analytics1_014" xml:space="preserve">
+    <value>Change made</value>
+  </data>
+  <data name="Analytics1_015" xml:space="preserve">
+    <value>Key elements to be finished</value>
+  </data>
+  <data name="Analytics1_016" xml:space="preserve">
+    <value>Key elements delayed or impacted</value>
+  </data>
+  <data name="Analytics1_017" xml:space="preserve">
+    <value>Project change control</value>
+  </data>
+  <data name="Footer" xml:space="preserve">
+    <value>Footer</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="Analytics4_001" xml:space="preserve">
+    <value>Organizational chart</value>
+  </data>
+  <data name="Analytics4_002" xml:space="preserve">
+    <value>Select a company</value>
+  </data>
+  <data name="Home_001" xml:space="preserve">
+    <value>Achivements record</value>
+  </data>
+  <data name="Home_002" xml:space="preserve">
+    <value>Key elements status</value>
+  </data>
+  <data name="Home_003" xml:space="preserve">
+    <value>Quality on tracking</value>
+  </data>
+  <data name="Home_004" xml:space="preserve">
+    <value>Last access</value>
+  </data>
+  <data name="Home_005" xml:space="preserve">
+    <value>Total of elements</value>
+  </data>
+  <data name="Home_006" xml:space="preserve">
+    <value>Qualification</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Analytics3_001" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Analytics3_002" xml:space="preserve">
+    <value>Working area</value>
+  </data>
+  <data name="Analytics3_003" xml:space="preserve">
+    <value>Finish on time</value>
+  </data>
+  <data name="Analytics3_004" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="Analytics3_005" xml:space="preserve">
+    <value>Progress less than expected</value>
+  </data>
+  <data name="Analytics3_006" xml:space="preserve">
+    <value>Percentage</value>
+  </data>
+  <data name="5053" xml:space="preserve">
+    <value>Relation between currencies already exists</value>
+  </data>
+  <data name="Analytics1_018" xml:space="preserve">
+    <value>Project assigned hours</value>
+  </data>
+  <data name="Analytics1_019" xml:space="preserve">
+    <value>Project hours</value>
+  </data>
+  <data name="Costs1_001" xml:space="preserve">
+    <value>Project costing</value>
+  </data>
+  <data name="Costs1_002" xml:space="preserve">
+    <value>Activities effort and work products</value>
+  </data>
+  <data name="Costs1_003" xml:space="preserve">
+    <value>Earned Value</value>
+  </data>
+  <data name="Costs1_004" xml:space="preserve">
+    <value>Costing</value>
+  </data>
+  <data name="Costs1_005" xml:space="preserve">
+    <value>Work partial cost</value>
+  </data>
+  <data name="Costs1_006" xml:space="preserve">
+    <value>Work products partial cost</value>
+  </data>
+  <data name="Costs1_007" xml:space="preserve">
+    <value>Total project cost</value>
+  </data>
+  <data name="Costs1_008" xml:space="preserve">
+    <value>Total costs</value>
+  </data>
+  <data name="Analytics2_009" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Analytics2_010" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Analytics2_011" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Analytics2_012" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="Analytics2_013" xml:space="preserve">
+    <value>Pending assignments</value>
+  </data>
+  <data name="Analytics2_014" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Analytics2_015" xml:space="preserve">
+    <value>Control element</value>
+  </data>
+  <data name="4026" xml:space="preserve">
+    <value>The participant already exists on the list</value>
+  </data>
+  <data name="4027" xml:space="preserve">
+    <value>Email already exists on the list</value>
+  </data>
+  <data name="Analytics1_020" xml:space="preserve">
+    <value>Soon to get started</value>
+  </data>
+  <data name="4028" xml:space="preserve">
+    <value>Progress must be a numerical value between 0 and 100</value>
+  </data>
+  <data name="Analytics4_003" xml:space="preserve">
+    <value>The company has no areas</value>
+  </data>
+  <data name="Analytics2_016" xml:space="preserve">
+    <value>Pending Items</value>
+  </data>
+  <data name="5054" xml:space="preserve">
+    <value>Milestone can not be mother</value>
+  </data>
+  <data name="5055" xml:space="preserve">
+    <value>Milestone can not be only child</value>
+  </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>Complaints</value>
+  </data>
+  <data name="Analytics2_017" xml:space="preserve">
+    <value>Details of activities and planned hours</value>
+  </data>
+  <data name="AbsoluteDeviationByActivity" xml:space="preserve">
+    <value>Absolute deviation by activity</value>
+  </data>
+  <data name="CumulativeDeviationPercentage" xml:space="preserve">
+    <value>Cumulative deviation percentage</value>
+  </data>
+  <data name="BulkLoad" xml:space="preserve">
+    <value>Bulk Load</value>
+  </data>
+  <data name="Newf" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Analytics4_004" xml:space="preserve">
+    <value>Must have at least one area without scale</value>
+  </data>
+  <data name="10061" xml:space="preserve">
+    <value>No connection could be made because the target machine actively refused it.</value>
+  </data>
+  <data name="ConnectionRefused" xml:space="preserve">
+    <value>A connection error has occurred, please try again in a few minutes.</value>
+  </data>
+  <data name="7001" xml:space="preserve">
+    <value>Internal server error</value>
+  </data>
+  <data name="Analytics2_018" xml:space="preserve">
+    <value>Date of consultation</value>
+  </data>
+  <data name="Analytics2_019" xml:space="preserve">
+    <value>You only have to select 1 Participant</value>
+  </data>
+  <data name="Analytics2_020" xml:space="preserve">
+    <value>You must select at least 1 Participant</value>
+  </data>
+  <data name="Analytics2_021" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Analytics2_022" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="Analytics2_023" xml:space="preserve">
+    <value>Planned hours</value>
+  </data>
+  <data name="Analytics2_024" xml:space="preserve">
+    <value>Time recoded</value>
+  </data>
+  <data name="Analytics2_025" xml:space="preserve">
+    <value>Select one or more projects</value>
+  </data>
+  <data name="Analytics2_026" xml:space="preserve">
+    <value>Select a participant</value>
+  </data>
+  <data name="Analytics2_027" xml:space="preserve">
+    <value>Select one or more participants</value>
+  </data>
+  <data name="Analytics2_028" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Analytics2_029" xml:space="preserve">
+    <value>Hours logged</value>
+  </data>
+  <data name="Root" xml:space="preserve">
+    <value>Root</value>
+  </data>
+  <data name="5056" xml:space="preserve">
+    <value>Can not archive task with related elements</value>
+  </data>
+  <data name="Analytics2_031" xml:space="preserve">
+    <value>Date start</value>
+  </data>
+  <data name="Analytics2_032" xml:space="preserve">
+    <value>Date end</value>
+  </data>
+  <data name="PasswordLong" xml:space="preserve">
+    <value>The password must be between 8 and 10 characters</value>
+  </data>
+  <data name="700" xml:space="preserve">
+    <value>User is linked to a participant which has higher assigned roles in projects than the new license allows</value>
+  </data>
+  <data name="gantt_001" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="gantt_002" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="gantt_003" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="gantt_004" xml:space="preserve">
+    <value>Expand</value>
+  </data>
+  <data name="gantt_005" xml:space="preserve">
+    <value>Indent</value>
+  </data>
+  <data name="gantt_006" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="gantt_007" xml:space="preserve">
+    <value>Unindex</value>
+  </data>
+  <data name="gantt_008" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="gantt_009" xml:space="preserve">
+    <value>Critical path</value>
+  </data>
+  <data name="gantt_010" xml:space="preserve">
+    <value>Baseline</value>
+  </data>
+  <data name="gantt_011" xml:space="preserve">
+    <value>Progress graph</value>
+  </data>
+  <data name="gantt_012" xml:space="preserve">
+    <value>Non-business days</value>
+  </data>
+  <data name="gantt_013" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="gantt_014" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="gantt_015" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="gantt_016" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="gantt_017" xml:space="preserve">
+    <value>Slack time</value>
+  </data>
+  <data name="Agreement001" xml:space="preserve">
+    <value>View meeting notes</value>
+  </data>
+  <data name="MeetingTemplete001" xml:space="preserve">
+    <value>No comments</value>
+  </data>
+  <data name="Minimum8characters" xml:space="preserve">
+    <value>Your password must be at least 8 characters</value>
+  </data>
+  <data name="SearchProjects" xml:space="preserve">
+    <value>Search projects by name</value>
+  </data>
+  <data name="6005" xml:space="preserve">
+    <value>Email already registered</value>
+  </data>
+  <data name="6006" xml:space="preserve">
+    <value>Username already registered</value>
+  </data>
+  <data name="4029" xml:space="preserve">
+    <value>¡This program has no projects assigned!</value>
+  </data>
+  <data name="4030" xml:space="preserve">
+    <value>Sorry</value>
+  </data>
+  <data name="4031" xml:space="preserve">
+    <value>¡This portfolio has no assigned programs and projects!</value>
+  </data>
+  <data name="4032" xml:space="preserve">
+    <value>¡This portfolio has programs but no projects are assigned!</value>
+  </data>
+</root>

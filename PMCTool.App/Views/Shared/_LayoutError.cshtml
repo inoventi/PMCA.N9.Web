@@ -1,0 +1,49 @@
+﻿@{
+    var lang = Context.Request.Cookies["pmctool-lang-app"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Página comercial del PMC-tool">
+    <meta name="author" content="InovenTI">
+    <title>PMC-Tool&reg; Application</title>
+    <link rel="shortcut icon" href="~/images/icono_pmc_tool.png" asp-append-version="true">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,500i,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/light-bootstrap-dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pmctool.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+
+    @if (lang == null || lang == "es-MX")
+    {
+        <script src="~/lib/jquery-validate/localization/messages_es.min.js" asp-append-version="true"></script>
+    }
+
+    <style>
+        .footer{
+            position:fixed !important;
+            left:0px !important;
+            bottom:0px !important;
+        }
+        body {
+          overflow: hidden;
+        }
+    </style>
+
+</head>
+<body>
+    @RenderBody()
+    @await Html.PartialAsync("~/Views/Shared/_LayoutFooterPartial.cshtml")
+    
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

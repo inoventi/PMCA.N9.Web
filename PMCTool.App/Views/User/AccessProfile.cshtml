@@ -1,0 +1,75 @@
+﻿@model PMCTool.Models.Core.User
+
+@Html.HiddenFor(m => m.UserID)
+@Html.Hidden("Yes", Localizer["Yes"].ToString().ToUpper())
+@Html.Hidden("Active", Localizer["Active"].ToString())
+@Html.Hidden("Inactive", Localizer["Inactive"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card  card-tasks">
+                    <div class="card-header ">
+                        <div class="col-md-12 pt-2">
+                            <div class="row">
+                                <div class="col-md-10 pt-2">
+                                    <h4 class="card-title">@Model.Name @Model.Lastname @Model.Surname</h4>
+                                    <p class="card-category">@Model.Email</p>
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <a href="/User/Index" class="btn btn-sm btn-default btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card data-tables">
+                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar          -->
+                        </div>
+                        <div class="fresh-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Selected"]</th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["Description"]</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Selected"]</th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["Description"]</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vUserAccessProfile.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,178 @@
+﻿@model PMCTool.Models.Environment.Participant
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/xd.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/mi-tablero.css" asp-append-version="true" />
+
+@Html.HiddenFor(m => m.ParticipantID)
+
+@{
+    if (ViewBag.ParticipantID == null || ViewBag.ParticipantID == Guid.Empty)
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Meetings"].ToString().ToUpper()</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Meetings"].ToString().ToUpper() </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-left">
+                                        <div class="card">
+                                            <div class="row">
+                                                <div class="col-md-12 pt-3 pl-4 pb-3">
+                                                    <h6 class="tx-uppercase tx-10 tx-spacing-1 tx-color-02 tx-semibold mg-b-0  txt-blue">@Localizer["NextMeetings"]:</h6>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="fresh-datatables">
+                                                        <table id="datatables" class="table table-hover table-striped dataTables_wrapper" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>@Localizer["Project"]</th>
+                                                                    <th>@Localizer["ScheduledDate"]</th>
+                                                                    <th>@Localizer["ScheduledTime"]</th>
+                                                                    <th>@Localizer["Duration"]</th>
+                                                                    <th>@Localizer["Place"]</th>
+                                                                    <th>@Localizer["Objetive"]</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="tbody">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                </div>
+                                <div class="row">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel-4"> </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pt-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card strpied-tabled-with-hover">
+                                    <div class="card-header ">
+                                        <div class="row">
+                                            <div class="col-md-12 pt-2 pl-4">
+                                                <small class="font-weight-normal bold"><b>@Localizer["Project"]</b></small>
+                                                <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                                    <span id="meetingModal_project" class="txt-blue"></span>
+                                                </h4>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-full-width table-responsive">
+                                        <div class="row pl-3 pr-3 pt-1">
+                                            <div class="col-md-12"><b>@Localizer["Meeting"].ToString().ToUpper(): </b> <span id="meetingModal_meeting"></span></div>
+                                            <div class="col-md-6"><b>@Localizer["Place"].ToString().ToUpper():</b> <span id="meetingModal_place"> </span></div>
+                                            <div class="col-md-6"><b>@Localizer["ScheduledDate"].ToString().ToUpper():</b> <span id="meetingModal_date"> </span></div>
+                                            <div class="col-md-6"><b>@Localizer["ScheduledTime"].ToString().ToUpper():</b> <span id="meetingModal_time"> </span></div>
+                                            <div class="col-md-6"><b>@Localizer["Duration"].ToString().ToUpper():</b> <span id="meetingModal_duration"> </span></div>
+                                            <div class="col-md-12">
+                                                <b> @Localizer["ViewTitleMyDashboardLabel_04"].ToString().ToUpper() :</b>
+                                                <ul id="meetingModal_topics" class="list-group">
+                                                    <li class="list-group-item">Actividad - Lorem ipsum dolor sit amet</li>
+                                                    <li class="list-group-item">Hito - Lorem ipsum dolor sit amet</li>
+                                                    <li class="list-group-item">Evidencia - Lorem ipsum dolor sit amet</li>
+                                                    <li class="list-group-item">Incidente - Lorem ipsum dolor sit amet</li>
+                                                    <li class="list-group-item">Riesgo - Lorem ipsum dolor sit amet</li>
+                                                    <li class="list-group-item">Otro - Lorem ipsum dolor sit amet</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right pr-5 mb-4">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMyDashboardMeetings.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

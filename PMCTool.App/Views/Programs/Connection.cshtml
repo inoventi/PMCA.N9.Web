@@ -1,0 +1,123 @@
+﻿    @model PMCTool.Models.Environment.Program
+
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("EnumProjectType_1", Localizer["EnumProjectType_1"].ToString())
+@Html.Hidden("EnumProjectType_2", Localizer["EnumProjectType_2"].ToString())
+@Html.Hidden("EnumProjectType_3", Localizer["EnumProjectType_3"].ToString())
+@Html.Hidden("EnumProjectType_4", Localizer["EnumProjectType_4"].ToString())
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Equal100", Localizer["5045"].ToString())
+@Html.Hidden("WeighingZero", Localizer["WeighingZero"].ToString())
+@Html.Hidden("RecordExist", Localizer["RecordExist"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmMain" enctype="multipart/form-data">
+                    @Html.HiddenFor(m => m.ProgramID)
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="row">
+                                <div class="col-md-10 pt-4">
+                                    <h4 class="card-title">@Model.Name</h4>
+                                    <p class="card-category">@Model.Description</p>
+                                    <br />
+                                </div>
+                                <div class="col-md-2 text-right pt-2">
+                                    <a href="/Programs/Index" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-arrow-left"></i> @Localizer["Back"]</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-9 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Project"]</label><star class="star">*</star>
+                                        <select id="ChildID" name="ChildID" class="form-control" required></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 px-2 text-center">
+                                    <div>
+                                        <br />
+                                        <button type="button" id="btnCreate" class="btn btn-default btn-fill">@Localizer["Add"]</button>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-3 px-2">
+                                        <div class="form-group">
+                                            <label>@Localizer["Weighing"]</label><star class="star">*</star>
+                                            @Html.TextBox("Weighing", "", "", new { @id = "Weighing", @class = "form-control", @style = "", @required = "required", @maxlength = 450 })
+                                        </div>
+                                    </div>*@
+                            </div>
+                            <div class="row text-right">
+                                @*<div class="col-md-12 px-2">
+                                    <button type="button" id="btnCancel" onclick="cancel(); return false;" class="btn btn-info btn-fill">@Localizer["Cancel"]</button>
+                                    <button type="button" id="btnCreate" onclick="createEntry(); return false;" class="btn btn-default btn-fill">@Localizer["Add"]</button>
+                                </div>*@
+                                <br /><br />
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="card data-tables">
+                                        <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                            <div class="toolbar">
+                                                <!--        Here you can write extra buttons/actions for the toolbar          -->
+                                            </div>
+                                            <div class="fresh-datatables">
+                                                <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>@Localizer["Code"]</th>
+                                                            <th>@Localizer["Name"]</th>
+                                                            <th>@Localizer["Order"]</th>
+                                                            <th>@Localizer["Weighing"]</th>
+                                                            @*<th>@Localizer["Type"]</th>*@
+                                                            <th class="disabled-sorting text-left">@Localizer["Action"]</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>@Localizer["Code"]</th>
+                                                            <th>@Localizer["Name"]</th>
+                                                            <th>@Localizer["Order"]</th>
+                                                            <th>@Localizer["Weighing"]</th>
+                                                           @* <th>@Localizer["Type"]</th>*@
+                                                            <th class="text-left">@Localizer["Action"]</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-right">
+                                <div class="col-md-12 px-2">
+                                    <button type="button" id="btnUpdate" onclick="updateEntry(); return false;" class="btn btn-default btn-fill">@Localizer["Save"]</button>
+                                </div>
+                                <br /><br /><br />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/core/vProgramConnection.js" asp-append-version="true"></script>
+}

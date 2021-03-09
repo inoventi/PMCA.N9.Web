@@ -1,0 +1,374 @@
+﻿@model PMCTool.Models.Environment.ProjectTemplate
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+
+}
+
+<link href="~/lib/dhtmlxgantt-7.0.2/dhtmlxgantt.css" rel="stylesheet" />
+
+<link href="~/css/pmctool_gantt.css" rel="stylesheet" />
+<link href="~/lib/dhtmlxgantt-7.0.2/skins/dhtmlxgantt_material.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/detalle-actividad.css" rel="stylesheet" />
+<link href="~/css/style-gantt.css" rel="stylesheet" asp-append-version="true" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:regular,medium,thin,bold">
+<script type="text/javascript" id="participantUser">
+     var participantUser = new Object();
+         participantUser.rolId = @ViewBag.Role;
+         participantUser.participantID = '@ViewBag.ParticipantID';
+
+</script>
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/dhtmlxgantt.js" asp-append-version="true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js?v=7.0.2"></script>
+<script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+<script src="https://export.dhtmlx.com/gantt/api.js?v=76253406517213" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/zoom.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/zoom_to_fit.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/indent.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/slack.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/zoom_segment.js" asp-append-version="true"></script>
+@*<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/grid_struct.js" asp-append-version="true"></script>*@
+@* <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/auto_task_type.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/wbs_calc.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/grid_struct.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/fit_task_text.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/zoom_segment.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/indent.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/slack.js" asp-append-version="true"></script>*@
+@*<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/chartjs.js" asp-append-version="true"></script>*@
+<script type="text/javascript" src="~/js/core/vGanttCustom.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/core/vGantt.js" asp-append-version="true"></script>
+
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/custom/chartjs.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/core/vGanttMenus.js" asp-append-version="true"></script>
+
+
+<style type="text/css">
+    .cancel_archive_btn_set {
+        background: #fff;
+        color: #ff584c;
+        text-transform: uppercase;
+        text-shadow: 0 -1px 0 #a60;
+        height: 32px;
+    }
+
+    .gantt_link-save-btn_button div {
+        background: #448aff;
+        text-shadow: 0 -1px 0 #248a9f;
+        color: #fff;
+        padding: 0px 15px;
+        text-transform: uppercase;
+    }
+
+    .gantt_link-delete-btn_button div {
+        background: #fff;
+        color: #ff584c;
+        text-transform: uppercase;
+        text-shadow: 0 -1px 0 #a60;
+        height: 32px;
+    }
+
+    .gantt_link-cancel-btn_button div {
+        background: #fff;
+        border: 1px solid #cecece;
+        border-radius: 2px;
+        font-size: 14px;
+        text-transform: uppercase;
+        height: 30px;
+        padding: 0px 15px;
+        color: #116aff;
+    }
+</style>
+
+<style>
+    html, body {
+        padding: 0px;
+        margin: 0px;
+        height: 100%;
+    }
+
+    #gantt_here {
+        width: 100%;
+        height: 100%;
+    }
+
+    .gantt_grid_scale .gantt_grid_head_cell,
+    .gantt_task .gantt_task_scale .gantt_scale_cell {
+        font-weight: bold;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    .resource_marker {
+        text-align: center;
+    }
+
+        .resource_marker div {
+            width: 28px;
+            height: 28px;
+            line-height: 29px;
+            display: inline-block;
+            border-radius: 15px;
+            color: #FFF;
+            margin: 3px;
+        }
+
+        .resource_marker.workday_ok div {
+            background: #51c185;
+        }
+
+        .resource_marker.workday_over div {
+            background: #ff8686;
+        }
+
+
+
+    .owner-label {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        display: inline-block;
+        border: 1px solid #cccccc;
+        border-radius: 25px;
+        background: #e6e6e6;
+        color: #6f6f6f;
+        margin: 0 3px;
+        font-weight: bold;
+    }
+    .gantt_duration {
+        color: rgb(255 255 255 / 54%);
+        font-weight: 500;
+    }
+    .gantt_duration span {
+        color: rgba(0,0,0,.54);
+    }
+</style>
+
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+@Html.Hidden("Weighing", Localizer["Weighing"].ToString())
+@Html.Hidden("Progress", Localizer["Progress"].ToString())
+@Html.Hidden("XDay", Localizer["XDay"].ToString())
+@Html.Hidden("XActivity", Localizer["XActivity"].ToString())
+@Html.Hidden("Holidays", Localizer["Holidays"].ToString())
+@Html.Hidden("CirticalPath", Localizer["CirticalPath"].ToString())
+@Html.Hidden("BaseLine", Localizer["BaseLine"].ToString())
+@Html.Hidden("Activated", Localizer["Activated"].ToString())
+@Html.Hidden("Deactivated", Localizer["Deactivated"].ToString())
+@Html.Hidden("StartDate", Localizer["PlannedStartDate"].ToString())
+@Html.Hidden("EndDate", Localizer["PlannedEndDate"].ToString())
+@Html.Hidden("Responsible", Localizer["Responsible"].ToString())
+@Html.Hidden("PlannedProgress", Localizer["PlannedProgress"].ToString())
+@Html.Hidden("RealProgress", Localizer["RealProgress"].ToString())
+@Html.Hidden("Status", Localizer["Status"].ToString())
+@Html.Hidden("Archive", Localizer["Archive"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Element", Localizer["Element"].ToString())
+@Html.Hidden("5054", Localizer["5054"].ToString())
+@Html.Hidden("5055", Localizer["5055"].ToString())
+@Html.Hidden("Element", Localizer["Element"].ToString())
+@Html.Hidden("LastOpenedTask", "")
+
+@Html.Hidden("ProjectPhase")
+
+@if (lng == null || lng == "es-MX")
+{
+    <script type="text/javascript" src="~/js/plugins/locale_mx.js" charset="utf-8"></script>
+}
+
+<div class="content pl-1 pt-2">
+    <div class="container-fluid pl-1 pr-1">
+        <div class="col-md-12 card pl-1 pr-1">
+            <div class="row">
+                <div class="col-md-10 pt-4 mb-4">
+                    <small class="font-weight-normal subtitle-detalle"><b>Proyecto</b></small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span id="projectname" class="txt-blue"> @ViewBag.ProjectName </span>
+                    </h4>
+                </div>
+                <div class="col-md-2 text-right pt-2">
+                    <a href="#" class="btn btn-sm btn-default  btn-outline" id="backBtn"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <div class="cp">
+                        <div id="gantt_menu" class="header gantt-demo-header">
+                            <ul class="gantt-controls">
+                                <li class="gantt-menu-item">
+                                    <a data-action="collapseAll" data-toggle="tooltip" data-html="true" title="<b>@Localizer["gantt_003"]</b> @Localizer["gantt_002"]"><img src="~/images/gantt/ic_collapse_all_24.png"> </a>
+                                </li>
+                                <li class="gantt-menu-item gantt-menu-item-last"><a data-action="expandAll" data-toggle="tooltip" data-html="true" title="<b>@Localizer["gantt_004"]</b>  @Localizer["gantt_002"]"><img src="~/images/gantt/ic_expand_all_24.png"> </a></li>
+                                @if (@ViewBag.Role == 5)
+                                {
+                                    <li class="gantt-menu-item">
+                                        <a href="#" class="_actionsIndent" name="indent" data-action="Indent" data-toggle="tooltip" data-html="true" title="<b>@Localizer["gantt_005"]</b> @Localizer["gantt_006"]"><img src="~/images/gantt/indent1.svg" class="icon-bar"></a>
+                                    </li>
+                                    <li class="gantt-menu-item">
+                                        <a href="#" class="_actionsIndent" name="outdent" data-action="Outdent" data-toggle="tooltip" data-html="true" title="<b>@Localizer["gantt_007"]</b> @Localizer["gantt_006"]"><img src="~/images/gantt/indent2.svg" class="icon-bar"></a>
+                                    </li>
+
+                                }
+
+                                <li class="gantt-menu-item"><a data-action="toggleCriticalPath" data-toggle="tooltip" data-html="true" title="" data-original-title="@Localizer["gantt_008"] <b>@Localizer["gantt_009"]</b>" class=""><img src="~/images/ic_critical_path_24.png"></a></li>
+                                <li class="gantt-menu-item"><a data-action="baseLine"><img src="~/images/baseline.svg" class="icon-bar" data-toggle="tooltip" data-html="true" title="" data-original-title="@Localizer["gantt_008"] <b>@Localizer["gantt_010"]</b>"></a></li>
+                                <li class="gantt-menu-item"><a data-action="toggleSlack"  data-toggle="tooltip"  title="@Localizer["gantt_017"]" ><img src="~/images/gantt/slack2.svg" class="icon-bar"></a></li>
+                                <li class="gantt-menu-item"><a data-action="toggleOverlay"><img src="~/images/gantt/lineavace.svg" class="icon-bar" data-toggle="tooltip" data-html="true" title="" data-original-title="<b>@Localizer["gantt_011"]</b>"></a></li>
+                                <li class="gantt-menu-item"><a data-action="showHolidays"><img src="~/images/holidays.svg" class="icon-bar" data-toggle="tooltip" data-html="true" title="" data-original-title="<b>@Localizer["gantt_012"]</b>"></a></li>
+                                <li class="gantt-menu-item gantt-menu-item-right">
+                                    <a><img src="~/images/ic_export_24.png">@Localizer["Export"]</a>
+                                    <ul class="gantt-controls">
+
+                                        <li class="gantt-menu-item"><a data-action="toPDF"><img src="~/images/png.svg" class="icon-bar">PDF</a></li>
+                                        <li class="gantt-menu-item"><a data-action="toPNG"><img src="~/images/png.svg" class="icon-bar">PNG</a></li>
+                                        <li class="gantt-menu-item"><a data-action="toExcel"><img src="~/images/excel.svg" class="icon-bar">Excel</a></li>
+                                        <!--
+                                        <li class="gantt-menu-item"><a data-action="toMSProject"><img src="~/images/ic_file_24.png" class="icon-bar">MS Project</a></li>
+                                        <li class="gantt-menu-item"><a onclick="gantt.exportToICal()"><img src="~/images/calendar.svg" class="icon-bar">iCal</a></li>
+                                        -->
+                                    </ul>
+                                </li>
+                                <li class="gantt-menu-item gantt-menu-item-right">
+                                    <a><img src="~/images/gantt/ic_zoom_in.png">Zoom</a>
+                                    <ul class="gantt-controls">
+                                        <li class="gantt-menu-item"><a data-action="trplweek" onclick="zoom_tasks(this)"><img src="~/images/gantt/ic_zoom_in.png">@Localizer["gantt_013"]</a></li>
+                                        <li class="gantt-menu-item"><a data-action="year" onclick="zoom_tasks(this)"><img src="~/images/gantt/ic_zoom_in.png">@Localizer["gantt_014"]</a></li>
+                                        <li class="gantt-menu-item"><a data-action="year" onclick="zoomingReset(this)"><img src="~/images/gantt/ic_zoom_to_fit_24.png">@Localizer["gantt_002"]</a></li>
+                                    </ul>
+                                </li>
+                                <li class="gantt-menu-item gantt-menu-item-right"><a data-action="fullscreen"><img src="~/images/ic_fullscreen_24.png" data-toggle="tooltip" data-html="true" title="" data-original-title="@Localizer["gantt_015"] <b>@Localizer["gantt_016"] </b>">@Localizer["FullScreen"]</a></li>
+
+                                <li class="gantt-menu-item" id="ModalTemplateBtn"><a data-action="showModalTemplate"><i class="fas fa-file-invoice f18"></i> @Localizer["LoadTemplate"]</a></li>
+                            </ul>
+                        </div>
+                        <div id="gantt" style="width: 100%; height: 100vh;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="templateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title">@Localizer["ViewTitleTemplate"]</h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmMain">
+                            @Html.HiddenFor(m => m.ProjectID)
+                            <div class="form-group">
+                                <label>@Localizer["Template"]</label><star class="star">*</star>
+                                @Html.DropDownListFor(m => m.TemplateID, new SelectList(ViewBag.Templates, "Key", "Value"), new { @id = "TemplateID", @class = "form-control", @style = "", @required = "required" })
+                            </div>
+                            @*@Html.TextBoxFor(m => m.ProjectStartDate, new { @id = "ProjectStartDate", @class = "form-control datepicker", @style = "", @required = "required", @maxlength = 150 })*@
+                            <div class="form-group">
+                                <label>@Localizer["ProjectStartDate"]</label><star class="star">*</star>
+                                <div>
+                                    @Html.TextBoxFor(m => m.ProjectStartDate, new { @id = "ProjectStartDate", @class = "form-control datepicker", @style = "", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnLoadTemplate" onclick="loadTemplate(); return false;" class="btn btn-default btn-fill">@Localizer["LoadTemplate"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+    <script>
+        var projectName = $('#projectname').html();
+    </script>
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}
+
+@{
+    // if (!ViewBag.ProjectEditable || ViewBag.Role == null || ViewBag.Role == 4 || ViewBag.Role == 2)
+    if (!ViewBag.ProjectEditable || ViewBag.Role == null || ViewBag.Role == 2)
+    {
+        <style>
+            .gantt_add {
+                display: none;
+            }
+
+            .gantt_save_btn_set {
+                display: none;
+            }
+
+            .gantt_delete_btn_set {
+                display: none;
+            }
+
+            .gantt_link-save-btn_button {
+                display: none;
+            }
+
+            .gantt_link-delete-btn_button {
+                display: none;
+            }
+
+            .cancel_archive_btn_set {
+                display: none;
+            }
+        </style>
+        <script>
+            gantt.attachEvent("onBeforeTaskDrag", function (id, mode, e) {
+                return false;
+            });
+
+            gantt.attachEvent("onLinkDblClick", function (id, e) {
+                return false;
+            });
+            gantt.attachEvent("onLinkClick", function (id, e) {
+                return false;
+            });
+            gantt.config.drag_links = false;
+            gantt.config.readonly = true;
+        </script>
+    }
+    if (ViewBag.Role == 4)
+    {
+        <style>
+            .gantt_add {
+                display: none;
+            }
+
+            .nested_task .gantt_add {
+                display: none !important;
+            }
+
+            .gantt_grid_head_add {
+                display: none !important;
+            }
+            .cancel_archive_btn_set {
+                display: none;
+            }
+            .gantt_delete_btn_set {
+                display: none;
+            }
+        </style>
+    }
+}

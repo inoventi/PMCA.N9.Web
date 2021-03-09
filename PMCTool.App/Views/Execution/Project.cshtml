@@ -1,0 +1,618 @@
+﻿@model PMCTool.App.Models.ProjectViewModel
+
+@Html.HiddenFor(m => m.Project.ProjectID, new { @id = "idProject" })
+@Html.Hidden("ProjectParticipants", @Localizer["ProjectParticipants"].ToString())
+@Html.Hidden("NoProjectParticipants", @Localizer["NoProjectParticipants"].ToString())
+@Html.Hidden("AcquiredValue", @Localizer["AcquiredValue"].ToString())
+@Html.Hidden("Pareto", @Localizer["Pareto"].ToString())
+@Html.Hidden("ElementRelationship", @Localizer["ElementRelationship"].ToString())
+@Html.Hidden("CustomizedReports", @Localizer["CustomizedReports"].ToString())
+@Html.Hidden("Factsheet", @Localizer["FactSheet"].ToString())
+@Html.Hidden("Status", @Localizer["Status"].ToString())
+@Html.Hidden("Fields", @Localizer["Fields"].ToString())
+@Html.Hidden("Next", @Localizer["Next"].ToString())
+@Html.Hidden("Previous", @Localizer["Previous"].ToString())
+@Html.Hidden("Save", @Localizer["Save"].ToString())
+@Html.Hidden("Delete", @Localizer["Delete"].ToString())
+@Html.Hidden("Edit", @Localizer["Edit"].ToString())
+@Html.Hidden("Execute", @Localizer["Execute"].ToString())
+@Html.Hidden("AreYouSureDelete", @Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Accept", @Localizer["Accept"].ToString())
+@Html.Hidden("Cancel", @Localizer["Cancel"].ToString())
+@Html.Hidden("Update", @Localizer["Update"].ToString())
+@Html.Hidden("Complaints", @Localizer["Complaints"].ToString())
+@Html.Hidden("AbsoluteDeviationByActivity", @Localizer["AbsoluteDeviationByActivity"].ToString())
+@Html.Hidden("CumulativeDeviationPercentage", @Localizer["CumulativeDeviationPercentage"].ToString())
+@Html.Hidden("Creation", "false")
+@Html.Hidden("Execution", "false")
+@Html.Hidden("CustomizedReportId", "")
+@Html.HiddenFor(m => m.ProjectAcquiredValueStartDate)
+@Html.HiddenFor(m => m.ProjectAcquiredValueEndDate)
+@Html.Hidden("FactSheetID", Model.Project.FactSheetID)
+
+<link href="~/css/detalle-actividad.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/indicadores.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/bootstrap/js/bootstrap.min.js" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/smart_wizard.min.css" rel="stylesheet" asp-append-version="true" />
+
+<script src="https://code.highcharts.com/highcharts.js" asp-append-version="true"></script>
+<script src="https://code.highcharts.com/highcharts-more.js" asp-append-version="true"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js" asp-append-version="true"></script>
+<script src="https://code.highcharts.com/modules/pareto.js" asp-append-version="true"></script>
+<style>
+  .tdbreak p {
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.2;
+  margin-bottom: .8rem;
+}
+</style>
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="row">
+                    <div class="col-md-10 pt-4">
+                        <small class="font-weight-normal bold">@Localizer["Project"]</small>
+                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="txt-blue"> @Model.Project.Name	</span>
+                        </h4>
+                    </div>
+                    <div class="col-md-2 text-right pt-2">
+                        <a href="/Execution/Projects" class="btn btn-sm btn-default btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                    </div>
+                </div>
+                <div class="media-body ml-3">
+                    <div class="row pt-3 mb-2">
+                        <div class="col-md-5 pt-4">
+                            <div class="media align-items-center font-weight-bold py-3 mb-1">
+
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(Model.Company.Logo))
+                                    {
+                                        <img src="@Model.Company.Logo" alt="" class="ui-w-50 rounded">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/avatar/companies/default-avatar.png" alt="" class="ui-w-50 rounded">
+                                    }
+
+                                    string realProgress = Model.ProjectIndicator.RealProgress.ToString() + "%",
+                                        expectedProgress = Model.ProjectIndicator.ExpectedProgress.ToString() + "%",
+                                        Deviation = Model.ProjectIndicator.Deviation.ToString() + "%",
+                                        barColor = "";
+
+                                    switch (Model.ProjectIndicator.Status)
+                                    {
+                                        case 1:
+                                            barColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                            break;
+                                        case 2:
+                                            barColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                            break;
+                                        case 3:
+                                            barColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                            break;
+                                        case 4:
+                                            barColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                }
+
+                                <div class="media-body ml-3">
+                                    <div class="mb-0 mt-1 txt-blue fontsize11">@Model.Company.Name</div>
+                                    <div class="text-muted text-tiny mt-1">
+                                        @{
+                                            string coName = Model.Company.Address.City;
+
+                                            if (!string.IsNullOrWhiteSpace(Model.Company.Address.State))
+                                            {
+                                                coName = coName + ", " + Model.Company.Address.State;
+                                            }
+
+                                            if (!string.IsNullOrWhiteSpace(Model.Company.Address.Country))
+                                            {
+                                                coName = coName + ", " + Model.Company.Address.Country;
+                                            }
+                                        }
+                                        <div class="font-weight-normal">@coName</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" text-tiny mt-0">@Localizer["Sponsor"]: <a href="#" onclick="getParticipantInfoModal('@Model.Project.SponsorID'); return false;" class="underline-link">@Model.Project.SponsorName</a> </div>
+                            <div class=" text-tiny mt-0">@Localizer["Leader"]: <a href="#" onclick="getParticipantInfoModal('@Model.Project.LeaderID'); return false;" class="underline-link">@Model.Project.LeaderName</a> </div>
+                            <div class=" text-tiny mt-0">@Localizer["ProjectManager"]: <a href="#" onclick="getParticipantInfoModal('@Model.Project.ProjectManagerID'); return false;" class="underline-link">@Model.Project.ProjectManagerName</a> </div>
+                            <div class=" text-tiny mt-0">@Localizer["Phase"]: @Localizer["EnumProjectPhase_" + Model.Project.Phase]</div>
+                        </div>
+                        <div class="col-md-7 mb-2 text-center pt-4">
+
+                            <div class="row justify-content-md-center">
+
+                                <div class="col-md-12 text-center txt-blue pb-3"><strong>@Localizer["ProyectProgress"].ToString().ToUpper()</strong></div>
+                                <hr class="mt-2 mb-2">
+                                <div class="col-md-8  text-center   px-4  text-left pb-3">
+                                    @{
+                                        if (Model.ProjectIndicator.Status > 0)
+                                        {
+                                            <div class="text-tiny mt-0">@Localizer["Status"]:<br> <span class="@Localizer["EnumProjectElementStatusClass_" + Model.ProjectIndicator.Status]">@Localizer["EnumProjectElementStatus_" + Model.ProjectIndicator.Status]</span></div>
+                                        }
+                                    }
+                                </div>
+                                <div class="col-md-8 text-center  small px-4  text-left">
+                                    <strong class="txt-blue"> @Localizer["RealProgress"] <span class="underline-link"> @Model.ProjectIndicator.RealProgress.ToString("N2") %</span> </strong>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="@barColor" style="width:@realProgress;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8  text-center small px-4  text-left">
+                                    <strong class="txt-blue"> @Localizer["ExpectedProgress"] <span class="underline-link"> @Model.ProjectIndicator.ExpectedProgress.ToString("N2") %</span> </strong>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar bg-default  progress-bar-striped progress-bar-animated" style="width:@expectedProgress"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+
+                        @{
+                            if (ViewBag.Role != null)
+                            {
+                                <div class="card mb-4">
+                                    <div class="card-body demo-paragraph-spacing">
+                                        <div class="col-12">
+                                            <div class="row no-gutters row-bordered h-100">
+                                                <div class="d-flex col-sm align-items-center">
+                                                    <a href="/Execution/Milestones?id=@Model.Project.ProjectID" class="card-body media align-items-center text-body">
+                                                        <span class="media-body d-block ml-0">
+                                                            <span class="text-big">@Localizer["Milestones"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.MilestonesStatus]">@Model.ProjectIndicator.ProjectElementCountStatus.MilestonesCount </span></span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex col-sm align-items-center">
+                                                    @{
+                                                        if (Model.Project.Phase == 1)
+                                                        {
+                                                            <a href="/gantt/index?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                                <span class="media-body d-block ml-0">
+                                                                    <span class="text-big">@Localizer["WorkingPlan"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesCount </span>  </span>
+                                                                </span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (ViewBag.Role == 5 || ViewBag.Role == 4 || ViewBag.Role == 2)
+                                                            {
+                                                                <a href="#" class="media align-items-center text-body" data-toggle="modal" data-target="#exampleModal" data-whatever="">
+                                                                    <span class="media-body d-block ml-0">
+                                                                        <span class="text-big">@Localizer["WorkingPlan"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesCount </span>  </span>
+                                                                    </span>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="/execution/activities?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                                    <span class="media-body d-block ml-0">
+                                                                        <span class="text-big">@Localizer["WorkingPlan"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.ActivtiesCount </span>  </span>
+                                                                    </span>
+                                                                </a>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+
+                                                @{
+                                                    if (ViewBag.LayerCount > 0 && (ViewBag.Role == 5 || ViewBag.Role == 4 || ViewBag.Role == 2))
+                                                    {
+                                                        <div class="d-flex col-sm align-items-center">
+                                                            <a href="/Execution/Layers?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                                <span class="media-body d-block ml-0">
+                                                                    <span class="text-big">@Localizer["Evidences"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.EvidencesStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.EvidencesCount </span></span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="d-flex col-sm align-items-center">
+                                                            <a href="/Execution/Evidences?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                                <span class="media-body d-block ml-0">
+                                                                    <span class="text-big">@Localizer["Evidences"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.EvidencesStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.EvidencesCount </span></span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                }
+                                                <div class="d-flex col-sm align-items-center">
+                                                    <a href="/Execution/Incidents?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                        <span class="media-body d-block ml-0">
+                                                            <span class="text-big">@Localizer["Incidents"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.IncidentsStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.IncidentsCount </span></span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex col-sm  align-items-center">
+                                                    <a href="/Execution/Risks?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                        <span class="media-body d-block ml-0">
+                                                            <span class="text-big">@Localizer["Risks"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.RisksStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.RisksCount </span></span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex col-sm  align-items-center">
+                                                    <a href="/Execution/Agreements?id=@Model.Project.ProjectID" class="media align-items-center text-body">
+                                                        <span class="media-body d-block ml-0">
+                                                            <span class="text-big">@Localizer["Agreements"] <span class="@Localizer["EnumProjectElementBadgeStatusClass_" + Model.ProjectIndicator.ProjectElementCountStatus.AgreementStatus]"> @Model.ProjectIndicator.ProjectElementCountStatus.AgreementCount </span></span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                if (Model.Project.Phase != 1)
+                                {
+                                    <div class="col-md-12  pl-0 pr-0 pt-4">
+                                        <div class="col-sm pl-0 pr-0">
+                                            <div class="card-body content-full-width">
+                                                <ul id="tabmenu" role="tablist" class="nav nav-tabs">
+                                                    <li role="presentation" class="nav-item">
+                                                        <a class="nav-link active" id="info-tab" href="#vganado" data-toggle="tab" role="tab" aria-selected="true">@Localizer["AcquiredValue"]</a>
+                                                    </li>
+                                                    @{
+                                                        if (ViewBag.Role == 5)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" id="account-tab" href="#tbpareto" onclick="getProjectPareto(); return false;" data-toggle="tab" role="tab" aria-selected="false">@Localizer["Pareto"]</a>
+                                                            </li>
+                                                            <li class="nav-item dropdown">
+                                                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="tab" aria-haspopup="true" aria-expanded="false" aria-selected="false">@Localizer["Others"]</a>
+                                                                <div class="dropdown-menu">
+                                                                    @*<a class="dropdown-item" href="#" data-toggle="tab" role="tab">@Localizer["ElementAssignment"]</a>*@
+                                                                    <a class="dropdown-item" href="#" onclick="getCustomizedReports(); return false;" data-toggle="tab" role="tab">@Localizer["CustomizedReports"]</a>
+                                                                    <a class="dropdown-item" href="#" onclick="getElementsRelationship(); return false;" data-toggle="tab" role="tab">@Localizer["ElementRelationship"]</a>
+                                                                    <a class="dropdown-item" href="#projectParticipants" onclick="getParticipants(); return false;" data-toggle="tab" role="tab">@Localizer["ProjectParticipants"]</a>
+                                                                    <a class="dropdown-item" href="#" onclick="getProjectFactsheet(); return false;" data-toggle="tab" role="tab">@Localizer["FactSheet"]</a>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div id="vganado" class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab">
+                                                        <div class="col-md-12 text-center pl-0 pr-0 mb-4">
+                                                            <button class="btn btn-outline btn-wd"><i class="fas fa-chart-line"></i> @Localizer["Progress"]</button>
+                                                            @*@{
+                                                                if (ViewBag.Role == 5)
+                                                                {
+                                                                    <button class="btn btn-outline btn-wd"><i class="fas fa-coins"></i> @Localizer["Cost"]</button>
+                                                                    <button class="btn btn-outline btn-wd"><i class="far fa-clock"></i> @Localizer["Hours"]</button>
+                                                                }
+                                                            }*@
+                                                        </div>
+                                                        <div id="aesperado"></div>
+                                                    </div>
+                                                    @{
+                                                        if (ViewBag.Role == 5)
+                                                        {
+                                                            <div id="tbpareto" class="tab-pane fade" role="tabpanel" aria-labelledby="account-tab">
+                                                                <center><h4 class="card-title">@Localizer["ParetoTitle"]</h4></center>
+                                                                <div id="pareto"></div>
+                                                                <div class="col-md-12">
+                                                                    <div class="card card-plain table-plain-bg">
+                                                                        <div class="card-header ">
+                                                                            <h4 class="card-title">@Localizer["ActivitiesTable"]</h4>
+                                                                            <p class="card-category">@Localizer["ParetoSubTitle"]</p>
+                                                                        </div>
+                                                                        <div class="card-body table-full-width table-responsive">
+                                                                            <table id="datatablePareto" class="table table-hover display responsive nowrap" width="100%">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>ID</th>
+                                                                                        <th>@Localizer["Activity"]</th>
+                                                                                        <th>CC</th>
+                                                                                        <th>@Localizer["Status"]</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    <div id="customizedReportsSection" class="tab-pane fade show " role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h4 class="card-title">@Localizer["CustomizedReports"]</h4></center>
+                                                        <div class="col-md-12 text-right">
+                                                            <button onclick="newReport(); return false;" class="btn btn-default btn-fill"><i class="fas fa-plus-circle"></i> @Localizer["New"]</button>
+                                                        </div>
+                                                        <div class="col-md-12 pl-0 pr-0 mb-4">
+                                                            <div class="data-tables">
+                                                                <table id="datatablesCustomizedReports" class="table table-striped table-no-bordered table-hover display responsive " cellspacing="0" width="100%" style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th>@Localizer["Name"]</th>
+                                                                            <th>@Localizer["Description"]</th>
+                                                                            <th class="disabled-sorting text-right">@Localizer["Action"]</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="elementsRelationshipSection" class="tab-pane fade show " role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h4 class="card-title">@Localizer["ElementRelationship"]</h4></center>
+                                                        <div class="col-md-12 pl-0 pr-0 mb-4">
+                                                            <div class="data-tables">
+                                                                <table id="datatablesRelationship" class="table table-striped table-no-bordered table-hover display responsive " cellspacing="0" width="100%" style="width:100%; table-layout:fixed;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th></th>
+                                                                            <th style="width:40%">@Localizer["Description"]</th>
+                                                                            <th style="width:20%">@Localizer["Evidences"]</th>
+                                                                            <th style="width:20%">@Localizer["Incidents"]</th>
+                                                                            <th style="width:20%">@Localizer["Agreements"]</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="projectParticipantsSection" class="tab-pane fade show " role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h4 class="card-title">@Localizer["ProjectParticipants"]</h4></center>
+                                                        <div class="col-md-12 pl-0 pr-0 mb-4">
+                                                            <table id="datatableParticipants" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>@Localizer["Name"]</th>
+                                                                        <th>@Localizer["Company"]</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <th>@Localizer["Name"]</th>
+                                                                        <th>@Localizer["Company"]</th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div id="reportWizardSection" class="tab-pane fade show " role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h4 class="card-title">@Localizer["CustomizedReports"]</h4></center>
+                                                        <div class="content">
+                                                            <div id="smartwizard">
+                                                                <ul>
+                                                                    <li><a href="#step-1">@Localizer["Step"] 1<br /><small>@Localizer["GeneralInfo"]</small></a></li>
+                                                                    <li><a href="#step-2">@Localizer["Step"] 2<br /><small>@Localizer["Modules"]</small></a></li>
+                                                                    <li><a href="#step-3">@Localizer["Step"] 3<br /><small>@Localizer["ChooseColumns"]</small></a></li>
+                                                                    <li><a href="#step-4">@Localizer["Step"] 4<br /><small>@Localizer["Filters"]</small></a></li>
+                                                                </ul>
+
+                                                                <div>
+                                                                    <div id="step-1" class="">
+                                                                        <form id="frmFirstStep">
+                                                                            <div class="form-group">
+                                                                                <label>@Localizer["ReportName"]</label><star class="star">*</star>
+                                                                                @Html.TextBox("reportName", "", new { @class = "form-control", @required = "required" })
+                                                                            </div><div class="form-group">
+                                                                                <label>@Localizer["ReportDescription"]</label>
+                                                                                @Html.TextArea("reportDescription", "", new { @class = "form-control"})
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                                    <div id="step-2" class="">
+                                                                        <div id="modules">
+                                                                            <div class="row">
+                                                                                <div class="dual-list list-left col-md-5 pt-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 text-center">
+                                                                                            <div class="font-weight-bold">@Localizer["AvailableModules"]</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="container">
+                                                                                        <ul id="unselectedModules" class="list-group mt-2">
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="list-arrows col-md-1 text-center">
+                                                                                    <button class="btn btn-default btn-sm move-left">
+                                                                                        <span class="fas fa-angle-left"></span>
+                                                                                    </button>
+
+                                                                                    <button class="btn btn-default btn-sm move-right">
+                                                                                        <span class="fas fa-angle-right"></span>
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                <div class="dual-list list-right col-md-5 pt-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="col-md-12 text-center">
+                                                                                                <div class="font-weight-bold">@Localizer["SelectedModules"]</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <ul id="selectedModules" class="list-group mt-2">
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="step-3" class="">
+                                                                        <div id="columns">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 font-weight-bold">
+                                                                                    @Localizer["SelectReportColumns"]
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="dual-list _duala list-left-b col-md-5 pt-3">
+                                                                                    <div class="well text-left">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12">
+                                                                                                <form class="form-inline md-form form-sm m-0">
+                                                                                                    <i class="fas fa-search"></i>
+                                                                                                    <input id="searchBarUnselected" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="@Localizer["Search"]">
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="container">
+                                                                                            <ul id="unselectedColumns" class="list-group mt-2">
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="list-arrows-b col-md-1 text-center">
+                                                                                    <button class="btn btn-default btn-sm move-left">
+                                                                                        <span class="fas fa-angle-left"></span>
+                                                                                    </button>
+
+                                                                                    <button class="btn btn-default btn-sm move-right">
+                                                                                        <span class="fas fa-angle-right align-middle"></span>
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                <div class="dual-list _dual list-right-b col-md-5 pt-3">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <form class="form-inline md-form form-sm m-0">
+                                                                                                <input id="searchBarSelected" class="form-control form-control-sm mr-3 w-75" type="text" placeholder="@Localizer["Search"]">
+                                                                                                <i class="fas fa-search"></i>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <ul id="selectedColumns" class="list-group mt-2">
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="step-4" class="">
+                                                                        <div id="modulesFilters">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="executedReportSection" class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h3 id="executionReportTitle" class="card-title txt-blue"></h3></center>
+                                                        <div id="executedReportTables" class="col-md-12 pl-0 pr-0 mb-4">
+
+                                                        </div>
+                                                    </div>
+                                                    <div id="factsheetSection" class="tab-pane fade show " role="tabpanel" aria-labelledby="info-tab">
+                                                        <center><h4 class="card-title">@Localizer["FactSheet"]</h4></center>
+                                                        <div class="col-md-12">
+                                                            <div class="card card-plain table-plain-bg">
+                                                                <div class="card-body table-full-width table-responsive">
+                                                                    @{
+                                                                        if (Model.Project.ProjectEditable && ViewBag.Role == 5)
+                                                                        {
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-right">
+                                                                                    <a href="#" class="btn btn-round btn-sm" data-toggle="modal" data-target="#fichatecnica"><i class="fas fa-edit"></i> @Localizer["Edit"]</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    }
+
+                                                                    <div id="factsheetHolder"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card d-flex w-100 p-3">
+
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-4">@Localizer["WorkingPlan"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-3">
+                <a href="/gantt/index?id=@Model.Project.ProjectID" class="btn btn-default btn-wd col-sm">@Localizer["Gantt"]</a>
+                <a href="/execution/activities?id=@Model.Project.ProjectID" class="btn btn-default btn-wd col-sm">@Localizer["TableView"]</a>
+            </div>
+            <div class="modal-footer ">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin modal-->
+<!-- Modal-->
+<div class="modal fade" id="fichatecnica" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-4">Editar ficha técnica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <form>
+                    <div id="modalFactsheetHolder"></div>
+
+                    <div class="form-row">
+                        <div class="form-group  mb-1 col-md-12">
+                            <label></label>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-default" onclick="updProjectFactsheet(); return false;">@Localizer["Save"]</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">@Localizer["Close"]</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer ">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin modal-->
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+<script type="text/javascript" src="~/js/core/vExecuteProject.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/plugins/jquery.smartWizard.min.js" asp-append-version="true"></script>

@@ -1,0 +1,157 @@
+﻿@using PMCTool.App.Helpers.Html;
+@{
+    var userName = Context.Request.Cookies["pmctool-name-app"];
+}
+@Html.Hidden("Loading", Localizer["Loading"].ToString())
+@Html.Hidden("January", Localizer["January"].ToString())
+@Html.Hidden("February", Localizer["February"].ToString())
+@Html.Hidden("March", Localizer["March"].ToString())
+@Html.Hidden("April", Localizer["April"].ToString())
+@Html.Hidden("May", Localizer["May"].ToString())
+@Html.Hidden("June", Localizer["June"].ToString())
+@Html.Hidden("July", Localizer["July"].ToString())
+@Html.Hidden("August", Localizer["August"].ToString())
+@Html.Hidden("September", Localizer["September"].ToString())
+@Html.Hidden("October", Localizer["October"].ToString())
+@Html.Hidden("November", Localizer["November"].ToString())
+@Html.Hidden("December", Localizer["December"].ToString())
+@Html.Hidden("Sunday", Localizer["Sunday"].ToString())
+@Html.Hidden("Monday", Localizer["Monday"].ToString())
+@Html.Hidden("Tuesday", Localizer["Tuesday"].ToString())
+@Html.Hidden("Wednesday", Localizer["Wednesday"].ToString())
+@Html.Hidden("Thursday", Localizer["Thursday"].ToString())
+@Html.Hidden("Friday", Localizer["Friday"].ToString())
+@Html.Hidden("Saturday", Localizer["Saturday"].ToString())
+@Html.Hidden("Export", Localizer["Export"].ToString())
+@Html.Hidden("Import", Localizer["Import"].ToString())
+@Html.Hidden("From", Localizer["From"].ToString())
+@Html.Hidden("To", Localizer["To"].ToString())
+@Html.Hidden("Zoom", Localizer["Zoom"].ToString())
+@Html.Hidden("ViewFullScreen", Localizer["ViewFullScreen"].ToString())
+@Html.Hidden("ExitFullScreen", Localizer["ExitFullScreen"].ToString())
+@Html.Hidden("DownloadImage", Localizer["DownloadImage"].ToString())
+@Html.Hidden("Print", Localizer["Print"].ToString())
+@Html.Hidden("Reload", Localizer["Reload"].ToString())
+@Html.Hidden("Year", Localizer["Year"].ToString())
+@Html.Hidden("Month", Localizer["Month"].ToString())
+@Html.Hidden("Week", Localizer["Week"].ToString())
+@Html.Hidden("YTD", Localizer["YTD"].ToString())
+@Html.Hidden("All", Localizer["All"].ToString())
+@Html.Hidden("Start", Localizer["Start"].ToString())
+@Html.Hidden("End", Localizer["End"].ToString())
+<link href="~/css/homet.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="row  justify-content-center pt-4">
+            <div class="col-md-12 pb-3">
+                <div class="header-text text-center">
+                    <h2 class="card-title mt-1 mb-0 txt-blue"><b>@Localizer["Welcome"]</b></h2>
+                    <h4 class="card-subtitle p-2 pt-1">@userName</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- allow-->
+            <div class="container-fluid pl-0 ml-0">
+                <div class="card card-register card-plain text-center">
+                    <div class="row">
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body" id="divComplianceGoal">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue">@Localizer["Home_001"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure" id="ComplianceGoal">
+                                        <div id="container2" style="width: 50%; height: 300px; margin: 0 auto"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="row">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <h4 class="card-title txt-blue pb-3">@Localizer["Date"]</h4>
+                                            </div>
+                                            <h3 class="hora" style="color: #205280;"></h3>
+                                            <h4 class="fecha" style="font-weight: bold;color: #205280;"></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <h4 class="card-title txt-blue pb-3">@Localizer["Home_004"]</h4>
+                                            </div>
+                                            <h4 class="LastDate" style="font-weight: bold;color: #205280;"></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body" id="divStatusElements">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue pb-4">@Localizer["Home_002"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure" id="StatusElements">
+                                        <div id="container3"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body" id="divQualityTracing">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue pb-4">@Localizer["Home_003"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure" id="QualityTracing">
+                                        <div id="container"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body" id="divprojects">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue">@Localizer["Projects"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="chartGantt"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <!--HIGHCHARTS-->
+    <script src="~/js/plugins/highcharts/highcharts.js"></script>
+    <script src="~/js/plugins/highcharts/highcharts-more.js"></script>
+    <script src="~/js/plugins/highcharts/modules/solid-gauge.js"></script>
+    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
+    <script>
+        var Highstock = window.Highcharts;
+        var HighF = window.Highcharts;
+
+        window.Highcharts = null;
+    </script>
+    <script src="~/js/plugins/highcharts/gantt/highcharts-gantt.js"></script>
+    <script src="~/js/core/vHome.js"  asp-append-version="true"></script>
+}

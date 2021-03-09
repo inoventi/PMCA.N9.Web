@@ -1,0 +1,64 @@
+﻿@Html.Hidden("EnumProjectStatus_1", Localizer["EnumProjectStatus_1"].ToString())
+@Html.Hidden("EnumProjectStatus_2", Localizer["EnumProjectStatus_2"].ToString())
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("PortfolioLabel", Localizer["Project"].ToString())
+@Html.Hidden("Active", Localizer["Active"].ToString())
+@Html.Hidden("Inactive", Localizer["Inactive"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button onclick="newEntry(); return false;" class="btn btn-default btn-fill"><i class="fas fa-plus-circle"></i> @Localizer["New"]</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card data-tables">
+                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar          -->
+                        </div>
+                        <div class="fresh-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Description"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th class="disabled-sorting text-left">@Localizer["Action"]</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Description"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th class="disabled-sorting text-left">@Localizer["Action"]</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMeetingNoteTemplates.js" asp-append-version="true"></script>
+}

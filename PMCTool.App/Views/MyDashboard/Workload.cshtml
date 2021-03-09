@@ -1,0 +1,175 @@
+﻿@model PMCTool.Models.Environment.Participant
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/xd.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/mi-tablero.css" asp-append-version="true" />
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@Html.Hidden("m4025", Localizer["4025"].ToString())
+@Html.HiddenFor(m => m.ParticipantID)
+
+@{
+    if (ViewBag.ParticipantID == null || ViewBag.ParticipantID == Guid.Empty)
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Workload"].ToString().ToUpper()</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["Workload"].ToString().ToUpper()</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 justify-content-center pt-2 pb-2">
+                                        <form class="form-inline justify-content-center" action="/action_page.php">
+                                            <label for="date1" class="mb-2 mr-sm-2">@Localizer["StartDate"]:</label>
+                                            <input type="text" class="form-control mb-2 mr-sm-2 datepicker" id="StartDate" name="StartDate" value="@ViewBag.StartDate">
+                                            <label for="date2" class="mb-2 mr-sm-2">@Localizer["EndDate"]:</label>
+                                            <input type="text" class="form-control mb-2 mr-sm-2 datepicker" id="EndDate" name="EndDate" value="@ViewBag.EndDate">
+                                            <div class="form-check mb-2 mr-sm-2">
+                                                <label class="form-check-label">
+                                                </label>
+                                            </div>
+                                            <button type="button" onclick="refresh(); return false;" class="btn btn-default mb-2">@Localizer["Search"]</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card-2">
+
+                                            <div class="card-body pd-y-15 pd-x-10">
+
+
+                                                <div class="col-md-12"> <div id="grafica"></div></div>
+                                            </div><!-- card-body -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-2">
+                                            <div class="card-header d-sm-flex align-items-start justify-content-between">
+                                                <h6 class="lh-5 mg-b-0">@Localizer["HoursPerProject"].ToString().ToUpper()</h6>
+                                            </div><!-- card-header -->
+                                        </div><!-- card-header -->
+                                    </div><!-- card-header -->
+                                    <div class="col-md-12 pb-4">
+                                        <div class="fresh-datatables">
+                                            <table id="datatables" class="table table-hover table-striped dataTables_wrapper" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:30%;">@Localizer["Project"].ToString().ToUpper()</th>
+                                                        <th style="width:30%;">@Localizer["ActivityDesctiption"].ToString().ToUpper()</th>
+                                                        <th>@Localizer["TotalPlannedTime"].ToString().ToUpper()</th>
+                                                        <th>@Localizer["TotalRealTime"].ToString().ToUpper()</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="tbody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="workloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel-4"> </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pt-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card strpied-tabled-with-hover">
+                                    <div class="card-header ">
+                                        <h6 class="lh-5 mg-b-0">@Localizer["Workload"].ToString().ToUpper() </h6>
+                                        <p class="card-category"><span class="badge badge-dark" id="category"></span> </p>
+                                    </div>
+                                    <div class="card-body table-full-width table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Localizer["Project"].ToString().ToUpper()</th>
+                                                    <th>@Localizer["Activity"].ToString().ToUpper()</th>
+                                                    <th>@Localizer["Date"].ToString().ToUpper()</th>
+                                                    <th>@Localizer["PlannedTime"].ToString().ToUpper()</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tdetail">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right pr-5 mb-4">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMyDashboardWorkload.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

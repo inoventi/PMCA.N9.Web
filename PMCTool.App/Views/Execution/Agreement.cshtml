@@ -1,0 +1,582 @@
+﻿@model PMCTool.App.Models.ProjectMeetingDetailViewModel
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("New", Localizer["New"].ToString())
+@Html.Hidden("Agreements", Localizer["Agreements"].ToString())
+@Html.Hidden("Agreement", Localizer["Agreement"].ToString())
+@Html.Hidden("m4020", Localizer["4020"].ToString())
+@Html.Hidden("m4021", Localizer["4021"].ToString())
+@Html.Hidden("m4022", Localizer["4022"].ToString())
+@Html.Hidden("m4023", Localizer["4023"].ToString())
+@Html.Hidden("m4024", Localizer["4024"].ToString())
+
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+
+@Html.HiddenFor(m => m.IsNew)
+@Html.HiddenFor(m => m.ProjectID)
+@Html.HiddenFor(m => m.ProjectMeetingID)
+@Html.HiddenFor(m => m.ProjectEditable)
+@Html.HiddenFor(m => m.ProjectMeeting.MeetingDate, new { @id = "MeetingDate" })
+@Html.Hidden("ElementType")
+@Html.Hidden("ElementTypeA")
+@Html.Hidden("rid")
+
+@Html.Hidden("ChangeControlEndDate", "")
+@Html.Hidden("ChangeControlResponsible", "")
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="row">
+                <div class="col-md-10 pt-2">
+                    <small class="font-weight-normal bold"><b>@Localizer["Project"]</b></small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="txt-blue"> @Model.ProjectName.ToUpper() </span>
+                    </h4>
+                </div>
+                <div class="col-md-2 text-right pt-2">
+                    <a href="/Execution/meetings?id=@Model.ProjectID" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                </div>
+                <div class="col-md-12">
+                    <div class="text-tiny mt-0">@Localizer["Status"]: <span class="bold st-entiempo ws">@Localizer["EnumProjectElementStatus_1"]</span></div>
+                </div>
+                @{
+                    if (!Model.IsNew)
+                    {
+                        <div class="col-md-12 text-right">
+                                            <a href="/Execution/MeetingTemplate?projectId=@Model.ProjectID&meetingId=@Model.ProjectMeetingID" target="_blank" class="btn btn-round btn-sm"><i class="fas fa-file-invoice"></i> @Localizer["Agreement001"]</a>
+                        </div>
+                    }
+                }
+                <div class="card-header ">
+                    <label class="title"><b> @Localizer["Meeting"]</b></label>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="frmMain" method="post">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>@Localizer["Objetive"]</label><star class="star">*</star>
+                                    @Html.TextBoxFor(m => m.ProjectMeeting.Objective, new { @id = "Objective", @class = "form-control", @required = "required", @maxlength = 500 })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>@Localizer["Place"]</label><star class="star">*</star>
+                                    @Html.TextBoxFor(m => m.ProjectMeeting.Place, new { @id = "Place", @class = "form-control", @required = "required", @maxlength = 1500 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>@Localizer["ScheduledDate"]</label><star class="star">*</star>
+                                    @Html.TextBoxFor(m => m.ProjectMeeting.MeetingDate, new { @id = "ProjectMeetingDate", @class = "form-control datepicker", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>@Localizer["ScheduledTime"]</label><star class="star">*</star>
+                                    @Html.TextBoxFor(m => m.ProjectMeeting.MeetingTime, new { @id = "MeetingTime", @class = "form-control timepicker", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>@Localizer["Duration"]</label><star class="star">*</star>
+                                    @Html.TextBoxFor(m => m.ProjectMeeting.Duration, new { @id = "Duration", @class = "form-control timepicker", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12 pt-3">
+                <div class="row">
+                    <div class="card-header ">
+                        <label class="title">  <b> @Localizer["MeetingGuests"]</b></label>
+                    </div>
+                </div>
+                @{
+                    if (Model.ProjectEditable)
+                    {
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-sm pl-0 pr-0">
+                                            <div class="card-body content-full-width">
+
+                                                <ul role="tablist" class="nav nav-tabs">
+                                                    <li role="presentation" class="nav-item show active">
+                                                        <a class="nav-link" id="info-tab" href="#invitados" data-toggle="tab">@Localizer["Participants"]</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="account1-tab" data-toggle="tab" href="#no-reg">@Localizer["NotRegistered"]</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div id="invitados" class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab">
+                                                        <form id="frmParticipant">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    @Html.DropDownListFor(m => m.Participants, new SelectList(ViewBag.Participants, "Key", "Value"), new { @id = "Participants", @class = "form-control" })
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <a href="#" onclick="addParticipant(); return false;" class="btn btn-sm btn-default"><i class="fas fa-plus-circle"></i> @Localizer["Add"] @Localizer["Participant"]</a>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div id="no-reg" class="tab-pane fade" role="tabpanel" aria-labelledby="info-tab">
+                                                        <form id="frmNoReg">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>@Localizer["Name"]</label>
+                                                                        @Html.TextBoxFor(m => m.NoRegName, new { @id = "NoRegName", @class = "form-control", @required = "required", @maxlength = 150 })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>@Localizer["Email"]</label>
+                                                                        @Html.TextBoxFor(m => m.NoRegEmail, new { @id = "NoRegEmail", @class = "form-control", @required = "required", @email = "email", @maxlength = 250 })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 text-center p-4">
+                                                                    <a href="#" onclick="addGuest(); return false;" class="btn btn-sm btn-default"><i class="fas fa-plus-circle"></i> @Localizer["Add"] @Localizer["Guest"]</a>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <label class="nom-seccion ml-4">@Localizer["ParticipantList"]</label>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="datatableParticipant" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Email"]</th>
+                                        <th>@Localizer["Attended"]</th>
+                                        <th>@Localizer["Actions"]</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 pt-5">
+                <div class="row">
+                    <div class="card-header ">
+                        <label class="title">  <b>@Localizer["MeetingTopics"] </b></label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @{
+                                if (Model.ProjectEditable)
+                                {
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="1" checked>
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Activity"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="2">
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Milestone"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="3">
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Evidences"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="4">
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Incident"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="5">
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Risk"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4">
+                                        <div class="form-check form-check-radio">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="radio" name="elementType" id="" value="99">
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Other"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="topicGpo">
+                                        <div class="form-group">
+                                            <label>@Localizer["Topic"]</label>
+                                            @Html.DropDownListFor(m => m.Topics, new SelectList("", "Key", "Value"), new { @id = "Topics", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="topictInd">
+                                        <div class="form-group">
+                                            <label>@Localizer["Topic"]</label>
+                                            @Html.TextBoxFor(m => m.Topic, new { @id = "Topic", @class = "form-control", @required = "required", @maxlength = 1500 })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>@Localizer["TopicDescription"]</label>
+                                            @Html.TextBoxFor(m => m.TopicDescription, new { @id = "TopicDescription", @class = "form-control", @required = "required", @maxlength = 1500 })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-right p-3">
+                                        <a href="#" onclick="addTopic(); return false;" class="btn btn-sm btn-default"><i class="fas fa-plus-circle"></i> @Localizer["Add"] @Localizer["Topic"]</a>
+                                    </div>
+                                }
+                            }
+
+                            <div class="col-md-12">
+                                <label class="nom-seccion">@Localizer["TopicList"]</label>
+                            </div>
+                            <div class="col-md-12">
+                                <table id="datatableTopic" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>@Localizer["Type"]</th>
+                                            <th>@Localizer["Topic"]</th>
+                                            <th>@Localizer["Description"]</th>
+                                            <th>@Localizer["Actions"]</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 pt-4">
+                <div class="row">
+                    <div class="card-header ">
+                        <label class="title">  <b>@Localizer["Agreements"]</b></label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @{
+                                if (Model.ProjectEditable)
+                                {
+                                    <div class="col-md-12 text-right">
+                                        <a href="#" onclick="newEntryAgreement(); return false;" class="btn btn-sm btn-default" data-toggle="modal" data-target="#exampleModal2"><i class="fas fa-plus-circle"></i> @Localizer["Add"] @Localizer["Agreements"]</a>
+                                    </div>
+                                }
+                            }
+                            <div class="col-md-12">
+                                <label class="nom-seccion">@Localizer["AgreementList"]</label>
+                            </div>
+                            <div class="col-md-12">
+                                <table id="datatableAgreement" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>@Localizer["Description"]</th>
+                                            <th>@Localizer["AgreementDate"]</th>
+                                            <th>@Localizer["Responsible"]</th>
+                                            <th>@Localizer["Status"]</th>
+                                            <th>@Localizer["Comments"]</th>
+                                            <th>@Localizer["Actions"]</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 pt-4">
+                <div class="row">
+                    <div class="card-header ">
+                        <label class="title"><b>@Localizer["MeetingNotes"]</b></label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                @if (Model.ProjectEditable && ViewBag.Role != null && ViewBag.Role != 2 && ViewBag.Role != 1)
+                                {
+                                    <a href="#" onclick="newEntryNote(); return false;" class="btn btn-sm btn-default" data-toggle="modal" data-target="#exampleModal3"><i class="fas fa-plus-circle"></i> @Localizer["Add"] @Localizer["Note"]</a>
+                                }
+                            </div>
+                            <div class="col-md-12">
+                                <table id="datatableNote" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>#</th>
+                                            <th>@Localizer["Note"]</th>
+                                            <th>@Localizer["Actions"]</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right p-3 pt-5">
+                <div class="form-group">
+                    <a href="#" onclick="cancel(); return false;" class="btn btn-info btn-wd">@Localizer["Cancel"]</a>
+                    @{
+                        if (Model.ProjectEditable)
+                        {
+                            if (Model.IsNew)
+                            {
+                                <button type="button" id="btnCreate" onclick="create('execution'); return false;" class="btn btn-default btn-wd">@Localizer["Save"]</button>
+                            }
+                            else
+                            {
+                                <button type="button" id="btnUpdate" onclick="update('execution'); return false;" class="btn btn-default btn-wd">@Localizer["Update"]</button>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="editAgreementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><strong class="txt-blue" id="agreement-modal-title"></strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <form id="frmAgreement" method="post">
+                    @Html.HiddenFor(m => m.ProjectMeetingAgreementID)
+                    @Html.HiddenFor(m => m.ProjectMeetingID)
+                    @Html.HiddenFor(m => m.ElementID)
+                    
+                    @Html.HiddenFor(m => m.ChangeControl)
+                    @Html.HiddenFor(m => m.ChangeControlComments)
+                    @Html.HiddenFor(m => m.ChangeControlAuthorizer)
+                    @Html.HiddenFor(m => m.ChangeControlManual)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Description"]</label><star class="star">*</star>
+                                <textarea id="agreementDescription" name="agreementDescription" class="form-control" maxlength="1500" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Responsible"]</label><star class="star">*</star>
+                                @Html.DropDownList("agreementResponsible", new SelectList(ViewBag.Participants, "Key", "Value"), new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["AgreementDate"]</label><star class="star">*</star>
+                                @Html.TextBox("agreementPlannedEndDate", "", "", new { @class = "form-control datepicker", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["ElementType"]</label><star class="star">*</star>
+                                <select id="agreementElementType" name="agreementElementType" class="form-control" data-title="@Localizer["SelectListNullItem"]" required>
+                                    <option value="1">@Localizer["Activity"]</option>
+                                    <option value="2">@Localizer["Milestone"]</option>
+                                    <option value="3">@Localizer["Evidence"]</option>
+                                    <option value="4">@Localizer["Incident"]</option>
+                                    <option value="5">@Localizer["Risk"]</option>
+                                    <option value="99">@Localizer["Other"]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Element"]</label><star class="star" id="agreementElementNameRequired">*</star>
+                                <select id="agreementElementName" name="agreementElementName" class="form-control" data-title="@Localizer["SelectListNullItem"]">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["TopicDescription"]</label><star class="star" id="agreementElementDescriptionRequired">*</star>
+                                <input class="form-control" type="text" id="agreementElementDescription" name="agreementElementDescription">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="dvStatus">
+                                <div class="form-group mb-0">
+                                    <label>@Localizer["Status"]</label> <span id="StatusIndicator" class="bold st-atrasado">Atrasado</span>
+                                </div>
+                                <div id="dvStatusCheck" class="form-group mb-0">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.CheckBox("WithImpact", false, new { @id = "WithImpact", @class = "form-check-input" })
+                                            <span class="form-check-sign"></span>
+                                            @Localizer["EnumProjectElementStatus_3"]
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Comment"]</label>
+                                <textarea id="agreementComment" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">@Localizer["Cancel"]</button>
+                        @{
+                            if (Model.ProjectEditable)
+                            {
+                                <button type="button" id="btnAgreementUpdate" class="btn btn-default" onclick="updateAgreement(); return false;">@Localizer["Update"]</button>
+                                <button type="button" id="btnAgreementCreate" class="btn btn-default" onclick="addAgreement(); return false;">@Localizer["Save"]</button>
+                            }
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer mb-0 pb-0">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><strong class="txt-blue">@Localizer["Add"] @Localizer["Note"]</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <form>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>@Localizer["Note"]</label><star>*</star>
+                            <textarea id="newEntryNote" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">@Localizer["Cancel"]</button>
+                        @{
+                            if (Model.ProjectEditable)
+                            {
+                                <button onclick="addNote(); return false;" type="button" class="btn btn-default">@Localizer["Save"]</button>
+                            }
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer ">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecuteAgreement.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

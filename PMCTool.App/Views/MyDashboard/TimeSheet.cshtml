@@ -1,0 +1,290 @@
+﻿@model PMCTool.Models.Environment.TimeSheet
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/xd.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/mi-tablero.css" asp-append-version="true" />
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.HiddenFor(m => m.ParticipantID)
+
+@{
+    if (ViewBag.ParticipantID == null || ViewBag.ParticipantID == Guid.Empty)
+    {
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["HoursRecord"].ToString().ToUpper()</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    else
+    {
+        <input type="hidden" id="Project_ID" name="Project_ID" value="@Model.ProjectID">
+        <input type="hidden" id="ProjectName" name="ProjectName" value="@Model.ProjectName">
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center">
+                            @await Html.PartialAsync("_Header.cshtml")
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12 text-center">
+                                                <div class="txt-blue pt-1 pb-2 title-pendientes bold">@Localizer["HoursRecord"].ToString().ToUpper() </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-2">
+                                            <div class="card-header d-sm-flex align-items-start justify-content-between">
+                                                <h6 class="lh-5 mg-b-0">@Localizer["HoursCapturedPerDay"].ToString().ToUpper() </h6>
+                                            </div><!-- card-header -->
+                                            <div class="card-body pd-y-15 pd-x-10">
+                                                <div class="col-md-12 text-right">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-filter"></i> @Localizer["Project"]
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                            @{
+                                                                var collection = new SelectList(ViewBag.Projects, "Key", "Value");
+                                                                foreach (var item in collection)
+                                                                {
+                                                                    <button onclick="getChart('@item.Value'); return false;" class="dropdown-item refresChart" type="button">@item.Text</button>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12"> <div id="grafica"></div></div>
+                                            </div><!-- card-body -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-2">
+                                            <div class="card-header d-sm-flex align-items-start justify-content-between">
+                                                <h6 class="lh-5 mg-b-0">@Localizer["ViewTitleMyDashboardLabel_03"].ToString().ToUpper()  </h6>
+                                            </div><!-- card-header -->
+                                        </div><!-- card-header -->
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead id="thhistoric">
+
+                                                </thead>
+                                                <tbody id="tbhistoric">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            
+                                        </div><!-- card-header -->
+                                        <div class="col-md-12 pb-4">
+                                            <div class="col-md-12 text-right pb-4">
+                                                <button onclick="newEntry(); return false;" class="btn btn-round btn-sm"><i class="fas fa-plus-circle"></i> @Localizer["RegisterHours"]</button>
+                                            </div>
+                                            <div class="col-md-12 text-right">
+                                                <div class="dropdown">
+                                                    <button class="btn-3 btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-filter"></i> @Localizer["Project"]
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                        @{
+                                                            <button onclick="getAllTimesheets(true); return false;" class="dropdown-item" type="button">@Localizer["All"]</button>
+                                                            foreach (var item in collection)
+                                                            {
+                                                                <button onclick="getTimesheets('@item.Value', true); return false;" class="dropdown-item" type="button">@item.Text</button>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="fresh-datatables">
+                                                <table id="datatables" class="table table-hover table-striped dataTables_wrapper" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>@Localizer["Project"].ToString().ToUpper()</th>
+                                                            <th>@Localizer["Activity"].ToString().ToUpper()</th>
+                                                            <th>@Localizer["Comment"].ToString().ToUpper()</th>
+                                                            <th>@Localizer["Hours"].ToString().ToUpper()</th>
+                                                            <th>@Localizer["Date"].ToString().ToUpper()</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="tbody">
+                                                    </tbody>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <button id="btnLoadMore" class="btn btn-round btn-wd">@Localizer["LoadMore"]</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="timesheetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><strong class="txt-blue">@Localizer["Add"] @Localizer["Hours"]</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pt-1">
+                        <form id="frmMain">
+                            @Html.HiddenFor(m => m.TimeSheetID)
+                            @Html.HiddenFor(m => m.Hours)
+                            <div class="form-row">
+                                <div class="form-group mb-1 col-md-12">
+                                    <label for="exampleSelectPrimary">@Localizer["Project"]:</label>
+                                    @Html.DropDownListFor(m => m.ProjectID, new SelectList(ViewBag.Projects, "Key", "Value"), new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group mb-1 col-md-12">
+                                    <label for="exampleSelectPrimary">@Localizer["Activity"]:</label>
+                                    @Html.DropDownListFor(m => m.ProjectTaskID, new SelectList(ViewBag.Activities, "Key", "Value"), new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group mb-1 col-md-6">
+                                    <label for="message-text" class="col-form-label">@Localizer["Workload"]:</label>
+                                    @Html.TextBox("WorkedTime", "", "", new { @class = "form-control timepicker", @required = "required" })
+                                </div>
+                                <div class="form-group  mb-1">
+                                    <label for="recipient-name" class="col-form-label">@Localizer["Date"]:</label>
+                                    @Html.TextBoxFor(m => m.WorkedDate, new { @class = "form-control datepicker", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="message-text" class="col-form-label">@Localizer["Comment"]:</label>
+                                @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", @maxlength = 1500 })
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Close"]</button>
+                                <button type="button" id="btnUpdate" onclick="updateRecord(); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                                <button type="button" id="btnCreate" onclick="createRecord(); return false;" class="btn btn-default btn-fill">@Localizer["Save"]</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer ">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalHoras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-4" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel-4"> </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body pt-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card strpied-tabled-with-hover">
+                                    <div class="card-header ">
+                                        <div class="card-header d-sm-flex align-items-start justify-content-between">
+                                            <h6 class="lh-5 mg-b-0">@Localizer["ViewTitleMyDashboardLabel_03"].ToString().ToUpper()  </h6>
+                                        </div>
+                                    </div>
+                                    <div class="card-body table-full-width table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Localizer["Activity"].ToString().ToUpper()</th>
+                                                    <th class="text-center">@Localizer["Hours"].ToString().ToUpper()</th>
+                                                    <th class="text-center">@Localizer["Date"].ToString().ToUpper()</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tbody" id="tActivityDailyDetail">
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right pr-5 mb-4">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMyDashboardTimeSheet.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.animateNumber.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

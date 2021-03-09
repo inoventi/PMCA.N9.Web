@@ -1,0 +1,338 @@
+﻿@model List<PMCTool.App.Models.PortfolioModel>
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <form name="frmMain" method="post">
+                @Html.Hidden("sortID")
+                <div class="container-fluid flex-grow-1 container-p-y">
+                    <div class="card mt-2">
+                        <div class="container px-0">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-10 pt-4">
+                                        <small class="font-weight-normal bold"><b>@Localizer["Portfolio"]</b></small>
+                                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                            <span class="txt-blue">@ViewBag.PortfolioName</span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-2 text-right pt-2">
+                                        <a href="/Execution/Portfolios" class="btn btn-sm btn-default btn-wd btn-outline"><i class="fas fa-arrow-left"></i> @Localizer["Back"]</a>
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <div class="row pt-3 mb-2">
+                                            <div class="col-md-12 pt-0">
+                                                <div class="row   pt-3">
+                                                    @{
+                                                            string pRealProgress = ViewBag.RealProgress.ToString() + "%",
+                                                                   pExpectedProgress = ViewBag.ExpectedProgress.ToString() + "%",
+                                                                   pBarColor = "";
+
+                                                            switch (ViewBag.Status)
+                                                            {
+                                                                case 1:
+                                                                    pBarColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                                                    break;
+                                                                case 2:
+                                                                    pBarColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                                                    break;
+                                                                case 3:
+                                                                    pBarColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                                                    break;
+                                                                case 4:
+                                                                    pBarColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            }
+
+                                                    }
+                                                    <div class="col-md-4">
+
+                                                        <strong class="txt-blue"> @Localizer["RealProgress"] <span class="underline-link"> @ViewBag.RealProgress.ToString("N2") %</span> </strong>
+                                                        <div class="progress" style="height: 15px;">
+                                                            <div class="@pBarColor" style="width: @pRealProgress;"></div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <strong class="txt-blue"> @Localizer["ExpectedProgress"] <span class="underline-link"> @ViewBag.ExpectedProgress.ToString("N2") %</span> </strong>
+                                                        <div class="progress" style="height: 15px;">
+                                                            <div class="progress-bar bg-default  progress-bar-striped progress-bar-animated" style="width: @pExpectedProgress"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 text-center">
+                                                        <strong>@Localizer["PortfolioProgress"].ToString().ToUpper()</strong>
+                                                        <div class="col-md-12  text-center   px-4   pb-3">
+                                                            @{
+                                                                if (ViewBag.Status > 0)
+                                                                {
+                                                                    <div class="text-tiny mt-0">@Localizer["Status"]:<br> <span class="@Localizer["EnumProjectElementStatusClass_" + ViewBag.Status]">@Localizer["EnumProjectElementStatus_" + ViewBag.Status]</span></div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center mb-4">
+                            <div class="col-md-11">
+                                @{
+
+                                    int pages = 1;
+                                    int ipp = 5;
+                                    double parse = Model.Count / 5.00;
+
+                                    if (parse > 0)
+                                    {
+                                        pages = (int)parse;
+                                        if ((parse - pages) > 0)
+                                        {
+                                            pages++;
+                                        }
+                                    }
+
+                                    @Html.Hidden("TotalPages", pages)
+
+                                    for (int i = 1; i <= pages; i++)
+                                    {
+                                        string id = "dvPage_" + i.ToString();
+                                        int finish = (ipp * i) - 1;
+                                        int start = 0;
+
+                                        if (i > 1)
+                                        {
+                                            start = (finish + 1) - ipp;
+                                        }
+
+                                        <div id="@id" style="display:none;">
+
+                                            @for (int x = start; x <= finish; x++)
+                                            {
+                                                try
+                                                {
+                                                    string startDate = "---- -- --",
+                                                        endDate = "---- -- --",
+                                                        barColor = "";
+
+                                                    double realProgress = 0,
+                                                            expectedProgress = 0,
+                                                            Deviation = 0;
+
+                                                    string sRealProgress = "",
+                                                        sExpectedProgress = "";
+
+                                                    if (Model[x].Type == 1)
+                                                    {
+                                                        var mdl = (PMCTool.Models.Environment.Program)Model[x].Value;
+
+                                                        realProgress = Math.Round(mdl.Progress * 100, 2);
+                                                        expectedProgress = Math.Round(mdl.PlannedProgress * 100, 2);
+                                                        Deviation = Math.Round(mdl.Deviation * 100, 2);
+
+                                                        sRealProgress = Math.Round(mdl.Progress * 100, 2).ToString("N2") + "%";
+                                                        sExpectedProgress = Math.Round(mdl.PlannedProgress * 100, 2).ToString("N2") + "%";
+
+                                                        if (mdl.StartDate != null)
+                                                        {
+                                                            startDate = mdl.StartDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        if (mdl.EndDate != null)
+                                                        {
+                                                            endDate = mdl.EndDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        switch (mdl.Status)
+                                                        {
+                                                            case 1:
+                                                                barColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 2:
+                                                                barColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 3:
+                                                                barColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 4:
+                                                                barColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            default:
+                                                                break;
+                                                        }
+
+                                                        <div class="row no-gutters align-items-center pb-2 pt-2  border-programa row-single">
+                                                            <div class="col-md-12  px-4 pt-2">
+                                                                <a href="/Execution/Program?id=@mdl.ProgramID">@mdl.Name</a><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                @Localizer["Projects"]: <span class="underline-link">@mdl.Projects.ToList().Count</span> <br>
+                                                                                @for (int y = 0; y < mdl.Projects.ToList().Count; y++)
+                                                                                {
+                                                                                    string pp = Math.Round((mdl.Projects.ToList()[y].Progress * 100), 2).ToString();
+
+                                                                                    <div class="row" style=" font-size: .8em;">
+                                                                                        <div class="col-md-9">
+                                                                                            <a href="/Execution/Project?id=@mdl.Projects.ToList()[y].ProjectID">@mdl.Projects.ToList()[y].Name</a>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <span class="@Localizer["EnumProjectElementStatusClass_" + mdl.Projects.ToList()[y].Status]">@pp %</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 text-center">
+                                                                        <div class="text-muted"><small><i class="fas fa-traffic-light"></i> @Localizer["Status"]: <span class="@Localizer["EnumProjectElementStatusClass_" + mdl.Status]">@Localizer["EnumProjectElementStatus_" + mdl.Status]</span></small></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+                                                                <strong class="txt-blue">% @Localizer["RealProgress"]</strong>
+                                                                <br>@realProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="@barColor" style="width:@sRealProgress;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4 text-center">
+                                                                <strong class="txt-blue">% @Localizer["ExpectedProgress"]</strong>
+                                                                <br> @expectedProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="progress-bar bg-default progress-bar-striped progress-bar-animated" style="width:@sExpectedProgress;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+                                                                <strong class="txt-blue pb-4">% @Localizer["Deviation"]</strong> <br> @Deviation.ToString("N2") %<br><br><br>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        var mdl = (PMCTool.Models.Environment.ProjectsByProgramId)Model[x].Value;
+
+                                                        realProgress = Math.Round(mdl.Progress * 100, 2);
+                                                        expectedProgress = Math.Round(mdl.PlannedProgress * 100, 2);
+                                                        Deviation = Math.Round(mdl.Deviation * 100, 2);
+
+                                                        sRealProgress = Math.Round(mdl.Progress * 100, 2).ToString("N2") + "%";
+                                                        sExpectedProgress = Math.Round(mdl.PlannedProgress * 100, 2).ToString("N2") + "%";
+
+                                                        if (mdl.StartDate != null)
+                                                        {
+                                                            startDate = mdl.StartDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        if (mdl.EndDate != null)
+                                                        {
+                                                            endDate = mdl.EndDate.Value.ToString("yyyy-MM-dd");
+                                                        }
+
+                                                        switch (mdl.Status)
+                                                        {
+                                                            case 1:
+                                                                barColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 2:
+                                                                barColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 3:
+                                                                barColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            case 4:
+                                                                barColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                                                break;
+                                                            default:
+                                                                break;
+                                                        }
+
+                                                        <div class="row no-gutters align-items-center pb-2 pt-2  border row-single">
+                                                            <div class="col-md-12  px-4 pt-2">
+                                                                <a href="/Execution/Project?id=@mdl.ProjectID" class="">@mdl.Name</a><br>
+                                                                <div class="row">
+                                                                    <div class="col-md-8"><small class="text-muted"><i class="fas fa-briefcase "></i> @mdl.ParentName  </small></div>
+                                                                    <div class="col-md-4 text-center"><div class="text-muted"><small><i class="fas fa-traffic-light"></i> @Localizer["Status"]: <span class="@Localizer["EnumProjectElementStatusClass_" + mdl.Status]">@Localizer["EnumProjectElementStatus_" + mdl.Status]</span></small></div></div>
+                                                                    <div class="col-md-12"><small class="text-muted"><i class="fas fa-building "></i> @mdl.CompanyName  </small></div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+                                                                <strong class="txt-blue">% @Localizer["RealProgress"]</strong> <br> @realProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="@barColor" style="width:@sRealProgress;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4 text-center">
+                                                                <strong class="txt-blue">% @Localizer["ExpectedProgress"]</strong> <br> @expectedProgress.ToString("N2") %
+                                                                <div class="progress" style="height: 15px;">
+                                                                    <div class="@barColor" style="width:@sExpectedProgress;"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-md-3 text-muted small px-4  text-center">
+                                                                <strong class="txt-blue pb-4">% @Localizer["Deviation"]</strong> <br> @Deviation.ToString("N2") %<br><br><br>
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                }
+                                <hr>
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:goToPage(1);">«</a>
+                                        </li>
+
+                                        @for (int i = 1; i <= pages; i++)
+                                        {
+                                            string id = "pagelink_" + i.ToString();
+
+                                            if (i == 1)
+                                            {
+                                                <li class="page-item active" id="@id">
+                                                    <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-item" id="@id">
+                                                    <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                                                </li>
+                                            }
+                                        }
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:goToPage(@pages);">»</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecutePortfolio.js" asp-append-version="true"></script>
+}

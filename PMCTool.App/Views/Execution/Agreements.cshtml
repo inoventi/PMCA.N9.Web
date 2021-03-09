@@ -1,0 +1,266 @@
+﻿
+@model PMCTool.App.Models.ProjectMeetingDetailViewModel
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("AreYouSureCancel", Localizer["AreYouSureCancel"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Agreements", Localizer["Agreements"].ToString())
+@Html.Hidden("Reopen", Localizer["Reopen"].ToString())
+@Html.Hidden("Update", Localizer["Update"].ToString())
+@Html.Hidden("m4020", Localizer["4020"].ToString())
+@Html.Hidden("m4021", Localizer["4021"].ToString())
+@Html.Hidden("m4022", Localizer["4022"].ToString())
+@Html.Hidden("m4023", Localizer["4023"].ToString())
+@Html.Hidden("m4024", Localizer["4024"].ToString())
+
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+
+@Html.HiddenFor(m => m.IsNew)
+@Html.HiddenFor(m => m.ProjectEditable)
+@Html.HiddenFor(m => m.ParticipantRole)
+@Html.Hidden("ElementType")
+@Html.Hidden("ElementTypeA")
+@Html.Hidden("rid")
+
+@Html.Hidden("ChangeControlEndDate", "")
+@Html.Hidden("ChangeControlResponsible", "")
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10 pt-2">
+                        <small class="font-weight-normal bold">@Localizer["Project"]</small>
+                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="txt-blue"> @Model.ProjectName </span>
+                        </h4>
+                    </div>
+                    <div class="col-md-2 text-right pt-2">
+                        <a href="/Execution/Project?id=@Model.ProjectID" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                    </div>
+                </div>
+                <div class="row mb-4 pb-3">
+                    <div class="col-md-9 pt-0">
+                        <p class="card-category">@Localizer["StatusIndicators"]</p>
+                        <div class="indicadores-st 9" data-toggle="tooltip" title="@Localizer["CountIndicator_WithImpact"]"><i class="fas fa-circle" style="color:red"></i><strong class="txt-blue underline-link" id="withImpact"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_OnTime"]"><i class="fas fa-circle" style="color:green"></i><strong class="txt-blue underline-link" id="onTime"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Delayed"]"><i class="fas fa-circle" style="color:yellow"></i><strong class="txt-blue underline-link" id="delayed"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Closed"]"><i class="fas fa-circle" style="color:gray"></i><strong class="txt-blue underline-link" id="closed"> 0 </strong></div>
+                    </div>
+                    <div class="col-md-3 pt-2 text-right">
+                        <div class="text-tiny mt-0">
+                            @Localizer["Status"]:
+                            <span id="groupStatus" class="bold st-entiempo ws">@Localizer["EnumProjectElementStatus_1"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 data-tables">
+                <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                    @{
+                        if (Model.ParticipantRole != null && Model.ParticipantRole == 5)
+                        {
+                            <div class="toolbar">
+                                <div class="col-md-12 text-right">
+                                    <a href="/Execution/Meetings?id=@Model.ProjectID" class="btn btn-sm btn-default btn-wd"><i class="fas fa-chalkboard-teacher"></i> @Localizer["Meetings"]</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="fresh-datatables">
+                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>@Localizer["Description"]</th>
+                                    <th>@Localizer["AgreementDate"]</th>
+                                    <th>@Localizer["Responsible"]</th>
+                                    <th>@Localizer["Status"]</th>
+                                    <th>@Localizer["Comments"]</th>
+                                    <th>@Localizer["Meeting"]</th>
+                                    <th>@Localizer["Topic"]</th>
+                                    <th class="disabled-sorting">@Localizer["Actions"]</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>@Localizer["Description"]</th>
+                                    <th>@Localizer["AgreementDate"]</th>
+                                    <th>@Localizer["Responsible"]</th>
+                                    <th>@Localizer["Status"]</th>
+                                    <th>@Localizer["Comments"]</th>
+                                    <th>@Localizer["Meeting"]</th>
+                                    <th>@Localizer["Topic"]</th>
+                                    <th>@Localizer["Actions"]</th>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editAgreementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><strong class="txt-blue">@Localizer["Edit"] @Localizer["Agreement"]</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <form id="frmAgreement" method="post">
+                    @Html.HiddenFor(m => m.ProjectID)
+                    @Html.HiddenFor(m => m.ProjectMeetingID)
+                    @Html.HiddenFor(m => m.ProjectMeetingAgreementID)
+                    @Html.HiddenFor(m => m.ElementID)
+
+                    @Html.HiddenFor(m => m.ChangeControl)
+                    @Html.HiddenFor(m => m.ChangeControlComments)
+                    @Html.HiddenFor(m => m.ChangeControlAuthorizer)
+                    @Html.Hidden("ChangeControlManualInput", "false")
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Description"]</label><star class="star">*</star>
+                                <textarea id="Description" name="Description" class="form-control" maxlength="1500" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Responsible"]</label><star class="star">*</star>
+                                @Html.DropDownList("Responsible", new SelectList(ViewBag.Participants, "Key", "Value"), new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["AgreementDate"]</label><star class="star">*</star>
+                                @Html.TextBox("PlannedEndDate", "", "", new { @class = "form-control datepicker", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["ElementType"]</label><star class="star">*</star>
+                                <select id="ElementType" name="ElementType" class="form-control" data-title="@Localizer["SelectListNullItem"]" required>
+                                    <option value="1">@Localizer["Activity"]</option>
+                                    <option value="2">@Localizer["Milestone"]</option>
+                                    <option value="3">@Localizer["Evidences"]</option>
+                                    <option value="4">@Localizer["Incident"]</option>
+                                    <option value="5">@Localizer["Risk"]</option>
+                                    <option value="99">@Localizer["Other"]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Element"]</label><star class="star" id="agreementElementNameRequired">*</star>
+                                <select id="ElementName" name="ElementName" class="form-control" data-title="@Localizer["SelectListNullItem"]">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["TopicDescription"]</label><star class="star" id="agreementElementDescriptionRequired">*</star>
+                                <input class="form-control" type="text" id="ElementDescription" name="ElementDescription">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Progress"]</label>
+                                @Html.TextBox("Progress", 0, new { @id = "Progress", @class = "form-control", @style = "", @required = "required", @type = "number", @min = "0", @max = "100", @step = "0.01" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="dvStatus">
+                                <div class="form-group mb-0">
+                                    <label>@Localizer["Status"]</label> <span id="StatusIndicator" class="bold st-atrasado">@Localizer["Delayed"]</span>
+                                </div>
+                                <div id="dvStatusCheck" class="form-group mb-0">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.CheckBox("WithImpact", false, new { @id = "WithImpact", @class = "form-check-input" })
+                                            <span class="form-check-sign"></span>
+                                            @Localizer["EnumProjectElementStatus_3"]
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group mb-1">
+                                <label>@Localizer["Comment"]</label>
+                                <textarea id="Comments" name="Comments" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">@Localizer["Cancel"]</button>
+                        @{
+                            if (Model.ProjectEditable)
+                            {
+                                <button type="button" id="btnUpdate" class="btn btn-default" onclick="updateAgreement(); return false;">@Localizer["Update"]</button>
+                                <button type="button" id="btnCreate" class="btn btn-default" onclick="addAgreement(); return false;">@Localizer["Save"]</button>
+                            }
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer mb-0 pb-0">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecuteAgreements.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

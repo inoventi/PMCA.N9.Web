@@ -1,0 +1,199 @@
+﻿@model List<PMCTool.Models.Environment.Board>
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <form name="frmMain" method="post">
+                @Html.Hidden("sortID")
+                <div class="container-fluid flex-grow-1 container-p-y">
+                    <div class="card mt-2">
+                        <div class="row justify-content-md-center mb-4">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-12 text-left pl-0 pr-0">
+                                        <h4 class="d-flex flex-wrap justify-content-between align-items-center w-100 font-weight-bold">  @Localizer["Dashboards"]  </h4>
+                                    </div>
+                                </div>
+
+                                @{
+                                    int inx = 0;
+                                    int pages = 1;
+                                    double parse = Model.Count / 6.00;
+
+                                    if (parse > 0)
+                                    {
+                                        pages = (int)parse;
+                                        if ((parse - pages) > 0)
+                                        {
+                                            pages++;
+                                        }
+                                    }
+
+                                    @Html.Hidden("TotalPages", pages)
+
+                                    for (int i = 1; i <= pages; i++)
+                                    {
+                                        string id = "dvPage_" + i.ToString();
+
+                                        <div id="@id" style="display:none;">
+
+                                            @for (int irow = 0; irow < 2; irow++)
+                                            {
+                                                <div class="row">
+                                                    @{
+                                                        try
+                                                        {
+                                                            for (int icell = 0; icell < 3; icell++)
+                                                            {
+                                                                if (Model[inx].BoardID != null)
+                                                                {
+
+                                                                    string startDate = "---- -- --",
+                                                                        endDate = "---- -- --",
+                                                                        barColor = "",
+                                                                        img = "https://pmc-tool.com/inoventi/logo/Nuestra%20Platafoma%20el%20PMC.jpg";
+
+                                                                    double realProgress = Math.Round(Model[inx].Progress * 100, 2),
+                                                                        expectedProgress = Math.Round(Model[inx].PlannedProgress * 100, 2),
+                                                                        Deviation = Math.Round(Model[inx].Deviation * 100, 2);
+
+                                                                    string sRealProgress = Math.Round(Model[inx].Progress * 100, 2).ToString("N2") + "%",
+                                                                        sExpectedProgress = Math.Round(Model[inx].PlannedProgress * 100, 2).ToString("N2") + "%";
+
+                                                                    if (Model[inx].StartDate != null)
+                                                                    {
+                                                                        startDate = Model[inx].StartDate.Value.ToString("yyyy-MM-dd");
+                                                                    }
+
+                                                                    if (Model[inx].EndDate != null)
+                                                                    {
+                                                                        endDate = Model[inx].EndDate.Value.ToString("yyyy-MM-dd");
+                                                                    }
+
+                                                                    switch (Model[inx].Status)
+                                                                    {
+                                                                        case 1:
+                                                                            barColor = "progress-bar bg-success progress-bar-striped progress-bar-animated";
+                                                                            break;
+                                                                        case 2:
+                                                                            barColor = "progress-bar bg-warning progress-bar-striped progress-bar-animated";
+                                                                            break;
+                                                                        case 3:
+                                                                            barColor = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                                                                            break;
+                                                                        case 4:
+                                                                            barColor = "progress-bar bg-secondary progress-bar-striped progress-bar-animated";
+                                                                            break;
+                                                                        default:
+                                                                            break;
+                                                                    }
+
+                                                                    if (!string.IsNullOrEmpty(Model[inx].Image))
+                                                                    {
+                                                                        img = Model[inx].Image;
+                                                                    }
+
+                                                                    <div class="col-sm-6 col-xl-4">
+                                                                        <div class="card mb-4">
+                                                                            <div class="w-100">
+                                                                                <a href="javascript:void(0)" class="card-img-top d-block bg-p" style="background-image: url('@img@ViewBag.versionCache');">
+                                                                                    <div class="d-flex justify-content-between align-items-end ui-rect-content p-3">
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <h5 class="mb-3">
+                                                                                    <a href="/Execution/Dashboard?id=@Model[inx].BoardID" class="#">@Model[inx].Name</a>
+                                                                                </h5>
+                                                                                <p class="text-muted mb-3">
+                                                                                    @Model[inx].Description
+                                                                                </p>
+                                                                                <div class="media f8">
+                                                                                    <div class="row justify-content-md-center">
+                                                                                        <div class="col-md-12 text-center txt-blue"><strong>@Localizer["DashboardProgress"].ToString().ToUpper()</strong></div>
+                                                                                        <hr class="mt-2 mb-2">
+                                                                                        <div class="col-md-12  text-center   px-4  text-left pb-3">
+
+                                                                                            <div class="text-tiny mt-0"><i class="fas fa-traffic-light"></i>@Localizer["Status"]:  <span class="@Localizer["EnumProjectElementStatusClass_" + Model[inx].Status]">@Localizer["EnumProjectElementStatus_" + Model[inx].Status]</span></div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12 text-left  small px-4  text-left f8">
+                                                                                            <strong class="txt-blue"> @Localizer["RealProgress"] <span class="underline-link"> @realProgress.ToString("N2") %</span> </strong>
+                                                                                            <div class="progress mb-2" style="height: 15px;">
+                                                                                                <div class="@barColor" style="width:@sRealProgress;"></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12 text-left  small px-4  text-left">
+                                                                                            <strong class="txt-blue"> @Localizer["ExpectedProgress"] <span class="underline-link"> @expectedProgress.ToString("N2") %</span> </strong>
+                                                                                            <div class="progress mb-2" style="height: 15px;">
+                                                                                                <div class="progress-bar bg-default  progress-bar-striped progress-bar-animated" style="width:@sExpectedProgress;"></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    inx++;
+                                                                }
+                                                            }
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+
+                                        </div>
+                                    }
+                                }
+
+                                <hr>
+                                <div id="show_paginator"></div>
+                                @*<nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="javascript:goToPage(1);">«</a>
+                </li>
+
+                @for (int i = 1; i <= pages; i++)
+                {
+                    string id = "pagelink_" + i.ToString();
+
+                    if (i == 1)
+                    {
+                        <li class="page-item active" id="@id">
+                            <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item" id="@id">
+                            <a class="page-link" href="javascript:goToPage(@i);">@i</a>
+                        </li>
+                    }
+                }
+
+                <li class="page-item">
+                    <a class="page-link" href="javascript:goToPage(@pages);">»</a>
+                </li>
+            </ul>
+        </nav>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/plugins/jquery.bootpag.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/core/vExecuteDashboards.js" asp-append-version="true"></script>
+}

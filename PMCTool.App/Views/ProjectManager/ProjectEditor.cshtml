@@ -1,0 +1,254 @@
+﻿@model PMCTool.Models.Environment.Project
+
+@Html.Hidden("OldCode", Model.Code)
+@Html.HiddenFor(m => m.Phase, new { @id = "mPhase" })
+@Html.Hidden("AreYouSureCancelProject", Localizer["AreYouSureCancelProject"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmMain" enctype="multipart/form-data">
+                    @Html.HiddenFor(m => m.ProjectID)
+                    @Html.HiddenFor(m => m.ParentID)
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <h4 class="card-title">@Localizer["Update"] @Localizer["Project"]</h4>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Code"]</label>
+                                        @Html.TextBoxFor(m => m.Code, new { @id = "Code", @class = "form-control", @style = "", @maxlength = 50 })
+                                    </div>
+                                </div>
+                                <div class="col-md-9 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Name"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Name, new { @id = "Name", @class = "form-control", @style = "", @required = "required", @maxlength = 150 })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Description"]</label>
+                                        @Html.TextAreaFor(m => m.Description, new { @id = "Description", @class = "form-control", @style = "", @maxlength = 1500 })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Sponsor"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.SponsorID, new SelectList(ViewBag.Sponsor, "Key", "Value"), new { @id = "SponsorID", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Leader"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.LeaderID, new SelectList(ViewBag.Leader, "Key", "Value"), new { @id = "LeaderID", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["ProjectManager"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.ProjectManagerID, new SelectList(ViewBag.ProjectManager, "Key", "Value"), new { @id = "ProjectManagerID", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["FactSheet"]</label>
+                                        @Html.DropDownListFor(m => m.FactSheetID, new SelectList(ViewBag.FactSheets, "Key", "Value"), new { @id = "FactSheetID", @class = "form-control", @style = "" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Company"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.CompanyID, new SelectList(ViewBag.Companies, "Key", "Value"), new { @id = "CompanyID", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["MeetingTemplate"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.MeetingNoteTemplateID, new SelectList(ViewBag.MeetingTemplate, "Key", "Value"), new { @id = "MeetingNoteTemplateID", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group mb-1">
+                                        <label class="title">
+                                            <b>@Localizer["ProjectConfiguration"]</b>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            @{
+                                if (Model.Phase == 1)
+                                {
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["ManagementType"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.ManagementType, new SelectList(ViewBag.ProjectManagementType, "Key", "Value"), new { @id = "ManagementType", @class = "form-control", @style = "", @required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["ChangeManagement"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.ChangeManagement, new SelectList(ViewBag.ProjectChangeManagement, "Key", "Value"), new { @id = "ChangeManagement", @class = "form-control", @style = "", @required = "required" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["WeighingManagement"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.WeighingManagement, new SelectList(ViewBag.ProjectWeighingManagement, "Key", "Value"), new { @id = "WeighingManagement", @class = "form-control", @style = "", @required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["CalendarType"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.CalendarType, new SelectList(ViewBag.ProjectCalendarType, "Key", "Value"), new { @id = "CalendarType", @class = "form-control", @style = "", @required = "required" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Currency"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.CurrencyID, new SelectList(ViewBag.Currencies, "Key", "Value"), new { @id = "CurrencyID", @class = "form-control", @style = "", @required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <br />
+                                                    <label class="form-check-label">
+                                                        @Html.CheckBoxFor(m => m.DelayBasedPlannedProgress, new { @id = "DelayBasedPlannedProgress", @class = "form-check-input" })
+                                                        <span class="form-check-sign"></span>
+                                                        @Localizer["DelayBasedPlannedProgress"]
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["ManagementType"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.ManagementType, new SelectList(ViewBag.ProjectManagementType, "Key", "Value"), new { @id = "ManagementType", @class = "form-control", @style = "", @required = "required", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["ChangeManagement"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.ChangeManagement, new SelectList(ViewBag.ProjectChangeManagement, "Key", "Value"), new { @id = "ChangeManagement", @class = "form-control", @style = "", @required = "required", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["WeighingManagement"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.WeighingManagement, new SelectList(ViewBag.ProjectWeighingManagement, "Key", "Value"), new { @id = "WeighingManagement", @class = "form-control", @style = "", @required = "required", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["CalendarType"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.CalendarType, new SelectList(ViewBag.ProjectCalendarType, "Key", "Value"), new { @id = "CalendarType", @class = "form-control", @style = "", @required = "required", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Currency"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.CurrencyID, new SelectList(ViewBag.Currencies, "Key", "Value"), new { @id = "CurrencyID", @class = "form-control", @style = "", @required = "required", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <br />
+                                                    <label class="form-check-label">
+                                                        @Html.CheckBoxFor(m => m.DelayBasedPlannedProgress, new { @id = "DelayBasedPlannedProgress", @class = "form-check-input", @disabled = "disabled" })
+                                                        <span class="form-check-sign"></span>
+                                                        @Localizer["DelayBasedPlannedProgress"]
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                @Html.CheckBoxFor(m => m.Notifications, new { @id = "Notifications", @class = "form-check-input" })
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Notifications"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group mb-1">
+                                        <label class="title">
+                                            <b>@Localizer["ProjectPhase"]</b>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Phase"]</label><star class="star">*</star>
+                                        @Html.DropDownListFor(m => m.Phase, new SelectList(ViewBag.ProjectPhase, "Key", "Value"), new { @id = "Phase", @class = "form-control", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="button" id="btnCancel" onclick="cancel(); return false;" class="btn btn-info btn-fill">@Localizer["Cancel"]</button>
+                            <button type="button" id="btnUpdate" onclick="cancelEntry(); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vProjectManagerProjectEditor.js" asp-append-version="true"></script>
+}

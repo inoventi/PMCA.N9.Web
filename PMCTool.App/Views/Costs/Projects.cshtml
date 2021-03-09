@@ -1,0 +1,214 @@
+﻿<link href="~/css/costos-proyectos.css" rel="stylesheet" asp-append-version="true" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 pt-2">
+                        <small class="font-weight-normal bold"><b> Dashboard </b></small>
+                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="txt-blue"> @Localizer["Costs1_001"] - @Localizer["Costs1_002"]</span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row mb-3 pb-2">
+                    <div class="col-md-6 text-letf">
+                        <div class="form-group">
+                            <label class="control-label">@Localizer["Projects"]</label>
+                            <select name="grupo" id="selectProjects" class="selectpicker select" data-title="@Localizer["SelectListNullItem"]" data-style="btn-outline" data-menu-style="dropdown-outline">
+                                @{
+                                    var collection = new SelectList(ViewBag.Projects, "Key", "Value");
+                                    foreach (var item in collection)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pt-3">
+                        <button class="btn btn-default btn-wd mt-3" onclick="refresh()">@Localizer["Search"]</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mb-3 pb-2">
+                <p class="card-category">@Localizer["Currency"]</p> <h5 class="card-title" id="currencyName"></h5>
+            </div>
+            <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                    <div class="card-header ">
+                        <p class="card-category">@Localizer["Project"]</p>
+                        <h4 class="card-title" id="projectName"></h4>
+                    </div>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Description"]</th>
+                                    <th>@Localizer["Status"]</th>
+                                    <th>@Localizer["PlannedCost"]</th>
+                                    <th>@Localizer["RealCost"]</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tProjectActivityCosts">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 data-tables">
+                <div class="row">
+                    <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title txt-blue pb-4">@Localizer["Costs1_003"] - @Localizer["Costs1_004"]</h4>
+                                </div>
+                                <figure class="highcharts-figure">
+                                    <div id="costos"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title txt-blue pb-4">@Localizer["Costs1_007"]</h4>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="row">@Localizer["Costs1_008"]</th>
+                                            <th scope="row">@Localizer["PlannedCost"]</th>
+                                            <th scope="row">@Localizer["RealCost"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tProjectCosts">
+                                        <tr>
+                                            <th scope="row">@Localizer["Costs1_005"]</th>
+                                            <td class="text-left"><span id="tProjectPlannedCostsActivities">0.00</span></td>
+                                            <td class="text-left"><span id="tProjectRealCostsActivities">0.00</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">@Localizer["Costs1_006"]</th>
+                                            <td class="text-left"><span id="tProjectPlannedCostsEvidences">0.00</span></td>
+                                            <td class="text-left"><span id="tProjectRealCostsEvidences">0.00</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">@Localizer["Costs1_007"]</th>
+                                            <th class="text-left"><span id="tProjectPlannedCostsTotal">0.00</span></th>
+                                            <th class="text-left"><span id="tProjectRealCostsTotal">0.00</span></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" id="costsModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> @Localizer["Activity"] </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <div class="row">
+                    <div class="col-md-12 pt-0  pl-4">
+                        <h5 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="txt-blue" id="activityName"></span>
+                        </h5>
+                    </div>
+                    <div class="col-md-12 pt-0  pl-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Localizer["PlannedCost"]: <b><span id="plannedCost"></span></b>
+                            </div>
+                            <div class="col-md-6">
+                                @Localizer["RealCost"]: <b><span id="realCost"></span></b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 pt-1">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#home">@Localizer["Participants"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#menu1">@Localizer["Evidences"]</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane container active" id="home">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["Participant"]</th>
+                                            <th>@Localizer["PlannedCost"]</th>
+                                            <th>@Localizer["RealCost"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tProjectActivityParticipants">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane container fade" id="menu1">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>@Localizer["Description"]</th>
+                                            <th>@Localizer["Status"]</th>
+                                            <th>@Localizer["PlannedCost"]</th>
+                                            <th>@Localizer["RealCost"]</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tProjectActivityEvidences">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right pr-5 mb-4">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer["Close"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- highcharts -->
+    <script src="~/js/plugins/highcharts/highcharts.js"></script>
+    <script src="~/js/plugins/highcharts/modules/xrange.js"></script>
+    <script src="~/js/plugins/highcharts/highcharts-more.js"></script>
+    <script src="~/js/plugins/highcharts/modules/sankey.js"></script>
+    <script src="~/js/plugins/highcharts/modules/organization.js"></script>
+    <script src="~/js/plugins/highcharts/modules/treemap.js"></script>
+    <script src="~/js/plugins/highcharts/modules/exporting.js"></script>
+    <script src="~/js/plugins/highcharts/modules/export-data.js"></script>
+    <script src="~/js/plugins/highcharts/modules/solid-gauge.js"></script>
+    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
+    <script src="~/js/plugins/highcharts/modules/heatmap.js"></script>
+
+    <script src="~/js/core/vCostsProjects.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/bootstrap-selectpicker.js"></script>
+}
+

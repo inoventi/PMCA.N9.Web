@@ -1,0 +1,151 @@
+﻿@model PMCTool.Models.Core.User
+
+@Html.Hidden("OldUsername", Model.Login)
+@Html.Hidden("OldEmail", Model.Email)
+@Html.Hidden("UsernameExist", Localizer["UsernameExist"])
+@Html.Hidden("EmailExist", Localizer["EmailExist"])
+@Html.Hidden("Lang", Model.LanguageID)
+@Html.Hidden("TZ", Model.TimeZoneID)
+@Html.Hidden("St", Model.Status)
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmMain" class="form" method="" action=""  autocomplete="off">
+                    @Html.HiddenFor(m => m.UserID)
+                    @Html.HiddenFor(m => m.Type)
+                    @Html.HiddenFor(m => m.Status)
+                    <div class="card ">
+                        <div class="card-header ">
+                            <div class="card-header">
+                                @{
+                                    if (ViewBag.IsNew == true)
+                                    {
+                                        <h4 class="card-title">@Localizer["New"] @Localizer["User"]</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="card-title">@Localizer["Update"] @Localizer["User"]</h4>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-4 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Name"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50, autocomplete = "off" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Lastname"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50, autocomplete = "off" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Surname"]</label>
+                                        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", @style = "", @maxlength = 50, autocomplete = "off" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-4 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Username"]</label><star class="star">*</star>
+                                                @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50})
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Password"]</label><star class="star">*</star>
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @style = "", @required = "required", @minlength = 8, @maxlength = 10, autocomplete = "off" })
+                                                <label id="password-long" class="mt-1" for="password">@Localizer["PasswordLong"]</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Email"]</label><star class="star">*</star>
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50, @type = "email", autocomplete = "off" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-md-12 px-2">
+                                            <div class="form-group">
+                                                <label>@Localizer["Email"]</label><star class="star">*</star>
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @style = "", @required = "required", @maxlength = 50, @type = "email" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <div class="row">
+                                <div class="col-md-6 px-2">
+                                    <label>@Localizer["Language"]</label><star class="star">*</star>
+                                    <select id="LanguageID" name="LanguageID" class="form-control" required></select>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["TimeZone"]</label><star class="star">*</star>
+                                        <select id="TimeZoneID" name="TimeZoneID" class="form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6 px-2">
+                                            <div class="form-group">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        @Html.CheckBoxFor(m => m.CreateParticipant, new { @id = "CreateParticipant", @class = "form-check-input" })
+                                                        <span class="form-check-sign"></span>
+                                                        @Localizer["CreateParticipant"]
+                                                    </label>
+                                                </div>
+                                                <label>@Localizer["Participant"]</label><star class="star">*</star>
+                                                @Html.DropDownListFor(m => m.ParticipantID, new SelectList(ViewBag.Particpants, "Key", "Value"), new { @id = "ParticipantID", @class = "form-control", @style = "" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 px-2">
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="button" onclick="cancel(); return false;" class="btn btn-info btn-fill">@Localizer["Cancel"]</button>
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <button type="button" id="btnCreate" onclick="createUser(); return false;" class="btn btn-default btn-fill">@Localizer["Create"]</button>
+                                }
+                                else
+                                {
+                                    <button type="button" id="btnUpdate" onclick="updateUser(); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts { 
+    <script type="text/javascript" src="~/js/plugins/bootstrap-selectpicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/core/vUserEditor.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,215 @@
+﻿@Html.Hidden("ImageFormatAllowed", Localizer["ImageFormatAllowed"].ToString())
+
+<style>
+    .avatar:hover {
+        opacity: 0.5;
+        transition: background-color .5s;
+        cursor: pointer;
+    }
+</style>
+
+<div class="card-header ">
+    <div class=" ">
+        @{
+            if (!string.IsNullOrEmpty(ViewBag.ParticipantLogo))
+            {
+                <img class="avatar border-gray" onclick="openModal(); return false" src="@ViewBag.ParticipantLogo" alt="..." style="height: 100px; padding-bottom: 10px;" asp-append-version="true" />
+            }
+            else
+            {
+                <img class="avatar border-gray" onclick="openModal(); return false" src="~/images/avatar/default-avatar.png" alt="..." style="height: 100px; padding-bottom: 10px;" asp-append-version="true" />
+            }
+        }
+        <h5 class="card-title">@ViewBag.ParticipantName</h5>
+        <div class="card-description">@ViewBag.ParticipantCompany</div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card-body ">
+        <a href="/MyDashboard" class="btn btn-outline btn-round">@Localizer["Summary"]</a>
+        <a href="/MyDashboard/Pendings" class="btn btn-outline btn-round">@Localizer["Pendings"]</a>
+        <a href="/MyDashboard/Timesheet" class="btn btn-outline btn-round">@Localizer["Timesheet"]</a>
+        <a href="/MyDashboard/Meetings" class="btn btn-outline btn-round">@Localizer["Meetings"]</a>
+        <a href="/MyDashboard/Workload" class="btn btn-outline btn-round">@Localizer["Workload"]</a>
+        <a href="/MyDashboard/Calendar" class="btn btn-outline btn-round">@Localizer["Calendar"]</a>
+        <a href="/MyDashboard/Notifications" class="btn btn-outline btn-round">@Localizer["Notifications"]</a>
+    </div>
+</div>
+<div class="modal fade" id="editImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-body ">
+                        <form id="frmFile">
+                            <div class="form-group text-center">
+                                @{
+                                    if (!string.IsNullOrEmpty(ViewBag.ParticipantLogo))
+                                    {
+                                        <img src="@ViewBag.ParticipantLogo" alt="..." style="height: 150px; padding-bottom: 10px;" asp-append-version="true" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/avatar/default-avatar.png" alt="..." style="height: 150px; padding-bottom: 10px;" asp-append-version="true" />
+                                    }
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label>@Localizer["Logo"]</label>
+                                @Html.TextBox("Image", "", new { @id = "Image", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
+                            </div>
+                            <div class="card-category form-category">
+                                <star class="star">*</star> @Localizer["ImageSuggestedSize"]: 370px 370px
+                            </div>
+                            <div class="card-footer text-right">
+                                <a class="btn btn-link btn-danger float-left" id="deleteImage" data-toggle="tooltip" style='font-size:18px; color: #FB404B;' onclick="deleteFile(); return false" title="@Localizer["Delete"]"><i class="far fa-trash-alt "></i></a>
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnUpload" onclick="uploadFile(); return false;" class="btn btn-default btn-fill">@Localizer["Upload"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        console.log()
+        $("#Image").change(function () {
+            var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                Swal.fire({
+                    type: 'error',
+                    title: '',
+                    text: $("#ImageFormatAllowed").val(),
+                    footer: ''
+                });
+                $(this).val('');
+            }
+        });
+
+    });
+    function openModal() {
+        if ('@ViewBag.ParticipantLogo' == "" || '@ViewBag.ParticipantLogo' == null)
+            $('#deleteImage').hide()
+        else
+            $('#deleteImage').show()
+
+        $('#editImg').modal('show');
+    }
+
+    function uploadFile() {
+        var form = $("#frmFile");
+        if (!form.valid())
+            return;
+
+        var participantID = '@ViewBag.ParticipantID';
+
+        formData = new FormData();
+        formData.append("ParticipantID", participantID);
+        formData.append("Image", $("#Image")[0].files[0]);
+
+
+        $.ajax({
+            type: 'PATCH',
+            url: '/ParticipantUsers/UploadFile',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                LoaderShow();
+            },
+            success: function (data) {
+                if (data.isSuccess) {
+                    Swal.fire({
+                        type: 'success',
+                        title: '',
+                        text: data.successMessage,
+                        footer: '',
+                        onAfterClose: function () {
+                            $('#editImg').modal('toggle');
+                            LoaderShow();
+                            location.reload();
+
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: data.errorMessage,
+                        footer: ''
+                    });
+                }
+            },
+            complete: function () {
+                LoaderHide();
+            },
+            error: function (xhr, status, error) {
+                LoaderHide();
+                Swal.fire({
+                    type: 'error',
+                    title: '',
+                    text: error,
+                    footer: ''
+                });
+            }
+        })
+    }
+
+    function deleteFile() {
+        var participantID = '@ViewBag.ParticipantID';
+
+        formData = new FormData();
+        formData.append("ParticipantID", participantID);
+
+        $.ajax({
+            type: 'PATCH',
+            url: '/ParticipantUsers/DeleteFile/',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                LoaderShow();
+            },
+            success: function (data) {
+                if (data.isSuccess) {
+                    Swal.fire({
+                        type: 'success',
+                        title: '',
+                        text: data.successMessage,
+                        footer: '',
+                        onAfterClose: function () {
+                            $('#editImg').modal('toggle');
+                            LoaderShow();
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: data.errorMessage,
+                        footer: ''
+                    });
+                }
+            },
+            complete: function () {
+                LoaderHide();
+            },
+            error: function (xhr, status, error) {
+                LoaderHide();
+                Swal.fire({
+                    type: 'error',
+                    title: '',
+                    text: error,
+                    footer: ''
+                });
+            }
+        })
+    }
+
+</script>

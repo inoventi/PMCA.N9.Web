@@ -1,0 +1,122 @@
+﻿@model PMCTool.Models.Environment.Project
+
+@Html.HiddenFor(m => m.ProjectID)
+@Html.Hidden("ParticipantID")
+
+@Html.Hidden("m4013", string.Format(Localizer["4013"].ToString(), Localizer["IPAddress"].ToString()))
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Active", Localizer["Active"].ToString())
+@Html.Hidden("Inactive", Localizer["Inactive"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+
+@Html.Hidden("EnumParticipantRole_1", Localizer["EnumParticipantRole_1"].ToString())
+@Html.Hidden("EnumParticipantRole_2", Localizer["EnumParticipantRole_2"].ToString())
+@Html.Hidden("EnumParticipantRole_3", Localizer["EnumParticipantRole_3"].ToString())
+@Html.Hidden("EnumParticipantRole_4", Localizer["EnumParticipantRole_4"].ToString())
+@Html.Hidden("EnumParticipantRole_5", Localizer["EnumParticipantRole_5"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        @*<div class="row">
+            <div class="col-md-12">
+                <div class="card  card-tasks">
+                    <div class="card-header ">
+                        <h4 class="card-title">@Model.Name</h4>
+                        <p class="card-category">@Model.Description</p>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="col-md-10 pt-4">
+                <small class="font-weight-normal bold">Proyecto</small>
+                <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                    <span class="txt-blue"> @Model.Name	</span>
+                </h4>
+                <small class="font-weight-normal bold">@Model.Description</small>
+            </div>
+            <div class="col-md-2 text-right pt-2">
+                <a href="/ProjectManager/Projects" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-arrow-left"></i> Regresar</a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card data-tables">
+                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar          -->
+                        </div>
+                        <div class="fresh-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Selected"]</th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Company"]</th>
+                                        <th>@Localizer["Role"]</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Selected"]</th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Company"]</th>
+                                        <th>@Localizer["Role"]</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title"><span id="mwTitle"></span></h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmMain">
+                            <div class="form-group">
+                                <label>@Localizer["SelectRole"]</label>
+                                <select id="RoleID" class="form-control"></select>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnUpload" onclick="Select(); return false;" class="btn btn-default btn-fill">@Localizer["Select"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vProjectManagerProjectparticipants.js" asp-append-version="true"></script>
+}

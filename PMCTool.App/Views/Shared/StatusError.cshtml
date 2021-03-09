@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_LayoutError";
+}
+    <div class="container" style="margin-top:10% !important">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="mx-auto d-block" src="~/images/logo3.png" alt="logo" style="width: 200px; height: 100px" asp-append-version="true">
+            </div>
+            <div class="col-md-8">
+                @{
+                    if (ViewBag.StatusCode == 401)
+                    {
+                        <h3 class="card-title font-weight-bold mb-1 txt-blue">@Localizer["Error401Title"]</h3>
+                        <h4 class="card-title mt-1 pt-0">@Localizer["Error401Subtitle"]</h4>
+                        <p class="card-title mt-1 pt-0 text-gris">@Localizer["Error401Body"] <a class="btn btn-sm" asp-controller="Home" asp-action="Index">@Localizer["GoHomePage"]</a></p>
+                    }
+                    else if (ViewBag.StatusCode == 404)
+                    {
+                        <h3 class="card-title font-weight-bold mb-1 txt-blue">@Localizer["Error404Title"]</h3>
+                        <h4 class="card-title mt-1 pt-0">@Localizer["Error404Subtitle"]</h4>
+                        <p class="card-title mt-1 pt-0 text-gris">@Localizer["Error404Body"] <a class="btn btn-sm" asp-controller="Home" asp-action="Index">@Localizer["GoHomePage"]</a></p>
+                    }
+                    else if (ViewBag.StatusCode == 500)
+                    {
+                        <h3 class="card-title font-weight-bold mb-1 txt-blue">@Localizer["Error500Title"]</h3>
+                        <h4 class="card-title mt-1 pt-0">@Localizer["Error500Subtitle"]</h4>
+                        <p class="card-title mt-1 pt-0 text-gris">@Localizer["Error500Body1"] <a href="mailto:soportepmctool@pmc-tool.com">soportepmctool@pmc-tool.com</a> @Localizer["Error500Body2"]</p>
+                        <p class="card-title mt-1 pt-0 text-gris">@Localizer["Error500Body3"]</p>
+                        <p class="card-title mt-1 pt-0 text-gris"><a class="btn btn-sm" asp-controller="Home" asp-action="Index">@Localizer["GoHomePage"]</a></p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+

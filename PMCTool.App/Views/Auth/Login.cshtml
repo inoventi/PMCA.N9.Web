@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "_LayoutLogin";
+}
+
+@Html.Hidden("AgreementVerification", Localizer["AgreementVerification"].ToString())
+@Html.Hidden("tk", "")
+
+<style>
+    #Agreement:hover {
+        text-decoration: none;
+        cursor: initial;
+        background-color: initial;
+    }
+</style>
+
+<div class="full-page  section-image" data-color="black" data-image="/images/full-screen-bg.png">
+    <div class="content">
+        <div class="container">
+            <div class="col-md-4 col-sm-6 ml-auto mr-auto">
+                <div id="dvLogin">
+                    <form class="form" id="frmLogin">
+                        <div class="card card-login card-hidden">
+                            <div class="card-header text-center">
+                                <img class="hlogo" src="~/images/logo3.png" asp-append-version="true">
+                            </div>
+                            <div class="card-body ">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>@Localizer["User"]</label><star class="star">*</star>
+                                        <input type="text" placeholder="@Localizer["UserEnter"]" class="form-control" id="username" name="username" maxlength="50" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@Localizer["Password"]</label><star class="star">*</star>
+                                        <input type="password" placeholder="@Localizer["PasswordEnter"]" class="form-control" id="password" name="password" minlength="8" maxlength="15" required>
+                                    </div>
+                                    <div class="form-group text-center" style="color: #9A9A9A;font-size: 13px;cursor: pointer;">
+                                        <i class="nc-icon nc-key-25"></i>
+                                        <a onclick="HideAndShow('dvLogin', 'dvPassword'); return false;"> @Localizer["PasswordRecover"] </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="button" onclick="login(); return false;" class="btn btn-default btn-wd">@Localizer["Enter"]</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="dvPassword">
+                    <form class="form" id="frmPassword">
+                        <div class="card card-login card-hidden">
+                            <div class="card-header text-center">
+                                <img class="hlogo" src="~/images/logo3.png" asp-append-version="true">
+                            </div>
+                            <div class="card-body ">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>@Localizer["User"] / @Localizer["Email"]</label><star class="star">*</star>
+                                        <input type="text" placeholder="@Localizer["EnterUserOrEmail"]" class="form-control" id="userRecover" name="userRecover" maxlength="50" required>
+                                    </div>
+                                    <div class="form-group text-center" style="color: #9A9A9A;font-size: 13px;cursor: pointer;">
+                                        <i class="nc-icon nc-key-25"></i>
+                                        <a onclick="HideAndShow('dvPassword', 'dvLogin'); return false;"> @Localizer["LoginTitle"] </a>
+                                    </div>
+                                    <br /><br />
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="button" onclick="passwordRecovery(); return false;" class="btn btn-default btn-wd">@Localizer["Recover"] </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="dvEnvironment">
+                    <form class="form">
+                        <div class="card card-login card-hidden">
+                            <div class="card-header text-center">
+                                <img class="hlogo" src="~/images/logo3.png" asp-append-version="true">
+                            </div>
+                            <div class="card-body ">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>@Localizer["SelectEnvironment"]</label>
+                                        <select id="Environment" name="Environment" class="form-control" required></select>
+                                    </div>
+                                    <br /><br />
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="button" onclick="back(); return false;" class="btn btn-info btn-wd">@Localizer["Back"] </button>
+                                <button type="button" onclick="loginExt(); return false;" class="btn btn-default btn-wd">@Localizer["Enter"] </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="agreementModal" tabindex="-1" role="dialog" aria-labelledby="AgreementModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title">@Localizer["PrivacyPolicyAndTerms"]</h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmMain">
+                            <div class="form-group">
+                                <label></label>
+                                @Html.TextArea("Agreement", null, new { @class = "form-control", @style = "font-size: 10px;", @readonly = "readonly", @rows = "10", @cols = "50" })
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        @Html.CheckBox("acceptEnrollment", new { @class = "form-check-input" })
+                                        <span class="form-check-sign"></span>
+                                        @Localizer["AgreementCheck"]
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="button" class="btn btn-info btn-fill" onclick="cancelAgreement(); return false;">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnUpdate" onclick="acceptAgreement(); return false;" class="btn btn-default btn-fill">@Localizer["Accept"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vLogin.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,178 @@
+﻿@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+@Html.Hidden("Loading", Localizer["Loading"].ToString())
+@Html.Hidden("January", Localizer["January"].ToString())
+@Html.Hidden("February", Localizer["February"].ToString())
+@Html.Hidden("March", Localizer["March"].ToString())
+@Html.Hidden("April", Localizer["April"].ToString())
+@Html.Hidden("May", Localizer["May"].ToString())
+@Html.Hidden("June", Localizer["June"].ToString())
+@Html.Hidden("July", Localizer["July"].ToString())
+@Html.Hidden("August", Localizer["August"].ToString())
+@Html.Hidden("September", Localizer["September"].ToString())
+@Html.Hidden("October", Localizer["October"].ToString())
+@Html.Hidden("November", Localizer["November"].ToString())
+@Html.Hidden("December", Localizer["December"].ToString())
+@Html.Hidden("Sunday", Localizer["Sunday"].ToString())
+@Html.Hidden("Monday", Localizer["Monday"].ToString())
+@Html.Hidden("Tuesday", Localizer["Tuesday"].ToString())
+@Html.Hidden("Wednesday", Localizer["Wednesday"].ToString())
+@Html.Hidden("Thursday", Localizer["Thursday"].ToString())
+@Html.Hidden("Friday", Localizer["Friday"].ToString())
+@Html.Hidden("Saturday", Localizer["Saturday"].ToString())
+@Html.Hidden("Export", Localizer["Export"].ToString())
+@Html.Hidden("Import", Localizer["Import"].ToString())
+@Html.Hidden("From", Localizer["From"].ToString())
+@Html.Hidden("To", Localizer["To"].ToString())
+@Html.Hidden("Zoom", Localizer["Zoom"].ToString())
+@Html.Hidden("ViewFullScreen", Localizer["ViewFullScreen"].ToString())
+@Html.Hidden("ExitFullScreen", Localizer["ExitFullScreen"].ToString())
+@Html.Hidden("DownloadImage", Localizer["DownloadImage"].ToString())
+@Html.Hidden("Print", Localizer["Print"].ToString())
+@Html.Hidden("Reload", Localizer["Reload"].ToString())
+@Html.Hidden("Year", Localizer["Year"].ToString())
+@Html.Hidden("Month", Localizer["Month"].ToString())
+@Html.Hidden("Week", Localizer["Week"].ToString())
+@Html.Hidden("YTD", Localizer["YTD"].ToString())
+@Html.Hidden("All", Localizer["All"].ToString())
+@Html.Hidden("Start", Localizer["Start"].ToString())
+@Html.Hidden("End", Localizer["End"].ToString())
+
+<link href="~/css/desempenoProyectos.css" rel="stylesheet" asp-append-version="true" />
+<input type="hidden" id="ProjectID" name="Project_ID" value="@Model.ProjectID">
+<div class="content">
+    <div class="container-fluid">
+        <div class="row pt-4">
+            <div class="col-md-12 mt-0 pt-0">
+                <div class="header-text text-left pb-3">
+                    <h3 class="card-title mt-1 mb-0 txt-blue"><b>@Localizer["Analytics1_001"]</b></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- allow-->
+            <div class="container-fluid pl-0 ml-0">
+                <div class="card card-register card-plain text-center">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue">@Localizer["Projects"]</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <figure class="highcharts-figure">
+                                                <div id="proyectos"></div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue pb-4">@Localizer["Analytics1_002"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="cambiosProyectos"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="card-title txt-blue pb-4">@Localizer["Analytics1_003"]</h4>
+                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="elementosProyecto"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title txt-blue pb-3">@Localizer["Analytics1_004"]</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div>
+                                            <ul id="list">
+                                                <li class="col-12"><span class="legend indicador-planeada"></span><label class="control-label">@Localizer["Analytics1_005"]</label></li>
+                                                <li class="col-12"><span class="legend indicador-real"></span><label class="control-label">@Localizer["Analytics1_006"]</label></li>
+                                                <li class="col-12"><span class="legend indicador-lineaBase"></span><label class="control-label">@Localizer["BaseLine"]</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4 text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-filter"></i> @Localizer["Project"]
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                @{
+                                                    var collection = new SelectList(ViewBag.Projects, "Key", "Value");
+                                                    foreach (var item in collection)
+                                                    {
+                                                        <button onclick="refresh('@item.Value', '@item.Text'); return false;" class="dropdown-item refresChart" type="button">@item.Text</button>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <figure class="highcharts-figure">
+                                            <div id="comparativoPlan"></div>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end allow-->
+</div>
+@section Scripts {
+    <!-- highcharts -->
+    <script src="~/js/plugins/highcharts/highcharts.js"></script>
+    <script src="~/js/plugins/highcharts/modules/xrange.js"></script>
+    <script src="~/js/plugins/highcharts/highcharts-more.js"></script>
+    <script src="~/js/plugins/highcharts/modules/sankey.js"></script>
+    <script src="~/js/plugins/highcharts/modules/organization.js"></script>
+    <script src="~/js/plugins/highcharts/modules/treemap.js"></script>
+    <script src="~/js/plugins/highcharts/modules/exporting.js"></script>
+    <script src="~/js/plugins/highcharts/modules/export-data.js"></script>
+    <script src="~/js/plugins/highcharts/modules/solid-gauge.js"></script>
+    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
+    <script src="~/js/plugins/highcharts/modules/heatmap.js"></script>
+    <script>
+        var Highstock = window.Highcharts;
+        var HighF = window.Highcharts;
+        window.Highcharts = null;
+    </script>
+    <script src="~/js/plugins/highcharts/gantt/highcharts-gantt.js"></script>
+    <script src="~/js/plugins/bootstrap-selectpicker.js"></script>
+    <script type="text/javascript" src="~/js/core/vAnalyticsProjects.js" asp-append-version="true"></script>
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

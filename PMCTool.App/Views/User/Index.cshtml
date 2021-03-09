@@ -1,0 +1,263 @@
+﻿@Html.Hidden("m4013", string.Format(Localizer["4013"].ToString(), Localizer["IPAddress"].ToString()))
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Active", Localizer["Active"].ToString())
+@Html.Hidden("Inactive", Localizer["Inactive"].ToString())
+@Html.Hidden("Locked", Localizer["Locked"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Profile", Localizer["Profile"].ToString())
+@Html.Hidden("ProjectManager", Localizer["ProjectManager"].ToString())
+@Html.Hidden("Executive", Localizer["Executive"].ToString())
+@Html.Hidden("Participant", Localizer["Participant"].ToString())
+@Html.Hidden("ParticipantPlus", Localizer["ParticipantPlus"].ToString())
+@Html.Hidden("Connectivity", Localizer["Connectivity"].ToString())
+@Html.Hidden("Environment", Localizer["Environment"].ToString())
+@Html.Hidden("License", Localizer["License"].ToString())
+@Html.Hidden("Unlock", Localizer["Unlock"].ToString())
+@Html.Hidden("EnumUserLicenseType_1", Localizer["EnumUserLicenseType_1"].ToString())
+@Html.Hidden("EnumUserLicenseType_2", Localizer["EnumUserLicenseType_2"].ToString())
+@Html.Hidden("EnumUserLicenseType_3", Localizer["EnumUserLicenseType_3"].ToString())
+@Html.Hidden("EnumUserLicenseType_4", Localizer["EnumUserLicenseType_4"].ToString())
+@Html.Hidden("EnumUserLicenseType_5", Localizer["EnumUserLicenseType_5"].ToString())
+
+@Html.Hidden("ID", "")
+@Html.Hidden("Env", "")
+@Html.Hidden("LicenseType", "")
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button onclick="licensing(); return false;" class="btn btn-default btn-fill"><i class="fas fa-id-badge"></i> @Localizer["Licensing"]</button>&nbsp;&nbsp;
+                <button onclick="newEntry(); return false;" class="btn btn-default btn-fill"><i class="fas fa-plus-circle"></i> @Localizer["New"]</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card data-tables">
+                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar          -->
+                        </div>
+                        <div class="fresh-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Name"]</th>
+                                        @*<th>@Localizer["Lastname"]</th>
+                                            <th>@Localizer["Surname"]</th>*@
+                                        <th>@Localizer["User"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["License"]</th>
+                                        <th>@Localizer["Language"]</th>
+                                        <th>@Localizer["TimeZone"]</th>
+                                        <th>@Localizer["Email"]</th>
+                                        <th>@Localizer["Created"]</th>
+                                        <th>@Localizer["CreatedBy"]</th>
+                                        <th>@Localizer["Updated"]</th>
+                                        <th>@Localizer["UpdatedBy"]</th>
+                                        <th class="disabled-sorting text-right">@Localizer["Action"]</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>@Localizer["Name"]</th>
+                                        @*<th>@Localizer["Lastname"]</th>
+                                            <th>@Localizer["Surname"]</th>*@
+                                        <th>@Localizer["User"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["License"]</th>
+                                        <th>@Localizer["Language"]</th>
+                                        <th>@Localizer["TimeZone"]</th>
+                                        <th>@Localizer["Email"]</th>
+                                        <th>@Localizer["Created"]</th>
+                                        <th>@Localizer["CreatedBy"]</th>
+                                        <th>@Localizer["Updated"]</th>
+                                        <th>@Localizer["UpdatedBy"]</th>
+                                        <th class="text-right">@Localizer["Action"]</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="connectivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title">@Localizer["Connectivity"]</h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmConnectivity">
+                            <div class="form-group">
+                                <label>@Localizer["IPAddress"]</label>
+                                <input type="text" placeholder="" class="form-control" id="ipaddress" name="ipaddress" maxlength="15" required>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="button" id="btnWithoutRestriction" onclick="saveUserConnection(); return false;" class="btn btn-default btn-fill">@Localizer["WithoutRestriction"]</button>
+                                <button type="button" id="btnAddIP" onclick="createUserConnection(); return false;" class="btn btn-default btn-fill">@Localizer["Enter"] @Localizer["IPAddress"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card data-tables">
+                            <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                <div class="toolbar">
+                                    <!--        Here you can write extra buttons/actions for the toolbar          -->
+                                </div>
+                                <div class="fresh-datatables">
+                                    <table id="datatablesIP" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>@Localizer["IPAddress"]</th>
+                                                <th class="disabled-sorting text-right">@Localizer["Action"]</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th>@Localizer["IPAddress"]</th>
+                                                <th class="disabled-sorting text-right">@Localizer["Action"]</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Close"]</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="licensingModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title">@Localizer["Licensing"]</h5>
+                    </div>
+                    <div class="card-body ">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card data-tables">
+                            <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                <div class="toolbar">
+                                    <!--        Here you can write extra buttons/actions for the toolbar          -->
+                                </div>
+                                <div class="fresh-datatables">
+                                    <table id="datatableLicensing" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>@Localizer["LicenseType"]</th>
+                                                <th>@Localizer["Quantity"]</th>
+                                                <th>@Localizer["Assigned"]</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Close"]</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="licenseModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h4 id="lmName" class="card-title"></h4>
+                        <p id="lmEmail" class="card-category"></p>
+                        <br />
+                    </div>
+                    <div id="dvAssignation" class="card-body ">
+                        <div id="lmSelect" class="form-group">
+                            <label>@Localizer["LicenseSelect"]</label>
+                            @*<select id="selectLicense" name="selectLicense" class="selectpicker" data-title="" data-style="btn-default btn-outline" data-menu-style="dropdown-blue"></select>*@
+                            <select id="selectLicense" name="selectLicense" class="form-control"></select>
+                        </div>
+                        <div id="lmNoLicense" class="form-group text-center">
+                            <h4>@Localizer["LicenseNoAvailable"]</h4>
+                        </div>
+                    </div>
+                    <div id="dvRemove" class="card-body ">
+                        <div class="form-group text-center">
+                            <h4 id="lmLicenseName"></h4>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="button" onclick="removeLicense(); return false;" class="btn btn-default btn-fill">@Localizer["Remove"] @Localizer["License"]</button>
+                            <button type="button" onclick="selectLicense(); return false;" class="btn btn-default btn-fill">@Localizer["Update"] @Localizer["License"]</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                        <button type="button" id="btnUpdate" onclick="updateLicense(); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/plugins/bootstrap-selectpicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/core/vUser.js" asp-append-version="true"></script>
+}
+

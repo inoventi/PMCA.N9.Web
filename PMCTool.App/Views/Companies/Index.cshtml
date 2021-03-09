@@ -1,0 +1,161 @@
+﻿@model PMCTool.App.Controllers.CompanyImage;
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("ImageLabel", Localizer["Image"].ToString())
+@Html.Hidden("ImageFormatAllowed", Localizer["ImageFormatAllowed"].ToString())
+@Html.Hidden("DragDrop", Localizer["DragDrop"].ToString())
+@Html.Hidden("Upload", Localizer["Upload"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString().ToUpper())
+@Html.Hidden("Active", Localizer["Active"].ToString())
+@Html.Hidden("Inactive", Localizer["Inactive"].ToString())
+@Html.Hidden("FileExtension", Localizer["FileExtensionNotAllowed"].ToString())
+@Html.Hidden("FormatAllowed", Localizer["BlukLoadFormatAllowed"].ToString())
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button onclick="newEntry(); return false;" class="btn btn-default btn-fill"><i class="fas fa-plus-circle"></i> @Localizer["New"]</button>
+                <button id="bulkload" onclick="showBulK(); return false;" class="btn btn-default btn-fill"><i class="fas fa-file-import"></i> @Localizer["BulkLoad"]</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card data-tables">
+                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                        <div class="toolbar">
+                            <!--        Here you can write extra buttons/actions for the toolbar          -->
+                        </div>
+                        <div class="fresh-datatables">
+                            <table id="datatables" class="table table-striped table-no-bordered table-hover display responsive nowrap" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["Logo"]</th>
+                                        <th>@Localizer["Street"]</th>
+                                        <th>@Localizer["ExtNum"]</th>
+                                        <th>@Localizer["IntNum"]</th>
+                                        <th>@Localizer["District"]</th>
+                                        <th>@Localizer["City"]</th>
+                                        <th>@Localizer["City"]</th>
+                                        <th>@Localizer["State"]</th>
+                                        <th>@Localizer["State"]</th>
+                                        <th>@Localizer["Country"]</th>
+                                        <th>@Localizer["Country"]</th>
+                                        <th>@Localizer["ZipCode"]</th>
+                                        <th>@Localizer["Contact"]</th>
+                                        <th>@Localizer["Created"]</th>
+                                        <th>@Localizer["CreatedBy"]</th>
+                                        <th>@Localizer["Updated"]</th>
+                                        <th>@Localizer["UpdatedBy"]</th>
+                                        <th class="disabled-sorting text-right">@Localizer["Actions"]</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>@Localizer["Code"]</th>
+                                        <th>@Localizer["Name"]</th>
+                                        <th>@Localizer["Status"]</th>
+                                        <th>@Localizer["Logo"]</th>
+                                        <th>@Localizer["Street"]</th>
+                                        <th>@Localizer["ExtNum"]</th>
+                                        <th>@Localizer["IntNum"]</th>
+                                        <th>@Localizer["District"]</th>
+                                        <th>@Localizer["City"]</th>
+                                        <th>@Localizer["City"]</th>
+                                        <th>@Localizer["State"]</th>
+                                        <th>@Localizer["State"]</th>
+                                        <th>@Localizer["Country"]</th>
+                                        <th>@Localizer["Country"]</th>
+                                        <th>@Localizer["ZipCode"]</th>
+                                        <th>@Localizer["Contact"]</th>
+                                        <th>@Localizer["Created"]</th>
+                                        <th>@Localizer["CreatedBy"]</th>
+                                        <th>@Localizer["Updated"]</th>
+                                        <th>@Localizer["UpdatedBy"]</th>
+                                        <th class="text-right">@Localizer["Actions"]</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bulkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title">@Localizer["BulkLoad"]</h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmLoader">
+                            <div id="fileuploader"></div>
+                            <div><a id="bulkLink" href="">@Localizer["DownloadBulk"]</a></div>
+                            <div><a id="catalogLink" href="" onclick="javascript: downloadCatalog(); return false;">@Localizer["DownloadCatalog"]</a></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-header ">
+                        <h5 class="card-title"><span id="umCompanyName"></span></h5>
+                    </div>
+                    <div class="card-body ">
+                        <form id="frmFile">
+                            @Html.HiddenFor(m => m.CompanyID)
+                            <div class="form-group text-center">
+                                <img id="umEnvironmentImage" src="" style="max-width:200px;" />
+                            </div>
+                            <div class="form-group">
+                                <label>@Localizer["Logo"]</label>
+                                @Html.TextBoxFor(m => m.Image, new { @id = "Image", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
+                            </div>
+                            <div class="card-category form-category">
+                                <star class="star">*</star> @Localizer["ImageSuggestedSize"]: 370px 370px
+                            </div>
+                            <div class="card-footer  text-right">
+                                <a class="btn btn-link btn-danger float-left" id="deleteImage" data-toggle="tooltip" style='font-size:18px; color: #FB404B;' onclick="deleteFile(); return false" title="@Localizer["Delete"]"><i class="far fa-trash-alt "></i></a>
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnUpload" onclick="uploadFile(); return false;" class="btn btn-default btn-fill">@Localizer["Upload"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vCompany.js" asp-append-version="true"></script>
+}

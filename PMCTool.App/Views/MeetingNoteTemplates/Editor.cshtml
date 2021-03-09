@@ -1,0 +1,137 @@
+﻿@model PMCTool.Models.Environment.MeetingNoteTemplate
+@{
+    var lang = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
+@if (lang == "es-MX")
+{
+    <script src="~/js/plugins/summernote/summernote-es-ES.min.js"></script>
+}
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("RequiredFields", Localizer["RequiredFields"].ToString())
+@Html.Hidden("RequiredField", Localizer["4012"].ToString())
+@Html.Hidden("HeaderTag", Localizer["Header"].ToString())
+@Html.Hidden("TemplateTag", Localizer["Template"].ToString())
+@Html.Hidden("FooterTag", Localizer["Footer"].ToString())
+
+@Html.Hidden("OldCode", Model.Code)
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmMain">
+                    @Html.HiddenFor(m => m.MeetingNoteTemplateID)
+
+                    <div class="card">
+                        <div class="card-header ">
+                            <div class="card-header">
+                                @{
+                                    if (ViewBag.IsNew == true)
+                                    {
+                                        <h4 class="card-title">@Localizer["New"] @Localizer["Template"]</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="card-title">@Localizer["Update"] @Localizer["Template"]</h4>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Code"]</label>
+                                        @Html.TextBoxFor(m => m.Code, new { @id = "Code", @class = "form-control", @style = "", @maxlength = 50 })
+                                    </div>
+                                </div>
+                                <div class="col-md-9 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Name"]</label><star class="star">*</star>
+                                        @Html.TextBoxFor(m => m.Name, new { @id = "Name", @class = "form-control", @style = "", @required = "required", @maxlength = 150 })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Description"]</label>
+                                        @Html.TextAreaFor(m => m.Description, new { @id = "Description", @class = "form-control", @style = "", @maxlength = 1500 })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Header"]</label><star class="star">*</star>
+                                        @Html.TextAreaFor(m => m.Header, new { @id = "Header", @class = "form-control textarea-editor", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Template"]</label><star class="star">*</star>
+                                        @Html.TextAreaFor(m => m.Template, new { @id = "Template", @class = "form-control textarea-editor", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 px-2">
+                                    <div class="form-group">
+                                        <label>@Localizer["Footer"]</label><star class="star">*</star>
+                                        @Html.TextAreaFor(m => m.Footer, new { @id = "Footer", @class = "form-control textarea-editor", @style = "", @required = "required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                @Html.CheckBoxFor(m => m.IsActive, new { @id = "IsActive", @class = "form-check-input" })
+                                                <span class="form-check-sign"></span>
+                                                @Localizer["Active"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 px-2">
+                                    <div class="form-group">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="button" id="btnCancel" onclick="cancel(); return false;" class="btn btn-info btn-fill">@Localizer["Cancel"]</button>
+                            @{
+                                if (ViewBag.IsNew == true)
+                                {
+                                    <button type="button" id="btnCreate" onclick="createRecord('MeetingNoteTemplates'); return false;" class="btn btn-default btn-fill">@Localizer["Create"]</button>
+                                }
+                                else
+                                {
+                                    <button type="button" id="btnUpdate" onclick="updateRecord('MeetingNoteTemplates'); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vMeetingNoteTemplatesEditor.js" asp-append-version="true"></script>
+}

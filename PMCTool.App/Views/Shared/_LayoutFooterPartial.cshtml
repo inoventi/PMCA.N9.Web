@@ -1,0 +1,108 @@
+﻿@{
+    @inject Microsoft.Extensions.Configuration.IConfiguration config;
+    string versionApp = @config["AppSettings:VersionAPP"];
+}
+@{
+    bool IsMobileBrowser = PMCTool.App.Helpers.RequestExtensions.IsMobileBrowser(Context.Request);
+    if (IsMobileBrowser)
+    {
+        <style>
+            .footer div {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                font-weight: normal;
+                font-size: 0.875rem;
+            }
+
+                .footer div > a:not(.btn) {
+                    color: #ffffff;
+                    display: block;
+                    margin-bottom: 3px;
+                }
+
+                    .footer div > a:not(.btn):hover,
+                    .footer div > a:not(.btn):focus {
+                        color: #ffffff;
+                    }
+
+            .footer .copyright {
+                color: #797979;
+                padding: 10px 15px;
+                line-height: 20px;
+            }
+        </style>
+        <footer class="footer">
+            <div class="container">
+                <div class="text-center">
+                    <div>
+                        <a>
+                            @Localizer["Version"]   @versionApp
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://pmc-tool.com/AvisoLegal.html" target="_blank">
+                            @Localizer["TermsAndConditions"]
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://pmc-tool.com/AvisoLegal.html" target="_blank">
+                            @Localizer["PrivacyPolicy"]
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://pmc-tool.com#contact" target="_blank">
+                            @Localizer["Contact"]
+                        </a>
+                    </div>
+                    <div class="copyright">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://www.pmc-tool.com" target="_blank">PMC-TOOL</a> @Localizer["AllRightsReserved"].
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+    }
+    else
+    {
+        <footer class="footer">
+            <div class="container">
+                <nav>
+                    <ul class="footer-menu">
+                        <li>
+                            <a>
+                                @Localizer["Version"] @versionApp
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pmc-tool.com/AvisoLegal.html" target="_blank">
+                                @Localizer["TermsAndConditions"]
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pmc-tool.com/AvisoLegal.html" target="_blank">
+                                @Localizer["PrivacyPolicy"]
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pmc-tool.com#contact" target="_blank">
+                                @Localizer["Contact"]
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-center">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://www.pmc-tool.com" target="_blank">PMC-TOOL</a>, @Localizer["AllRightsReserved"].
+                    </p>
+                </nav>
+            </div>
+        </footer>
+    }
+}

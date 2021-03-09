@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Analytics";
+}
+
+<div class="content">
+    
+</div>
+@section Scripts {
+    <link href="~/css/analytics-kpis.css" rel="stylesheet" asp-append-version="true" />
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/js/core/vAnalyticsKpis.js?v=1.0.0" asp-append-version="true"></script>
+    <script src="~/js/plugins/bootstrap-selectpicker.js"></script>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        window.location = "@ViewBag.UrlAnalytics/Auth/ExternalLogin?userEmail=@ViewBag.userEmail"; 
+    });
+ </script>
+
+

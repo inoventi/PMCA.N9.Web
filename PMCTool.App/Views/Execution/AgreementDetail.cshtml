@@ -1,0 +1,229 @@
+﻿@model PMCTool.App.Models.ProjectMeetingAgreementViewModel
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+    string endate = Model.ProjectMeetingAgreement.PlannedEndDate.ToString("yyyy-MM-dd");
+    string topic = "";
+
+    if (!string.IsNullOrEmpty(Model.ProjectMeetingAgreement.ElementDescription))
+    {
+        topic = Model.ProjectMeetingAgreement.ElementDescription;
+    }
+    else
+    {
+        topic = Model.ProjectMeetingAgreement.ElementName;
+    }
+}
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="~/css/select2/select2.min.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/select2/select2-bootstrap4.min.css" asp-append-version="true" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+
+@Html.Hidden("EnumProjectRiskImpact_1", Localizer["EnumProjectRiskImpact_1"].ToString())
+@Html.Hidden("EnumProjectRiskImpact_2", Localizer["EnumProjectRiskImpact_2"].ToString())
+@Html.Hidden("EnumProjectRiskImpact_3", Localizer["EnumProjectRiskImpact_3"].ToString())
+@Html.Hidden("EnumProjectRiskProbability_1", Localizer["EnumProjectRiskProbability_1"].ToString())
+@Html.Hidden("EnumProjectRiskProbability_2", Localizer["EnumProjectRiskProbability_2"].ToString())
+@Html.Hidden("EnumProjectRiskProbability_3", Localizer["EnumProjectRiskProbability_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+
+@Html.Hidden("ChangeControlEndDate", "")
+@Html.Hidden("ChangeControlResponsible", "")
+@Html.Hidden("ProjectMeetingAgreementID", Model.ProjectMeetingAgreement.ProjectMeetingAgreementID)
+@Html.Hidden("ProjectMeetingID", Model.ProjectMeetingAgreement.ProjectMeetingID)
+@Html.Hidden("AgreementStatus", Model.ProjectMeetingAgreement.Status)
+@Html.Hidden("ParticipantID", Model.ProjectMeetingAgreement.Responsible)
+@Html.HiddenFor(m => m.ProjectID)
+@Html.HiddenFor(m => m.ProjectEditable)
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-md-12">
+                            <div class="col-md-12 pt-2">
+                                <div class="row">
+                                    <div class="col-md-10 pt-2">
+                                        <small class="font-weight-normal bold">@Localizer["Project"]</small>
+                                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                            <span class="txt-blue"> @Model.ProjectName </span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <a href="/Execution/Agreements?id=@Model.ProjectID" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 pt-2">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <small class="font-weight-normal bold">@Localizer["Agreements"]</small>
+                                        <h4 class="card-title txt-blue">@Model.ProjectMeetingAgreement.Description</h4>
+                                        <p class="card-category">@Localizer["DetailedAgreementReport"]</p>
+                                    </div>
+                                    @{
+                                        if (Model.ProjectEditable)
+                                        {
+                                            <div class="col-md-4 text-right pt-3">
+                                                <a href="#" onclick="setNotificationEntry('@Model.ProjectID','@Model.ProjectMeetingAgreement.ProjectMeetingAgreementID',6); return false;" class="btn btn-round btn-sm"><i class="far fa-bell"></i> @Localizer["Notify"] </a>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+
+                                <div class="row pt-4 pl-3">
+                                    <div class="col-md-6">
+                                        <div class="row">@Localizer["Status"]:&nbsp;<span id="StatusIndicator" class="bold st-atrasado ws">&nbsp;@Localizer["EnumProjectElementStatus_" + Model.ProjectMeetingAgreement.Status.ToString()]</span></div>
+                                        <div class="row">@Localizer["Meeting"]:&nbsp;<strong class="txt-blue">@Model.ProjectMeetingAgreement.Objective</strong></div>
+                                        <div class="row">@Localizer["Topic"]:&nbsp;<strong class="txt-blue">@topic</strong></div>
+                                        <div class="row">@Localizer["PercentageOfCompletion"]: <strong class="txt-blue">&nbsp; @Model.ProjectMeetingAgreement.Progress.ToString("N2") %</strong></div>
+                                        <div class="row">@Localizer["Responsible"]:&nbsp;<span><a class="underline-link" href="#" onclick="getParticipantInfoModal('@Model.ProjectMeetingAgreement.Responsible'); return false;">@Model.ProjectMeetingAgreement.ResponsibleName</a></span> </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">@Localizer["AgreementDate"]:&nbsp;<strong class="txt-blue"> @endate</strong></div>
+                                    </div>
+                                    <div class="col-md-12 pl-1">
+                                        <span id="LastCommentLabel">@Localizer["Comment"]:  </span> <br>
+                                        <span class="pl-3 txt-blue" id="LastAnnotationHolder"></span>
+                                        <br>
+                                        <div class="row text-right">
+                                            <div class="col-md-12 text-right">
+                                                @if (Model.ProjectEditable && ViewBag.Role != null && ViewBag.Role != 2 && ViewBag.Role != 1)
+                                                {
+                                                    <a href="#" onclick="setAnnotationEntry('@Model.ProjectID', '@Model.ProjectMeetingAgreement.ProjectMeetingAgreementID', 6); return false;" class="btn btn-round btn-sm"><i class="fas fa-plus-circle"></i> @Localizer["Comment"] </a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pt-1 mt-1">
+                                    <div class="card-body pt-4">
+                                        <div class="accordions" id="accordion">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">
+                                                        <a data-target="#collapseOne" href="#" data-toggle="collapse" aria-expanded="false">
+                                                            <i class="fas fa-user-tie"></i> @Localizer["Involved"]
+                                                            <b class="caret"></b>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="card-collapse collapse" style="">
+                                                    <div class="card-body">
+                                                        <div class="row justify-content-md-center">
+                                                            <div class="col-md-6  text-center lbl-responsable">
+                                                                @Localizer["Responsible"]
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-1 bg-gray">
+                                                            <div class="col-md-6  text-left">
+                                                                @Localizer["Name"]: <span class="txt-blue" id="ResponsibleName"></span><br>
+                                                                @Localizer["Escalation"]: <span class="txt-blue"><a id="EscalationName" class="underline-link" href="#"></a></span>
+                                                            </div>
+                                                            <div class="col-md-6  text-left">
+                                                                @Localizer["Phone"]: <span class="txt-blue"><a class="underline-link" href="#" id="ResponsiblePhone"></a></span><br>
+                                                                @Localizer["Email"]: <span class="txt-blue"><a class="underline-link" href="#" id="ResponsibleEmail"></a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">
+                                                        <a data-target="#collapseTwo" href="#" data-toggle="collapse">
+                                                            <i class="fas fa-book-open"></i> @Localizer["Comments"] <span id="BadgeAnnotation" class="badge badge-secondary">0</span>
+                                                            <b class="caret"></b>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="card-collapse collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="bd-comment">
+                                                                    <ul class="list-unstyled" id="AnnotationHolder"></ul>
+                                                                    <div class="col-md-12 text-right">
+                                                                        <a href="#" onclick="getAnnotations('@Model.ProjectID','@Model.ProjectMeetingAgreement.ProjectMeetingAgreementID', 6); return false;" class="btn btn-round btn-sm" id="seeMoreAnnotations"><i class="fas fa-book-open"></i> @Localizer["SeeMore"]</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">
+                                                        <a data-target="#collapseThree2" href="#" data-toggle="collapse">
+                                                            <i class="fas fa-info-circle"></i> @Localizer["TopicDetail"]
+                                                            <b class="caret"></b>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree2" class="card-collapse collapse">
+                                                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                                        <div class="col-md-12 data-tables">
+                                                            <div class="fresh-datatables">
+                                                                <table id="datatables" class="table table-striped table-no-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="disabled-sorting">@Localizer["Type"]</th>
+                                                                            <th class="disabled-sorting">@Localizer["Description"]</th>
+                                                                            <th class="disabled-sorting">@Localizer["Responsible"]</th>
+                                                                            <th class="disabled-sorting">@Localizer["Status"]</th>
+                                                                            <th class="disabled-sorting">@Localizer["Comment"]</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td id="t_type">Actividad</td>
+                                                                            <td id="t_description">@topic</td>
+                                                                            <td id="t_responsible"><a class="underline-link" href="#">Abrajam</a></td>
+                                                                            <td id="t_status"><span class="st-atrasado ws">Atrasado</span></td>
+                                                                            <td id="t_comments">En proceso de cierre</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")*@
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecuteAgreementDetail.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,124 @@
+﻿@model PMCTool.App.Models.ProjectMeetingViewModel
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Agreements", Localizer["Agreements"].ToString())
+@Html.Hidden("SendMeetingInvitation", Localizer["SendMeetingInvitation"].ToString())
+@Html.Hidden("DoYouWantToSendMeetingInvitation", Localizer["DoYouWantToSendMeetingInvitation"].ToString())
+
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+
+@Html.HiddenFor(m => m.ProjectID)
+@Html.HiddenFor(m => m.ProjectMeetingID)
+@Html.HiddenFor(m => m.ProjectEditable)
+
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-10 pt-2">
+                                <small class="font-weight-normal bold"> <b> @Localizer["Project"]</b></small>
+                                <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                    <span class="txt-blue"> @Model.ProjectName.ToUpper() </span>
+                                </h4>
+                            </div>
+                            <div class="col-md-2 text-right pt-2">
+                                <a href="/Execution/Project?id=@Model.ProjectID" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9 pt-0">
+                                <p class="card-category">@Localizer["StatusIndicators"]</p>
+                                <div class="indicadores-st 9" data-toggle="tooltip" title="@Localizer["CountIndicator_WithImpact"]"><i class="fas fa-circle" style="color:red"></i><strong class="txt-blue underline-link" id="withImpact"> 0 </strong></div>
+                                <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_OnTime"]"><i class="fas fa-circle" style="color:green"></i><strong class="txt-blue underline-link" id="onTime"> 0 </strong></div>
+                                <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Delayed"]"><i class="fas fa-circle" style="color:yellow"></i><strong class="txt-blue underline-link" id="delayed"> 0 </strong></div>
+                                <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Closed"]"><i class="fas fa-circle" style="color:gray"></i><strong class="txt-blue underline-link" id="closed"> 0 </strong></div>
+                            </div>
+                            <div class="col-md-3 pt-2 text-right">
+                                <div class="text-tiny mt-0">
+                                    @Localizer["Status"]:
+                                    <span id="groupStatus" class="bold st-entiempo ws">@Localizer["EnumProjectElementStatus_1"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                @if(Model.ProjectEditable && ViewBag.Role == 5)
+                                {
+                                    <a href="#" onclick="newEntry(); return false;" class="btn btn-sm btn-default btn-wd"><i class="fas fa-plus-circle"></i> @Localizer["New"]</a>
+                                }
+                            </div>
+                        </div>
+                        <div class="media-body ml-3">
+                            <div class="row">
+                                <div class="col-md-12 data-tables">
+                                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                        <div class="toolbar">
+                                        </div>
+                                        <div class="fresh-datatables">
+                                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@Localizer["Objetive"]</th>
+                                                        <th>@Localizer["Place"]</th>
+                                                        <th>@Localizer["ScheduledDate"]</th>
+                                                        <th>@Localizer["Duration"]</th>
+                                                        <th>@Localizer["ScheduledTime"]</th>
+                                                        <th class="text-right">@Localizer["Action"]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>@Localizer["Objetive"]</th>
+                                                        <th>@Localizer["Place"]</th>
+                                                        <th>@Localizer["ScheduledDate"]</th>
+                                                        <th>@Localizer["Duration"]</th>
+                                                        <th>@Localizer["ScheduledTime"]</th>
+                                                        <th class="text-right">@Localizer["Action"]</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecuteMeetings.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/jquery.mask.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}

@@ -1,0 +1,204 @@
+﻿@model PMCTool.App.Models.ProjectMilestoneDetailViewModel
+
+@{
+    var lng = Context.Request.Cookies["pmctool-lang-app"];
+}
+<link rel="stylesheet" href="~/css/detalle-actividad.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indicadores.css" asp-append-version="true" />
+@*<link href="~/css/dhtmlxgantt.css" rel="stylesheet" />*@
+<link href="~/lib/dhtmlxgantt-7.0.2/dhtmlxgantt.css" rel="stylesheet" />
+
+@*<script type="text/javascript" src="~/js/plugins/dhtmlxgantt.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/dhtmlxgantt_auto_scheduling.js" asp-append-version="true"></script>*@
+<link href="~/lib/dhtmlxgantt-7.0.2/dhtmlxgantt.css" rel="stylesheet" />
+<script type="text/javascript" src="~/lib/dhtmlxgantt-7.0.2/dhtmlxgantt.js" asp-append-version="true"></script>
+
+@Html.Hidden("AreYouSureDelete", Localizer["AreYouSureDelete"].ToString())
+@Html.Hidden("AreYouSureCancel", Localizer["AreYouSureCancel"].ToString())
+@Html.Hidden("AreYouSureArchive", Localizer["AreYouSureArchive"].ToString())
+@Html.Hidden("AreYouSureCancelMilestone", Localizer["AreYouSureCancelMilestone"].ToString())
+@Html.Hidden("Cancel", Localizer["Cancel"].ToString())
+@Html.Hidden("Accept", Localizer["Accept"].ToString())
+@Html.Hidden("Yes", Localizer["Yes"].ToString())
+@Html.Hidden("Edit", Localizer["Edit"].ToString())
+@Html.Hidden("Delete", Localizer["Delete"].ToString())
+@Html.Hidden("Archive", Localizer["Archive"].ToString())
+
+@Html.Hidden("EnumProjectElementStatus_1", Localizer["EnumProjectElementStatus_1"].ToString())
+@Html.Hidden("EnumProjectElementStatus_2", Localizer["EnumProjectElementStatus_2"].ToString())
+@Html.Hidden("EnumProjectElementStatus_3", Localizer["EnumProjectElementStatus_3"].ToString())
+@Html.Hidden("EnumProjectElementStatus_4", Localizer["EnumProjectElementStatus_4"].ToString())
+@Html.Hidden("EnumProjectElementStatus_5", Localizer["EnumProjectElementStatus_5"].ToString())
+
+@Html.Hidden("ChangeControlStartDate", "")
+@Html.Hidden("ChangeControlEndDate", "")
+@Html.Hidden("ChangeControlResponsible", "")
+
+@if (lng == null || lng == "es-MX")
+{
+    <script type="text/javascript" src="~/js/plugins/locale_mx.js" charset="utf-8"></script>
+}
+
+@Html.HiddenFor(m => m.ProjectID)
+@Html.HiddenFor(m => m.ProjectEditable)
+@Html.HiddenFor(m => m.ParticipantRole)
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card" hidden="hidden">
+            <div class="row">
+                <div id="gantt" style="width: 100%; height: 100vh;"></div>
+            </div>
+        </div>
+        <div class="col-md-12 card">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10 pt-2">
+                        <small class="font-weight-normal bold">@Localizer["Project"]</small>
+                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="txt-blue"> @Model.ProjectName </span>
+                        </h4>
+                    </div>
+                    <div class="col-md-2 text-right pt-2">
+                        <a href="/Execution/Project?id=@Model.ProjectID" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> @Localizer["Back"]</a>
+                    </div>
+                </div>
+                <div class="row mb-4 pb-3">
+                    <div class="col-md-9 pt-0">
+                        <p class="card-category">@Localizer["StatusIndicators"]</p>
+                        <div class="indicadores-st 9" data-toggle="tooltip" title="@Localizer["CountIndicator_WithImpact"]"><i class="fas fa-circle" style="color:red"></i><strong class="txt-blue underline-link" id="withImpact"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_OnTime"]"><i class="fas fa-circle" style="color:green"></i><strong class="txt-blue underline-link" id="onTime"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Delayed"]"><i class="fas fa-circle" style="color:yellow"></i><strong class="txt-blue underline-link" id="delayed"> 0 </strong></div>
+                        <div class="indicadores-st mleft-9" data-toggle="tooltip" title="@Localizer["CountIndicator_Closed"]"><i class="fas fa-circle" style="color:gray"></i><strong class="txt-blue underline-link" id="closed"> 0 </strong></div>
+                    </div>
+                    <div class="col-md-3 pt-2 text-right">
+                        <div class="text-tiny mt-0">
+                            @Localizer["Status"]:
+                            <span id="groupStatus" class="bold st-entiempo ws">@Localizer["EnumProjectElementStatus_1"]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 data-tables">
+                <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                    <div class="toolbar">
+                        <div class="col-md-12 text-right">
+
+                        </div>
+                    </div>
+                    <div class="fresh-datatables">
+                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th align="center">@Localizer["Milestone"]</th>
+                                    <th align="center">@Localizer["PlannedStartDate"]</th>
+                                    <th align="center">@Localizer["PlannedEndDate"]</th>
+                                    <th align="center">@Localizer["Responsible"]</th>
+                                    <th align="center">@Localizer["Status"]</th>
+                                    <th align="center">@Localizer["Comments"]</th>
+                                    <th class="disabled-sorting">@Localizer["Actions"]</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th align="center">@Localizer["Milestone"]</th>
+                                    <th align="center">@Localizer["PlannedStartDate"]</th>
+                                    <th align="center">@Localizer["PlannedEndDate"]</th>
+                                    <th align="center">@Localizer["Responsible"]</th>
+                                    <th align="center">@Localizer["Status"]</th>
+                                    <th align="center">@Localizer["Comments"]</th>
+                                    <th>@Localizer["Actions"]</th>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><strong class="txt-blue">@Localizer["Edit"] @Localizer["Milestone"]</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-1">
+                <div class="card stacked-form" style="border:none;">
+                    <div class="card-body ">
+                        <form id="frmMain">
+                            @Html.HiddenFor(m => m.ChangeControl)
+                            @Html.HiddenFor(m => m.ChangeControlComments)
+                            @Html.HiddenFor(m => m.ChangeControlAuthorizer)
+                            @Html.HiddenFor(m => m.ChangeControlManual)
+                            @Html.HiddenFor(m => m.ProjectMilestone.id, new { @id = "id" })
+
+                            <div class="form-group">
+                                <label>@Localizer["PlannedEndDate"]</label>
+                                @Html.TextBoxFor(m => m.ProjectMilestone.end_date, new { @id = "end_date", @class = "form-control datepicker", @style = "", @required = "required", @maxlength = 150 })
+                            </div>
+                            @*<div class="form-group">
+                                    <label>@Localizer["RealProgress"]</label>
+                                    @Html.TextBoxFor(m => m.ProjectMilestone.RealProgress, new { @id = "RealProgress", @class = "form-control", @style = "", @required = "required", @type = "number", @min = "0", @max = "100", @step = "0.01" })
+                                </div>*@
+                            <div class="form-group">
+                                <label>@Localizer["Responsible"]</label>
+                                @Html.DropDownListFor(m => m.ProjectMilestone.owner_id, new SelectList(ViewBag.Participants, "Key", "Value"), new { @id = "owner_id", @class = "form-control", @required = "required" })
+                            </div>
+                            <div id="dvStatus">
+                                <div class="form-group mb-0">
+                                    <label>@Localizer["Status"]</label> <span id="StatusIndicator" class="bold st-atrasado"></span>
+                                </div>
+                                <div id="dvStatusCheck" class="form-group mb-0 row">
+                                    <div class="form-check col">
+                                        <label class="form-check-label">
+                                            @Html.CheckBoxFor(m => m.ProjectMilestone.WithImpact, new { @id = "WithImpact", @class = "form-check-input" })
+                                            <span class="form-check-sign"></span>
+                                            @Localizer["EnumProjectElementStatus_3"]
+                                        </label>
+                                    </div>
+                                    <div class="form-check col">
+                                        <label class="form-check-label">
+                                            @Html.CheckBox("RealProgress", new { @id = "RealProgress", @class = "form-check-input" })
+                                            <span class="form-check-sign"></span>
+                                            @Localizer["Completed"]
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer  text-right">
+                        <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                        @{
+                            if (Model.ProjectEditable)
+                            {
+                                <button type="button" id="btnUpdate" onclick="updateRecord(); return false;" class="btn btn-default btn-fill">@Localizer["Update"]</button>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/core/vExecuteMilestones.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/plugins/bootstrap-datetimepicker.js" asp-append-version="true"></script>
+
+    @if (lng == null || lng == "es-MX")
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    }
+}
