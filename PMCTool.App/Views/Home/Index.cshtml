@@ -41,7 +41,7 @@
 @Html.Hidden("End", Localizer["End"].ToString())
 <link href="~/css/homet.css" rel="stylesheet" />
 <div class="content">
-    <div class="container-fluid">
+    <div class="container-fluid bg-white">
         <div class="row  justify-content-center pt-4">
             <div class="col-md-12 pb-3">
                 <div class="header-text text-center">
@@ -50,20 +50,15 @@
                 </div>
             </div>
         </div>
+        <div class="row"> 
+                    <div class="container-fluid pl-0 ml-0">
+                      <center> 
+                       <img src="/images/banbien.png">
+                      </center>
+                    </div> 
+         </div>
     </div>
 </div>
-@section Scripts {
-    <!--HIGHCHARTS-->
-    <script src="~/js/plugins/highcharts/highcharts.js"></script>
-    <script src="~/js/plugins/highcharts/highcharts-more.js"></script>
-    <script src="~/js/plugins/highcharts/modules/solid-gauge.js"></script>
-    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
-    <script>
-        var Highstock = window.Highcharts;
-        var HighF = window.Highcharts;
-
-        window.Highcharts = null;
-    </script>
-    <script src="~/js/plugins/highcharts/gantt/highcharts-gantt.js"></script>
-    <script src="~/js/core/vHome.js"  asp-append-version="true"></script>
+@section Scripts { 
+     
 }

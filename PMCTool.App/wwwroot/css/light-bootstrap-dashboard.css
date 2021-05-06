@@ -863,17 +863,19 @@ input:focus {
     overflow: hidden;
 }
 
-.sidebar[data-color="black"]:after,
-.bootstrap-navbar[data-color="black"]:after {
-  /* background: #797979; */
-background: -moz-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
-/* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #797979), color-stop(100%, rgba(121, 121, 121, 0.7))); */
-/* background: -webkit-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%); */
-background: -o-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
-background: -ms-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
-background: linear-gradient(to bottom, #f2f2f2 0%, rgba(210, 209, 209, 0.7) 100%);
-/* background-size: 150% 150%; */
-}
+    .sidebar[data-color="black"]:after,
+    .bootstrap-navbar[data-color="black"]:after {
+        background: #797979;
+         
+        background: -moz-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
+        /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #797979), color-stop(100%, rgba(121, 121, 121, 0.7))); */
+        /* background: -webkit-linear-gradient(top, #797979 0%, rgba(121, 121, 121, 0.7) 100%); */
+        background: -o-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
+        background: -ms-linear-gradient(top, #f2f2f2 0%, rgba(121, 121, 121, 0.7) 100%);
+        background: linear-gradient(to bottom, #ffffff 0%, rgb(255 255 255) 100%);
+        /* background-size: 150% 150%; */
+        border-right: 1px solid #e8e8e8;
+    }
 
 .sidebar[data-color="blue"]:after,
 .bootstrap-navbar[data-color="blue"]:after {
@@ -954,10 +956,10 @@ background: linear-gradient(to bottom, #f2f2f2 0%, rgba(210, 209, 209, 0.7) 100%
     width: calc(100% - 260px);
 }
 
-.main-panel .content {
-    padding: 30px 15px;
-    min-height: calc(100vh - 123px);
-}
+    .main-panel .content {
+        padding: 10px 10px;
+        min-height: calc(100vh - 123px);
+    }
 
 .main-panel .footer {
     border-top: 1px solid #e7e7e7;
@@ -13606,4 +13608,7 @@ select.selectpicker {
 
 .border-bottom {
     border-bottom: 1px solid #f7f7f8;
+}
+.bg-white {
+    background-color: white;
 }
