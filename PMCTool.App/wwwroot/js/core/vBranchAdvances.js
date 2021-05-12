@@ -85,7 +85,7 @@
     initHome() {
         vBranchs.addEventMunicipios();
         vBranchs.addEventBtnReport();
-               
+        vBranchs.loadData();
     },
     iniDataTable() {
         $(document).ready(function () {
@@ -109,7 +109,11 @@
                     lengthMenu: "Ver _MENU_  Elementos",
                     info: "Registros _START_ al _END_ de _TOTAL_ encontrados",
                      
-                }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                       'excel', 'pdf' 
+                ]
 
             });
         });
