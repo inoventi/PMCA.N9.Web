@@ -1,4 +1,4 @@
-﻿
+﻿@model PMCTool.Models.Core.Location
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
@@ -31,54 +31,20 @@
                                 </select>
                             </div> -->
                             <div class="col-3">
-                                <select multiple name="Estado" class="selectpicker" data-title="Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
-                                    <option value="id">Aguascalientes</option>
-                                    <option value="ms">Baja California</option>
-                                    <option value="ca"> Baja California Sur</option>
-                                    <option value="da">Campeche</option>
-                                    <option value="da">Chiapas</option>
-                                    <option value="da">Chihuahua</option>
-                                    <option value="da">Coahuila</option>
-                                    <option value="da">Colima</option>
-                                    <option value="da">Ciudad de México / Distrito Federal</option>
-                                    <option value="da">Durango</option>
-                                    <option value="da">Estado de México</option>
-                                    <option value="da">Guanajuato</option>
-                                    <option value="da">Guerrero</option>
-                                    <option value="da">Hidalgo</option>
-                                    <option value="da">Jalisco</option>
-                                    <option value="da">Michoacán</option>
-                                    <option value="da">Morelos</option>
-                                    <option value="da">Nayarit</option>
-                                    <option value="da">Nuevo León</option>
-                                    <option value="da">Oaxaca</option>
-                                    <option value="da">Puebla</option>
-                                    <option value="da">Querétaro</option>
-                                    <option value="da">Quintana Roo</option>
-                                    <option value="da">San Luis Potosí</option>
-                                    <option value="da">Sinaloa</option>
-                                    <option value="da">Sonora</option>
-                                    <option value="da">Tabasco</option>
-                                    <option value="da">Tamaulipas</option>
-                                    <option value="da">Tlaxcala</option>
-                                    <option value="da">Veracruz</option>
-                                    <option value="da">Yucatán</option>
-                                    <option value="da">Zacatecas</option>
+                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" })
+                            </div>
+                            <div class="col-3">
+                                <select multiple id="Municipios" name="Municipio" class="selectpicker" data-title="Municipios" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                   
                                 </select>
                             </div>
+                            <div class="col-3">
+                                <select multiple name="Viabilidad" class="selectpicker" data-title="Tipo de predio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                    <option value="FEDERAL">FEDERAL</option>
+                                    <option value="MUNICIPAL">MUNICIPAL</option>
+                                    <option value="PARTICULAR">PARTICULAR</option>
+                                    <option value="PROPIEDAD SOCIAL">PROPIEDAD SOCIAL</option>
 
-                            <div class="col-3">
-                                <select multiple name="Municipio" class="selectpicker" data-title="Municipio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
-                                    <option value="id">Acatic</option>
-                                    <option value="ms">La Barca</option>
-                                    <option value="ca">Chapala</option>
-                                </select>
-                            </div>
-                            <div class="col-3">
-                                <select multiple name="Viabilidad" class="selectpicker" data-title="Tipo de predio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
-                                    <option value="id">predio 1</option>
-                                    <option value="ms">predio 2</option>
-                                    <option value="ca">predio 3</option>
                                 </select>
                             </div>
                             <div class="col-2 mt-1">
@@ -369,5 +335,6 @@
     <!--  Google Maps Plugin    -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&libraries=&v=weekly" defer></script>
     <script src="~/js/core/vBranchLocations.js"></script>
+    <script src="~/js/core/vBranchAdvances.js"></script>
 }
 

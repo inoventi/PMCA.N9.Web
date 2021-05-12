@@ -1,4 +1,5 @@
-﻿using PMCTool.Models.Core;
+﻿using Microsoft.Extensions.Localization;
+using PMCTool.Models.Core;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,19 @@ namespace PMCTool.App.Helpers
             SelectionListItem nullItem = new SelectionListItem
             {
                 Key = Guid.Empty,
+                Value = nullValue
+            };
+
+            list.Insert(0, nullItem);
+
+            return list;
+        }
+
+        internal static List<SelectionListState> AddNullOption(List<SelectionListState> list, string nullValue)
+        {
+            SelectionListState nullItem = new SelectionListState
+            {
+                Key = null,
                 Value = nullValue
             };
 

@@ -51,8 +51,8 @@ namespace PMCTool.App.Helpers.Html
                             Description = "Ubicación de sucursales",
                             ParentId = "",
                             Icon = "nc-icon nc-square-pin",
-                            Action = null,
-                            Controller = null,
+                            Action = "Index",
+                            Controller = "BranchLocations",
                             MenuCode = "002",
                             ObjectCode = "002"
                         },
