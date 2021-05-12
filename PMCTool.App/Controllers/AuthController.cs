@@ -282,6 +282,7 @@ namespace PMCTool.App.Controllers
                     _httpContextAccessor.HttpContext.Response.Cookies.Delete("pmctool-avatar-app");
                     _httpContextAccessor.HttpContext.Response.Cookies.Delete("pmctool-envlogo-app");
                     _httpContextAccessor.HttpContext.Response.Cookies.Delete("pmctool-option");
+                    _httpContextAccessor.HttpContext.Response.Cookies.Delete("pmctool-name-env");
                 }
             }
             catch (HttpResponseException ex)
@@ -416,10 +417,12 @@ namespace PMCTool.App.Controllers
                 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 //Environment information 
                 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                string EnvName = null;
                 if (!string.IsNullOrEmpty(envId))
                 {
                     var environment = await restClient.Get<PMCTool.Models.Core.Environment>(baseUrl, $"/api/v1/environments/{envId}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
                     envLogo = environment.Logo;
+                    EnvName = environment.Name;
                 }
 
                 if (profile.Type == (int)EnumFactory.UserType.App)
@@ -428,7 +431,7 @@ namespace PMCTool.App.Controllers
                     var hasAgreement = await restClient.Get<bool>(baseUrl, $"/api/v1/auth/Agreement", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
                     if (hasAgreement)
                     {
-                        SetupAccess(response.ValueString, profile.Image, envLogo);
+                        SetupAccess(response.ValueString, profile.Image, envLogo, EnvName);
                         response.ValueBoolean = true;
                     }
                 }
@@ -437,7 +440,7 @@ namespace PMCTool.App.Controllers
                     response.ValueInt = 2;
                     if (profile.Type == (int)EnumFactory.UserType.CCP && !string.IsNullOrEmpty(env))
                     {
-                        SetupAccess(response.ValueString, profile.Image, envLogo);
+                        SetupAccess(response.ValueString, profile.Image, envLogo, EnvName);
                         response.ValueBoolean = true;
                     }
                 }
@@ -477,7 +480,7 @@ namespace PMCTool.App.Controllers
             return response;
         }
 
-        private void SetupAccess(string token, string image, string envLogo) {
+        private void SetupAccess(string token, string image, string envLogo,string envName) {
 
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
@@ -494,6 +497,12 @@ namespace PMCTool.App.Controllers
 
             _httpContextAccessor.HttpContext.Response.Cookies.Append("pmctool-name-app",
                 name, new CookieOptions()
+                {
+                    Expires = DateTime.Now.AddDays(7),
+                    IsEssential = true
+                });
+            _httpContextAccessor.HttpContext.Response.Cookies.Append("pmctool-name-env",
+                envName, new CookieOptions()
                 {
                     Expires = DateTime.Now.AddDays(7),
                     IsEssential = true

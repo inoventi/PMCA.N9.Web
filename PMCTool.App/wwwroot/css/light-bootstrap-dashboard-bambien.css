@@ -1,20 +1,3 @@
-/*!
-
- =========================================================
- * Light Bootstrap Dashboard - v2.0.1
- =========================================================
-
- * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard
- * Copyright 2017 Creative Tim (http://www.creative-tim.com)
- * License (http://www.creative-tim.com/license)
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
-
-/*      light colors         */
 .hlogo{    height: 82px;}
 @keyframes spin {
     from {
@@ -517,14 +500,14 @@ input:focus {
     display: block;
 }
 
-.sidebar .logo a.logo-mini {
-    float: left;
-    width: 30px;
-    text-align: center;
-    margin-left: 23px;
-    margin-right: 15px;
-    position: relative;
-}
+    .sidebar .logo a.logo-mini {
+        float: left;
+        width: 37px;
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 14px;
+        position: relative;
+    }
 
 .sidebar .logo a.logo-normal {
     display: block;
@@ -1790,24 +1773,24 @@ input:focus {
     background-color: transparent;
     font-weight: 400;
     padding: 8px 16px;
-    border: 1px solid #205280;
+    border: 1px solid #235B4E;
     color: #FFFFFF;
-    background-color: #205280;
+    background-color: #235B4E;
     cursor: pointer;
     margin-bottom: 5px;
     font-size: 0.875rem;
     line-height: 1.42857143;
 }
 
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.active,
-.open>.btn.dropdown-toggle {
-  background-color: #3c78ad;
-  color: #FFFFFF;
-  border-color: #3c78ad;
-}
+    .btn:hover,
+    .btn:focus,
+    .btn:active,
+    .btn.active,
+    .open > .btn.dropdown-toggle {
+        background-color: #10312B;
+        color: #FFFFFF;
+        border-color: #10312B;
+    }
 
 .btn.disabled,
 .btn.disabled:hover,
@@ -3449,7 +3432,7 @@ fieldset[disabled] .form-control {
 }
 
 .alert-info {
-    background-color: #63d8f1;
+    background-color: #235B4E;
 }
 
 .alert-success {
@@ -4764,10 +4747,10 @@ fieldset[disabled] .form-control {
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #205280;
+    background-color: #bc955c;
     border: 0;
     color: #FFFFFF !important;
-    padding: 7px 13px;
+    padding: 5px 13px; 
 }
 
 .pagination .page-item:first-child .page-link,
@@ -13611,4 +13594,18 @@ select.selectpicker {
 }
 .bg-white {
     background-color: white;
+}
+.color-drackred {
+    color: #691C32 !important;
+}
+
+.color-drackgreen {
+    color: #235B4E !important;
+}
+#tablebrachadvances thead tr th {
+    background: rgb(188, 149, 92);
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    width: 133px;
 }

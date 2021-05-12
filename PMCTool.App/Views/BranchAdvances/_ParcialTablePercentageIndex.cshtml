@@ -1,0 +1,58 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.ReportBrachAdvances>; 
+
+ @if (Model != null)
+ {
+     <div class="fresh-datatables">
+                                     <table id="tablebrachadvances" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                                    <tr>
+                                                        <th>Sucursales</th> 
+                                                        <th  class="text-center">Obra civil</th>
+                                                        <th  class="text-center">Legal</th>
+                                                        <th  class="text-center">Recursos Humanos</th>
+                                                        <th  class="text-center">Tecnología</th>
+                                                        <th  class="text-center">Pre prueba</th>  
+                                                    </tr>
+                                                </thead> 
+                                        <tbody>
+                                         @{
+                                                @foreach (var row in Model)  
+                                                {  
+                                                     
+                                                         <tr>
+                                                            <td><a href="/FactSheet/Index?projectId=@row.ProjectID">@row.ProjectName</a></td>
+                                                             <td class="text-center">
+                                                                 <strong> @row.CivilWork%</strong>
+                                                              </td>
+
+                                                            <td class="text-center">
+                                                                <strong> @row.Legal%  </strong>
+                                                             </td>
+                                                            <td class="text-center">
+                                                                 <strong> @row.HumanResources%   </strong>
+                                                             </td>
+                                                            <td class="text-center">
+                                                                 <strong> @row.Technology%  </strong>
+                                                             </td>
+                                                            <td class="text-center">
+                                                                <strong> @row.PreTest%  </strong>
+                                                             </td>
+                                                         </tr>    
+        
+                                                 } 
+                                            }
+                                        </tbody>
+                                    </table>
+   </div>
+   <script>
+       vBranchs.iniDataTable()
+   </script>
+ }
+ else
+ {
+        <h5 class="color-font-global">No se encontraron resultados para los filtros ingresados</h5>
+}
+
+                                        
+                                         
+                                       
