@@ -13609,3 +13609,30 @@ select.selectpicker {
     font-weight: bold;
     width: 133px;
 }
+.headbox-factsheet {
+    background: #BC955C;
+    color: white;
+    margin-left: 11px;
+    padding: 6px;
+}
+.textheadbox-factsheet {
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.borderbox-factsheet {
+    border: 1px solid #a5a5a5;
+    border-radius: 2px;
+    margin-left: 11px;
+}
+
+#tFactSheet thead tr th {
+    background: rgb(188, 149, 92);
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+#tFactSheet {
+    border: 1px solid #a5a5a5;
+}

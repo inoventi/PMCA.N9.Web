@@ -16,6 +16,7 @@ namespace PMCTool.App
         public string FileStorage { get; set; }
 
         public string PmMenuCodes { get; set; }
+        public string UrlPMCTool { get; set; }
 
         public AppSettings(IConfiguration config)
         {
@@ -23,6 +24,7 @@ namespace PMCTool.App
             this.ImageLogicalPath = config.GetValue<string>("ImageLogicalPath");
             this.FileStorage = config.GetValue<string>("FileStorage");
             this.PmMenuCodes = config.GetValue<string>("PmMenuCodes");
+            this.UrlPMCTool = config.GetValue<string>("UrlPMCTool");
 
             _appSettings = this;
         }

@@ -104,7 +104,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end">
                         <ul class="navbar-nav">
-                             
+
                             @{
                                 if (!string.IsNullOrEmpty(envImage))
                                 {
@@ -129,9 +129,9 @@
     </div>
 
     <script type="text/javascript" src="~/js/plugins/moment.min.js" asp-append-version="true"></script>
-    <script type="text/javascript" src=""~/js/plugins/moment-duration-format.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="" ~ /js/plugins/moment-duration-format.min.js" asp-append-version="true"></script>
 
-     <script src="~/js/plugins/sweetalert2.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/sweetalert2.min.js" asp-append-version="true"></script>
     <script src="~/js/plugins/bootstrap-tagsinput.js" asp-append-version="true"></script>
     <script src="~/js/light-bootstrap-dashboard.js" asp-append-version="true"></script>
     <script src="~/js/plugins/bootstrap-notify.js"></script>
@@ -139,6 +139,7 @@
 
     <script src="~/js/pmctool.js" asp-append-version="true"></script>
     <script src="~/js/helper.js" asp-append-version="true"></script>
+    <script>window.webroot = "@Url.Content("~/")";</script>
 
     @RenderSection("Scripts", required: false)
 </body>

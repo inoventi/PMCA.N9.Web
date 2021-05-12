@@ -1,6 +1,5 @@
-﻿$(document).ready(function () {
-
-    console.log(document.location.href);
+﻿var pmcUrl;
+$(document).ready(function () {
     $("#divFichaTecnicaProyecto").hide();
 
     $("#progress").html('');
@@ -8,9 +7,6 @@
     let projectId = $("#ProjectID").val();
     
     if ($("#ProjectID").val() != "") {
-        //$("#btnClose").show();
-        //$("#btnSearch").hide();
-        //$('#btnIrPMC').show();
         refresh(projectId);
     } else {
         $("#divFichaTecnicaProyecto").hide();
@@ -39,18 +35,6 @@ function refresh(projectId) {
 $("#btnClose").click(function () {
     $("#divFichaTecnicaProyecto").hide();
     window.location = "/FactSheet/Index";
-    //$("#btnSearch").show();
-    //$("#btnClose").hide();
-    //$('#btnIrPMC').hide();
-    ////$("#btnImprimir").hide();
-    ////$("#divFichaTecnicaProyecto").empty();
-    ////$("#btnSearch").attr("disabled", true);
-    //$("#proyecto").val(0);
-    //$('#proyecto').prop('disabled', false);
-    //$('#proyecto').selectpicker('refresh');
-    //$("#divFichaTecnicaProyecto").hide();
-    ////cleanUrl();
-    //cleanFactSheet();
 });
 
 function cleanFactSheet() {
@@ -77,9 +61,6 @@ function getFactSheet(projectId) {
             LoaderShow();
         },
         success: function (data) {
-            //var obj = '[{"ResumenEjecutivo":"Este es el resumen ejecutivo del proyecto","KeyDecisions":"Estapa de desarrollo","Institucion":"SADER","Predio":"Predio 1","CategoriaPredio":"Publico","Progress":80,"Estado":"Jalisco","Municipio":"Poncitlan","Localidad":"Santiago"}]';
-            //var data = jQuery.parseJSON(obj);
-            //console.log(data);
             for (let i = 0; i < data.length; i++) {
                 data[i].progress = data[i].progress * 100;
                 data[i].progress = parseFloat(data[i]["progress"]).toFixed(2);
@@ -197,13 +178,17 @@ function OnFailure() {
         footer: ''
     });
 }
-var pmcUrl;
+
 function RedirectPMC(id) {
-    const url = "http://app.test.pmc-tool.com/Execution/Project?id="+id;
+    const url = `${pmcUrl}/Execution/Project?id=${id}`;
     const el = document.createElement('a');
     el.href = url;
     el.target = '_blank';
     document.body.appendChild(el);
     el.click();
     document.body.removeChild(el);
+}
+
+function saveUrl(url) {
+    pmcUrl = url;
 }
