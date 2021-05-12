@@ -73,8 +73,8 @@ namespace PMCTool.App.Helpers.Html
                             Description = "Ficha de proyectos",
                             ParentId = "",
                             Icon = "nc-icon nc-notes",
-                            Action = null,
-                            Controller = null,
+                            Action = "Index",
+                            Controller = "FactSheet",
                             MenuCode = "004",
                             ObjectCode = "004"
                         },

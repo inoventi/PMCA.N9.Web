@@ -4,6 +4,9 @@
 }
 
 <link href="~/css/progress-circle.css" rel="stylesheet" />
+<link href="~/css/detalle-actividad.css" rel="stylesheet" />
+
+<input type="hidden" id="ProjectID" name="Project_ID" value="@Model.ProjectID">
 
 <div class="content">
     <div class="container-fluid card">
@@ -12,7 +15,7 @@
                 <div class="col-md-12 pt-4">
                     <small class="font-weight-normal">Analytics</small>
                     <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
-                        <span style="color: #691C32 !important;"> Ficha de proyectos	</span>
+                        <span> Ficha de proyectos	</span>
                     </h4>
                 </div>
             </div>
@@ -21,157 +24,111 @@
             <div class="row justify-content-center mt-3">
                 <div class="col-12">
                     <div class="row justify-content-left">
-                        <div class="col-4">
-                            <select name="Proyecto" class="selectpicker" data-title="Proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                <option value="id">Proyecto 1</option>
-                                <option value="ms">Proyecto 2</option>
-                                <option value="ca">Proyecto 3</option>
-                                <option value="da">Proyecto 4</option>
+                        <div class="col-4 pb-2">
+                            <select name="Proyecto" class="selectpicker show-tick resetSelect" id="proyecto" data-title="--Seleccione un proyecto--" data-live-search="true" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                @{
+                                    var collection = new SelectList(ViewBag.Projects, "Key", "Value");
+                                    foreach (var item in collection)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
                             </select>
                         </div>
-                        <div class="col-5 mt-1">
+                        <div class="col-md-4 pb-2"></div>
+                        <div class="col-md-4 pb-2 text-center" id="index_card_buttons">
                             <div class="row">
-                                <button type="button" class="btn btn-wd btn-default btn-default" style="background-color: #235B4E!important;">
-                                    <span class="btn-label">
-                                        <i class="fa fa-file-alt"></i>
-                                    </span>
-                                    Mostrar Reporte
-                                </button>
+                                <button type="button" id="btnSearch" class="btn btn-wd btn-default mr-1"><span class="btn-label"><i class="fa fa-file-alt"></i></span>Mostrar Reporte</button>
+                                <button class="btn btn-wd btn-default btn-default mr-1" type="button" id="btnIrPMC"><i class="btn-icon-filter"></i>Ir a PMC-tool</button>
+                                <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1"><span class="btn-label"><i class="fas fa-times"></i></span> Cerrar Reporte</button>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-12 text-right text-right">
-                            <button class="btn btn-social btn-tumblr btn-link">
-                                <i class="fas fa-file-pdf"></i> Exportar en PDF
-                            </button>
-                        </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="row">
-                                                <h5 style="font-weight: 600;margin-left: 16px; color: #691C32 !important;">Nombre de sucursal</h5>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-10" style="background: #BC955C;color: white;margin-left: 11px;padding: 6px;">
-                                                    <h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">Resumen ejecutivo</h5>
+                    <div id="divFichaTecnicaProyecto">
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-12 text-right text-right">
+                                <button class="btn btn-social btn-tumblr btn-link">
+                                    <i class="fas fa-file-pdf"></i> Exportar en PDF
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <h5 class="media align-items-center font-weight-bold  ml-2"><span id="projectName"></span></h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10" style="background: #205280;color: white;margin-left: 11px;padding: 6px;">
+                                                        <h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">Resumen ejecutivo</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10" style="border: 1px solid #a5a5a5;border-radius: 2px;margin-left: 11px;">
+                                                        <p style="line-height: 1;">
+                                                            <em style="font-size: 11px;" id="resumenEjecutivo">
+
+                                                            </em>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-10" style="background: #205280;color: white;margin-left: 11px;padding: 6px;">
+                                                        <h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">Decisiones clave</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10" style="border: 1px solid #a5a5a5;border-radius: 2px;margin-left: 11px;">
+                                                        <p style="line-height: 1;">
+                                                            <em style="font-size: 11px;" id="DesicionesClave">
+
+                                                            </em>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12 mt-1"> <h6>Intitución que administra el inmueble: <span id="institucion"></span></h6> </div>
+                                                    <div class="col-md-12 mt-1"> <h6>Tipo de predio: <span id="tipoPredio"></span></h6> </div>
+                                                    <div class="col-md-12 mt-1"> <h6>Categoria de predio: <span id="categoriaPredio"></span></h6> </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-10" style="border: 1px solid #a5a5a5;border-radius: 2px;margin-left: 11px;">
-                                                    <p style="line-height: 1;">
-                                                        <em style="font-size: 11px;">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                                                            galley of type and scrambled it to make a type specimen book.
-                                                        </em>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-10" style="background: #BC955C;color: white;margin-left: 11px;padding: 6px;">
-                                                    <h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">Decisiones clave</h5>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-10" style="border: 1px solid #a5a5a5;border-radius: 2px;margin-left: 11px;">
-                                                    <p style="line-height: 1;">
-                                                        <em style="font-size: 11px;">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                                                            galley of type and scrambled it to make a type specimen book.
-                                                        </em>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-12 mt-1"> <h6>Intitución que administra el inmueble: SEDENA</h6> </div>
-                                                <div class="col-md-12 mt-1"> <h6>Tipo de predio: Federal</h6> </div>
-                                                <div class="col-md-12 mt-1"> <h6>Categoria de predio: Rural</h6> </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="row justify-content-center">
-                                                <div class="col-6">
-                                                    <div class="row text-center justify-content-center">
-                                                        <div class="col-12">
-                                                            <h6>Avance general</h6>
+                                            <div class="col-8">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-6">
+                                                        <div class="row text-center justify-content-center">
+                                                            <div class="col-12">
+                                                                <h6>Avance general</h6>
+                                                            </div>
+                                                            <div class="col-12 mt-2" id="progress"></div>
                                                         </div>
-                                                        <div class="col-12 mt-2">
-                                                            <div class="progress-circle progress-60"><span>60</span></div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-12 mt-1">
+                                                                <h6>Estado: <span id="estado"></span></h6>
+                                                            </div>
+                                                            <div class="col-12 mt-1">
+                                                                <h6>Municipio: <span id="municipio"></span></h6>
+                                                            </div>
+                                                            <div class="col-12 mt-1">
+                                                                <h6>Localidad: <span id="localidad"></span></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div class="col-12 mt-1">
-                                                            <h6>Estado: Jalisco</h6>
-                                                        </div>
-                                                        <div class="col-12 mt-1">
-                                                            <h6>Municipio: Zapopan</h6>
-                                                        </div>
-                                                        <div class="col-12 mt-1">
-                                                            <h6>Localidad: Chapala</h6>
-                                                        </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table class="table table-hover" style="border: 1px solid #a5a5a5;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Etapas</th>
+                                                                    <th>Avance</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tStageProgress"></tbody>
+                                                        </table>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <table class="table table-hover" style="border: 1px solid #a5a5a5;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Etapas</th>
-                                                                <th>Avance</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    Obra civil
-                                                                    <br><span class="badge badge-secondary">Terminado</span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress" style="height: 16px;">
-                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;background-color: #a5a5a5;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Legal
-                                                                    <br><span class="badge badge-warning">Atrasado</span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress" style="height: 16px;">
-                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 80%;background-color: #ffc000;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">80%</div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Recursos Humanos
-                                                                    <br><span class="badge badge-success">En tiempo</span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress" style="height: 16px;">
-                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 60%;background-color: #70ad47;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">60%</div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Pre Prueba
-                                                                    <br><span class="badge badge-success">En tiempo</span>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="progress" style="height: 16px;">
-                                                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 80%;background-color: #70ad47;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">80%</div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>   
-                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,12 +143,7 @@
     </div>
 </div>
 
-@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
-
 @section Scripts {
-    <!--HIGHCHARTS-->
-    <script src="~/js/plugins/highcharts/highcharts.js"></script>
-
     <script src="~/js/plugins/bootstrap-selectpicker.js" asp-append-version="true"></script>
     <script src="~/js/core/vFactSheet.js" asp-append-version="true"></script>
 }

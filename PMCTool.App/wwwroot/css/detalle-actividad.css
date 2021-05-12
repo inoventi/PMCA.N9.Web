@@ -1,0 +1,410 @@
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.1rem 0em 0em 0em;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.bold {
+    /*padding: 2px 4px 2px 4px;
+    background-color: #ffc107;
+    border-radius: 3px;
+    */
+    font-weight: bold;
+}
+
+.accordions .card .card-header + .card-collapse .card-body {
+    box-shadow: inset 0 0px 0px 0px rgba(0, 0, 0, 0.14);
+}
+
+.slbl-cerrado {
+    padding: 2px 4px 2px 4px;
+    background-color: #d0d0d0;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.slbl-atrasado {
+    padding: 2px 4px 2px 4px;
+    background-color: #FFEB3B;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.slbl-entiempo {
+    padding: 2px 4px 2px 4px;
+    background-color: #8BC34A;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 3px 8px;
+    vertical-align: middle;
+    border-color: #E3E3E3;
+}
+
+.card-title a {
+    font-weight: 500;
+}
+
+.ui-w-50 {
+    width: 70px !important;
+    height: auto;
+}
+
+.fontsize11 {
+    font-size: 1.1em;
+}
+
+.bg-p {
+    padding-top: 60% !important;
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+    background-color: rgba(0,0,0,0);
+    background-position: center center;
+    background-size: cover;
+}
+
+.f8 {
+    font-size: 0.8em;
+}
+/* Banderas de estatus */
+.st-atrasado {
+    background-color: #f7d408;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-entiempo {
+    background-color: #4CAF50;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cerrado {
+    background-color: #d0d0d0;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cimpacto {
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cancelado {
+    background-color: #545454;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+    text-decoration: line-through;
+}
+
+.st-suspendido {
+    color: gray;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.txt-gris {
+    color: #5f727b;
+}
+
+.block {
+    display: block;
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.ws {
+    white-space: nowrap;
+}
+
+.border-programa {
+    border: 3px solid #c3c3c3 !important;
+}
+/*13agosto-falta-nodo*/
+.txt-gray {
+    color: #798896
+}
+
+.lbl-responsable {
+    background-color: #e9e9e9;
+    font-weight: 500;
+    color: black;
+}
+
+.bg-gray {
+    background-color: #f9f9f9;
+}
+
+.box-p {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.display-line {
+    display: inline-block;
+}
+
+.bag-area {
+    background-color: #dedede;
+    padding: 1px 6px 1px 6px;
+    border-radius: 13px;
+    font-size: .7em;
+}
+
+.font8em {
+    font-size: .9em;
+}
+
+.color-black1 {
+    color: #524d4d;
+}
+
+.bag-date-comment {
+    font-size: .9em;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.indicadores-st {
+    float: left;
+}
+
+.mleft-9 {
+    margin-left: 9px;
+}
+
+.user-notify {
+    font-size: .7em;
+    color: #646366;
+}
+
+.element-notify {
+    font-size: .7em;
+    color: #205280;
+}
+
+.lh-15px {
+    line-height: 15px;
+}
+
+.btn-small {
+    padding: 1px 11px !important;
+}
+/*INDICADORES*/
+.in-color-green {
+    color: green;
+}
+
+.in-color-yellow {
+    color: yellow;
+}
+
+.in-color-gray {
+    color: gray;
+}
+
+.in-color-red {
+    color: red;
+}
+
+.fg textarea {
+    height: 100px;
+}
+
+.blue-pmc {
+    color: #205180;
+}
+/*9Sep- Estilo a text area de form capas padre e hijas*/
+.heigh-77 {
+    height: 77px;
+}
+
+.st-atrasado {
+    background-color: rgb(230, 199, 2);
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-suspendidon {
+    background-color: rgb(0, 64, 255);
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-sinwbs {
+    background-color: rgb(251, 183, 56);
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-in-pulple {
+    background-color: #9C27B0;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+    color: white;
+}
+
+.btn-view {
+    border-width: 2px;
+    background-color: transparent;
+    font-weight: 400;
+    padding: 8px 16px;
+    border: 1px solid #009688;
+    color: #FFFFFF;
+    background-color: #009688;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 0.875rem;
+    line-height: 1.42857143;
+}
+
+.subjet-notificacion {
+    background-color: #f1f1f1;
+    padding: 1px 5px 1px 5px;
+    border-radius: 8px;
+    color: #205280;
+    font-weight: 500;
+}
+
+.noti-in-left-atr {
+    border-left: 7px solid #FFC107
+}
+
+.noti-in-left-enti {
+    border-left: 11px solid #4CAF50;
+}
+
+.ccrazon {
+    height: 80px;
+}
+
+.cc-header {
+    height: 93px;
+}
+
+
+.event-orange {
+    background-color: #F2D7D5;
+}
+
+.element-1 {
+    background-color: #4caf502b;
+}
+
+.element-2 {
+    background-color: #FADBD8;
+}
+
+.element-3 {
+    background-color: #ebd5f3;
+}
+
+.element-4 {
+    background-color: #E8DAEF;
+}
+
+.element-5 {
+    background-color: #f1e6f7;
+}
+
+.element-6 {
+    background-color: #D6EAF8;
+}
+
+.element-7 {
+    background-color: #f5d9bd;
+}
+
+.element-8 {
+    background-color: #f7f4f1;
+}
+
+.element-9 {
+    background-color: #f9ece0;
+}
+
+.element-10 {
+    background-color: #D5F5E3;
+}
+
+.element-11 {
+    background-color: #FCF3CF;
+}
+
+.element-13 {
+    background-color: #FAE5D3;
+}
+
+.element-14 {
+    background-color: #F6DDCC;
+}
+
+.element-15 {
+    background-color: #F2F3F4;
+}
+
+.element-16 {
+    background-color: #9c27b024;
+}
+
+.element-17 {
+    background-color: #D5D8DC;
+}
+
+.element-18 {
+    background-color: #A3E4D7;
+}
+
+.element-19 {
+    background-color: #bdefd2;
+}
+
+.element-20 {
+    background-color: #D5DBDB;
+}
+
+.no-visto {
+    background-color: #f3f3f3;
+}
+
+.f600 {
+    font-weight: 600;
+}
+
+.float-r {
+    float: right;
+}
+
+.list-group-item-c {
+    position: relative;
+    display: block;
+    padding: 0.3em 0em 0.3em 0em;
+    margin-bottom: 0px;
+    background-color: #fff;
+    border: 1px solid rgba(111, 111, 111, 0.125);
+}
+
+label.error{
+    color:red;
+}
