@@ -30,7 +30,89 @@ namespace PMCTool.App.Controllers
         {
             return View();
         }
-          
-         
-    }
+
+        [HttpPost]
+        public async Task<JsonResult> getMunicipalities(int estateID) {
+
+            var respuesta = new Dictionary<string, object>(); 
+            List<EstatesMunicipalities> fullStates = new List<EstatesMunicipalities>(); 
+            try
+            {
+                fullStates = await restClient.Get<List<EstatesMunicipalities>>(baseUrl, $"/api/v1/locations/state/{estateID}/Municipalities", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                var cleanfullStates = fullStates.RemoveAll(x => x.EstateID != estateID);
+                //ViewBag.Particpants = participants;
+
+            }
+            catch (HttpResponseException ex)
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                 
+            }
+
+
+            return Json(fullStates);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> getBranchAdvancesData(brachAdvances data)
+        {
+            List<ReportBrachAdvances> fullStates = new List<ReportBrachAdvances>();
+            try
+            {
+                if (data.estadoid == null) {
+                    data.estadoid = 0;
+                }
+                fullStates = await restClient.Get<List<ReportBrachAdvances>>(baseUrl,
+                                   $"api/v1/branchadvances/reportdata/estate/{data.estadoid}/data?municipiosid={data.municipiosid}&tipopredio={data.tipopredio}&tipovista={data.tipovista}",
+                   new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                ///ViewBag.data = fullStates;
+                if (data.tipovista == "default") {
+                    return PartialView("_ParcialTableDefaultIndex", fullStates);
+                }else {
+                    return PartialView("_ParcialTablePercentageIndex", fullStates);
+                }
+              
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+        //public async Task<JsonResult> getBranchAdvancesData(brachAdvances data)
+        //{  
+
+            //    List<ReportBrachAdvances> fullStates = new List<ReportBrachAdvances>();
+            //    try
+            //    {
+            //         fullStates = await restClient.Get<List<ReportBrachAdvances>>(baseUrl,
+            //                            $"api/v1/branchadvances/reportdata/estate/{data.estadoid}/data?municipiosid={data.municipiosid}&tipopredio={data.tipopredio}&tipovista={data.tipovista}",
+            //            new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+
+            //        return Json(new { hasError = false, data = fullStates });
+
+            //    }
+            //    catch (HttpResponseException ex)
+            //    {
+            //        return Json(new { hasError = true, message= ex.Message });
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return Json(new { hasError = true, message = ex.Message }); 
+            //    }
+
+            //}
+
+
+
+        }
 }
