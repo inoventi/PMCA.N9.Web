@@ -1,0 +1,94 @@
+﻿@{
+    var userName = Context.Request.Cookies["pmctool-name-app"];
+    var userImage = Context.Request.Cookies["pmctool-avatar-app"];
+    var envImage = Context.Request.Cookies["pmctool-envlogo-app"];
+    var lang = Context.Request.Cookies["pmctool-lang-app"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" id="meta_viewport" />
+    <meta name="description" content="Página comercial del PMC-tool">
+    <meta name="author" content="InovenTI">
+    <title>PMCT-Analytics&reg; Application</title>
+    <link rel="shortcut icon" href="~/images/icono_pmc_tool.png" asp-append-version="true">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,500i,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap-select.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/light-bootstrap-dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pmctool.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/jquery.spin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toastr.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/arrow.css" asp-append-version="true" />
+    <link href="~/css/pmctool_gantt.css" rel="stylesheet" />
+    <link href="~/css/detalle-actividad.css" rel="stylesheet" />
+    <link href="~/css/indicadores.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/popper.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/js.cookie.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/jquery.i18n.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/bootstrap-select.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/jquery.spin.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/toastr.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/chart/Chart.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/highcharts/highcharts.js" asp-append-version="true"></script>
+
+
+    @if (lang == null || lang == "es-MX")
+    {
+        <script src="~/lib/jquery-validate/localization/messages_es.min.js" asp-append-version="true"></script>
+        <script src="~/js/localization/messages_es.js" asp-append-version="true"></script>
+    }
+    else
+    {
+        <script src="~/js/localization/messages_us.js" asp-append-version="true"></script>
+    }
+    <style>
+        body{font-family: 'Montserrat', sans-serif !important;}
+
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <div style="margin: 2%">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " style="padding-bottom: 52px">
+                <div class="container-fluid" style="padding-bottom:40px">
+                    <div class="row" style="padding-top:12px; height: 90px;"> 
+                        <div class="col-md-8 text-left"> <div style="font-size:1.5em; color: #235B4E !important;"><strong>@ViewBag.Title</strong></div> </div>
+                        <div class="col-md-4 text-right"> <img src="/images/banbien.png" width="100px" style="    position: fixed;top: 0px;right: 36px;"> </div>
+                        
+                    </div> 
+                </div>
+            </nav>   
+            @RenderBody()
+            <!-- End Navbar -->
+            @await Html.PartialAsync("~/Views/Shared/_LayoutFooterPartial.cshtml")
+        </div>
+    </div>
+   
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/2.3.2/moment-duration-format.min.js" asp-append-version="true"></script>
+
+    <script src="~/js/plugins/sweetalert2.min.js" asp-append-version="true"></script>
+    <script src="~/js/plugins/bootstrap-tagsinput.js" asp-append-version="true"></script>
+    <script src="~/js/light-bootstrap-dashboard.js" asp-append-version="true"></script>
+    <script src="~/js/pmctool.js" asp-append-version="true"></script>
+    <script src="~/js/helper.js" asp-append-version="true"></script>
+    <script>window.webroot = "@Url.Content("~/")";</script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

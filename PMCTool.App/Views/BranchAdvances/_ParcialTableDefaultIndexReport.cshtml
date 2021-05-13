@@ -1,0 +1,128 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.ReportBrachAdvances>; 
+@{
+    Layout = "_LayoutReport";
+    ViewData["Title"] = "AVANCE DE SUCURSALES VISTA DEFAULT";
+}
+ @if (Model != null)
+ {
+     <div class="fresh-datatables" style="margin-top:40px">
+                                     <table id="tablebrachadvances" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                        <thead>
+                                                    <tr style="background-color: rgb(188, 149, 92);color: white;font-weight: bold;font-size: 1em;">
+                                                        <th style="color:white; font-size: 1em;">Sucursales</th> 
+                                                        <th  class="text-center" style="color:white; font-size: 1em;">Obra civil</th>
+                                                        <th  class="text-center" style="color:white; font-size: 1em;">Legal</th>
+                                                        <th  class="text-center" style="color:white; font-size: 1em;">Recursos Humanos</th>
+                                                        <th  class="text-center" style="color:white; font-size: 1em;">Tecnología</th>
+                                                        <th  class="text-center" style="color:white; font-size: 1em;" >Pre prueba</th> 
+                                                    </tr>
+                                                </thead> 
+                                        <tbody>
+                                            @{
+                                                @foreach (var row in Model)  
+                                                {  
+                                                    string txtCivilWork = null;
+                                                    int indexCivilWork = 0;
+                                                    if (row.CivilWork >= 100)
+                                                    { 
+                                                        txtCivilWork = "<img src='/images/checked.png' style='width: 18px;'> ";
+                                                        indexCivilWork = 1;
+                            
+                                                    }
+                                                    if (row.CivilWork < 100)
+                                                    {
+                                                        txtCivilWork = "<img src='/images/circleminus.png' style='width: 18px;'>";
+                                                        indexCivilWork = 0;
+                                                    }    
+                                                     
+                                                    string txtLegal = null; 
+                                                    int indexLegal = 0;
+                                                    if (row.Legal >= 100)
+                                                    { 
+                                                        txtLegal = "<img src='/images/checked.png' style='width: 18px;'>";
+                                                        indexLegal = 1;
+                            
+                                                    }
+                                                    if (row.Legal < 100)
+                                                    {
+                                                        txtLegal = "<img src='/images/circleminus.png' style='width: 18px;'>";
+                                                        indexLegal = 0;
+                                                    } 
+                                                    
+                                                    string txtHumanResources = null;
+                                                    int indexHumanResources = 0;
+                                                    if (row.HumanResources >= 100)
+                                                    { 
+                                                        txtHumanResources = "<img src='/images/checked.png' style='width: 18px;'>";
+                                                        indexHumanResources = 1;
+                            
+                                                    }
+                                                    if (row.HumanResources < 100)
+                                                    {
+                                                        txtHumanResources = "<img src='/images/circleminus.png' style='width: 18px;'>";
+                                                        indexHumanResources = 0;
+                                                    }   
+                                                    
+                                                    string txtTechnology = null;
+                                                    int indexTechnology = 0;
+                                                    if (row.Technology >= 100)
+                                                    { 
+                                                        txtTechnology = "<img src='/images/checked.png' style='width: 18px;'>";
+                                                        indexTechnology = 1;
+                            
+                                                    }
+                                                    if (row.Technology < 100)
+                                                    {
+                                                        txtTechnology = "<img src='/images/circleminus.png' style='width: 18px;'>";
+                                                        indexTechnology = 0;
+                                                    }                                                            
+                                                        
+                                                    string txtPreTest = null;
+                                                    int indexPreTest = 0;
+                                                    if (row.PreTest >= 100)
+                                                    { 
+                                                        txtPreTest = "<img src='/images/checked.png' style='width: 18px;'>";
+                                                        indexPreTest = 1;
+                            
+                                                    }
+                                                    if (row.PreTest < 100)
+                                                    {
+                                                        txtPreTest = "<img src='/images/circleminus.png' style='width: 18px;'>";
+                                                        indexPreTest = 0;
+                                                    }
+                                                         <tr>
+                                                            <td>@row.ProjectName</td>
+                                                             <td class="text-center">
+                                                                 @Html.Raw(@txtCivilWork) 
+                                                             </td>
+
+                                                            <td class="text-center">
+                                                                 @Html.Raw(@txtLegal) 
+                                                            </td>
+                                                            <td class="text-center">
+                                                                 @Html.Raw(@txtHumanResources) 
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @Html.Raw(@txtTechnology)  
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @Html.Raw(@txtPreTest) 
+                                                            </td>
+                                                         </tr>    
+        
+                                                 } 
+                                            }
+                                         
+                                        </tbody>
+                                    </table>
+   </div>
+ 
+ }
+ else
+ {
+        <h5 class="color-font-global">No se encontraron resultados para los filtros ingresados</h5>
+}
+
+                                        
+                                         
+                                       

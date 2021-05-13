@@ -15,23 +15,87 @@ using PMCTool.App.Models;
 using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
 using PMCTool.Models.Enumeration;
-using PMCTool.Models.Environment;
+using PMCTool.Models.Environment; 
+using Syncfusion.Pdf;
+using Syncfusion.HtmlConverter; 
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace PMCTool.App.Controllers
 {
+ 
     public class BranchAdvancesController : BaseController
     {
-        public BranchAdvancesController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer) : base(appSettings, localizer)
-        {
+        private readonly IHostingEnvironment _hostingEnvironment;
 
+        public BranchAdvancesController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
+        {
+            _hostingEnvironment = hostingEnvironment;
         }
-        // GET: BranchAdvancesController
+        [PMCToolAuthentication] 
         public ActionResult Index()
         {
             return View();
         }
 
+        public IActionResult printReportBranchAdvances(brachAdvances data)
+        {
+            string url = "/BranchAdvances/printViewReportBranchAdvances?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+             
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportBranchAdvances(string model)
+        {
+            List<ReportBrachAdvances> fullStates = new List<ReportBrachAdvances>();
+            var modelo = model.Split('|')[0]; 
+            var token = model.Split('|')[1];
+
+             brachAdvances data = JsonConvert.DeserializeObject<brachAdvances>(modelo);
+
+            try
+            {
+                if (data.estadoid == null)
+                {
+                    data.estadoid = 0;
+                }
+
+                fullStates = await restClient.Get<List<ReportBrachAdvances>>(baseUrl,
+                                   $"api/v1/branchadvances/reportdata/estate/{data.estadoid}/data?municipiosid={data.municipiosid}&tipopredio={data.tipopredio}&tipovista={data.tipovista}",
+                                    new Dictionary<string, string>() { { "Authorization", token } });
+                ///ViewBag.data = fullStates;
+                if (data.tipovista == "default")
+                {
+                    return PartialView("_ParcialTableDefaultIndexReport", fullStates);
+                }
+                else
+                {
+                    return PartialView("_ParcialTablePercentageIndexReport", fullStates);
+                }
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+
+
+
         [HttpPost]
+        [PMCToolAuthentication]
+
         public async Task<JsonResult> getMunicipalities(int estateID) {
 
             var respuesta = new Dictionary<string, object>(); 
@@ -57,6 +121,8 @@ namespace PMCTool.App.Controllers
 
         }
         [HttpPost]
+        [PMCToolAuthentication]
+
         public async Task<IActionResult> getBranchAdvancesData(brachAdvances data)
         {
             List<ReportBrachAdvances> fullStates = new List<ReportBrachAdvances>();
@@ -85,32 +151,7 @@ namespace PMCTool.App.Controllers
             {
                 return Json(new { hasError = true, message = ex.Message });
             }
-        }
-        //public async Task<JsonResult> getBranchAdvancesData(brachAdvances data)
-        //{  
-
-            //    List<ReportBrachAdvances> fullStates = new List<ReportBrachAdvances>();
-            //    try
-            //    {
-            //         fullStates = await restClient.Get<List<ReportBrachAdvances>>(baseUrl,
-            //                            $"api/v1/branchadvances/reportdata/estate/{data.estadoid}/data?municipiosid={data.municipiosid}&tipopredio={data.tipopredio}&tipovista={data.tipovista}",
-            //            new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-
-
-            //        return Json(new { hasError = false, data = fullStates });
-
-            //    }
-            //    catch (HttpResponseException ex)
-            //    {
-            //        return Json(new { hasError = true, message= ex.Message });
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return Json(new { hasError = true, message = ex.Message }); 
-            //    }
-
-            //}
+        } 
 
 
 
