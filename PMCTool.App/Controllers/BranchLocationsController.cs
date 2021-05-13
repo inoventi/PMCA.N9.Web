@@ -24,13 +24,17 @@ namespace PMCTool.App.Controllers
             ViewBag.States = states;
             return View();
         }
-        [HttpGet]
-        public async Task<JsonResult> GetBranchLocation(int state, int municipalities, string predio)
+        [HttpPost]
+        public async Task<IActionResult> GetBranchLocation(BranchLocation data)
         {
-            List<BranchLocation> data = new List<BranchLocation>();
+            List<BranchLocation> Report = new List<BranchLocation>();
             try
             {
-                data = await restClient.Get<List<BranchLocation>>(baseUrl, $"/api/v1/branchlocation/{state}/{municipalities}/{predio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                if(data.State == null)
+                {
+                    data.State = "0";
+                }
+                Report = await restClient.Get<List<BranchLocation>>(baseUrl, $"api/v1/branchlocation/state/{data.State}/data?municipalities={data.Municipalities}&predio={data.Predio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -40,7 +44,7 @@ namespace PMCTool.App.Controllers
                     ErrorCode = apiError.ErrorCode,
                     ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
                 };
-                return Json(response);
+                return Json(apiError);
             }
             catch (Exception ex)
             {
@@ -54,7 +58,7 @@ namespace PMCTool.App.Controllers
                 return Json(response);
             }
 
-            return Json(data);
+            return Json(Report);
         }
     }
 }
