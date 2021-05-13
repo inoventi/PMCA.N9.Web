@@ -5,6 +5,42 @@
             vBranchs.getMunicipios(this.value);
         }); 
     },
+    addEventBtnExportPDF() {
+        $('#bntReportPDF').click(function () { 
+            let municiopiosid = $("#Municipios").val();
+            let estadoid = $('#Estate').val();
+            let tipopredio = $('#tipopredio').val();
+            let vista = $('#tipovista').val();
+            debugger;
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/BranchAdvances/printReportBranchAdvances",
+                type: "POST",
+                data: {
+                    "estadoid":"'"+ estadoid+"'",
+                    "municipiosid": "'" + municiopiosid.join() + "'",
+                    "tipopredio": "'" + tipopredio.join() + "'",
+                    "tipovista": "'" + vista + "'",
+                },
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "AvencedeSucursales-"+vista+".pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        });
+
+    },
     addEventBtnReport() {
         $('#bntReport').click(function () {
             vBranchs.loadData();
@@ -85,6 +121,7 @@
     initHome() {
         vBranchs.addEventMunicipios();
         vBranchs.addEventBtnReport();
+        vBranchs.addEventBtnExportPDF();
         vBranchs.loadData();
     },
     iniDataTable() {
@@ -109,11 +146,7 @@
                     lengthMenu: "Ver _MENU_  Elementos",
                     info: "Registros _START_ al _END_ de _TOTAL_ encontrados",
                      
-                },
-                dom: 'Bfrtip',
-                buttons: [
-                       'excel', 'pdf' 
-                ]
+                } 
 
             });
         });

@@ -8,6 +8,11 @@
                            <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
                               <span class="color-drackgreen"> Avances de sucursales	</span>
                            </h4>
+                           @*@{
+                        Html.BeginForm("printReportBranchAdvances", "BranchAdvances", FormMethod.Post);
+                        {   
+                        <input type="submit" class="Buttom" value="Export PDF"/> }
+                           }*@
                         </div>
                         <div class=""> 
                     <div class="container-fluid pl-0 ml-0">
@@ -31,6 +36,7 @@
                                                 <option value="1">MUNICIPAL</option>
                                                 <option value="2">FEDERAL</option>
                                                 <option value="3">PROPIEDAD SOCIAL</option>
+                                                <option value="4">PARTICULAR</option>
                                         </select>
                                     </div>
                                     
@@ -57,7 +63,7 @@
                         </div>
                         <div class="row justify-content-center mt-4">
                             <div class="col-md-12 text-right text-right">
-                                <button class="btn btn-social btn-tumblr btn-link">
+                                <button class="btn btn-social btn-tumblr btn-link" id="bntReportPDF">
                                                 <i class="fas fa-file-pdf"></i> Exportar en PDF
                                                 </button>
                             </div>

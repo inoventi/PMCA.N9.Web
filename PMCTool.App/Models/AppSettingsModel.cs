@@ -11,6 +11,9 @@ namespace PMCTool.App.Models
         public string ImageLogicalPath { get; set; }
         public string FileStorage { get; set; }
         public string PmMenuCodes { get; set; }
-        
+        public string UrlPMCTool { get; set; }
+        public string UrlPDFViews { get; set; }
+        public string UrlAPP { get; set; }
+        public string PlatformRun { get; set; }
     }
 }

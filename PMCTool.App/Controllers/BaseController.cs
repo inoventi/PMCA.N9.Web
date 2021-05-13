@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -7,9 +8,12 @@ using PMCTool.App.Models;
 using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
 using PMCTool.Models.Exceptions;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
 using System;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,6 +28,9 @@ namespace PMCTool.App.Controllers
         public readonly IStringLocalizer<SharedResource> localizer;
         public int? participantRole;
         public Guid? participantId;
+        public string pdfUrl; 
+        public string PlatformRun; 
+        public ResponseModel responseModel;
 
         public BaseController(
                     IOptions<AppSettingsModel> appSettings,
@@ -31,7 +38,9 @@ namespace PMCTool.App.Controllers
         {
             this.restClient = new RestClient();
             this.baseUrl = appSettings.Value.BaseUrl;
+            this.pdfUrl = appSettings.Value.UrlPDFViews;  
             this.localizer = localizer;
+            this.PlatformRun = appSettings.Value.PlatformRun;
 
         }
 
@@ -39,7 +48,35 @@ namespace PMCTool.App.Controllers
         {
             return JsonConvert.DeserializeObject<ApiError>(json);
         }
+        protected FileContentResult ExportToPDF(string requestParametersModel,string url, IHostingEnvironment _hostingEnvironment)
+        {
+            try
+            {
+                HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter(HtmlRenderingEngine.WebKit);
+                WebKitConverterSettings settings = new WebKitConverterSettings();
+                if (PlatformRun == "Windows") {
+                    settings.WebKitPath = Path.Combine(_hostingEnvironment.ContentRootPath, "References/QtBinariesWindows"); 
+                }
+                if (PlatformRun == "Linux")
+                {
+                   settings.WebKitPath = Path.Combine(_hostingEnvironment.ContentRootPath, "References/QtBinariesLinux");
 
+                }
+                settings.EnableJavaScript = true;
+                settings.Margin = new Syncfusion.Pdf.Graphics.PdfMargins { Top = 20, Left = 30, Right = 30, Bottom = 30 };
+                htmlConverter.ConverterSettings = settings;
+                string token = requestParametersModel + "|" + GetTokenValue("Token"); 
+                PdfDocument document = htmlConverter.Convert(pdfUrl + url + token);
+                MemoryStream stream = new MemoryStream();
+                document.Save(stream);
+                FileContentResult archivo = File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Pdf, "Output.pdf");
+                return archivo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         protected string GetTokenValue(string key)
         {
             string value = "";
