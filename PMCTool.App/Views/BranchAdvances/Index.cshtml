@@ -1,4 +1,10 @@
-﻿<div class="content">
+﻿@model PMCTool.Models.Core.Location
+
+@{
+    ViewData["Title"] = "Avance de sucursales";
+    Layout = "_Layout";
+}
+<div class="content">
                <div class="container-fluid">
 
                   <div class="col-md-12 card">
@@ -20,11 +26,8 @@
                             <div class="col-12">
                             <div class="row"> 
                                     <div class="col-3">
-                                        <select name="Estate" id="Estate" class="selectpicker" data-title="Estado" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                                <option value="14">predio 1</option>
-                                                <option value="20">predio 1</option>
-        
-                                        </select>
+                                     @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" })
+                                       
                                     </div>
                                     
                                     <div class="col-2">

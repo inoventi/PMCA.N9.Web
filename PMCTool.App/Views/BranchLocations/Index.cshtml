@@ -18,20 +18,8 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-12">
                         <div class="row">
-                            <!--<div class="col-2">
-                    <select multiple name="Región" class="selectpicker" data-title="Región" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
-                            <option value="Noroeste">Noroeste</option>
-                            <option value="Noreste">Noreste</option>
-                            <option value="Chapala">Chapala</option>
-                            <option value="Oriente">Oriente</option>
-                            <option value="Centronorte">Centronorte</option>
-                            <option value="Centrosur">Centrosur</option>
-                            <option value="Suroeste">Suroeste</option>
-                            <option value="Sureste">Sureste</option>
-                    </select>
-                </div> -->
-                            <div class="col-3">
-                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style = "btn-default btn-outline", @data_title = "Estados" })
+                            <div class="col-3"> 
+                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" });
                             </div>
                             <div class="col-3">
                                 <select multiple id="Municipios" name="Municipio" class="selectpicker" data-title="Municipios" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">

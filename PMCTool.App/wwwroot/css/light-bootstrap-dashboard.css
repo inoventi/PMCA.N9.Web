@@ -758,11 +758,11 @@ input:focus {
         opacity: 1;
     }
 
-.sidebar .nav .nav-item.active .nav-link {
-    /*color: #FFFFFF;*/
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.23);
-}
+    .sidebar .nav .nav-item.active .nav-link {
+        /*color: #FFFFFF;*/
+        opacity: 1;
+        background: #e4e4e4;
+    }
 
 .sidebar .nav .nav-item.separator {
     margin: 15px 0;
