@@ -19,7 +19,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-3"> 
-                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" });
+                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" })
                             </div>
                             <div class="col-3">
                                 <select multiple id="Municipios" name="Municipio" class="selectpicker" data-title="Municipios" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
@@ -107,7 +107,7 @@
     <script src="~/js/plugins/jquery.dataTables.min.js"></script>
     <!--  Google Maps Plugin    -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&libraries=&v=weekly" defer></script>
-    <script src="~/js/core/vBranchLocations.js"></script>
-    <script src="~/js/core/vBranchAdvances.js"></script>
+    <script src="~/js/core/vBranchLocations.js" asp-append-version="true"></script>
+    <script src="~/js/core/vBranchAdvances.js" asp-append-version="true"></script>
 }
 
