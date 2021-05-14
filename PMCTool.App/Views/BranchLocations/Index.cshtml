@@ -32,6 +32,7 @@
                             </div> -->
                             <div class="col-3">
                                 @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style= "btn-default btn-outline", @data_title="Estados" })
+                            
                             </div>
                             <div class="col-3">
                                 <select multiple id="Municipios" name="Municipio" class="selectpicker" data-title="Municipios" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
