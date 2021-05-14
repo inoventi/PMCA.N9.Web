@@ -4,8 +4,8 @@
 var vBranchLocationClass = {
     initMap: (data) => {
     $('.div-map').removeAttr('hidden');
+    // Multiple markers location, latitude, and longitude
     var markers = [];
-
     for (var a = 0; a < data.length; a++) {
         var advance = data[a].advance * 100;        
         var lenght = data[a].lenght;
@@ -14,7 +14,6 @@ var vBranchLocationClass = {
             markers.push([data[a].projectName, parseFloat(latitude), parseFloat(lenght), data[a].projectID, Math.trunc(advance), data[a].status]);
         }    
     }
-        //ArrayMapCordenate.push(["Sucursal 1", 22.234257, -101.335193, "11cd0b2c-bf6c-47f7-abab-0132df91c450", 50, 1]);
     var map;
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
@@ -25,26 +24,8 @@ var vBranchLocationClass = {
     map = new google.maps.Map(document.getElementById("regularMap"), mapOptions);
     map.setTilt(50);
 
-    // Multiple markers location, latitude, and longitude
-        //var markers = ArrayMapCordenate;
-
-        //var markers = [
-        //    ["LA HUERTA", -104.6458522042, 19.4763826892, "e68980dc-6639-42c1-a102-3ec856f8242e", 37, 1]
-        //];
-    // Info window content
-    /*var infoWindowContent = [
-        ['<div class="info_content">' +
-        '<h3>Brooklyn Museum</h3>' +
-        '<p>The Brooklyn Museum is an art museum located in the New York City borough of Brooklyn.</p>' + '</div>'],
-        ['<div class="info_content">' +
-        '<h3>Brooklyn Public Library</h3>' +
-        '<p>The Brooklyn Public Library (BPL) is the public library system of the borough of Brooklyn, in New York City.</p>' +
-        '</div>'],
-        ['<div class="info_content">' +
-        '<h3>Prospect Park Zoo</h3>' +
-        '<p>The Prospect Park Zoo is a 12-acre (4.9 ha) zoo located off Flatbush Avenue on the eastern side of Prospect Park, Brooklyn, New York City.</p>' +
-        '</div>']
-    ];*/
+    
+ 
 
     // Add multiple markers to map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
@@ -103,7 +84,6 @@ var vBranchLocationClass = {
                 + '</div>'
                 + '</div>'
                 + '</div></div>';
-            //var html = marker.title;
             return function () {
                 infoWindow.setContent(html);
                 infoWindow.open(map, marker);
