@@ -11,7 +11,6 @@
             let estadoid = $('#Estate').val();
             let tipopredio = $('#tipopredio').val();
             let vista = $('#tipovista').val();
-            debugger;
             jQuery.ajaxSettings.traditional = true;
             $.ajax({
                 url: "/BranchAdvances/printReportBranchAdvances",

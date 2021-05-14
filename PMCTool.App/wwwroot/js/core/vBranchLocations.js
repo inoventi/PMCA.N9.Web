@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     vBranchLocationClass.initReport();
 })
+var numExc = 0;
 var vBranchLocationClass = {
     initMap: (data) => {
         $('.div-map').show();
@@ -123,7 +124,6 @@ var vBranchLocationClass = {
     },
     initDatatable: (data) => {
         $('.div-table').show();
-        $('#dataTable').empty();
         for (var b = 0; b < data.length; b++) {
             var status = data[b].status;
             status == 1 ? status = '<span class="badge badge-success">En tiempo</span>' : '';
@@ -141,7 +141,7 @@ var vBranchLocationClass = {
                 + '</td>'
                 + '</tr>');
         }
-        var table = $('#datatables').DataTable({
+        $('#datatables').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -154,17 +154,24 @@ var vBranchLocationClass = {
             }
 
         });
+        
 
     },
     initReport: () => {
         $('.div-map').hide();
         $('.div-table').hide();
+        $('#btnClose').hide();
         $('#btnReporte').click(() => {
+            $('#btnReporte').hide();
+            $('#btnClose').show();
             let Municipalities = $("#Municipios").val();
             let State = $('#Estate').val();
             let Predio = $('#predio').val();
             vBranchLocationClass.getDataResul(State, Municipalities.join(), Predio.join());
         })
+        $('#btnClose').click(() => {
+            location.reload();
+        });
     },
     getDataResul(State, Municipalities, Predio) {
         let data = {

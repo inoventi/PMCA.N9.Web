@@ -1,3 +1,4 @@
+@import url('light-bootstrap-dashboard-bambien.css');
 .hlogo{    height: 82px;}
 @keyframes spin {
     from {
@@ -13603,6 +13604,13 @@ select.selectpicker {
     color: #235B4E !important;
 }
 #tablebrachadvances thead tr th {
+    background: rgb(188, 149, 92);
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    width: 133px;
+}
+#datatables thead tr th {
     background: rgb(188, 149, 92);
     color: white;
     font-size: 0.8em;
