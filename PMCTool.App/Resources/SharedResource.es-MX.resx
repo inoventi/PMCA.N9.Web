@@ -2929,4 +2929,10 @@
   <data name="4032" xml:space="preserve">
     <value>¡Este portafolio tiene programas pero no tienen proyectos asignados!</value>
   </data>
+  <data name="Lockscreen" xml:space="preserve">
+    <value>Bloquear</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Log out</value>
+  </data>
 </root>

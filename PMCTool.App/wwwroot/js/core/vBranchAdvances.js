@@ -6,7 +6,8 @@
         }); 
     },
     addEventBtnExportPDF() {
-        $('#bntReportPDF').click(function () { 
+        $('#bntReportPDF').click(function () {
+            LoaderShow();
             let municiopiosid = $("#Municipios").val();
             let estadoid = $('#Estate').val();
             let tipopredio = $('#tipopredio').val();
@@ -26,6 +27,7 @@
                     console.log(error);
                 },
                 success: function (data) {
+                    LoaderHide();
                     jQuery.ajaxSettings.traditional = false;
                     if (data != null) {
                         var a = document.createElement("a");
@@ -96,25 +98,7 @@
             divElement.html(dataResult);
             LoaderHide();
             
-        });
-        
-        //let r = "";
-        //const dataResul = fetch('/BranchAdvances/getBranchAdvancesData', {
-        //    method: 'POST',
-        //    body: data
-        //}).then(function (response) {
-        //    // The API call was successful!
-        //    return response.text();
-        //}).then(function (html) {
-
-        //    // Convert the HTML string into a document object
-        //    var parser = new DOMParser();
-        //    var doc = parser.parseFromString(html, 'text/html');
-        //    console.log(parser);
-        //    return doc;
-        //});
-        //    //.catch(function (err) { console.log(err); }); 
-        //return r;
+        }); 
         
     },
     initHome() {

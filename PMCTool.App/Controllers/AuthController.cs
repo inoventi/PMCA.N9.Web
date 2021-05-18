@@ -104,8 +104,7 @@ namespace PMCTool.App.Controllers
             else {
 
                 return Redirect(UrlPMCTool);  
-            }
-
+            }  
         }
         public async Task<ResponseModel> LoginWithToken(string tokenUser)
         {
@@ -478,6 +477,53 @@ namespace PMCTool.App.Controllers
             }
             return Json(response);
 
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> unLockScreen(string password) {
+            ResponseModel response = new ResponseModel
+            {
+                IsSuccess = false,
+                ValueBoolean = false,
+                ValueString = null
+            };
+            if (string.IsNullOrEmpty(password)) {
+                response.IsSuccess = false; 
+                response.ErrorMessage = localizer.GetString("5003");
+                return Json(response);
+            }
+
+            string appToken = Request.Cookies["pmctool-token-app"];
+            if (!string.IsNullOrEmpty(appToken)) {
+                response.ValueString = appToken;
+
+                var handler = new JwtSecurityTokenHandler();
+                var token = handler.ReadJwtToken(response.ValueString);
+                var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+                var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value; 
+                try
+                {
+                    Boolean userValidate = await restClient.Get<Boolean>(baseUrl, $"/api/v1/Users/{userId}/validatepass/screenblock?password={password}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+                    if (userValidate) {
+                        response.IsSuccess = userValidate;
+                        response.Redirect = "/Home/Index";
+                    }
+                    else {
+
+                        response.ErrorMessage = localizer.GetString("5003");
+                        response.IsSuccess = false;
+                    }
+                }
+                catch (HttpResponseException ex)
+                {
+                }
+                catch (Exception ex)
+                {
+                }
+
+            }
+            response.ValueString = null;
+           return Json(response);
         }
 
         #region P R I V A T E 

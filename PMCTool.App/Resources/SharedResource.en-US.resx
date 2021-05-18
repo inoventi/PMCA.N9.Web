@@ -2926,4 +2926,10 @@
   <data name="4032" xml:space="preserve">
     <value>¡This portfolio has programs but no projects are assigned!</value>
   </data>
+  <data name="Lockscreen" xml:space="preserve">
+    <value>Lock Screen</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Cerrar sesion</value>
+  </data>
 </root>

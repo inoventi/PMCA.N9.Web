@@ -16,6 +16,7 @@ using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
 using PMCTool.Models.Enumeration;
 using PMCTool.Models.Environment;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace PMCTool.App.Controllers
 {
@@ -35,6 +36,16 @@ namespace PMCTool.App.Controllers
 
             return View();
         }
+
+        public IActionResult Lock()
+        {
+            //SetActiveOption("3000");
+            //ViewBag.Title = localizer["ViewTitleHome"];
+             
+
+            return View();
+        }
+
         public IActionResult EmptyProgram()
         {
             ViewBag.Title = localizer["4030"];
