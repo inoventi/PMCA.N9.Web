@@ -71,18 +71,137 @@ namespace PMCTool.App.Controllers
             return Json(response);
         }
 
-        public IActionResult ExternalLogin() {
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ExternalLogin()
+        {
             string email = Request.HttpContext.Request.Query["userEmail"].ToString();
-            if (email == null | email=="")
+            string UrlPMCTool = AppSettings.Current.UrlPMCTool;
+            string token = "";
+            if (!String.IsNullOrEmpty(email))
             {
-                return RedirectToAction("Login", "Auth");
+                try
+                {
+                    token = Task.Run<string>(() => restClient.Post<string, string>(baseUrl, $"/api/v1/auth/TokenByEmailAsync", email, new Dictionary<string, string>())).Result;
+
+                }
+                catch (HttpResponseException ex)
+                {
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            else
+            {
+                return RedirectToAction("AccessNotAllowed", "Home", null);
+            } 
+            ResponseModel validateAccess = await LoginWithToken(token); 
+            if (validateAccess.IsSuccess)
+            {
+                return Redirect("/Home/Index"); 
             }
             else {
-                return RedirectToAction("Index", "Home");
 
+                return Redirect(UrlPMCTool);  
             }
 
-           
+        }
+        public async Task<ResponseModel> LoginWithToken(string tokenUser)
+        {
+            ResponseModel response = new ResponseModel
+            {
+                IsSuccess = false,
+                ValueBoolean = false,
+                ValueString = tokenUser
+            };
+            try
+            {
+                string envLogo = "";
+
+                var handler = new JwtSecurityTokenHandler();
+                var token = handler.ReadJwtToken(response.ValueString);
+                var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+                var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value;
+
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                //User profile information 
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                var profile = await restClient.Get<User>(baseUrl, $"/api/v1/Users/{userId}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                //Environment information 
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                string EnvName = null;
+                if (!string.IsNullOrEmpty(envId))
+                {
+                    var environment = await restClient.Get<PMCTool.Models.Core.Environment>(baseUrl, $"/api/v1/environments/{envId}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+                    envLogo = environment.Logo;
+                    EnvName = environment.Name;
+                }
+
+                if (profile.Type == (int)EnumFactory.UserType.App)
+                {
+                    response.ValueInt = 1;
+                    var hasAgreement = await restClient.Get<bool>(baseUrl, $"/api/v1/auth/Agreement", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+                    if (hasAgreement)
+                    {
+                        SetupAccess(response.ValueString, profile.Image, envLogo, EnvName);
+                                        //string token, string image, string envLogo,string envName
+                        response.ValueBoolean = true;
+                    }
+                }
+                else
+                {
+                    response.ValueInt = 2;
+                    if (profile.Type == (int)EnumFactory.UserType.CCP && !string.IsNullOrEmpty(envId))
+                    {
+                        //AQUI
+                        SetupAccess(response.ValueString, profile.Image, envLogo, EnvName);
+                        response.ValueBoolean = true;
+                    }
+                }
+
+                response.ValueString1 = response.ValueString;
+                response.ValueString = userId;
+                response.IsSuccess = true;
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                response.ErrorCode = apiError.ErrorCode;
+
+                if (apiError.ErrorCode == 5017)
+                {
+                    response.ErrorMessage = "Contraseña incorrecta, intentos fallidos:" + " " + apiError.ErrorMessage;
+                }
+                else if (apiError.ErrorCode == 5018)
+                {
+                    response.ErrorMessage = "El usuario no es válido";
+                }
+                else if (apiError.ErrorCode == 5019)
+                {
+                    response.ErrorMessage = "La contraseña no es válida";
+                }
+                else
+                {
+                    response.ErrorMessage = localizer.GetString(response.ErrorCode.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                if (string.Equals(ex.Message, "No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión."))
+                {
+                    response.ErrorMessage = "Ha ocurrido un error de conexión, favor de intentar nuevamente en unos minutos.";
+                }
+                else
+                {
+                    response.ErrorMessage = ex.Source + ": " + ex.Message;
+                    if (ex.InnerException != null)
+                        response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                }
+            }
+            return response;
         }
         [AllowAnonymous]
         [HttpPost]
