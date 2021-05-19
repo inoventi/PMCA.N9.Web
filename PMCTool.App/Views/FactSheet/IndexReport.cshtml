@@ -1,0 +1,176 @@
+﻿ @model dynamic;
+@{
+    Layout = "_LayoutReport";
+    ViewData["Title"] ="FICHA DE PROYECTO";; 
+}
+
+<link href="~/css/progress-circle.css" rel="stylesheet" />
+<link href="~/css/detalle-actividad.css" rel="stylesheet" />
+
+ <div class="content">
+@{
+        var State = "";
+        var Municipality =  "";
+        var Locality =  "";
+        double Progress =  0;
+        int ProgressInt =  0;
+        var CategoryVenue = "";
+        var Venue =  "";
+        var Institution = "";
+        var KeyDecisions =  "";
+        var ExecutiveSummary =  "";
+        var ProjectName =  "";
+    @foreach (var row in Model.Data)
+    {
+          State = @row.State;
+          Municipality = @row.Municipality;
+          Locality = @row.Locality;
+          Progress = @row.Progress * 100;
+          ProgressInt =Convert.ToInt32(Progress);
+          CategoryVenue = @row.CategoryVenue;
+          Venue = @row.Venue;
+          Institution = @row.Institution;
+          KeyDecisions = @row.KeyDecisions;
+          ExecutiveSummary = @row.ExecutiveSummary;
+          ProjectName = @row.ProjectName;
+    
+    }
+
+    <div class="container-fluid card">
+        <div class="col-md-12">
+             
+        </div>
+        <div class="container-fluid pl-0 ml-0">
+            <div class="row justify-content-center mt-3">
+                <div class="col-12">
+                    <div class="row justify-content-left">
+                         
+                    </div>
+                    <div id="divFichaTecnicaProyecto">
+                        <div class="row justify-content-center mt-4"> 
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td>
+                                                        <h5 class="media align-items-center font-weight-bold  ml-2"><span style="color: #691C32 !important;" id="projectName">@ProjectName</span></h5><br /><div class="row">
+                                                            <div class="col-12 mt-1">
+                                                                <h6><strong>Estado:</strong> <span id="estado">@State</span></h6>
+                                                            </div>
+                                                            <div class="col-12 mt-1">
+                                                                <h6><strong>Municipio: </strong><span id="municipio">@Municipality</span></h6>
+                                                            </div>
+                                                            <div class="col-12 mt-1">
+                                                                <h6><strong>Localidad:</strong> <span id="localidad">@Locality</span></h6>
+                                                            </div>
+                                                             <div class="col-md-12 mt-1"> <h6><strong>Intitución que administra el inmueble:</strong> <span id="institucion">@Institution</span></h6> </div>
+                                                            <div class="col-md-12 mt-1"> <h6><strong>Tipo de predio:</strong> <span id="tipoPredio">@Venue</span></h6> </div>
+                                                            <div class="col-md-12 mt-1"> <h6><strong>Categoria de predio:</strong> <span id="categoriaPredio">@CategoryVenue</span></h6> </div>
+                                                        </div>
+                                                    </td> 
+                                                     <td>
+                                                         <div class="row text-center justify-content-center">
+                                                            <div class="col-12">
+                                                                <strong><h6>Avance general</h6></strong>
+                                                            </div>
+                                                            <div class="col-12 mt-2" id="progress">
+                                                                <div class="progress-circle border-primary progress-@ProgressInt"><span id="progressCircle">@ProgressInt</span></div>
+                                                            </div>
+                                                        </div>
+                                                     </td> 
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="col-10 headbox-factsheet" style="background: #BC955C;    color: #ffefef; padding-top: 8px;margin-top: 22px;padding-bottom: 1px;">
+                                                            <h5 class="textheadbox-factsheet" style="margin-bottom: 10px;">Resumen ejecutivo</h5>
+                                                        </div>
+                                                        <div class="col-10 borderbox-factsheet">
+                                                            <p style="line-height: 1;">
+                                                                <em style="font-size: 11px;" id="resumenEjecutivo">
+                                                                    @ExecutiveSummary
+                                                                </em>
+                                                            </p>
+                                                        </div>
+                                                     </td>  
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td colspan="2">
+                                                         <div class="col-10 headbox-factsheet" style="background: #BC955C;    color: #ffefef;  padding-top: 8px;margin-top: 15px; padding-bottom: 1px;">
+                                                            <h5 class="textheadbox-factsheet" style="margin-bottom: 10px;">Decisiones clave</h5>
+                                                        </div>
+                                                            <div class="col-10 borderbox-factsheet">
+                                                            <p style="line-height: 1;">
+                                                                <em style="font-size: 11px;" id="DesicionesClave">
+                                                                    @KeyDecisions
+                                                                </em>
+                                                            </p>
+                                                        </div>
+                                                     </td>  
+                                                </tr>
+                                            </table>
+                                             
+                                                  
+                                                    <div class="" style="width: 100%;">
+                                                        <table id="tFactSheet" class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="background-color: rgb(188, 149, 92);color: white;">Etapas</th>
+                                                                    <th style="background-color: rgb(188, 149, 92);color: white;">Avance</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tStageProgress">
+                                                                @foreach (var rowx in Model.ProjectTask)
+                                                                        {
+                                                                        var statusSpan = "";
+                                                                        double progress = @rowx.Progress * 100;
+                                                                        double progressRow =Math.Round(progress, MidpointRounding.AwayFromZero);
+                                                                        switch (@rowx.Status)
+                                                                        {
+                                                                            case 1:
+                                                                                statusSpan = "<span style='background-color: green;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>En tiempo</span>";
+                                                                                break;
+                                                                            case 2:
+                                                                                statusSpan = "<span style='background-color: rgb(230, 199, 2);color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Atrasado</span>";
+                                                                                break;
+                                                                            case 3:
+                                                                                statusSpan = "<span style='background-color: #f44336;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Con impacto</span>";
+                                                                                break;
+                                                                            case 4:
+                                                                                statusSpan = "<span style='background-color: #d0d0d0;color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cerrado</span>";
+                                                                                break;
+                                                                            case 5:
+                                                                                statusSpan = "<span style='background-color: #545454;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cancelado</span>";
+                                                                                break;
+                                                                        }
+                                                                            <tr>
+                                                                                <th>@rowx.Activity <br />  @Html.Raw(@statusSpan)</th>       
+                                                                                <th>@progressRow%</th>
+
+                                                                            </tr>   
+    
+                                                                        }
+                                                            </tbody>
+                                                        </table>
+                                                    </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+</div>
+@section Scripts {
+     <script type="text/javascript">
+                saveUrl('@AppSettings.Current.UrlPMCTool');
+     </script>
+}
+

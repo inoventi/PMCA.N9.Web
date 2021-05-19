@@ -17,7 +17,47 @@ $(document).ready(function () {
     $("#btnSearch").click(function () {
         refresh(projectId);
     });
+    vFactSheet.addEventBtnExportPDF();
 });
+
+let vFactSheet = { 
+    printRefresh() { 
+            let projectId = $("#ProjectID").val(); 
+        getFactSheet(projectId);
+        getStagesProgress(projectId); 
+    },
+    addEventBtnExportPDF() {
+        $('.bntReportPDF').click(function () {
+            LoaderShow();
+            let projectid = $("#proyecto").val(); 
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/FactSheet/printReport",
+                type: "POST",
+                data: {
+                    "ProjectID": "'" + projectid + "'"
+                },
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    LoaderHide();
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "FechaDeProyecto.pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        });
+
+    }
+}
 
 function refresh(projectId) {
     if (projectId == "") {

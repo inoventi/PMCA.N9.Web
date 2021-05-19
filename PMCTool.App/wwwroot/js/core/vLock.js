@@ -7,11 +7,14 @@
     },
     unLockScreen() {
         let password = $("input[name=password]").val(); 
+        let login = $("input[name=login]").val(); 
+        let env = $("input[name=env]").val(); 
         LoaderShow();
-        $.post('/Auth/unLockScreen', { password: password }, function (dataResult) {
+        $.post('/Auth/unLockScreen', { password: password, login: login, env: env}, function (dataResult) {
             LoaderHide();
             if (dataResult.isSuccess) {
-                window.location = dataResult.redirect;  
+                //window.location = dataResult.redirect;  
+                window.history.back();
 
             } else {
                 Swal.fire({

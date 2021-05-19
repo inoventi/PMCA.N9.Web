@@ -16,17 +16,16 @@ using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
 using PMCTool.Models.Enumeration;
 using PMCTool.Models.Environment;
-using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt; 
 
 namespace PMCTool.App.Controllers
 {
     [PMCToolAuthentication]
     public class HomeController : BaseController
-    {
-        public HomeController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer) : base(appSettings, localizer)
+    { 
+        public HomeController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer ) : base(appSettings, localizer)
         {
-
-        }
+         }
 
         [PMCToolAuthorize(ObjectCode = "3000")]
         public IActionResult Index()
@@ -37,11 +36,25 @@ namespace PMCTool.App.Controllers
             return View();
         }
 
-        public IActionResult Lock()
+        public  async Task<IActionResult> Lock()
         {
-            //SetActiveOption("3000");
-            //ViewBag.Title = localizer["ViewTitleHome"];
-             
+            string appToken = Request.Cookies["pmctool-token-app"];
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(appToken);
+            var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+            var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value;
+            var profile = await restClient.Get<User>(baseUrl, $"/api/v1/Users/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var result = await restClient.Post<bool, string>(baseUrl, $"/api/v1/auth/logout", "", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+            ViewBag.Login = profile.Login;
+            ViewBag.envId = envId;
+            Response.HttpContext.Response.Cookies.Delete("pmctool-token-app");
+            Response.HttpContext.Response.Cookies.Delete("pmctool-name-app");
+            Response.HttpContext.Response.Cookies.Delete("pmctool-avatar-app");
+            Response.HttpContext.Response.Cookies.Delete("pmctool-envlogo-app");
+            Response.HttpContext.Response.Cookies.Delete("pmctool-option");
+            Response.HttpContext.Response.Cookies.Delete("pmctool-name-env");
 
             return View();
         }

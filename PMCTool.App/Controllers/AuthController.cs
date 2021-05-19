@@ -478,52 +478,78 @@ namespace PMCTool.App.Controllers
             return Json(response);
 
         }
-
+        
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<JsonResult> unLockScreen(string password) {
+        public async Task<JsonResult> unLockScreen(string password, string login, string env) {
             ResponseModel response = new ResponseModel
             {
                 IsSuccess = false,
                 ValueBoolean = false,
                 ValueString = null
             };
-            if (string.IsNullOrEmpty(password)) {
-                response.IsSuccess = false; 
+            if (string.IsNullOrEmpty(password))
+            {
+                response.IsSuccess = false;
                 response.ErrorMessage = localizer.GetString("5003");
                 return Json(response);
             }
+            if (string.IsNullOrEmpty(login))
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = localizer.GetString("5003");
+                return Json(response);
+            }
+            if (string.IsNullOrEmpty(env))
+            {
+                response.IsSuccess = false;
+                response.ErrorMessage = localizer.GetString("5003");
+                return Json(response);
+            }
+            ResponseModel responsew = await SignIn(login, password, env);
 
-            string appToken = Request.Cookies["pmctool-token-app"];
-            if (!string.IsNullOrEmpty(appToken)) {
-                response.ValueString = appToken;
-
-                var handler = new JwtSecurityTokenHandler();
-                var token = handler.ReadJwtToken(response.ValueString);
-                var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
-                var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value; 
-                try
-                {
-                    Boolean userValidate = await restClient.Get<Boolean>(baseUrl, $"/api/v1/Users/{userId}/validatepass/screenblock?password={password}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
-                    if (userValidate) {
-                        response.IsSuccess = userValidate;
-                        response.Redirect = "/Home/Index";
-                    }
-                    else {
-
-                        response.ErrorMessage = localizer.GetString("5003");
-                        response.IsSuccess = false;
-                    }
-                }
-                catch (HttpResponseException ex)
-                {
-                }
-                catch (Exception ex)
-                {
-                }
+            if (responsew.IsSuccess)
+            {
+                response.IsSuccess = true;
+                response.Redirect = "/Home/Index";
 
             }
+            else {
+                response.IsSuccess = false;
+                response.ErrorMessage = localizer.GetString("5003"); 
+                response.Redirect = "";
+            }
+            //string appToken = Request.Cookies["pmctool-token-app"];
+            //if (!string.IsNullOrEmpty(appToken)) {
+            //    response.ValueString = appToken;
+
+            //    var handler = new JwtSecurityTokenHandler();
+            //    var token = handler.ReadJwtToken(response.ValueString);
+            //    var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+            //    var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value; 
+            //    try
+            //    {
+            //        Boolean userValidate = await restClient.Get<Boolean>(baseUrl, $"/api/v1/Users/{userId}/validatepass/screenblock?password={password}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+            //        if (userValidate) {
+            //            response.IsSuccess = userValidate;
+            //            response.Redirect = "/Home/Index";
+            //        }
+            //        else {
+
+            //            response.ErrorMessage = localizer.GetString("5003");
+            //            response.IsSuccess = false;
+            //        }
+            //    }
+            //    catch (HttpResponseException ex)
+            //    {
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //    }
+
+            //}
             response.ValueString = null;
-           return Json(response);
+            return Json(response);
         }
 
         #region P R I V A T E 
@@ -644,7 +670,7 @@ namespace PMCTool.App.Controllers
 
             return response;
         }
-
+       
         private void SetupAccess(string token, string image, string envLogo,string envName) {
 
             var handler = new JwtSecurityTokenHandler();
