@@ -521,7 +521,7 @@ input:focus {
     float: left;
     width: 30px;
     text-align: center;
-    margin-left: 23px;
+    margin-left: 6px;
     margin-right: 15px;
     position: relative;
 }
@@ -596,7 +596,7 @@ input:focus {
 .sidebar .sidebar-wrapper .nav .nav-link p {
     margin: 0;
     line-height: 30px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     white-space: nowrap;
@@ -647,7 +647,7 @@ input:focus {
     border-radius: 50%;
     float: left;
     margin-right: 11px;
-    margin-left: 23px;
+    margin-left: 10px;
     z-index: 5;
     border: 2px solid rgba(255, 255, 255, 0.3);
 }
@@ -726,18 +726,18 @@ input:focus {
     display: block;
 }
 
-    .sidebar .nav .nav-item .nav-link {
-        color: #595959;
-        margin: 3px 9px 0px 5px;
-        opacity: .86;
-        border-radius: 4px;
-        text-transform: uppercase;
-        line-height: 30px;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 9px;
-        white-space: nowrap;
-    }
+.sidebar .nav .nav-item .nav-link {
+    color: #595959;
+    margin: 3px 5px 0px 5px;
+    opacity: .86;
+    border-radius: 4px;
+    text-transform: uppercase;
+    line-height: 30px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 4px;
+    white-space: nowrap
+}
 
 .sidebar .nav .nav-item .nav-link:hover {
     background: rgba(255, 255, 255, 0.13);
@@ -745,8 +745,8 @@ input:focus {
 }
 
 .sidebar .nav .nav-item .nav-link i {
-    font-size: 28px;
-    margin-right: 15px;
+    font-size: 21px;
+    margin-right: 5px;
     width: 30px;
     text-align: center;
     vertical-align: middle;
@@ -1008,7 +1008,7 @@ input:focus {
         display: inline-block !important;
     }
     .sidebar-mini .sidebar {
-        width: 80px;
+        width: 61px;
         display: block;
         font-weight: 200;
         z-index: 3;
