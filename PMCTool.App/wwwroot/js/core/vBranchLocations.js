@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     vBranchLocationClass.initReport();
+    vBranchLocationClass.initReportPDF();
 })
 var vBranchLocationClass = {
     initMap: (data) => {
@@ -148,6 +149,7 @@ var vBranchLocationClass = {
         $('#btnClose').click(() => {
             location.reload();
         });
+        
     },
     getDataResul(State, Municipalities, Predio) {
         let data = {
@@ -165,5 +167,38 @@ var vBranchLocationClass = {
         // Load initialize function
         google.maps.event.addDomListener(window, 'load', vBranchLocationClass.initMap(data));
         vBranchLocationClass.initDatatable(data);
+    },
+    initReportPDF: () => {
+        $('#bntReportPDFBL').click(function () {
+            let State = $('#Estate').val();
+            let Municipalities = $("#Municipios").val();    
+            let Predio = $('#predio').val();
+            LoaderShow();
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/BranchLocations/PrintReportBranchLocation",
+                type: "POST",
+                data: {
+                    "State": "'" + State + "'",
+                    "Municipalities": "'" + Municipalities.join() + "'",
+                    "Predio": "'" + Predio.join() + "'",
+                },
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    LoaderHide();
+                },
+                success: function (data) {
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "BranchLocationsReport.pdf";
+                        a.click();
+                        LoaderHide();
+                    }
+                }
+            });
+        });
     }
 }

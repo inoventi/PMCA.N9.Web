@@ -1,22 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Diagnostics;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using PMCTool.App.Attributes;
 using PMCTool.App.Helpers;
 using PMCTool.App.Models;
 using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
+using PMCTool.Models.Enumeration;
 using PMCTool.Models.Environment;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Syncfusion.Pdf;
+using Syncfusion.HtmlConverter;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace PMCTool.App.Controllers
 {
     public class BranchLocationsController : BaseController
     {
-        public BranchLocationsController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer) : base(appSettings, localizer)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public BranchLocationsController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
         {
-
+            _hostingEnvironment = hostingEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -25,16 +39,16 @@ namespace PMCTool.App.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> GetBranchLocation(BranchLocation data)
+        public async Task<IActionResult> GetBranchLocation(ReportBranchLocation data)
         {
-            List<BranchLocation> Report = new List<BranchLocation>();
+            List<ReportBranchLocation> Report = new List<ReportBranchLocation>();
             try
             {
-                if(data.State == null)
+                if (data.State == null)
                 {
                     data.State = "0";
                 }
-                Report = await restClient.Get<List<BranchLocation>>(baseUrl, $"api/v1/branchlocation/state/{data.State}/data?municipalities={data.Municipalities}&predio={data.Predio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                Report = await restClient.Get<List<ReportBranchLocation>>(baseUrl, $"api/v1/branchlocation/state/{data.State}/data?municipalities={data.Municipalities}&predio={data.Predio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -59,6 +73,46 @@ namespace PMCTool.App.Controllers
             }
 
             return Json(Report);
+        }
+        public IActionResult PrintReportBranchLocation(BranchLocation data)
+        {
+            string url = "/BranchLocations/printViewReportBranchLocation?model=";
+            if(data.State == null)
+            {
+                data.State = 0;
+            }
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportBranchLocation(string model)
+        {
+            List<ReportBranchLocation> fullStates = new List<ReportBranchLocation>();
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+
+            BranchLocation data = JsonConvert.DeserializeObject<BranchLocation>(modelo);
+
+            try
+            {                                                                                  
+                fullStates = await restClient.Get<List<ReportBranchLocation>>(baseUrl,$"api/v1/branchlocation/reportdata/state/{data.State}/data?municipalities={data.Municipalities}&predio={data.Predio}",new Dictionary<string, string>() { { "Authorization", token } });
+                return PartialView("_PartialReportBranchLocation", fullStates);
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
         }
     }
 }
