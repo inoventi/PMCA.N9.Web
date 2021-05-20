@@ -1,12 +1,13 @@
 ﻿$(document).ready(function () {
     vBranchLocationClass.initReport();
-    vBranchLocationClass.initReportPDF();
-})
+});
+// Initialize and add the map
+var map, locations, markers;
 var vBranchLocationClass = {
     initMap: (data) => {
     $('.div-map').removeAttr('hidden');
     // Multiple markers location, latitude, and longitude
-    var markers = [];
+    markers = [];
     for (var a = 0; a < data.length; a++) {
         var advance = data[a].advance * 100;        
         var lenght = data[a].lenght;
@@ -15,12 +16,12 @@ var vBranchLocationClass = {
             markers.push([data[a].projectName, parseFloat(latitude), parseFloat(lenght), data[a].projectID, Math.trunc(advance), data[a].status]);
         }    
     }
-    var map;
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
-        mapTypeId: google.maps.MapTypeId.HYBRID
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        zoom: 5,
+        center: { lat: 23.314402, lng: -102.674031 }
     };
-
     // Display a map on the web page
     map = new google.maps.Map(document.getElementById("regularMap"), mapOptions);
     map.setTilt(50);
@@ -141,6 +142,13 @@ var vBranchLocationClass = {
         $('#btnReporte').click(() => {
             $('#btnReporte').hide();
             $('#btnClose').removeAttr('hidden');
+            $('#btnPDF').removeAttr('hidden');
+            $('#Estate').prop('disabled', true);
+            $('#Estate').selectpicker('refresh');
+            $('#Municipios').prop('disabled', true);
+            $('#Municipios').selectpicker('refresh');
+            $('#predio').prop('disabled', true);
+            $('#predio').selectpicker('refresh');
             let Municipalities = $("#Municipios").val();
             let State = $('#Estate').val();
             let Predio = $('#predio').val();
@@ -168,37 +176,104 @@ var vBranchLocationClass = {
         google.maps.event.addDomListener(window, 'load', vBranchLocationClass.initMap(data));
         vBranchLocationClass.initDatatable(data);
     },
-    initReportPDF: () => {
-        $('#bntReportPDFBL').click(function () {
-            let State = $('#Estate').val();
-            let Municipalities = $("#Municipios").val();    
-            let Predio = $('#predio').val();
-            LoaderShow();
-            jQuery.ajaxSettings.traditional = true;
-            $.ajax({
-                url: "/BranchLocations/PrintReportBranchLocation",
-                type: "POST",
-                data: {
-                    "State": "'" + State + "'",
-                    "Municipalities": "'" + Municipalities.join() + "'",
-                    "Predio": "'" + Predio.join() + "'",
-                },
-                cache: false,
-                error: function (xhr, status, error) {
-                    console.log(error);
-                    LoaderHide();
-                },
-                success: function (data) {
-                    jQuery.ajaxSettings.traditional = false;
-                    if (data != null) {
-                        var a = document.createElement("a");
-                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
-                        a.download = "BranchLocationsReport.pdf";
-                        a.click();
+    MakePDF: () => {
+        LoaderShow();
+        $('html').css('overflow', 'hidden');
+        $('#rowEncabezado').removeAttr('hidden');
+        $objetivo = document.querySelector("#encabezado"), // A qué le tomamos la foto
+        $tablareport = document.querySelector('#tablereport');
+        if (!markers || markers === null || markers.lenght < 1) {
+            return;
+        }
+        const pdf = new jspdf.jsPDF("p", "pt", "letter");
+        var encabezado, tablereport;
+        html2canvas($objetivo) // Llamar a html2canvas y pasarle el elemento
+            .then(canvas => {
+                // Convertir la imagen a Base64
+                encabezado = canvas.toDataURL();
+                const e = new Image();
+                e.crossOrigin = 'Anonymous';
+                e.onload = event => {
+                    var canvas = document.createElement('CANVAS');
+                    var ctx = canvas.getContext('2d');
+                    var dataURL;
+                    ctx.drawImage(e, 0, 0);
+                    dataURL = canvas.toDataURL('image/jpeg,1.0');
+                    pdf.addImage(encabezado, "JPEG", 0, 40, 600, 30);
+                    $('#rowEncabezado').attr("hidden", true);
+                    $('html').css('overflow', 'overlay');
+                    window.URL.revokeObjectURL(dataURL);
+                    canvas = null;
+                    const r = pdf.internal.pageSize.getWidth() / pdf.internal.pageSize.getHeight();
+                    const wh = [Math.floor(974 / 2), Math.floor((974 / r) / 2)];
+                    const center = map.getCenter();
+                    let staticurl = `https://maps.googleapis.com/maps/api/staticmap?center=${center.lat()},${center.lng()}&scale=2&zoom=${map.getZoom() - 1}&size=${wh[0]}x${wh[1]}&maptype=hybrid`;
+                    staticurl += '&markers=color:red';
+                    console.log(markers);
+                    markers.forEach(mark => {
+                        staticurl += '%7C' + mark[1] + ',' + mark[2];
+                    });
+                    staticurl += '&key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&libraries=&v=weekly';
+                    console.log(staticurl);
+                    if (staticurl.lenght > 8192) {
+                        Swal.fire({
+                            type: 'error',
+                            title: '',
+                            text: 'Too much data on map',
+                            footer: ''
+                        });
                         LoaderHide();
+                        return;
                     }
-                }
+                    const d = new Image();
+                    d.crossOrigin = 'Anonymous';
+                    d.onload = event => {
+                        var canvas = document.createElement('CANVAS');
+                        var ctx = canvas.getContext('2d');
+                        var dataURL;
+                        canvas.height = wh[1] * 2;
+                        canvas.width = wh[0] * 2;
+                        ctx.drawImage(d, 0, 0);
+                        dataURL = canvas.toDataURL('image/jpeg,1.0');
+                        pdf.addImage(dataURL, "JPEG", 60, 100, 500, 0);
+                        pdf.save('ReporteMapaUbicacionSucursales.pdf');
+                        $('#rowEncabezado').attr("hidden", true);
+                        window.URL.revokeObjectURL(dataURL);
+                        canvas = null;
+                    };
+                    d.src = staticurl;
+                };
+                e.src = encabezado;
+
             });
+        let State = $('#Estate').val();
+        let Municipalities = $("#Municipios").val();
+        let Predio = $('#predio').val();
+        jQuery.ajaxSettings.traditional = true;
+        $.ajax({
+            url: "/BranchLocations/PrintReportBranchLocation",
+            type: "POST",
+            data: {
+                "State": "'" + State + "'",
+                "Municipalities": "'" + Municipalities.join() + "'",
+                "Predio": "'" + Predio.join() + "'",
+            },
+            cache: false,
+            error: function (xhr, status, error) {
+                console.log(error);
+                LoaderHide();
+            },
+            success: function (data) {
+                console.log(data);
+                jQuery.ajaxSettings.traditional = false;
+                if (data != null) {
+                    var a = document.createElement("a");
+                    a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                    a.download = "ReporteTablaUbicacionSucursales.pdf";
+                    a.click();
+                    LoaderHide();
+                }
+            }
         });
     }
 }
