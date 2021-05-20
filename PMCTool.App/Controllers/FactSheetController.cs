@@ -38,10 +38,11 @@ namespace PMCTool.App.Controllers
 
         }
 
-        //[PMCToolAuthorize(ObjectCode = "3100")]
+        [PMCToolAuthentication]
         [HttpGet]
         public async Task<IActionResult> Index(Guid? projectId)
         {
+            SetActiveOption("004");
             ProjectTabViewModel p = new ProjectTabViewModel();
             try
             {

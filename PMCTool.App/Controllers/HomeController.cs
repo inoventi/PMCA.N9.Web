@@ -30,7 +30,7 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthorize(ObjectCode = "3000")]
         public IActionResult Index()
         {
-            SetActiveOption("3000");
+            SetActiveOption("001");
             ViewBag.Title = localizer["ViewTitleHome"];
 
             return View();
