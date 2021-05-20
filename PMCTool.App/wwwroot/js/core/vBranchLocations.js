@@ -277,3 +277,7 @@ var vBranchLocationClass = {
         });
     }
 }
+$.fn.selectpicker.defaults = {
+    selectAllText: 'Seleccionar Todo',
+    deselectAllText: 'Deseleccionar Todo'
+};
