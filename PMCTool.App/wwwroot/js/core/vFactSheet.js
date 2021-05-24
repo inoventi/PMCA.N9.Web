@@ -47,7 +47,7 @@ let vFactSheet = {
                     if (data != null) {
                         var a = document.createElement("a");
                         a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
-                        a.download = "FechaDeProyecto.pdf";
+                        a.download = "FichaDeProyecto.pdf";
                         a.click();
                     }
                 }

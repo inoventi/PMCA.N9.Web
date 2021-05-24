@@ -1,7 +1,6 @@
 ﻿let vBranchs = {
     addEventMunicipios() {
-        $('#Estate').on('change', function (e) {
-            console.log(this.value);
+        $('#Estate').on('change', function (e) { 
             vBranchs.getMunicipios(this.value);
         }); 
     },
@@ -43,7 +42,7 @@
 
     },
     addEventBtnReport() {
-        $('#bntReport').click(function () {
+        $('#BAbntReport').click(function () {
             vBranchs.loadData();
         });
         
@@ -97,15 +96,31 @@
             divElement.empty();
             divElement.html(dataResult);
             LoaderHide();
+            $('#BAbntReport').hide();
+            $('#BAbtnClose').show();
+            
             
         }); 
         
     },
+    addEventBtnCloseReport() {
+        $('#BAbtnClose').click(function () {
+            $('#BAbntReport').show();
+            $('#BAbtnClose').hide(); 
+            $('#Estate').selectpicker('val', 'Estado');
+            $('#tipovista').selectpicker('val', 'default');
+            $('#tipovista').selectpicker('deselectAll');
+            $('.selectpicker').selectpicker('deselectAll');
+
+        });
+    },
     initHome() {
+        $('#BAbtnClose').hide();
         vBranchs.addEventMunicipios();
         vBranchs.addEventBtnReport();
         vBranchs.addEventBtnExportPDF();
-        vBranchs.loadData();
+        vBranchs.addEventBtnCloseReport();
+        //vBranchs.loadData();
     },
     iniDataTable() {
         $(document).ready(function () {
