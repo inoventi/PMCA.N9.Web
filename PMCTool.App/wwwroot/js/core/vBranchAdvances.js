@@ -84,6 +84,15 @@
        
     },
     getDataResul(estadoid, municipiosid, tipopredio, vista) {
+        $('#Estate').prop('disabled', true);
+        $('#Estate').selectpicker('refresh');
+        $('#Municipios').prop('disabled', true);
+        $('#Municipios').selectpicker('refresh');
+        $('#tipopredio').prop('disabled', true);
+        $('#tipopredio').selectpicker('refresh');
+        $('#tipovista').prop('disabled', true);
+        $('#tipovista').selectpicker('refresh');
+
         const divElement = $('._tablereport');
         let data = {
             estadoid: estadoid,
@@ -111,6 +120,16 @@
             $('#tipovista').selectpicker('val', 'default');
             $('#tipovista').selectpicker('deselectAll');
             $('.selectpicker').selectpicker('deselectAll');
+
+            $('#Estate').prop('disabled', false);
+            $('#Estate').selectpicker('refresh');
+            $('#Municipios').prop('disabled', false);
+            $('#Municipios').selectpicker('refresh');
+            $('#tipopredio').prop('disabled', false);
+            $('#tipopredio').selectpicker('refresh');
+            $('#tipovista').prop('disabled', false);
+            $('#tipovista').selectpicker('refresh');
+            $('._tablereport').empty();
 
         });
     },
