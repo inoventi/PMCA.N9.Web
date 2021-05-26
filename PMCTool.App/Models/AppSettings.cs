@@ -18,6 +18,7 @@ namespace PMCTool.App
         public string PmMenuCodes { get; set; }
         public string UrlPMCTool { get; set; }
         public string UrlAnalytics { get; set; }
+        public string AppState { get; set; }
 
         public AppSettings(IConfiguration config)
         {
@@ -25,6 +26,7 @@ namespace PMCTool.App
             this.ImageLogicalPath = config.GetValue<string>("ImageLogicalPath");
             this.FileStorage = config.GetValue<string>("FileStorage");
             this.PmMenuCodes = config.GetValue<string>("PmMenuCodes");
+            this.AppState = config.GetValue<string>("AppState");
             this.UrlPMCTool = config.GetValue<string>("UrlPMCTool");
             this.UrlAnalytics = config.GetValue<string>("UrlAnalytics");
 

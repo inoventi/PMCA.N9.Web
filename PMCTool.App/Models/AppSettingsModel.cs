@@ -15,5 +15,6 @@ namespace PMCTool.App.Models
         public string UrlPDFViews { get; set; }
         public string UrlAPP { get; set; }
         public string PlatformRun { get; set; }
+        public string AppState { get; set; }
     }
 }

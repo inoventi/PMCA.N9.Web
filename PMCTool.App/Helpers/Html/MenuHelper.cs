@@ -29,68 +29,68 @@ namespace PMCTool.App.Helpers.Html
             TagBuilder ul = new TagBuilder("ul");
             ul.AddCssClass("nav");
 
-            //List<MenuModel> userMenus = await GetMenus(context);
-            List<MenuModel> userMenus = new List<MenuModel>
-                (
-                    new MenuModel[]
-                    {
-                        new MenuModel()
-                        {
-                            Id = "1",
-                            Description = "Inicio",
-                            ParentId = "",
-                            Icon = "nc-icon nc-bank",
-                            Action = "Index",
-                            Controller = "Home",
-                            MenuCode = "001",
-                            ObjectCode = "001"
-                        },
-                        new MenuModel()
-                        {
-                            Id = "2",
-                            Description = "Ubicación de sucursales",
-                            ParentId = "",
-                            Icon = "nc-icon nc-square-pin",
-                            Action = "Index",
-                            Controller = "BranchLocations",
-                            MenuCode = "002",
-                            ObjectCode = "002"
-                        },
-                        new MenuModel()
-                        {
-                            Id = "3",
-                            Description = "Avances de sucursales",
-                            ParentId = "",
-                            Icon = "nc-icon nc-chart-bar-32",
-                            Action = "Index",
-                            Controller = "BranchAdvances",
-                            MenuCode = "003",
-                            ObjectCode = "003"
-                        },
-                        new MenuModel()
-                        {
-                            Id = "4",
-                            Description = "Ficha de proyectos",
-                            ParentId = "",
-                            Icon = "nc-icon nc-notes",
-                            Action = "Index",
-                            Controller = "FactSheet",
-                            MenuCode = "004",
-                            ObjectCode = "004"
-                        },
-                        new MenuModel()
-                        {
-                            Id = "100",
-                            Description = "Salir",
-                            ParentId = "",
-                            Icon = "fas fa-power-off f18",
-                            Action = "Logout",
-                            Controller = "Auth",
-                            MenuCode = "100",
-                            ObjectCode = "100"
-                        },
-                    }
-                );
+            List<MenuModel> userMenus = await GetMenus(context);
+            //List<MenuModel> userMenus = new List<MenuModel>
+            //    (
+            //        new MenuModel[]
+            //        {
+            //            new MenuModel()
+            //            {
+            //                Id = "1",
+            //                Description = "Inicio",
+            //                ParentId = "",
+            //                Icon = "nc-icon nc-bank",
+            //                Action = "Index",
+            //                Controller = "Home",
+            //                MenuCode = "001",
+            //                ObjectCode = "001"
+            //            },
+            //            new MenuModel()
+            //            {
+            //                Id = "2",
+            //                Description = "Ubicación de sucursales",
+            //                ParentId = "",
+            //                Icon = "nc-icon nc-square-pin",
+            //                Action = "Index",
+            //                Controller = "BranchLocations",
+            //                MenuCode = "002",
+            //                ObjectCode = "002"
+            //            },
+            //            new MenuModel()
+            //            {
+            //                Id = "3",
+            //                Description = "Avances de sucursales",
+            //                ParentId = "",
+            //                Icon = "nc-icon nc-chart-bar-32",
+            //                Action = "Index",
+            //                Controller = "BranchAdvances",
+            //                MenuCode = "003",
+            //                ObjectCode = "003"
+            //            },
+            //            new MenuModel()
+            //            {
+            //                Id = "4",
+            //                Description = "Ficha de proyectos",
+            //                ParentId = "",
+            //                Icon = "nc-icon nc-notes",
+            //                Action = "Index",
+            //                Controller = "FactSheet",
+            //                MenuCode = "004",
+            //                ObjectCode = "004"
+            //            },
+            //            new MenuModel()
+            //            {
+            //                Id = "100",
+            //                Description = "Salir",
+            //                ParentId = "",
+            //                Icon = "fas fa-power-off f18",
+            //                Action = "Logout",
+            //                Controller = "Auth",
+            //                MenuCode = "100",
+            //                ObjectCode = "100"
+            //            },
+            //        }
+            //    );
 
             TagBuilder mainMenu = CreateMenus(ul, userMenus, null);
 
@@ -112,7 +112,8 @@ namespace PMCTool.App.Helpers.Html
             {
                 string token = context.Request.Cookies["pmctool-token-app"];
                 string lang = context.Request.Cookies["pmctool-lang-app"];
-                int system = (int)EnumFactory.System.PMCTool_App;
+                //int system = (int)EnumFactory.System.PMCTool_App;
+                int system = (int)EnumFactory.System.PMCTool_Analytics;
 
                 var handler = new JwtSecurityTokenHandler();
                 var jwt = handler.ReadJwtToken(token);
@@ -136,14 +137,15 @@ namespace PMCTool.App.Helpers.Html
                     item.Controller = menu.ObjectController;
                     item.MenuCode = menu.MenuCode;
                     item.ObjectCode = menu.ObjectCode;
-                    
-                    if (pmCodes.Contains(menu.MenuCode) && userType == (int)EnumFactory.UserType.App) {
-                        if (userEnvironment.LicenseType == (int)EnumFactory.UserLicenseType.ProjectManager)
-                            result.Add(item);
-                    }
-                    else {
-                        result.Add(item);
-                    }
+
+                    //if (pmCodes.Contains(menu.MenuCode) && userType == (int)EnumFactory.UserType.App) {
+                    //    if (userEnvironment.LicenseType == (int)EnumFactory.UserLicenseType.ProjectManager)
+                    //        result.Add(item);
+                    //}
+                    //else {
+                    //    result.Add(item);
+                    //}
+                    result.Add(item);
                 }
 
                 for (int i = 0; i < result.Count; i++)

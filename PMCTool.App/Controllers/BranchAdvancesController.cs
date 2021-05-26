@@ -37,9 +37,9 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication] 
         public async Task<IActionResult> Index()
         {
+            SetActiveOption("4002");
             List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             ViewBag.States = states;
-            SetActiveOption("003");
             return View();
         }
 

@@ -585,7 +585,7 @@ namespace PMCTool.App.Controllers
                     IP = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString(),
                     Type = (int)EnumFactory.UserType.App,
                     Device = (int)EnumFactory.UserLoginDevice.NonMobileApp,
-                    System = (int)EnumFactory.System.PMCTool_App,
+                    System = (int)EnumFactory.System.PMCTool_Analytics,
                     Environment = env,
                 };
 
