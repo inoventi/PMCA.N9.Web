@@ -609,21 +609,35 @@ namespace PMCTool.App.Controllers
                 //Environment information 
                 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 string EnvName = null;
+                PMCTool.Models.Core.Environment environment = new PMCTool.Models.Core.Environment();
                 if (!string.IsNullOrEmpty(envId))
                 {
-                    var environment = await restClient.Get<PMCTool.Models.Core.Environment>(baseUrl, $"/api/v1/environments/{envId}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+                    environment = await restClient.Get<PMCTool.Models.Core.Environment>(baseUrl, $"/api/v1/environments/{envId}", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
                     envLogo = environment.Logo;
                     EnvName = environment.Name;
                 }
-
+                bool hasAgreement = false;
                 if (profile.Type == (int)EnumFactory.UserType.App)
                 {
                     response.ValueInt = 1;
-                    var hasAgreement = await restClient.Get<bool>(baseUrl, $"/api/v1/auth/Agreement", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
+                    hasAgreement = await restClient.Get<bool>(baseUrl, $"/api/v1/auth/Agreement", new Dictionary<string, string>() { { "Authorization", response.ValueString } });
                     if (hasAgreement)
                     {
                         SetupAccess(response.ValueString, profile.Image, envLogo, EnvName);
                         response.ValueBoolean = true;
+                        if (environment.AccessAnalytics == (int)EnumFactory.AnalyticsAccess.Active)
+                        {
+                            response.ValueString1 = response.ValueString;
+                            response.ValueString = userId;
+                            response.IsSuccess = true;
+                        }
+                        else
+                        { 
+                            response.IsSuccess = false; 
+
+                        }
+                    }else{
+                        response.IsSuccess = false; 
                     }
                 }
                 else
@@ -636,9 +650,40 @@ namespace PMCTool.App.Controllers
                     }
                 }
 
-                response.ValueString1 = response.ValueString;
-                response.ValueString = userId;
-                response.IsSuccess = true;
+                //SOLO Para TIPO APP
+                if (profile.Type == (int)EnumFactory.UserType.App)
+                {
+                    if (response.IsSuccess == false)
+                    {
+                        response.ValueString1 = null;
+                        response.ValueString = null;
+                        response.IsSuccess = false;
+                        if (hasAgreement)
+                        {
+                            response.ErrorMessage = localizer.GetString("AnalyticsAcceesNotAllowed");
+                        }
+                        else
+                        {
+                            response.ErrorMessage = localizer.GetString("AnalyticdTerminosNoFirmados");
+                        }
+                    }
+                    else
+                    {
+                        response.ValueString1 = response.ValueString;
+                        response.ValueString = userId;
+                        response.IsSuccess = true;
+                    }
+                }
+                else {
+
+                    response.ValueString1 = response.ValueString;
+                    response.ValueString = userId;
+                    response.IsSuccess = true;
+                }
+                
+
+               
+                
             }
             catch (HttpResponseException ex)
             {

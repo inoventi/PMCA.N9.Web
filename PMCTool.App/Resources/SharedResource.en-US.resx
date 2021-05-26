@@ -2932,4 +2932,10 @@
   <data name="Logout" xml:space="preserve">
     <value>Cerrar sesion</value>
   </data>
+  <data name="AnalyticdTerminosNoFirmados" xml:space="preserve">
+    <value>You must accept the terms and conditions of the PMC-Tool, Go to http://app.pmc-tool.com</value>
+  </data>
+  <data name="AnalyticsAcceesNotAllowed" xml:space="preserve">
+    <value>Your user does not have access to PMC-Tool Analytics</value>
+  </data>
 </root>

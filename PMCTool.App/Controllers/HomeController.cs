@@ -27,6 +27,7 @@ namespace PMCTool.App.Controllers
         {
          }
 
+        //[PMCToolAuthorize(ObjectCode = "3000")]
         [PMCToolAuthorize(ObjectCode = "4000")]
         public IActionResult Index()
         {

@@ -97,7 +97,40 @@ namespace PMCTool.App.Helpers.Html
             string r = RenderContent(mainMenu);
             return new HtmlString(r);
         }
+        public static async Task<string> GetThemeStyleEnvironmen(HttpContext context)
+        {
+            string result = "";
+            try
+            {
+                RestClient restClient = new RestClient();
 
+
+                string token = context.Request.Cookies["pmctool-token-app"];
+                string lang = context.Request.Cookies["pmctool-lang-app"];
+                string baseUrl = AppSettings.Current.BaseUrl; 
+                int system = (int)EnumFactory.System.PMCTool_App;
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwt = handler.ReadJwtToken(token);
+                string userId = jwt.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+                int userType = int.Parse(jwt.Claims.FirstOrDefault(x => x.Type == "TP").Value);
+                string envId = jwt.Claims.FirstOrDefault(x => x.Type == "Env").Value;
+
+                PMCTool.Models.Core.Environment environment = new PMCTool.Models.Core.Environment(); 
+                environment = await restClient.Get<PMCTool.Models.Core.Environment>(baseUrl, $"/api/v1/environments/{envId}", new Dictionary<string, string>() { { "Authorization", token } });
+                if (!string.IsNullOrEmpty(environment.ThemeStyle))
+                {
+                    result = environment.ThemeStyle;
+                }
+                else {
+                    result = "/css/light-bootstrap-dashboard.css";
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+             return result;
+        }
         private static async Task<List<MenuModel>> GetMenus(HttpContext context)
         {
             List<MenuModel> result = new List<MenuModel>();
@@ -261,6 +294,7 @@ namespace PMCTool.App.Helpers.Html
             return parent;
         }
 
+        
         private static string RenderContent(TagBuilder tag)
         {
 
@@ -274,5 +308,6 @@ namespace PMCTool.App.Helpers.Html
 
             return result;
         }
+        
     }
 }

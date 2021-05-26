@@ -46,23 +46,11 @@ function login() {
                     $("#tk").val(data.valueString1);
 
                     if (data.valueInt == 1) {
-
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Auth/GetAgreementPolicy',
-                            dataType: 'json',
-                            data: { tk: data.valueString1 },
-                            beforeSend: function () {
-                            },
-                            success: function (data) {
-                                $("#Agreement").html(data.wording);
-                                $("#dvLogin").hide();
-                                $('#agreementModal').modal('show');
-                            },
-                            complete: function () {
-                            },
-                            error: function (xhr, status, error) {
-                            }
+                        Swal.fire({
+                            type: 'error',
+                            title: '',
+                            text: data.errorMessage,
+                            footer: ''
                         });
                     }
 
