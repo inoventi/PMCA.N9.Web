@@ -2935,4 +2935,10 @@
   <data name="Logout" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="AnalyticsAcceesNotAllowed" xml:space="preserve">
+    <value>Tu usuario no tiene acceso a PMC-Tool Analytics</value>
+  </data>
+  <data name="AnalyticdTerminosNoFirmados" xml:space="preserve">
+    <value>Debes aceptar terminos y condiciones del PMC-Tool, Dirigete a http://app.pmc-tool.com</value>
+  </data>
 </root>

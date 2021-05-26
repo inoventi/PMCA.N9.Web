@@ -27,7 +27,7 @@ namespace PMCTool.App.Controllers
         {
          }
 
-        [PMCToolAuthorize(ObjectCode = "3000")]
+        //[PMCToolAuthorize(ObjectCode = "3000")]
         public IActionResult Index()
         {
             SetActiveOption("001");
