@@ -16,16 +16,19 @@ using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
 using PMCTool.Models.Enumeration;
 using PMCTool.Models.Environment;
-using System.IdentityModel.Tokens.Jwt; 
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace PMCTool.App.Controllers
 {
     [PMCToolAuthentication]
     public class HomeController : BaseController
-    { 
-        public HomeController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer ) : base(appSettings, localizer)
+    {
+        private IConfiguration configuration;
+        public HomeController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer, IConfiguration iConfig) : base(appSettings, localizer)
         {
-         }
+            configuration = iConfig;
+        }
 
         //[PMCToolAuthorize(ObjectCode = "3000")]
         [PMCToolAuthorize(ObjectCode = "4000")]
@@ -95,6 +98,37 @@ namespace PMCTool.App.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpGet]
+        public async Task<IActionResult> redirectPMCTool()
+        {
+            try
+            {
+                string appToken = Request.Cookies["pmctool-token-app"];
+
+                var handler = new JwtSecurityTokenHandler();
+                var token = handler.ReadJwtToken(appToken);
+                var userId = token.Claims.FirstOrDefault(x => x.Type == "jti").Value;
+                var envId = token.Claims.FirstOrDefault(x => x.Type == "Env").Value;
+                var user = await restClient.Get<User>(baseUrl, $"/api/v1/Users/{userId}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                if (user != null)
+                {
+                    ViewBag.UrlPMCTool = configuration.GetSection("AppSettings").GetSection("UrlPMCTool").Value + "?userEmail=" + user.Email;
+                }
+                else
+                {
+                    return new RedirectResult("/Auth/Login");
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                return new RedirectResult("/Auth/Login");
+
+            }
+
+            return View();
         }
     }
 }
