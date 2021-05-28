@@ -34,6 +34,8 @@ namespace PMCTool.App.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
         }
+        [PMCToolAuthorize(ObjectCode = "4002")]
+
         [PMCToolAuthentication] 
         public async Task<IActionResult> Index()
         {
