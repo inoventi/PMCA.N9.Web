@@ -13644,6 +13644,9 @@ select.selectpicker {
 #tFactSheet {
     border: 1px solid #a5a5a5;
 }
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #a3a3a3 !important;
+}
 .namescreen {
     text-transform: capitalize;
     font-weight: 500;

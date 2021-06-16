@@ -24,12 +24,11 @@
     @{
         string style = await MenuHelper.GetThemeStyleEnvironmen(Context);
     }
-     <link rel="stylesheet" href="@style" asp-append-version="true" />   
-     
-   
-     <link rel="stylesheet" href="~/css/pmctool.css" asp-append-version="true" />
+    <link rel="stylesheet" href="@style" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pmctool.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/elementStatus.css" asp-append-version="true" />
- 
+    <link href="~/css/bootstrap-select.css" rel="stylesheet" />
+
     <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validate/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/js/plugins/popper.min.js" asp-append-version="true"></script>
@@ -49,7 +48,7 @@
             ga('send', 'pageview');
             let enviroment = '@envName';
         }
-    </script> 
+    </script>
     @if (lang == null || lang == "es-MX")
     {
         <script src="~/lib/jquery-validate/localization/messages_es.min.js" asp-append-version="true"></script>
@@ -58,8 +57,8 @@
     else
     {
         <script src="~/js/localization/messages_us.js" asp-append-version="true"></script>
-    }  
-     
+    }
+
 </head>
 <body>
 
@@ -150,7 +149,7 @@
     <script src="~/js/plugins/bootstrap-tagsinput.js" asp-append-version="true"></script>
     <script src="~/js/light-bootstrap-dashboard.js" asp-append-version="true"></script>
     <script src="~/js/plugins/bootstrap-notify.js"></script>
-    <script src="~/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+    <script src="~/js/plugins/bootstrap-select.js" asp-append-version="true"></script>
 
     <script src="~/js/pmctool.js" asp-append-version="true"></script>
     <script src="~/js/helper.js" asp-append-version="true"></script>
