@@ -18,14 +18,14 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="ml-2">
                                 @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { @id = "Estate", @class = "selectpicker", @style = "", @data_style = "btn-default btn-outline", @data_title = "Estados" })
                             </div>
-                            <div class="col-3">
+                            <div class="ml-2">
                                 <select multiple id="Municipios" name="Municipios" class="selectpicker" data-title="Municipio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-actions-box="true">
                                 </select>
                             </div>
-                            <div class="col-3">
+                            <div class="ml-2">
                                 <select multiple id="predio" name="predio" class="selectpicker" data-title="Tipo de predio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                     <option value="FEDERAL">FEDERAL</option>
                                     <option value="MUNICIPAL">MUNICIPAL</option>
@@ -34,10 +34,7 @@
 
                                 </select>
                             </div>
-                            <div class="col-3 mt-1">
-                                <div class="row">
-
-                                </div>
+                            <div class="ml-2 mt-1">
                                 <button type="button" id="btnReporte" class="btn btn-wd btn-default btn-default">
                                     <span class="btn-label">
                                         <i class="fa fa-file-alt"></i>
