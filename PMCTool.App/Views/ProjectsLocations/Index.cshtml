@@ -1,0 +1,244 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="col-md-12 pt-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="title-report"> Ubicación de proyectos	</span>
+                    </h4>
+                </div>
+                <div class="">
+                    <!-- allow-->
+                    <div class="container-fluid pl-0 ml-0">
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="Entidad" class="selectpicker" data-title="Entidad Federativa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                            <option value="id">Aguascalientes</option>
+                                            <option value="ms">Baja California</option>
+                                            <option value="ca"> Baja California Sur</option>
+                                            <option value="da">Campeche</option>
+                                            <option value="da">Chiapas</option>
+                                            <option value="da">Chihuahua</option>
+                                            <option value="da">Coahuila</option>
+                                            <option value="da">Colima</option>
+                                            <option value="da">Ciudad de México / Distrito Federal</option>
+                                            <option value="da">Durango</option>
+                                            <option value="da">Estado de México</option>
+                                            <option value="da">Guanajuato</option>
+                                            <option value="da">Guerrero</option>
+                                            <option value="da">Hidalgo</option>
+                                            <option value="da">Jalisco</option>
+                                            <option value="da">Michoacán</option>
+                                            <option value="da">Morelos</option>
+                                            <option value="da">Nayarit</option>
+                                            <option value="da">Nuevo León</option>
+                                            <option value="da">Oaxaca</option>
+                                            <option value="da">Puebla</option>
+                                            <option value="da">Querétaro</option>
+                                            <option value="da">Quintana Roo</option>
+                                            <option value="da">San Luis Potosí</option>
+                                            <option value="da">Sinaloa</option>
+                                            <option value="da">Sonora</option>
+                                            <option value="da">Tabasco</option>
+                                            <option value="da">Tamaulipas</option>
+                                            <option value="da">Tlaxcala</option>
+                                            <option value="da">Veracruz</option>
+                                            <option value="da">Yucatán</option>
+                                            <option value="da">Zacatecas</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="DireccionG" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                            <option value="id">DG Desarrollo Carretero (UI)</option>
+                                            <option value="ms">DG Desarollo Ferroviario</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="TipoP" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                            <option value="id">Compromisos presidenciales</option>
+                                            <option value="ms">Conectividad AIFA</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                            <option value="id">Obra</option>
+                                            <option value="ms">Proyecto</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                            <option value="id">FONADIN</option>
+                                            <option value="ms">Privado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <select multiple name="Anuncio" class="selectpicker" data-title="Anuncio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                            <option value="id">Primer anuncio</option>
+                                            <option value="ms">Segundo anuncio</option>
+                                            <option value="ms">No aplica</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <button type="button" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
+                                            <span class="btn-label">
+                                                <i class="fa fa-file-alt"></i>
+                                            </span>
+                                            Mostrar Reporte
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-12 text-right text-right">
+                                <button class="btn btn-social btn-tumblr btn-link">
+                                    <i class="fas fa-file-pdf"></i> Exportar en PDF
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body ">
+                                        <div id="regularMap" class="map"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end allow-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Sección de scripts-->
+@section scripts
+{
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&libraries=&v=weekly" defer></script>
+    <script>
+        $(document).ready(function () {
+            initMap();
+        })
+        function initMap() {
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap'
+            };
+
+            // Display a map on the web page
+            map = new google.maps.Map(document.getElementById("regularMap"), mapOptions);
+            map.setTilt(50);
+            var MarkerTrain = [
+                [18.873251, -90.819135, 'https://www.pmc-tool.com/analyticsicons/train.png'],
+                [18.183054, -91.414382, 'https://www.pmc-tool.com/analyticsicons/train.png'],
+                [18.678958, -89.853948, 'https://www.pmc-tool.com/analyticsicons/train.png']
+            ];
+            for (a = 0; a < MarkerTrain.length; a++) {
+                var position = new google.maps.LatLng(MarkerTrain[a][0], MarkerTrain[a][1]);
+                bounds.extend(position);
+                marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    icon: {
+                        url: MarkerTrain[a][2],
+                        scaledSize: new google.maps.Size(30, 30)
+                    },
+                    zIndex: 99999
+                });
+            }
+            // Multiple markers location, latitude, and longitude
+            var markers = [
+                ['Construcción de libramiento carretero tramo La Pitahaya - libramiento OT', 22.234257, -101.335193, 1, '50%', 1],
+                ['Construcción autopista Silao', 20.709082, -103.409315, 2, '100%', 4],
+                ['Agua prieta - Bavispe', 30.157879, -111.674817, 3, '20%', 2]
+            ];
+            // Add multiple markers to map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Place each marker on the map
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+                bounds.extend(position);
+                var status = markers[i][5];
+                status == 1 ? status = '<span class="badge badge-success">En tiempo</span>' : '';
+                status == 2 ? status = '<span class="badge badge-warning">Atrasado</span>' : '';
+                status == 3 ? status = '<span class="badge badge-danger">Con impacto</span>' : '';
+                status == 4 ? status = '<span class="badge badge-secondary">Terminado</span>' : '';
+
+                marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: markers[i][0],
+                    idProject: markers[i][3],
+                    avance: markers[i][4],
+                    status: status
+                });
+
+                // Add info window to marker
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    var html = '<div class="container-fluid"><div class="row">'
+                        + '<div class="col-12">'
+                        + '<div class="row text-center">'
+                        + '<div class="col-12" style="background: #235b4e;color: white;background: #235b4e;padding: 6px;">'
+                        + '<h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">' + marker.title + '</h5>'
+                        + '</div>'
+                        + '</div>'
+                        + '<div class="row" style="border:1px solid #E6E6E6">'
+                        + '<div class="col-6" style="padding: 2px;margin-top: 3px;margin-bottom: 3px;">'
+                        + '<h6>Avance</h6>'
+                        + '</div>'
+                        + '<div class="col-6 text-center">'
+                        + '<h6>' + marker.avance + '</h6>'
+                        + '</div>'
+                        + '</div>'
+                        + '<div class="row" style="border:1px solid #E6E6E6">'
+                        + '<div class="col-6" style="padding: 2px;margin-top: 3px;margin-bottom: 3px;">'
+                        + '<h6>Estatus</h6>'
+                        + '</div>'
+                        + '<div class="col-6 text-center">'
+                        + marker.status
+                        + '</div>'
+                        + '</div>'
+                        + '<div class="row justify-content-center pt-3">'
+                        + '<a type="button" href="http://doc.pmc-tool.mx/PMCAnalytics/sct/FactSheet/">'
+                        + 'Ficha de proyecto <span class="btn-label btn-label-right">'
+                        + '<i class="fa fa-arrow-right"></i>'
+                        + '</span>'
+                        + '</a>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div></div>';
+                    //var html = marker.title;
+                    return function () {
+                        infoWindow.setContent(html);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, i));
+
+                // Center the map to fit all markers on the screen
+                map.fitBounds(bounds);
+            }
+            // Set zoom level
+            var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+                this.setZoom(5);
+                google.maps.event.removeListener(boundsListener);
+            });
+
+        }
+        // Load initialize function
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+}
+
