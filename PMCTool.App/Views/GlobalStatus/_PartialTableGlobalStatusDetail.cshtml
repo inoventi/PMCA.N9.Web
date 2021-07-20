@@ -1,0 +1,73 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.GlobalStatusDetail>;
+<div class="row">
+    <div class="col-md-9 mt-3">
+        <h5 class="title-report">
+            Portafolio de proyectos
+        </h5>
+    </div>
+    <div class="col-md-3 mt-3 text-right">
+        <span clas="color-font-black">Fecha: 30/06/2021</span>
+    </div>
+</div>
+<div class="fresh-datatables">
+    <table id="tableGlobalStatusDetail" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+            <tr class="div-detail-head">
+                <th rowspan="1" colspan="1">Código</th>
+                <th rowspan="1" colspan="1">Proyecto</th>
+                <th rowspan="1" colspan="1">Etapa</th>
+                <th rowspan="1" colspan="1">Dirección general</th>
+                <th rowspan="1" colspan="1">Tipo de proyecto</th>
+                <th rowspan="1" colspan="1">Estatus</th>
+                <th rowspan="1" colspan="1">Avance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@item.Code</th>
+                        <td><a href="/FactSheet/Index?projectId=@item.ProjectID">@item.ProjectName</a></td>
+                        <td>@item.Stage</td>
+                        <td>@item.GeneralDirection</td>
+                        <td>@item.ProjectType</td>
+                        <td class="text-center">
+                            @if (@item.Status == 1)
+                            {
+                                <span class="st-entiempo">En tiempo</span>
+                            }
+                            @if (@item.Status == 2)
+                            {
+                                <span class="st-atrasado">Atrasado</span>
+                            }
+                            @if (@item.Status == 3)
+                            {
+                                <span class="st-cimpacto">Con impacto</span>
+                            }
+                            @if (@item.Status == 4)
+                            {
+                                <span class="st-cerrado">Terminado</span>
+                            }
+                            @if (@item.Status == 5)
+                            {
+                                <span class="st-cancelado">Cancelado</span>
+                            }
+                        </td>
+                        @{
+                            var progress = item.Progress * 100;
+                            var result = progress.ToString("N2");
+                          }  
+
+                        <td>@result%</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+    vGlobalStatus.iniDataTableDetail();
+</script>
+

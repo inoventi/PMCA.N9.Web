@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.GlobalStatus>;
+<div class="fresh-datatables">
+    <table id="tableGlobalStatus" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+            <tr class="div-detail-head">
+                <th>DIRECCIÓN GENERAL</th>
+                <th class="text-center">EN EJECUCIÓN</th>
+                <th class="text-center">EN PROCESO PARA EJECUCIÓN</th>
+                <th class="text-center">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var totalInExecution = 0;
+                var totalPreviousExecution = 0;
+                var total = 0;
+                @foreach (var item in Model)
+                {
+                    totalInExecution = totalInExecution + item.InExecution;
+                    totalPreviousExecution = totalPreviousExecution + item.PreviousExecution;
+                    total = total + item.Total;
+                    <tr>
+                        <th>@item.GeneralDirection</th>
+                        <td class="text-center">@item.InExecution</td>
+                        <td class="text-center">@item.PreviousExecution</td>
+                        <td class="text-center">@item.Total</td>
+                    </tr>
+
+                }
+                <tr>
+                    <th class="text-center">Total:</th>
+                    <th class="text-center">@totalInExecution</th>
+                    <th class="text-center">@totalPreviousExecution</th>
+                    <th class="text-center">@total</th>
+                </tr>
+
+
+            }
+
+
+        </tbody>
+    </table>
+</div>
+<script>
+    vGlobalStatus.iniDataTable();
+</script>

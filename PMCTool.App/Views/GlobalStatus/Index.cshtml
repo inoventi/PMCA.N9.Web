@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewData["Title"] = "Estatus Global";
+    Layout = "_Layout";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="col-md-12 pt-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="title-report"> Estatus global</span>
+                    </h4>
+                </div>
+                <!-- allow-->
+                <div class="container-fluid pl-0 ml-0">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select name="Entidad" id="Entidad" class="selectpicker" data-title="Entidad Federativa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple data-live-search="true" data-actions-box="true">
+                                        <option value="1">Aguascalientes</option>
+                                        <option value="2">Baja California</option>
+                                        <option value="3"> Baja California Sur</option>
+                                        <option value="4">Campeche</option>
+                                        <option value="5">Chiapas</option>
+                                        <option value="6">Chihuahua</option>
+                                        <option value="7">Coahuila</option>
+                                        <option value="8">Colima</option>
+                                        <option value="9">Ciudad de México / Distrito Federal</option>
+                                        <option value="10">Durango</option>
+                                        <option value="11">Estado de México</option>
+                                        <option value="12">Guanajuato</option>
+                                        <option value="13">Guerrero</option>
+                                        <option value="14">Hidalgo</option>
+                                        <option value="15">Jalisco</option>
+                                        <option value="16">Michoacán</option>
+                                        <option value="17">Morelos</option>
+                                        <option value="18">Nayarit</option>
+                                        <option value="19">Nuevo León</option>
+                                        <option value="20">Oaxaca</option>
+                                        <option value="21">Puebla</option>
+                                        <option value="22">Querétaro</option>
+                                        <option value="23">Quintana Roo</option>
+                                        <option value="24">San Luis Potosí</option>
+                                        <option value="25">Sinaloa</option>
+                                        <option value="26">Sonora</option>
+                                        <option value="27">Tabasco</option>
+                                        <option value="28">Tamaulipas</option>
+                                        <option value="29">Tlaxcala</option>
+                                        <option value="30">Veracruz</option>
+                                        <option value="31">Yucatán</option>
+                                        <option value="32">Zacatecas</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="ARTF">ARTF</option>
+                                        <option value="DGC">DG Carretera</option>
+                                        <option value="DGCC">DG Conservación de Carreteras</option>
+                                        <option value="DGDC">DG Desarrollo carretero</option>
+                                        <option value="DGTFM">DG Transporte Ferroviario y Multimodal</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="1">Compromisos del presidente</option>
+                                        <option value="2">Conectividad AIFA</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="1">En ejecución</option>
+                                        <option value="2">En proceso para ejecución</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="PEF">PEF</option>
+                                        <option value="FONADIN">FONADIN</option>
+                                        <option value="ESTATAL">Estatal</option>
+                                        <option value="PRIVADA">Privada</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Anuncio" id="Anuncio" class="selectpicker" data-title="Anuncio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="1">1er Anuncio</option>
+                                        <option value="2">2do Anuncio</option>
+                                        <option value="3">No Aplica</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <button type="button" id="btnSearch" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
+                                        <span class="btn-label"><i class="fa fa-file-alt"></i></span> Mostrar Reporte
+                                    </button>
+                                    <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1" style="">
+                                        <span class="btn-label"><i class="fas fa-times"></i></span> Cerrar Reporte
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-12 text-right text-right">
+                            <button type="button" id="btnDetalle" class="btn btn-wd btn-default btn-default mr-1" style="">
+                                <span class="btn-label"><i class="fas fa-align-justify"></i></span> Detalle Reporte
+                            </button>
+                            <a type="button" id="btnDetalleClose" class="btn btn-round btn-sm btn-back">
+                                <span class="btn-label">
+                                    <i class="fas fa-arrow-left"></i>
+                                </span>Regresar
+                            </a>
+                            @*<button type="button" id="btnDetalleClose" class="btn btn-wd btn-default btn-default mr-1" style="">
+                                <span class="btn-label"><i class="fas fa-times"></i></span> Cerrar Detalle
+                            </button>*@
+                            <button class="btn btn-social btn-tumblr btn-link">
+                                <i class="fas fa-file-pdf"></i> Exportar en PDF
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <div class="card data-tables">
+                                <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+                                    <div class="toolbar">
+                                        <div class="_tableglobalstatus">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    <!-- end allow-->
+        </div>
+    </div>
+</div>
+
+<!--Sección de scripts-->
+@section scripts{
+    <script src="~/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/js/core/vGlobalStatus.js" asp-append-version="true"></script>
+}
