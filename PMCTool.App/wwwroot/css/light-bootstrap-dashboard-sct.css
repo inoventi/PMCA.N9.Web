@@ -18,7 +18,9 @@
 .hlogo {
     height: 82px;
 }
-
+.bold {
+    font-weight: bold;
+}
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -1853,9 +1855,9 @@ input:focus {
     .btn:active,
     .btn.active,
     .open > .btn.dropdown-toggle {
-        background-color: #3c78ad;
+        background-color: #6c757d;
         color: #FFFFFF;
-        border-color: #3c78ad;
+        border-color: #585858;
     }
 
     .btn.disabled,
@@ -13893,4 +13895,71 @@ select.selectpicker {
 
 .border-gray {
     border: solid 1px #d3d3d4;
+}
+.title-section {
+    border-radius: 10px;
+    background-color: #c3c3c3;
+    padding: 4px;
+    text-align: center;
+    color: black;
+}
+
+.bg-table-green {
+    background-color: #235b4e;
+    color: #ffffff;
+}
+.btn-black {
+    border: 1px solid #232323;
+    color: #FFFFFF;
+    background-color: #191919;
+    cursor: pointer;
+}
+.st-atrasado {
+    background-color: #f7d408;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-entiempo {
+    background-color: #4CAF50;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cerrado {
+    background-color: #d0d0d0;
+    color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cimpacto {
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.st-cancelado {
+    background-color: #545454;
+    color: white;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+    text-decoration: line-through;
+}
+
+.st-suspendido {
+    color: gray;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+.ws {
+    white-space: nowrap;
+}
+.aclick {
+    color: #056999 !important;
+    cursor: pointer;
+}
 }

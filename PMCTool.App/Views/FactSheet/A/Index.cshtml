@@ -1,0 +1,65 @@
+﻿ 
+@{
+    ViewData["Title"] = "Ficha de proyectos";
+      Layout = "_Layout";
+} 
+
+@section ScriptsHeader {
+    <script src="~/js/plugins/chart/chart.min.js" asp-append-version="true"></script>
+     
+}
+<div class="content">
+               <div class="container-fluid">
+                  <div class="row card">
+                     <div class="col-md-12 pt-4">
+                        <small class="font-weight-normal">Analytics</small>
+                        <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                           <span style="color: #235b4e !important;"> Ficha de proyectos	</span>
+                        </h4>
+                     </div>
+                     <div class="col-md-12" id="divContainer" style="">
+                        <div class="row justify-content-center mt-3">
+                           <div class="col-12">
+                              <div class="row">
+                                 <div class="col-md-8 col-sm-12 col-md-4 col-lg-8 col-xl-8">
+                                    <select name="project" class="selectpicker project" id="project" data-title="Nombre de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true">
+                                        @{
+                                            var collection = new SelectList(ViewBag.Projects, "Key", "Value");
+                                            foreach (var item in collection)
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        } 
+                                    </select>
+                                 </div>
+                                 <div class="col-md-2 mt-1 col-sm-2 col-md-2 col-lg-2 col-xl-4">
+                                    <button type="button" class="btn btn-default btn-default btnviewReport">
+                                        <span class="btn-label">
+                                            <i class="fa fa-file-alt"></i>
+                                        </span>
+                                            Mostrar Reporte
+                                    </button>
+                                    <button type="button" class="btn btn-black  btnCloseReport" style="display:none">
+                                        <span class="btn-label">
+                                            <i class="fas fa-times"></i>
+                                        </span>
+                                            Cerrar reporte
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <hr>
+                        <!--Sección de PartialView-->
+                        <div class="FactSheetA">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+@section Scripts {
+    <script src="~/js/core/vFactSheetA.js" asp-append-version="true"></script>
+  
+}
+ 

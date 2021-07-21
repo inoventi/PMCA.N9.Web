@@ -1,0 +1,252 @@
+﻿@using Microsoft.AspNetCore.Components;
+@model dynamic;
+@{ 
+    ViewData["Title"] = "Ficha de proyectos";
+      Layout = "_Layout";
+        var ProjectName = "";
+        var Benefit =  "";
+        var Scope =  ""; 
+        var KeyDecisions =  "";  
+        var DirectJobsGenerated =  "";  
+        var IndirectJobsGenerated =  "";  
+        var RelevantMilestones =  "";  
+        var Promoter =  "";  
+        var Logo =  "";  
+        var ActionsToBeTaken =  "";  
+        var chartEstatal =  "";  
+        var chartPrivada =  "";  
+        var chartFonden =  "";  
+        var chartPef =  "";  
+        var chartFonadin =  "";  
+        @foreach (var row in Model.Project)
+        {
+              ProjectName = @row.ProjectName;
+              Benefit = @row.Benefit;
+              Scope = @row.Scope;
+              KeyDecisions = @row.KeyDecisions;
+              DirectJobsGenerated = @row.DirectJobsGenerated;
+              IndirectJobsGenerated = @row.IndirectJobsGenerated;
+              RelevantMilestones = @row.RelevantMilestones;
+              Promoter = @row.Promoter;
+              Logo = @row.Logo;
+              ActionsToBeTaken = @row.ActionsToBeTaken;
+              chartEstatal =@row.chartEstatal;
+              chartPrivada = @row.chartPrivada; 
+              chartFonden = @row.chartFonden;
+              chartPef = @row.chartPef; 
+              chartFonadin = @row.chartFonadin;
+
+             
+                break;
+    
+        }
+        @section ScriptsHeader {
+            <script src="~/js/plugins/chart/chart.min.js" asp-append-version="true"></script>
+     
+        }
+  <div class="content">
+        <div class="container-fluid">
+            <div class="row card">
+                    <div class="col-md-12 pt-2">
+                        <small class="font-weight-normal">Analytics</small>
+                        <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                           <span style="color: #235b4e !important;"> Ficha de proyecto crítico	</span>
+                        </h4>
+                     </div>
+                      <div class="col-md-12" id="divContainer" style="">
+                        <hr> 
+                        <div id="divFichaTecnicaProyecto">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                       <small class="font-weight-normal">Proyecto</small>
+                                       <h4 class="mt-1 font-weight-bold"> 
+                                          @ProjectName
+                                       </h4>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                       <div class="row text-right">
+                                          <div class="col-md-12"> 
+                                             <a type="button" class="btn btn-round btn-sm btn-back" href="/FactSheetA?projectid=@ViewBag.ProjectSeleted">
+                                             <span class="btn-label">
+                                             <i class="fas fa-arrow-left"></i>
+                                             </span>Regresar
+                                             </a>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12 pt-3">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Resumen ejecutivo de elementos</b>
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!---->
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover table-striped tbimpact">
+                                              <thead>
+                                                 <tr style="background-color: #235b4e;">
+                                                    <th>Tipo</th>
+                                                    <th>Evidencia</th>
+                                                    <th>Estatus</th>
+                                                    <th>Fecha de Obtención</th>
+                                                    <th>Dependencia/Área que expide/autoriza</th>
+                                                    <th>Aspectos Relevantes/Comentarios</th>
+                                                 </tr>
+                                              </thead>
+                                              <tbody> 
+                                                  @foreach (var r in Model.Evidences)
+                                                    { 
+                                                    <tr>
+                                                        <td scope="row">@r.ProjectLayerName</td>
+                                                        <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" onclick="factSheetA.getControlPoints(this)">@r.Description</a></td>
+                                                         @{  
+                                                                    @switch (@r.Status)
+                                                                    {
+                                                                        case 1:  
+                                                                                <td><span class="bold ws st-entiempo ws">En tiempo</span></td> 
+                                                                            break;
+                                                                        case 2:  
+                                                                                <td><span class="bold st-atrasado ws">Atrasado</span></td> 
+                                                                            break;
+                                                                        case 3: 
+                                                                                <td><span class="bold ws st-cimpacto ws">Con impacto</span></td> 
+                                                                            break;
+                                                                        case 4: 
+                                                                                <td><span class="bold ws st-cerrado ws">Cerrado</span></td> 
+                                                                            break;
+                                                                        case 5:  
+                                                                                <td><span class="bold ws st-cancelado  ws">Cancelado</span></td> 
+                                                                            break;
+                                                                        case 6:  
+                                                                                <td><span class="bold ws st-suspendido ws">Archivado</span></td> 
+                                                                            break;
+                                                                    }
+                                                            }
+                                                        <td>@r.PlannedEndDate</td>
+                                                        <td>@r.ResponsibleApprovalName</td>
+                                                        <td>@r.Comment</td>
+                                                     </tr>
+                                                    }
+
+                                              </tbody>
+                                          </table>
+                                    </div>
+                                 </div>
+                                 <!---->
+                                  <div class="row">
+                                    <div class="col-md-12 pt-4">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Problemáticas</b>
+                                             </p>
+                                          </div>
+                                          <div class="col-md-12">
+                                              <table class="table table-hover table-striped">
+                                                <thead>
+                                                   <tr style="background-color: #235b4e;">
+                                                      <th>Incidente</th>
+                                                      <th>Elemento relacionado</th>
+                                                      <th>Fecha de solución</th>
+                                                      <th>Acciones</th>
+                                                      <th>Estatus</th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var b in Model.Incidents)
+                                                    { 
+                                                    <tr>
+                                                        <td scope="row">@b.Description</td>
+                                                            @if (@b.TaskID!=null)
+                                                            {
+                                                                <td><a>@b.TaskDescripcion</a></td>
+                                                            }
+                                                            @if (@b.EvidenceID!=null)
+                                                            {
+                                                                <td><a>@b.EvidenceDescripcion</a></td>
+                                                            }
+                                                        
+                                                        <td>@b.PlannedEndDate</td>
+                                                        <td>
+                                                        @{
+                                                                string comment =  @b.ActionPlan;
+                                                                    comment = comment.Replace("|", "<br>"); 
+                                                            } 
+
+                                                             @Html.Raw(@comment)
+                                                        </td>
+                                                         @{  
+                                                                    @switch (@b.Status)
+                                                                    {
+                                                                        case 1:  
+                                                                                <td><span class="bold ws st-entiempo ws">En tiempo</span></td> 
+                                                                            break;
+                                                                        case 2:  
+                                                                                <td><span class="bold st-atrasado ws">Atrasado</span></td> 
+                                                                            break;
+                                                                        case 3: 
+                                                                                <td><span class="bold ws st-cimpacto ws">Con impacto</span></td> 
+                                                                            break;
+                                                                        case 4: 
+                                                                                <td><span class="bold ws st-cerrado ws">Cerrado</span></td> 
+                                                                            break;
+                                                                        case 5:  
+                                                                                <td><span class="bold ws st-cancelado  ws">Cancelado</span></td> 
+                                                                            break;
+                                                                        case 6:  
+                                                                                <td><span class="bold ws st-suspendido ws">Archivado</span></td> 
+                                                                            break;
+                                                                    }
+                                                            }
+                                                         
+                                                     </tr>
+                                                    }
+                                                     
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <!---->
+                                 <div class="row">
+                                    <div class="col-md-12 pt-4">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Acciones a realizar</b>
+                                             </p>
+                                          </div>
+                                          <div class="col-md-12 pb-4">
+                                             @ActionsToBeTaken
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                            </div>
+                         </div>
+                     </div>
+            </div>
+        </div>
+   </div>
+}
+
+
+
+@section Scripts {
+    <script src="~/js/core/vFactSheetA.js" asp-append-version="true"></script>
+  
+}
+ 
