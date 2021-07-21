@@ -46,7 +46,7 @@ let ActionsToMakeController = {
             }
             $('#datatable').append('<tr>'
                 + ' <th>' + data[a].code +'</th>'
-                + ' <td> <a href="http://doc.pmc-tool.mx/PMCAnalytics/sct/FactSheet/">' + data[a].name +'</a></td>'
+                + ' <td> <a href="/FactSheetA?projectid=' + data[a].projectID +'">' + data[a].name +'</a></td>'
                 + ' <td>' + data[a].inversion +' MDP</td>'
                 + ' <td>' + Date.split('T')[0] +'</td>'
                 + ' <td>' + data[a].fase + '</td>'

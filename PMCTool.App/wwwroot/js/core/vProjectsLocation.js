@@ -117,7 +117,7 @@ let projectsLocationController = {
                     + '</div>'
                     + '</div>'
                     + '<div class="row justify-content-center pt-3">'
-                    + '<a type="button" href="http://doc.pmc-tool.mx/PMCAnalytics/sct/FactSheet/">'
+                    + '<a type="button" href="/FactSheetA?projectid=' + marker.idProject +'">'
                     + 'Ficha de proyecto <span class="btn-label btn-label-right">'
                     + '<i class="fa fa-arrow-right"></i>'
                     + '</span>'
