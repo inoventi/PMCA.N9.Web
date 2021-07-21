@@ -77,6 +77,7 @@ namespace PMCTool.App.Controllers
             }
             
         }
+         
         [HttpGet]
         public async Task<IActionResult> demo(Guid? projectId)
         {
@@ -100,9 +101,6 @@ namespace PMCTool.App.Controllers
             return View("IndexReport", modelProjectTab);
 
         }
-
-
-
 
         [HttpGet]
         public async Task<JsonResult> GetProjectTab(Guid projectID)

@@ -1,0 +1,68 @@
+﻿@model dynamic;
+
+<tr data-dinamytr="true">
+    <th scope='row' style="text-align: center;">
+        <img src="/images/arrow.png" style="transform: rotate(269deg);width: 39px;position: absolute;top: 0px;">
+    </td>
+    <td colspan='6'>
+         @{
+              @if(Model.controlPoints.Count > 0){
+                        <table class="table table-bordered tbcp" style="border-left: 4px solid #235b4e;">
+                            <thead>
+                                <tr style="background: #193e35;">
+                                    <th scope="col">Punto de control</th>
+                                    <th scope="col">Estatus</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Comentario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                 
+              
+                                        @foreach (var row in Model.controlPoints)
+                                        {
+                                            <tr class="tr-cp">
+                                                <th scope="row">@row.Description</th>
+                                                 @switch (@row.Status)
+                                                {
+                                                    case 1:  
+                                                            <td><span class="bold ws st-entiempo ws">En tiempo</span></td> 
+                                                        break;
+                                                    case 2:  
+                                                            <td><span class="bold st-atrasado ws">Atrasado</span></td> 
+                                                        break;
+                                                    case 3: 
+                                                            <td><span class="bold ws st-cimpacto ws">Con impacto</span></td> 
+                                                        break;
+                                                    case 4: 
+                                                            <td><span class="bold ws st-cerrado ws">Cerrado</span></td> 
+                                                        break;
+                                                    case 5:  
+                                                            <td><span class="bold ws st-cancelado  ws">Cancelado</span></td> 
+                                                        break;
+                                                    case 6:  
+                                                            <td><span class="bold ws st-suspendido ws">Archivado</span></td> 
+                                                        break;
+                                                }
+                                                 <td>@row.PlannedEndDate</td>
+                                                <td class="td-cp">@row.Comments</td>
+                                            </tr>
+                               
+                                        }
+                    
+                   
+                            </tbody>
+                        </table>
+                    }else{
+                    <div><i>No se encontraron datos</i></div>
+                    }
+        }
+    </td>
+    <td> 
+            <button type="button" class="btn btn-danger btn-sm" onclick="factSheetA.closetr(this)">
+                                                    <span class="btn-label">
+                                                        <i class="fa fa-times"></i>
+                                                    </span>
+                                                    </button>
+    </td>
+</tr>

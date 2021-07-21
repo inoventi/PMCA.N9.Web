@@ -1,0 +1,309 @@
+﻿ @model dynamic;
+ @{
+        var ProjectName = "";
+        var Benefit =  "";
+        var Scope =  ""; 
+        var KeyDecisions =  "";  
+        var DirectJobsGenerated =  "";  
+        var IndirectJobsGenerated =  "";  
+        var RelevantMilestones =  "";  
+        var Promoter =  "";  
+        var Logo =  "";  
+        var ActionsToBeTaken =  "";  
+        var chartEstatal =  "";  
+        var chartPrivada =  "";  
+        var chartFonden =  "";  
+        var chartPef =  "";  
+        var chartFonadin =  "";  
+
+       @foreach (var row in Model.tabsheet)
+        {
+              ProjectName = @row.ProjectName;
+              Benefit = @row.Benefit;
+              Scope = @row.Scope;
+              KeyDecisions = @row.KeyDecisions;
+              DirectJobsGenerated = @row.DirectJobsGenerated;
+              IndirectJobsGenerated = @row.IndirectJobsGenerated;
+              RelevantMilestones = @row.RelevantMilestones;
+              Promoter = @row.Promoter;
+              Logo = @row.Logo;
+              chartEstatal =@row.chartEstatal;
+              chartPrivada = @row.chartPrivada; 
+              chartFonden = @row.chartFonden;
+              chartPef = @row.chartPef; 
+              chartFonadin = @row.chartFonadin;
+
+             
+                break;
+    
+        }
+
+  
+                           <div>
+                              <div class="col-md-12">
+                                 <div class="row">
+                                    <div class="col-md-9">
+                                       <small class="font-weight-normal">Proyecto</small>
+                                       <h4 class="mt-1 font-weight-bold"> 
+                                          @ProjectName
+                                       </h4>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                       <a  class="btn btn-round btn-sm  btn-danger" href="/FactSheetA/ProjectDetail?project=@ViewBag.ProjectSeleted">
+                                       <span class="btn-label">
+                                       <i class="fas fa-exclamation-circle"></i>
+                                       </span>Detalle de Proyecto
+                                       </a>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Beneficios</b>
+                                             </p>
+                                             <p>
+                                                @Benefit
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Alcance</b>
+                                             </p>
+                                             <p>
+                                                 @Scope
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Inversión</b>
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <h3 class="text-responsive text-lg-center _totalmont">
+                                                
+                                             </h3>
+                                             <p>
+                                             <div class="chartjs-size-monitor">
+                                                <div class="chartjs-size-monitor-expand">
+                                                   <div class=""></div>
+                                                </div>
+                                                <div class="chartjs-size-monitor-shrink">
+                                                   <div class=""></div>
+                                                </div>
+                                             </div>
+                                             <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Tiempo</b>
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <table class="table table-sm">
+                                                <tbody>
+                                                   <tr>
+                                                      <td class="bg-table-green">Etapa</td>
+                                                      <td class="bg-table-green" style="text-align:center">Duración (Meses)</td>
+                                                      <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
+                                                      <td class=""></td>
+                                                   </tr>
+                                                        @foreach (var rowx in Model.ProjectTask)
+                                                        {
+                                     
+                                                                       <tr style="text-align:center">
+                                                                          <th style="text-align:initial">
+                                                                             @rowx.text
+                                                                          </th>
+                                                                          <td style="text-align:center"> @rowx.duration</td>
+                                                                          <td style="text-align:center"> @rowx.start_date</td>
+                                                                           @{ 
+                                                                               var styleStatus ="";
+                                                                                @switch (@rowx.status)
+                                                                                {
+                                                                                  case 1: 
+                                                                                        <td class="table-success">
+                                                                                         <i class="fas fa-check" style="color:white"></i>
+                                                                                        </td>
+                                                                                        break;
+                                                                                    case 2: 
+                                                                                        <td    style="background: #f9ec54;">
+                                                                                            <i class="fas fa-check" style="color:white"></i>
+                                                                                        </td>
+                                                                                        break;
+                                                                                    case 3:
+                                                                                        <td class="table-danger">
+                                                                                            <i class="fas fa-check" style="color:white"></i>
+                                                                                        </td>
+                                                                                        break;
+                                                                                    case 4:
+                                                                                        <td class="table-danger" style="background: #676767;">
+                                                                                            <i class="fas fa-check" style="color:white"></i>
+                                                                                        </td>
+                                                                                        break;
+                                                                                    case 5: 
+                                                                                        <td class="table-danger" style="background: #000000;">
+                                                                                            <i class="fas fa-check" style="color:white"></i>
+                                                                                        </td>
+                                                                                        break;
+                                                                                }
+                                                                          }
+                                                                          <td class="table-success">
+                                                                             <i class="fas fa-check" style="color:white"></i>
+                                                                          </td>
+                                                                       </tr>   
+                                                        }
+                                                    
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Decisiones Claves</b>
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="justify-text">
+                                                 @KeyDecisions
+                                              </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-4">
+                                       <div class="table-responsive">
+                                          <table class="table table-sm">
+                                             <tbody>
+                                                <tr>
+                                                   <th rowspan="2" class="bg-table-green" style="text-align: center;">
+                                                      <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
+                                                   </th>
+                                                   <td>
+                                                      <h6 class="h5-responsive"><b>Directos</b></h6>
+                                                   </td>
+                                                   <td>
+                                                      <h6 class="h5-responsive">@DirectJobsGenerated</h6>
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td>
+                                                      <h6 class="h5-responsive"><b>Indirectos</b></h6>
+                                                   </td>
+                                                   <td>
+                                                      <h6 class="h5-responsive">@IndirectJobsGenerated</h6>
+                                                   </td>
+                                                </tr>
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Hitos Relevantes</b>
+                                             </p>
+                                             <p>
+                                                @RelevantMilestones
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="justify-text">
+                                             </p>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <p class="title-section">
+                                                <b>Promotor</b>
+                                             </p>
+                                             <p>
+                                                @Promoter
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-12 mx-auto text-center">
+                                             <p></p>
+                                             <h6 class="h5-responsive"></h6>
+                                             <p></p>
+                                          </div>
+                                       </div>
+                                       <div class="row">
+                                          <div class="col-md-6 mx-auto text-center">
+                                             <img class="img-fluid" alt="logo" src="/images/test.png">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <script>
+                               if (typeof variable === 'undefined') {
+                                   let totalmont = 0;
+                                }
+                                totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+                                $('._totalmont').empty();
+                                $('._totalmont').html("$ "+totalmont+ " mdp");
+                              new Chart(document.getElementById("doughnut-chart"), {
+                                  type: 'doughnut',
+                                  data: {
+                                      labels: ["Privados", "Fonden", "Fonadin", "Estatal", "PEF"],
+                                      datasets: [
+                                          {
+                                              backgroundColor: ["#330101", "#8B0000", "#D2B48C", "#FFE4C4"],
+                                              data: [
+                                                Math.round(@chartPrivada * 100/ totalmont ),
+                                                Math.round(@chartFonden * 100 / totalmont ),
+                                                Math.round(@chartFonadin * 100/ totalmont ),
+                                                Math.round(@chartEstatal * 100/ totalmont ),
+                                                Math.round(@chartPef * 100/ totalmont )
+                                              ]
+                                          }
+                                      ]
+                                  },
+                                  options: {
+                                      legend: { position: 'bottom' }
+                                  }
+                              });
+                              if (factSheetA.getUrlParameter('projectid')) {
+                                      let pp = factSheetA.getUrlParameter('projectid'); 
+                                        $('#project').val("'" + pp + "'");
+                                        $('#project').prop('disabled', true);
+                                        $('#project').selectpicker('refresh'); 
+                                }
+                           </script>
+}

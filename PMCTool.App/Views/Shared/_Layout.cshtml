@@ -47,7 +47,7 @@
         <script src="~/js/localization/messages_us.js" asp-append-version="true"></script>
     }
     <script src="~/js/plugins/analytics.js" asp-append-version="true"></script>
-
+    @RenderSection("ScriptsHeader", required: false)
 </head>
 <body>
 
@@ -144,12 +144,7 @@
     <script src="~/js/helper.js" asp-append-version="true"></script>
 
     <script>window.webroot = "@Url.Content("~/")";</script>
-    @{
-        if (@AppSettings.Current.AppState == "Production")
-        {
-            <script src="~/js/plugins/analytics.js" asp-append-version="true"></script>
-        }
-    }
+    
     @RenderSection("Scripts", required: false)
     </body>
 </html>
