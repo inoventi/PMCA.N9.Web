@@ -1,0 +1,29 @@
+﻿@model PMCTool.Models.Environment.AccumulatedInvestmentSummary;
+
+<figure class="highcharts-figure">
+    <div id="inversion"></div>
+    <div class="col-12 center">
+        <text class="font-weight-bold">
+            <span style="background-color: #235b4e; color: white">Inversión Acumulada Real = $ @Model.TotalInvestmentReal.ToString("C2")  mdp</span>, <span style="background-color: #800000; color: white;">Inversión Acumulada Planeada = $ @Model.TotalInvestmentPlanned.ToString("C2") mdp</span>,
+        </text>
+        <text class="font-weight-bold">
+            @Model.TotalProjects proyectos.
+        </text>
+    </div>
+    <div id="accumulated_investment_graphics_container" class="d-flex flex-column flex-md-column flex-lg-row flex-xl-row">
+        <div class="col-sm col-md col-lg-12 col-xl-12" style="margin-top: 2em">
+            <div id="chart" style="position: relative">
+            </div>
+            <div id="accumulated_investment_bubble" class="bubble" style="display: none; position: absolute; top:0; left: 0; width: 19em !important;">
+                <div class="font-weight-bold" style="text-align:end">
+                    <span style="cursor: pointer; padding-right: 5px" onclick="vAccumulatedInvestment.closeBubble()">
+                        x
+                    </span>
+                </div>
+                <div id="accumulated_investment_bubble_table">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</figure>

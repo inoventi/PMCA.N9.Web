@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.AccumulatedInvestmentDetail>;
+
+<div style="padding: 0 1em 0 1em; overflow: auto; height: 13em">
+    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+        <thead>
+            <tr class="div-detail-head">
+                <th rowspan="1" colspan="1">
+                    Proyecto
+                </th>
+                <th rowspan="1" colspan="1">
+                    Monto de inversión
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>
+                            <i style="cursor:pointer">
+                                <a href="/FactSheetA?projectid=@item.ProjectID">@item.ProjectName</a>
+</i>
+
+                        </th>
+                        <td>
+                            @item.Investment.ToString("C2")
+                        </td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+</div>

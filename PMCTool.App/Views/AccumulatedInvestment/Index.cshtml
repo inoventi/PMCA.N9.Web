@@ -1,0 +1,111 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Inversión Acumulada";
+    Layout = "_Layout";
+}
+    <link href="~/css/speech-bubble.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="col-md-12 pt-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="title-report">Inversión Acumulada</span>
+                    </h4>
+                </div>
+                <!-- allow-->
+                <div class="container-fluid pl-0 ml-0">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { multiple = true, @id = "Entidad", @class = "selectpicker", @data_style = "btn-default btn-outline", @data_title = "Entidad Federativa", @data_live_search = true, @data_actions_box = true })
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="ARTF">Agencia Reguladora de Transporte Ferroviario</option>
+                                        <option value="DGC">DG Carretera</option>
+                                        <option value="DGCC">DG Conservación de Carreteras</option>
+                                        <option value="DGDC">DG Desarrollo carretero</option>
+                                        <option value="DGTFM">DG Transporte Ferroviario y Multimodal</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="1">Compromisos del presidente</option>
+                                        <option value="2">Conectividad AIFA</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="1">En ejecución</option>
+                                        <option value="2">En proceso para ejecución</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="FEDERAL">Federal</option>
+                                        <option value="FONADIN">FONADIN</option>
+                                        <option value="FONDEN">FONDEN</option>
+                                        <option value="ESTATAL">Estatal</option>
+                                        <option value="PRIVADA">Privada</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select name="Year" id="Year" class="selectpicker" data-title="Año" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <button type="button" id="btnSearch" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
+                                        <span class="btn-label"><i class="fa fa-file-alt"></i></span> Mostrar Reporte
+                                    </button>
+                                    <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1" style="">
+                                        <span class="btn-label"><i class="fas fa-times"></i></span> Cerrar Reporte
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-12 text-right text-right">
+                            <button class="btn btn-social btn-tumblr btn-link">
+                                <i class="fas fa-file-pdf"></i> Exportar en PDF
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body ">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <div id="accumulated_investment_container_div">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    <!-- end allow-->
+        </div>
+    </div>
+</div>
+
+<!--Sección de scripts-->
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/highcharts.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.src.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/export-data.min.js" type="text/javascript"></script>
+
+    <script src="~/js/core/vAccumulatedInvestment.js" asp-append-version="true"></script>
+}
+
