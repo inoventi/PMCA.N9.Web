@@ -10,6 +10,7 @@ using PMCTool.Common.RestConnector;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Localization;
+using PMCTool.Models.Core;
 
 namespace PMCTool.App.Controllers
 {
@@ -21,8 +22,11 @@ namespace PMCTool.App.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            SetActiveOption("4004");
+            List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            ViewBag.States = states;
             return View();
         }
 
