@@ -23,7 +23,7 @@
                                     @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { multiple = true, @id = "Entidad", @class = "selectpicker", @data_style = "btn-default btn-outline", @data_title = "Entidad Federativa", @data_live_search = true, @data_actions_box = true })
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                    <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple data-live-search="true" data-actions-box="true">
                                         <option value="ARTF">Agencia Reguladora de Transporte Ferroviario</option>
                                         <option value="DGC">DG Carretera</option>
                                         <option value="DGCC">DG Conservación de Carreteras</option>
@@ -32,20 +32,20 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                    <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
                                         <option value="1">Compromisos del presidente</option>
                                         <option value="2">Conectividad AIFA</option>
                                     </select>
                                 </div>
 
                                 <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                    <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
                                         <option value="1">En ejecución</option>
                                         <option value="2">En proceso para ejecución</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                    <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
                                         <option value="FEDERAL">Federal</option>
                                         <option value="FONADIN">FONADIN</option>
                                         <option value="FONDEN">FONDEN</option>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center mt-4">
-                        <div class="col-md-12 text-right text-right">
+                        <div class="col-md-12 text-right text-right" hidden>
                             <button class="btn btn-social btn-tumblr btn-link">
                                 <i class="fas fa-file-pdf"></i> Exportar en PDF
                             </button>

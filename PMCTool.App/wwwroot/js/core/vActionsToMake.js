@@ -21,8 +21,7 @@ let ActionsToMakeController = {
             };
             console.log(data);
             $.post('/ActionsToMake/GetDataActionsToMake', data, function (data) {
-                ActionsToMakeController.initCustomReaction();
-                ActionsToMakeController.initConstructionTable(data);
+                data == '' ? (ActionsToMakeController.initCustomReaction(2)): (ActionsToMakeController.initCustomReaction(1),ActionsToMakeController.initConstructionTable(data));
                 LoaderHide();
             }).fail(function (e) {
                 console.log("ERROR: ", e);
@@ -35,20 +34,21 @@ let ActionsToMakeController = {
             let status = '';
             switch (data[a].estatus) {
                 case 1:
-                    status = '<span class=" st-entiempo">En tiempo</span>'
+                    status = '<span class="ws st-entiempo">En tiempo</span>'
                     break;
                 case 2:
-                    status = '<span class=" st-atrasado">Atrasado</span>'
+                    status = '<span class="ws st-atrasado">Atrasado</span>'
                     break;
                 case 3:
-                    status = '<span class=" st-cimpacto">Con impacto</span>'
+                    status = '<span class="ws st-cimpacto">Con impacto</span>'
                     break;
             }
+
             $('#datatable').append('<tr>'
                 + ' <th>' + data[a].code +'</th>'
                 + ' <td> <a href="/FactSheetA?projectid=' + data[a].projectID +'">' + data[a].name +'</a></td>'
-                + ' <td>' + data[a].inversion +' MDP</td>'
-                + ' <td>' + Date.split('T')[0] +'</td>'
+                + ' <td><span class="ws">' + formatter.format(data[a].inversion) +' mdp</span></td>'
+                + ' <td><span class="ws">' + Date.split('T')[0] +'</span></td>'
                 + ' <td>' + data[a].fase + '</td>'
                 + ' <td>' + status + '</td > '
                 + ' <td>' + data[a].actionToMake + '</td>'
@@ -57,11 +57,29 @@ let ActionsToMakeController = {
         }
         ActionsToMakeController.initDataTable();
     },
-    initCustomReaction: () => {
-        $('#cardTable').removeAttr('hidden');
-        $('#btnReport').hide();
-        $('#btnClose').removeAttr('hidden');
-        $('#btnPDF').removeAttr('hidden');
+    initCustomReaction: (e) => {
+        switch (e) {
+            case 1:
+                $('#cardTable').removeAttr('hidden');
+                $('#btnReport').hide();
+                $('#btnClose').removeAttr('hidden');
+                //$('#btnPDF').removeAttr('hidden');
+                ActionsToMakeController.resetSelects();
+                break;
+            case 2:
+                $('#cardTable').removeAttr('hidden');
+                $('#rowTable').attr('hidden', true);
+                $('#btnClose').removeAttr('hidden');
+                $('#messageBox').append('<center>No se encontraron registros</center>');
+                $('#btnReport').hide();
+                ActionsToMakeController.resetSelects();
+                break;
+        }
+        $('#btnClose').click(() => {
+            window.location.href = window.location.href;
+        })
+    },
+    resetSelects: () => {
         $('#Entidad').prop('disabled', true);
         $('#Entidad').selectpicker('refresh');
         $('#DireccionGral').prop('disabled', true);
@@ -74,9 +92,6 @@ let ActionsToMakeController = {
         $('#Inversion').selectpicker('refresh');
         $('#Anuncio').prop('disabled', true);
         $('#Anuncio').selectpicker('refresh');
-        $('#btnClose').click(() => {
-            location.reload();
-        })
     },
     initDataTable: () => {
         $('#datatables').DataTable({
@@ -93,6 +108,14 @@ let ActionsToMakeController = {
         });     
     }
 }
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
 $.fn.selectpicker.defaults = {
     selectAllText: 'Seleccionar Todo',
     deselectAllText: 'Deseleccionar Todo'

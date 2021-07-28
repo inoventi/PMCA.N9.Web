@@ -18,7 +18,7 @@ var vBranchLocationClass = {
     }
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
-        mapTypeId: google.maps.MapTypeId.HYBRID,
+        mapTypeId: 'roadmap',
         zoom: 5,
         center: { lat: 23.314402, lng: -102.674031 }
     };
