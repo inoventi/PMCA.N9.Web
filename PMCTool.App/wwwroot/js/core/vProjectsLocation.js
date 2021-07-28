@@ -14,7 +14,7 @@ let projectsLocationController = {
                 advertisement: $('#Anuncio').val(),
             };
             $.post('/ProjectsLocations/GetDataProjectsLocation', data, function (data) {
-                projectsLocationController.initAcomodateData(data);
+                data == '' ? projectsLocationController.initCustomReaction(2) : projectsLocationController.initAcomodateData(data);    
                 LoaderHide();
             }).fail(function (e) {
                 console.log("ERROR: ", e);
@@ -30,16 +30,32 @@ let projectsLocationController = {
             let progress = data[a].progress * 100;
             markers.push([data[a].projectID, data[a].name, Math.trunc(progress), data[a].status, latitud, longitud]);
         }
-        projectsLocationController.initCustomReaction();
+        projectsLocationController.initCustomReaction(1);
         projectsLocationController.initMap(markers);
         // Load initialize function
         google.maps.event.addDomListener(window, 'load', projectsLocationController.initMap);
     },
-    initCustomReaction: () => {
-        $('#divCardMap').removeAttr('hidden');
+    initCustomReaction: (e) => {
+        switch (e){
+            case 1:
+                $('#divCardMap').removeAttr('hidden');
+                projectsLocationController.ResetSelects();
+            break;
+            case 2:
+                $('#divCardMap').removeAttr('hidden');
+                $('#regularMap').removeClass('map');
+                $('#regularMap').append('<center>No se encontraron registros.</center>');
+                projectsLocationController.ResetSelects();
+            break;
+        } 
+        $('#btnClose').click(() => {
+            window.location.href = window.location.href;
+        })
+    },
+    ResetSelects: () => {
         $('#btnReport').hide();
         $('#btnClose').removeAttr('hidden');
-        $('#btnPDF').removeAttr('hidden');
+        //$('#btnPDF').removeAttr('hidden');
         $('#Entidad').prop('disabled', true);
         $('#Entidad').selectpicker('refresh');
         $('#DireccionGral').prop('disabled', true);
@@ -52,9 +68,6 @@ let projectsLocationController = {
         $('#Inversion').selectpicker('refresh');
         $('#Anuncio').prop('disabled', true);
         $('#Anuncio').selectpicker('refresh');
-        $('#btnClose').click(() => {
-            location.reload();
-        })
     },
     initMap: (markers) => {
         let map;
