@@ -22,13 +22,23 @@ let factSheetA = {
 
         btnviewReport.click(function () {
             let project = $('#project').val();
-            $('#project').prop('disabled', true);
-            $('#project').selectpicker('refresh');
+            if (project != "") {
+                $('#project').prop('disabled', true);
+                $('#project').selectpicker('refresh');
 
-            factSheetA.getReport(project);
-            btnviewReport.hide();
-            btnCloseReport.show();
-            delete totalmont;
+                factSheetA.getReport(project);
+                btnviewReport.hide();
+                btnCloseReport.show();
+                delete totalmont;
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: '',
+                    text: "Debes selecionar un proyecto",
+                    footer: ''
+                });
+            }
+               
         });
         btnCloseReport.click(function () {
             delete totalmont;
