@@ -22,7 +22,24 @@
                             totalPreviousExecution = totalPreviousExecution + item.PreviousExecution;
                             total = total + item.Total;
                             <tr>
-                                <th>@item.GeneralDirection</th>
+                                <th>
+                                    @{
+                                        string GeneralDirection = item.GeneralDirection;
+                                    }
+                                    @if (GeneralDirection == "DGC")
+                                    {
+                                        GeneralDirection= GeneralDirection+" Carretera";
+                                    }
+                                    @if (GeneralDirection == "DGDC")
+                                    {
+                                        GeneralDirection = GeneralDirection + " Desarrollo Carretero";
+                                    }
+                                    @if (GeneralDirection == "DGTFM")
+                                    {
+                                        GeneralDirection = GeneralDirection + " Transporte Ferroviario y Multimodal";
+                                    }
+                                     @GeneralDirection
+                                </th>
                                 <td class="text-center">@item.InExecution</td>
                                 <td class="text-center">@item.PreviousExecution</td>
                                 <td class="text-center">@item.Total</td>
