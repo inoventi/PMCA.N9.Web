@@ -25,10 +25,12 @@ let projectsLocationController = {
         let markers = [];
         for (a = 0; a < data.length; a++){
             let coordenate = data[a].location;
-            let latitud = coordenate.split(',')[0];
-            let longitud = coordenate.split(',')[1];
-            let progress = data[a].progress * 100;
-            markers.push([data[a].projectID, data[a].name, Math.trunc(progress), data[a].status, latitud, longitud]);
+            if (coordenate != "") {
+                let latitud = coordenate.split(',')[0];
+                let longitud = coordenate.split(',')[1];
+                let progress = data[a].progress * 100;
+                markers.push([data[a].projectID, data[a].name, Math.trunc(progress), data[a].status, latitud, longitud]);
+            }
         }
         projectsLocationController.initCustomReaction(1);
         projectsLocationController.initMap(markers);
