@@ -32,10 +32,14 @@ let projectsLocationController = {
                 markers.push([data[a].projectID, data[a].name, Math.trunc(progress), data[a].status, latitud, longitud]);
             }
         }
-        projectsLocationController.initCustomReaction(1);
-        projectsLocationController.initMap(markers);
-        // Load initialize function
-        google.maps.event.addDomListener(window, 'load', projectsLocationController.initMap);
+        if (markers.length > 0) {
+            projectsLocationController.initCustomReaction(1);
+            projectsLocationController.initMap(markers);
+            // Load initialize function
+            google.maps.event.addDomListener(window, 'load', projectsLocationController.initMap);
+        } else {
+            projectsLocationController.initCustomReaction(2);
+        }
     },
     initCustomReaction: (e) => {
         switch (e){
