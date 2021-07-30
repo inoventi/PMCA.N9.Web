@@ -5,13 +5,19 @@ let projectsLocationController = {
     initPetition: () => {
         $('#btnReport').click(() => {
             LoaderShow();
+            let states = $("#Entidad").val();
+            let generalDirection = $('#DireccionGral').val();
+            let projectType = $('#TipoProyecto').val();
+            let stage = $('#Etapa').val();
+            let investment = $('#Inversion').val();
+            let advertisement = $('#Anuncio').val();
             let data = {
-                states: $('#Entidad').val(),
-                generalDirection: $('#DireccionGral').val(),
-                projectType: $('#TipoProyecto').val(),
-                stage: $('#Etapa').val(),
-                investment: $('#Inversion').val(),
-                advertisement: $('#Anuncio').val(),
+                states: states.join(),
+                generalDirection: generalDirection.join(),
+                projectType: projectType.join(),
+                stage: stage.join(),
+                investment: investment.join(),
+                advertisement: advertisement.join(),
             };
             $.post('/ProjectsLocations/GetDataProjectsLocation', data, function (data) {
                 data == '' ? projectsLocationController.initCustomReaction(2) : projectsLocationController.initAcomodateData(data);    
