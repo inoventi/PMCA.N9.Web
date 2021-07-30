@@ -42,14 +42,22 @@ let ActionsToMakeController = {
                 case 3:
                     status = '<span class="ws st-cimpacto">Con impacto</span>'
                     break;
+                case 4:
+                    status = '<span class="ws st-cerrado">Cerrado</span>'
+                    break;
             }
-
+            let fase = ""
+            if (data[a].estatus == 4) {
+                fase = "";
+            } else {
+                fase = data[a].fase;
+            }
             $('#datatable').append('<tr>'
                 + ' <th>' + data[a].code +'</th>'
                 + ' <td> <a href="/FactSheetA?projectid=' + data[a].projectID +'">' + data[a].name +'</a></td>'
                 + ' <td><span class="ws">' + formatter.format(data[a].inversion) +' mdp</span></td>'
                 + ' <td><span class="ws">' + Date.split('T')[0] +'</span></td>'
-                + ' <td>' + data[a].fase + '</td>'
+                + ' <td>' + fase + '</td>'
                 + ' <td>' + status + '</td > '
                 + ' <td>' + data[a].actionToMake + '</td>'
                 + ' <td>' + data[a].nota +'</td>'
