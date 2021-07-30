@@ -45,13 +45,17 @@ let ActionsToMakeController = {
                 case 4:
                     status = '<span class="ws st-cerrado">Cerrado</span>'
                     break;
+                case 5:
+                    status = '<span class="ws st-cancelado">Cancelado</span>'
+                    break;
             }
             let fase = ""
-            if (data[a].estatus == 4) {
+            if (data[a].estatus == 4 || data[a].estatus == 5) {
                 fase = "";
             } else {
                 fase = data[a].fase;
             }
+            
             $('#datatable').append('<tr>'
                 + ' <th>' + data[a].code +'</th>'
                 + ' <td> <a href="/FactSheetA?projectid=' + data[a].projectID +'">' + data[a].name +'</a></td>'
