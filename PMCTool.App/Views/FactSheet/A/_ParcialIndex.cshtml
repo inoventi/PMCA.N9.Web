@@ -105,7 +105,19 @@
                                                    <div class=""></div>
                                                 </div>
                                              </div>
-                                             <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+                                              @*@chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef*@
+                                              @{
+                                                    @if (@chartPrivada=="" || @chartFonden=="" || @chartFonadin=="" || @chartEstatal=="" || @chartPef=="" )
+                                                    {
+                                                        <div class="text-center" style="    padding-bottom: 41px;"><i class="fas fa-exclamation-circle  fa-3x" style="color: #207561;"></i><br /><span style="font-size: .9em;">No se puede cargar la gráfica de inversión.<br> Favor de verificar sus datos en <a href="https://app.pmc-tool.com/">PMC-tool</a></span></div>
+                                                    }
+                                                    else
+                                                    {
+                                                             <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+                                        
+                                                    }
+                                              }
+                                             
                                              </p>
                                           </div>
                                        </div>
@@ -124,7 +136,7 @@
                                                 <tbody>
                                                    <tr>
                                                       <td class="bg-table-green">Etapa</td>
-                                                      <td class="bg-table-green" style="text-align:center">Duración (Meses)</td>
+                                                      <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
                                                       <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
                                                       <td class=""></td>
                                                    </tr>
