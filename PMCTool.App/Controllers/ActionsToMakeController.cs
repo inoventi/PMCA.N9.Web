@@ -35,6 +35,7 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication]
         public IActionResult Index()
         {
+            SetActiveOption("4008");
             return View();
         }
         [HttpPost]
