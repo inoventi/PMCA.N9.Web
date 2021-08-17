@@ -191,9 +191,12 @@
                                                         <td>@b.PlannedEndDate</td>
                                                         <td>
                                                         @{
-                                                                string comment =  @b.ActionPlan;
-                                                                    comment = comment.Replace("|", "<br>"); 
-                                                            } 
+                                                            string comment =  @b.ActionPlan;
+                                                            if(comment != null)
+                                                            {
+                                                                comment = comment.Replace("|", "<br>");
+                                                            }
+                                                        } 
 
                                                              @Html.Raw(@comment)
                                                         </td>
