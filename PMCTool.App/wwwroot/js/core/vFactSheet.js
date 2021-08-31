@@ -110,8 +110,26 @@ function getFactSheet(projectId) {
                 $("#institucion").append(data[i].institution);
                 $("#tipoPredio").append(data[i].venue);
                 $("#categoriaPredio").append(data[i].categoryVenue);
+                let estatus;
+                switch (data[i].status) {
+                    case 1:
+                        estatus = 'OnTime';
+                        break;
+                    case 2:
+                        estatus = 'Delayed';
+                        break;
+                    case 3:
+                        estatus = 'withImpact';
+                        break;
+                    case 4:
+                        estatus = 'Closed';
+                        break;
+                    case 5:
+                        estatus = 'Canceled';
+                        break;
+                }
                 $("#progress").append(
-                    '<div class="progress-circle border-primary progress-' + parseInt(data[i].progress) + '"><span id="progressCircle">' + data[i].progress + '</span></div>'
+                    '<div class="progress-circle border-primary progress-' + estatus + '-' + parseInt(data[i].progress) + '"><span id="progressCircle">' + data[i].progress + '</span></div>'
                 );
                 $("#progressCircle").css({ 'font-size': '1.0em'});
                 $("#estado").append(data[i].state);
