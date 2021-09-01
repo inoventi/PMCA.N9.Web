@@ -77,7 +77,7 @@
         let municiopiosid = $("#Municipios").val();
         let estadoid = $('#Estate').val();
         let tipopredio = $('#tipopredio').val();
-        let vista = $('#tipovista').val();
+        let vista = "porcentaje";//$('#tipovista').val();
         const divElement = $('._tablereport');
          vBranchs.getDataResul(estadoid, municiopiosid.join(), tipopredio.join(), vista);
          
