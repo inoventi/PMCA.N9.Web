@@ -12,8 +12,27 @@ var vBranchLocationClass = {
         var advance = data[a].advance * 100;        
         var lenght = data[a].lenght;
         var latitude = data[a].latitude;
+        var icon;
+        switch (data[a].status) {
+            case 1:
+                icon = '/images/EnTiempo.png';
+                break;
+            case 2:
+                icon = '/images/Atrasado.png';
+                break;
+            case 3:
+                icon = '/images/ConImpacto.png';
+                break;
+            case 4:
+                icon = '/images/Cerrado.png';
+                break;
+            case 5:
+                icon = '/images/Cancelado.png';
+                break;
+        }
+
         if (latitude.length > 8) {
-            markers.push([data[a].projectName, parseFloat(latitude), parseFloat(lenght), data[a].projectID, Math.trunc(advance), data[a].status]);
+            markers.push([data[a].projectName, parseFloat(latitude), parseFloat(lenght), data[a].projectID, Math.trunc(advance), data[a].status,icon]);
         }    
     }
     var bounds = new google.maps.LatLngBounds();
@@ -36,21 +55,30 @@ var vBranchLocationClass = {
         for (i = 0; i < markers.length; i++) {
             
         var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-
+            let icons = {
+                url: markers[i][5],
+                size: new google.maps.Size(71, 71)
+            }
         bounds.extend(position);
         var status = markers[i][5];
         status == 1 ? status = '<span class="badge badge-success">En tiempo</span>' : '';
         status == 2 ? status = '<span class="badge badge-warning">Atrasado</span>' : '';
         status == 3 ? status = '<span class="badge badge-danger">Con impacto</span>' : '';
         status == 4 ? status = '<span class="badge badge-secondary">Terminado</span>' : '';
-
+            var icon = {
+                url: markers[i][6], // url
+                scaledSize: new google.maps.Size(30, 30), // scaled size
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
         marker = new google.maps.Marker({
             position: position,
             map: map,
             title: markers[i][0],
             idProject: markers[i][3],
             avance: markers[i][4],
-            status: status
+            status: status,
+            icon: icon,
         });
         // Add info window to marker
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
