@@ -12,6 +12,9 @@
         btnCloseReport.show(); 
         delete totalmont;
     }
+    $('.selectpicker').selectpicker({
+        noneResultsText: 'No se encontraron resultados'
+    });
 });
 
 let factSheetA = {
