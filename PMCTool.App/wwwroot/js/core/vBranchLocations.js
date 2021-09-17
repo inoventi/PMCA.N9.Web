@@ -35,7 +35,7 @@ var vBranchLocationClass = {
             markers.push([data[a].projectName, parseFloat(latitude), parseFloat(lenght), data[a].projectID, Math.trunc(advance), data[a].status,icon]);
         }    
     }
-    var bounds = new google.maps.LatLngBounds();
+    //var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
         mapTypeId: 'roadmap',
         zoom: 5,
@@ -59,7 +59,7 @@ var vBranchLocationClass = {
                 url: markers[i][5],
                 size: new google.maps.Size(71, 71)
             }
-        bounds.extend(position);
+        //bounds.extend(position);
         var status = markers[i][5];
         status == 1 ? status = '<span class="badge badge-success">En tiempo</span>' : '';
         status == 2 ? status = '<span class="badge badge-warning">Atrasado</span>' : '';
@@ -121,15 +121,15 @@ var vBranchLocationClass = {
         })(marker, i));
 
         // Center the map to fit all markers on the screen
-        map.fitBounds(bounds);
+        //map.fitBounds(bounds);
     }
 
     // Set zoom level
-    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+    /*var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
         this.setZoom(5);
         google.maps.event.removeListener(boundsListener);
 
-    });
+    });*/
     },
     initDatatable: (data) => {
         $('.div-table').removeAttr('hidden');
