@@ -20,20 +20,38 @@
         var KeyDecisions =  "";
         var ExecutiveSummary =  "";
         var ProjectName =  "";
+        var Status = "";
     @foreach (var row in Model.Data)
     {
-          State = @row.State;
-          Municipality = @row.Municipality;
-          Locality = @row.Locality;
-          Progress = @row.Progress * 100;
-          ProgressInt =Convert.ToInt32(Progress);
-          CategoryVenue = @row.CategoryVenue;
-          Venue = @row.Venue;
-          Institution = @row.Institution;
-          KeyDecisions = @row.KeyDecisions;
-          ExecutiveSummary = @row.ExecutiveSummary;
-          ProjectName = @row.ProjectName;
-    
+        State = @row.State;
+        Municipality = @row.Municipality;
+        Locality = @row.Locality;
+        Progress = @row.Progress * 100;
+        ProgressInt =Convert.ToInt32(Progress);
+        CategoryVenue = @row.CategoryVenue;
+        Venue = @row.Venue;
+        Institution = @row.Institution;
+        KeyDecisions = @row.KeyDecisions;
+        ExecutiveSummary = @row.ExecutiveSummary;
+        ProjectName = @row.ProjectName;
+        switch (@row.Status)
+        {
+            case 1:
+                Status = "OnTime";
+                break;
+            case 2:
+                Status = "Delayed";
+                break;
+            case 3:
+                Status = "withImpact";
+                break;
+            case 4:
+                Status = "Closed";
+                break;
+            case 5:
+                Status = "Canceled";
+                break;
+        }
     }
 
     <div class="container-fluid card">
@@ -76,7 +94,7 @@
                                                                 <strong><h6>Avance general</h6></strong>
                                                             </div>
                                                             <div class="col-12 mt-2" id="progress">
-                                                                <div class="progress-circle border-primary progress-@ProgressInt"><span id="progressCircle">@ProgressInt</span></div>
+                                                                <div class="progress-circle border-primary progress-@Status-@ProgressInt"><span id="progressCircle" style="font-size: 1em;">@ProgressInt</span></div>
                                                             </div>
                                                         </div>
                                                      </td> 
