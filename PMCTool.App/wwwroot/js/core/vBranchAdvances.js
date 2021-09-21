@@ -10,13 +10,13 @@
             let municiopiosid = $("#Municipios").val();
             let estadoid = $('#Estate').val();
             let tipopredio = $('#tipopredio').val();
-            let vista = $('#tipovista').val();
+            let vista = "porcentaje";//$('#tipovista').val();
             jQuery.ajaxSettings.traditional = true;
             $.ajax({
                 url: "/BranchAdvances/printReportBranchAdvances",
                 type: "POST",
                 data: {
-                    "estadoid":"'"+ estadoid+"'",
+                    "estadoid": estadoid,
                     "municipiosid": "'" + municiopiosid.join() + "'",
                     "tipopredio": "'" + tipopredio.join() + "'",
                     "tipovista": "'" + vista + "'",
