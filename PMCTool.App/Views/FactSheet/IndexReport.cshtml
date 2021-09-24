@@ -3,9 +3,7 @@
     Layout = "_LayoutReport";
     ViewData["Title"] ="FICHA DE PROYECTO";; 
 }
-
 <link href="~/css/progress-circle.css" rel="stylesheet" />
-<link href="~/css/detalle-actividad.css" rel="stylesheet" />
 
  <div class="content">
 @{
@@ -101,7 +99,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2">
-                                                        <div class="col-10 headbox-factsheet" style="background: #BC955C;    color: #ffefef; padding-top: 8px;margin-top: 22px;padding-bottom: 1px;">
+                                                        <div class="col-12 headbox-factsheet" style="background: #BC955C;    color: #ffefef; padding-top: 8px;margin-top: 22px;padding-bottom: 1px;">
                                                             <h5 class="textheadbox-factsheet" style="margin-bottom: 10px;">Resumen ejecutivo</h5>
                                                         </div>
                                                         <div class="col-10 borderbox-factsheet">
@@ -116,7 +114,7 @@
                                                 
                                                 <tr>
                                                     <td colspan="2">
-                                                         <div class="col-10 headbox-factsheet" style="background: #BC955C;    color: #ffefef;  padding-top: 8px;margin-top: 15px; padding-bottom: 1px;">
+                                                         <div class="col-12 headbox-factsheet" style="background: #BC955C;    color: #ffefef;  padding-top: 8px;margin-top: 15px; padding-bottom: 1px;">
                                                             <h5 class="textheadbox-factsheet" style="margin-bottom: 10px;">Decisiones clave</h5>
                                                         </div>
                                                             <div class="col-10 borderbox-factsheet">
@@ -131,7 +129,7 @@
                                             </table>
                                              
                                                   
-                                                    <div class="" style="width: 100%;">
+                                                    <div class="col-12" style="width: 100%;">
                                                         <table id="tFactSheet" class="table table-hover">
                                                             <thead>
                                                                 <tr>
@@ -141,31 +139,37 @@
                                                             </thead>
                                                             <tbody id="tStageProgress">
                                                                 @foreach (var rowx in Model.ProjectTask)
-                                                                        {
-                                                                        var statusSpan = "";
-                                                                        double progress = @rowx.Progress * 100;
-                                                                        double progressRow =Math.Round(progress, MidpointRounding.AwayFromZero);
-                                                                        switch (@rowx.Status)
-                                                                        {
-                                                                            case 1:
-                                                                                statusSpan = "<span style='background-color: green;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>En tiempo</span>";
-                                                                                break;
-                                                                            case 2:
-                                                                                statusSpan = "<span style='background-color: rgb(230, 199, 2);color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Atrasado</span>";
-                                                                                break;
-                                                                            case 3:
-                                                                                statusSpan = "<span style='background-color: #f44336;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Con impacto</span>";
-                                                                                break;
-                                                                            case 4:
-                                                                                statusSpan = "<span style='background-color: #d0d0d0;color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cerrado</span>";
-                                                                                break;
-                                                                            case 5:
-                                                                                statusSpan = "<span style='background-color: #545454;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cancelado</span>";
-                                                                                break;
-                                                                        }
+                                                                {
+                                                                    var statusSpan = "";
+                                                                    var divprogress = "";
+                                                                    double progress = @rowx.Progress * 100;
+                                                                    double progressRow =Math.Round(progress, MidpointRounding.AwayFromZero);
+                                                                    switch (@rowx.Status)
+                                                                    {
+                                                                        case 1:
+                                                                            statusSpan = "<span style='background-color: green;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>En tiempo</span>";
+                                                                            divprogress = $"<div class='progress' style='height: 16px;'><div class='progress-bar bg-success progress-bar-striped' style='width:{progressRow}%;'  role='progressbar' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>{progressRow}%</div></div>";
+                                                                            break;
+                                                                        case 2:
+                                                                            statusSpan = "<span style='background-color: rgb(230, 199, 2);color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Atrasado</span>";
+                                                                            divprogress = $"<div class='progress' style='height: 16px;'><div class='progress-bar bg-warning progress-bar-striped' style='width:{progressRow}%;'  role='progressbar' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>{progressRow}%</div></div>";
+                                                                            break;
+                                                                        case 3:
+                                                                            statusSpan = "<span style='color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Con impacto</span>";
+                                                                            divprogress = $"<div class='progress' style='height: 16px;'><div class='progress-bar bg-danger  progress-bar-striped' style='width:{progressRow}%;'  role='progressbar' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>{progressRow}%</div></div>";
+                                                                            break;
+                                                                        case 4:
+                                                                            statusSpan = "<span style='background-color: #d0d0d0;color: black;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cerrado</span>";
+                                                                            divprogress = $"<div class='progress' style='height: 16px;'><div class='progress-bar bg-secondary progress-bar-striped' style='width:{progressRow}%;'  role='progressbar' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>{progressRow}%</div></div>";
+                                                                            break;
+                                                                        case 5:
+                                                                            statusSpan = "<span style='background-color: #545454;color: white;padding: 2px 5px 1px 3px;border-radius: 3px;font-size: 11px;'>Cancelado</span>";
+                                                                            divprogress = $"<div class='progress' style='height: 16px;'><div class='progress-bar bg-warning progress-bar-striped' style='width:{progressRow}%;'  role='progressbar' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'>{progressRow}%</div></div>";
+                                                                            break;
+                                                                    }
                                                                             <tr>
-                                                                                <th>@rowx.Activity <br />  @Html.Raw(@statusSpan)</th>       
-                                                                                <th>@progressRow%</th>
+                                                                                <td width="40%">@rowx.Activity <br />  @Html.Raw(@statusSpan)</td>       
+                                                                                <td width="100%">@Html.Raw(@divprogress)</td>
 
                                                                             </tr>   
     
