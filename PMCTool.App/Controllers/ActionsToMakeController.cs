@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Diagnostics;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 using PMCTool.App.Attributes;
-using PMCTool.App.Helpers;
 using PMCTool.App.Models;
-using PMCTool.Common.RestConnector;
-using PMCTool.Models.Core;
-using PMCTool.Models.Enumeration;
 using PMCTool.Models.Environment;
-using Syncfusion.Pdf;
-using Syncfusion.HtmlConverter;
-using System.IO;
+using PMCTool.Common.RestConnector;
 using Microsoft.AspNetCore.Hosting;
-using System.Text.Json;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Localization;
+using PMCTool.Models.Core;
 
 namespace PMCTool.App.Controllers
 {
@@ -33,9 +22,11 @@ namespace PMCTool.App.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         [PMCToolAuthentication]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             SetActiveOption("4008");
+            List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            ViewBag.States = states;
             return View();
         }
         [HttpPost]
