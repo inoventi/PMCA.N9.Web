@@ -1,0 +1,219 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row card">
+                <div class="col-md-12 pt-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                        <span style="color: #235b4e !important;"> Indicadores de proyectos	</span>
+                    </h4>
+                </div>
+                <div class="col-md-12" id="divContainer" style="">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Entidad" class="selectpicker" data-title="Entidad Federativa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="id">Aguascalientes</option>
+                                        <option value="ms">Baja California</option>
+                                        <option value="ca"> Baja California Sur</option>
+                                        <option value="da">Campeche</option>
+                                        <option value="da">Chiapas</option>
+                                        <option value="da">Chihuahua</option>
+                                        <option value="da">Coahuila</option>
+                                        <option value="da">Colima</option>
+                                        <option value="da">Ciudad de México / Distrito Federal</option>
+                                        <option value="da">Durango</option>
+                                        <option value="da">Estado de México</option>
+                                        <option value="da">Guanajuato</option>
+                                        <option value="da">Guerrero</option>
+                                        <option value="da">Hidalgo</option>
+                                        <option value="da">Jalisco</option>
+                                        <option value="da">Michoacán</option>
+                                        <option value="da">Morelos</option>
+                                        <option value="da">Nayarit</option>
+                                        <option value="da">Nuevo León</option>
+                                        <option value="da">Oaxaca</option>
+                                        <option value="da">Puebla</option>
+                                        <option value="da">Querétaro</option>
+                                        <option value="da">Quintana Roo</option>
+                                        <option value="da">San Luis Potosí</option>
+                                        <option value="da">Sinaloa</option>
+                                        <option value="da">Sonora</option>
+                                        <option value="da">Tabasco</option>
+                                        <option value="da">Tamaulipas</option>
+                                        <option value="da">Tlaxcala</option>
+                                        <option value="da">Veracruz</option>
+                                        <option value="da">Yucatán</option>
+                                        <option value="da">Zacatecas</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="DireccionG" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="id">DG Desarrollo Carretero (UI)</option>
+                                        <option value="ms">DG Desarollo Ferroviario</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="TipoP" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="id">Compromisos presidenciales</option>
+                                        <option value="ms">Conectividad AIFA</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="id">Obra</option>
+                                        <option value="ms">Proyecto</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple>
+                                        <option value="id">FONADIN</option>
+                                        <option value="ms">Privado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <select multiple name="Anuncio" class="selectpicker" data-title="Anuncio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <option value="id">Primer anuncio</option>
+                                        <option value="ms">Segundo anuncio</option>
+                                        <option value="ms">No aplica</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                    <button type="button" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
+                                        <span class="btn-label">
+                                            <i class="fa fa-file-alt"></i>
+                                        </span>
+                                        Mostrar Reporte
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!--Sección de PartialView-->
+
+                    <div id="divFichaTecnicaProyecto">
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped tbimpact">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center bg-table-green">Código</th>
+                                                <th class="text-center bg-table-green">Proyecto</th>
+                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
+                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
+                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
+                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
+                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
+                                                <th class="text-center bg-table-green">Fecha Final</th>
+                                                <th class="text-center bg-table-green">Fecha Proyectada</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">08096400015</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Oaxaca-Puerto Escondido-Huatulco</a></td>
+                                                <td class="text-center indicadores-danger">0.47</td>
+                                                <td class="text-center indicadores-danger">0.69</td>
+                                                <td class="text-center">12.5</td>
+                                                <td class="text-center">13.2</td>
+                                                <td class="text-center">1.0</td>
+                                                <td class="text-center">Dic-2021</td>
+                                                <td class="text-center">Feb-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">10096320017</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Ayutla-Acatepec,Tr:San José LA Hacienda-Encino Amarillo</a></td>
+                                                <td class="text-center indicadores-danger">0.60</td>
+                                                <td class="text-center indicadores-danger">0.43</td>
+                                                <td class="text-center">10.5</td>
+                                                <td class="text-center">12.0</td>
+                                                <td class="text-center">1.5</td>
+                                                <td class="text-center">Jun-2021</td>
+                                                <td class="text-center">Dic-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">11096500018</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Ozuluama- Tampico</a></td>
+                                                <td class="text-center indicadores-danger">0.35</td>
+                                                <td class="text-center indicadores-danger">0.74</td>
+                                                <td class="text-center">5.3</td>
+                                                <td class="text-center">5.4</td>
+                                                <td class="text-center">-1.0</td>
+                                                <td class="text-center">Dic-2021</td>
+                                                <td class="text-center">Nov-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">13096400003</td>
+                                                <td><a href="/ProjectIndicators/Indicator">E.C. Km 126+645(Mitla - Tehuantepec ll) -San Juan Juquila Mixes</a></td>
+                                                <td class="text-center indicadores-success">0.02</td>
+                                                <td class="text-center indicadores-success">0.94</td>
+                                                <td class="text-center">22.1</td>
+                                                <td class="text-center">25.0</td>
+                                                <td class="text-center">2.9</td>
+                                                <td class="text-center">Ago-2021</td>
+                                                <td class="text-center">Mar-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">14096270033</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Palenque- Catzajá</a></td>
+                                                <td class="text-center indicadores-danger">0.21</td>
+                                                <td class="text-center indicadores-danger">0.34</td>
+                                                <td class="text-center">50.5</td>
+                                                <td class="text-center">55.0</td>
+                                                <td class="text-center">2.9</td>
+                                                <td class="text-center">Dic-2021</td>
+                                                <td class="text-center">Mar-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">14096460006</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Agua Prieta - Bavispe (Agua Prieta - La Morita)</a></td>
+                                                <td class="text-center indicadores-warning">0.09</td>
+                                                <td class="text-center indicadores-warning">0.93</td>
+                                                <td class="text-center">37.5</td>
+                                                <td class="text-center">40.0</td>
+                                                <td class="text-center">4.5</td>
+                                                <td class="text-center">Ene-2022</td>
+                                                <td class="text-center">Abr-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">15096270004</td>
+                                                <td><a href="/ProjectIndicators/Indicator">Modernización de la carretera Palenque - San Cristobal de Las Casas</a></td>
+                                                <td class="text-center indicadores-danger">0.32</td>
+                                                <td class="text-center indicadores-danger">0.76</td>
+                                                <td class="text-center">40.0</td>
+                                                <td class="text-center">45.0</td>
+                                                <td class="text-center">5.0</td>
+                                                <td class="text-center">Dic-2021</td>
+                                                <td class="text-center">Feb-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">15096400007</td>
+                                                <td><a href="/ProjectIndicators/Indicator">E.C (Diaz Ordaz-Villa Alta)- E.C. (Mitla-Totontepec Villa de Morelos) del Km 0+000 al km 18+000</a></td>
+                                                <td class="text-center indicadores-danger">0.24</td>
+                                                <td class="text-center indicadores-danger">0.32</td>
+                                                <td class="text-center">67.2</td>
+                                                <td class="text-center">70.2</td>
+                                                <td class="text-center">3.0</td>
+                                                <td class="text-center">Nov-2021</td>
+                                                <td class="text-center">Dic-2021</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -13963,3 +13963,26 @@ select.selectpicker {
     cursor: pointer;
 }
 }
+.status-ontime {
+    background: #92d050;
+}
+
+.status-delayed {
+    background: #ffc000;
+}
+
+.status-withimpact {
+    background: red;
+}
+
+.indicadores-danger {
+    background: red;
+}
+
+.indicadores-success {
+    background: #92d050;
+}
+
+.indicadores-warning {
+    background: #ffc000;
+}

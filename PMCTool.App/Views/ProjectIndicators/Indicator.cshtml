@@ -1,0 +1,74 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Indicator";
+    Layout = "_Layout";
+}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row card">
+            <div class="col-md-12 pt-4">
+                <small class="font-weight-normal">Analytics</small>
+                <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                    <span style="color: #235b4e !important;"> Indicador	</span>
+                </h4>
+                <small class="font-weight-normal">Proyecto</small>
+                <h4 class="mt-1 font-weight-bold">
+                    Carretera: Nuevo Casas Grandes – Puerto Palomas
+                </h4>
+            </div>
+            <div class="col-md-12" id="divContainer" style="">
+                <div id="divFichaTecnicaProyecto">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body ">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <figure class="highcharts-figure">
+                                                <div id="inversion"></div>
+                                            </figure>
+                                        </div>
+                                        <div class="col-8">
+                                            <table class="table table-hover table-striped tbimpact">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
+                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
+                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
+                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
+                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
+                                                        <th class="bg-table-green">Fecha Final </th>
+                                                        <th class="bg-table-green">Fecha Proyectada </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="indicadores-danger">0.47</td>
+                                                        <td class="indicadores-danger">0.69</td>
+                                                        <td class="indicadores-danger">12.5</td>
+                                                        <td class="indicadores-danger">13.2</td>
+                                                        <td class="indicadores-warning">1.0</td>
+                                                        <td>Dic-2021</td>
+                                                        <td>Dic-2022</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/highcharts.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.src.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/export-data.min.js" type="text/javascript"></script>
+    <script src="~/js/core/vProjectsIndicators.js" asp-append-version="true"></script>
+}
