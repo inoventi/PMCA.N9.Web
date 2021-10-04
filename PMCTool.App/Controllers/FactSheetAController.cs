@@ -151,7 +151,7 @@ namespace PMCTool.App.Controllers
             }
             ViewBag.ProjectSeleted = projectId;
             //AGREGAR CONSULTA PARA OBTENER EL STATUS DEL PROYECTO Y MANDAR EJECUTAR LAS COSULTAS NECESARIAS PARA EL PARCIAL VIEW QUE SE OCUPA
-            var ProjectStatus = 1;//Ejecución
+            var ProjectStatus = 2;//Ejecución
             if(ProjectStatus == 1)
             {
                 return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
