@@ -1,0 +1,461 @@
+﻿@model dynamic;
+@{
+    var ProjectName = "";
+    var Benefit = "";
+    var Scope = "";
+    var KeyDecisions = "";
+    var DirectJobsGenerated = "";
+    var IndirectJobsGenerated = "";
+    var RelevantMilestones = "";
+    var Promoter = "";
+    var Logo = "";
+    var ActionsToBeTaken = "";
+    var chartEstatal = "";
+    var chartPrivada = "";
+    var chartFonden = "";
+    var chartPef = "";
+    var chartFonadin = "";
+
+    @foreach (var row in Model.tabsheet)
+    {
+        ProjectName = @row.ProjectName;
+        Benefit = @row.Benefit;
+        Scope = @row.Scope;
+        KeyDecisions = @row.KeyDecisions;
+        DirectJobsGenerated = @row.DirectJobsGenerated;
+        IndirectJobsGenerated = @row.IndirectJobsGenerated;
+        RelevantMilestones = @row.RelevantMilestones;
+        Promoter = @row.Promoter;
+        Logo = @row.Logo;
+        chartEstatal = @row.chartEstatal;
+        chartPrivada = @row.chartPrivada;
+        chartFonden = @row.chartFonden;
+        chartPef = @row.chartPef;
+        chartFonadin = @row.chartFonadin;
+
+
+        break;
+
+    }
+
+
+    <div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <small class="font-weight-normal">Proyecto</small>
+                    <h4 class="mt-1 font-weight-bold">
+                        @ProjectName
+                    </h4>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a class="btn btn-round btn-sm  btn-danger" href="/FactSheetA/ProjectDetail?project=@ViewBag.ProjectSeleted">
+                        <span class="btn-label">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </span>Detalle de Proyecto
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Beneficios</b>
+                            </p>
+                            <p>Reducción de los tiempos de viaje de 90 min a 50 min, se aumentará la seguridad del usuario y mejora de la operación del tramo.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Alcance</b>
+                            </p>
+                            <p>
+                                Ampliación a una sección tipo boulevard de 22 m. de ancho de corona, para alojar 4 carriles (2 por sentido y acotamientos laterales de 2.5 m) con carpeta asfáltica.
+                            </p>
+                            <p>
+                                <b style="font-weigth:bold">Problemática a resolver:</b> Altos costos generalizados de viaje de los usuarios de la carretera, congestión vial en tramos ascendentes por la imposibilidad de rebase.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2" class="bg-table-green" style="text-align: center;">
+                                        <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
+                                    </th>
+                                    <td><h6 class="h5-responsive"><b>Directos</b></h6></td>
+                                    <td><h6 class="h5-responsive">1120</h6></td>
+                                </tr>
+                                <tr>
+                                    <td><h6 class="h5-responsive"><b>Indirectos</b></h6></td>
+                                    <td><h6 class="h5-responsive">510</h6></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Inversión</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="text-responsive text-lg-center">
+                                $9265 mdp / FONADIN
+                            </h3>
+                            <p>
+                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Licitación</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="arrow-steps clearfix">
+                                <div class="step">
+                                    <span>Convocatoria</span> <br>
+                                    <span>06/05/2021</span>
+                                </div>
+                                <div class="step">
+                                    <span>Presentación de propuestas</span> <br>
+                                    <span>20/05/2021</span>
+                                </div>
+                                <div class="step">
+                                    <span>Apertura de propuestas</span> <br>
+                                    <span>23/05/2021</span>
+                                </div>
+                                <div class="step current">
+                                    <span>Fallo</span> <br>
+                                    <span>30/05/2021</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Actividades Previas a la Ejecución</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover table-striped tbimpact">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-table-green">Concepto</th>
+                                        <th class="bg-table-green">Inicio</th>
+                                        <th class="bg-table-green">Duración </th>
+                                        <th class="bg-table-green">Estatus </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Registro en cartera de la SHCP</td>
+                                        <td>Jun-2020</td>
+                                        <td>90 días</td>
+                                        <td class="status-ontime">En tiempo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Proyecto ejecutivo</td>
+                                        <td>Sep-2020</td>
+                                        <td>120 días</td>
+                                        <td class="status-ontime">En tiempo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Liberación del Derecho de Vía</td>
+                                        <td>Ene-2021</td>
+                                        <td>180 días</td>
+                                        <td class="status-delayed">Atrasado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manifestación de Impacto Ambiental</td>
+                                        <td>Ene-2021</td>
+                                        <td>150 días</td>
+                                        <td class="status-withimpact">Con impacto</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acreditación de Laboratorios</td>
+                                        <td>jun-2021</td>
+                                        <td>150 días</td>
+                                        <td class="status-delayed">Atrasado</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="title-section">
+                                <b>Promotor</b>
+                            </p>
+                            <p style="font-weight: bold;text-align: center;">
+                                Gobierno del Estado de Chihuahua
+
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="title-section">
+                                <b>Detalle de etapa</b>
+                            </p>
+                            <table class="table table-hover table-striped tbimpact">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-table-green" style="border-right: 1px solid !important;">Etapa</th>
+                                        <th class="bg-table-green" style="text-align:center; border-right: 1px solid;">Fecha Inicio</th>
+                                        <th class="bg-table-green" style="text-align:center; display: table-cell; border-right: 1px solid;">Meses </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: bold;">Ejecución</td>
+                                        <td style="font-weight: bold;">Jun-2021</td>
+                                        <td style="font-weight: bold;">12</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bold;">Operación</td>
+                                        <td style="font-weight: bold;">Jun-2022</td>
+                                        <td style="font-weight: bold;">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Decisiones Claves</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="justify-text">
+                                1.- Aprobación de la manifestación de impacto ambiental jun-2021: SEMARNAT // 2.- Asignación de contrato y pago de anticipo 02 julio 2021: SCT // 3.-Concluir la liberación del derecho de vía: SEDATU
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Hitos Relevantes</b>
+                            </p>
+                            <p>
+                                Ejecución 28 abril 21 Visto bueno SHCP: concluyó en enero 2021
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="justify-text">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Anuncios</b>
+                            </p>
+                            <p>2do. Anuncio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-12">
+                    <iframe src="http://doc.pmc-tool.mx/PMCAnalytics/sctv1.1/Factsheet2/" width="100%" height="300px"></iframe>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Localización</b>
+                            </p>
+                            <p>
+                                La carretera comunica al norponiente de Chihuahua con el estado de Nuevo México, en los EE.UU., a través del Puerto Fronterizo de Puerto Palomas.
+                            </p>
+                            <p><b style="font-weight: bold">Coordenadas:</b> Inicio:   22.386111º, -100.769444°; Fin:   22.652778,°, -100.605833°</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="floating-panel">
+                                <b>Modo de viaje: </b>
+                                <select id="mode">
+                                    <option value="DRIVING">Manejando</option>
+                                    <option value="WALKING">Caminando</option>
+                                    <option value="BICYCLING">Bicicleta</option>
+                                    <option value="TRANSIT">Transito</option>
+                                </select>
+                            </div>
+                            <div id="map" style="height: 534px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Reporte fotográfico</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-md-12">
+                            <div class="row" style="border: 1px solid;height: 284px;">
+                                <div class="col-md-6 text-center">
+                                    <p style="font-weight: bold; margin-top: 33%;">Trabajos de topografia</p>
+                                </div>
+                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
+                                    <img src="https://www.ajttopografos.com/blog/wp-content/uploads/2017/02/topografos-malaga-granada.jpg" alt="" width="274px;" height="277px" style="padding: 6px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row" style="border: 1px solid;height: 284px;">
+                                <div class="col-md-6 text-center">
+                                    <p style="font-weight: bold; margin-top: 33%;">Inicio de la ejecución Conformación de cuerpo de terraplén en el Km 0+000 al 0+800 </p>
+                                </div>
+                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
+                                    <img src="https://www.gruasyaparejos.com/wp-content/uploads/2019/07/estacion-total-topografia-2.jpg" alt="" width="277px;" height="277px" style="padding: 6px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+                               if (typeof variable === 'undefined') {
+                                   let totalmont = 0;
+                                }
+                                totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+                                $('._totalmont').empty();
+                                $('._totalmont').html("$ "+totalmont+ " mdp");
+                              new Chart(document.getElementById("doughnut-chart"), {
+                                  type: 'doughnut',
+                                  data: {
+                                      labels: ["Privados", "Fonden", "Fonadin", "Estatal", "PEF"],
+                                      datasets: [
+                                          {
+                                              backgroundColor: ["#330101", "#8B0000", "#D2B48C", "#FFE4C4"],
+                                              data: [
+                                                Math.round(@chartPrivada * 100/ totalmont ),
+                                                Math.round(@chartFonden * 100 / totalmont ),
+                                                Math.round(@chartFonadin * 100/ totalmont ),
+                                                Math.round(@chartEstatal * 100/ totalmont ),
+                                                Math.round(@chartPef * 100/ totalmont )
+                                              ]
+                                          }
+                                      ]
+                                  },
+                                  options: {
+                                      legend: { position: 'bottom' }
+                                  }
+                              });
+                              if (factSheetA.getUrlParameter('projectid')) {
+                                      let pp = factSheetA.getUrlParameter('projectid');
+                                        $('#project').val("'" + pp + "'");
+                                        $('#project').prop('disabled', true);
+                                        $('#project').selectpicker('refresh');
+                                }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&callback=initMap&libraries=&v=weekly"
+            defer></script>
+
+    <script type="text/javascript">
+        function initMap() {
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            const directionsService = new google.maps.DirectionsService();
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: { lat: 31.756490, lng: -107.620201 },
+            });
+            directionsRenderer.setMap(map);
+            calculateAndDisplayRoute(directionsService, directionsRenderer);
+            document.getElementById("mode").addEventListener("change", () => {
+                calculateAndDisplayRoute(directionsService, directionsRenderer);
+            });
+        }
+
+        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+            const selectedMode = document.getElementById("mode").value;
+            directionsService
+                .route({
+                    origin: { lat: 31.756490, lng: -107.620201 },
+                    destination: { lat: 31.471000, lng: -107.612186 },
+                    // Note that Javascript allows us to access the constant
+                    // using square brackets and a string value as its
+                    // "property."
+                    travelMode: google.maps.TravelMode[selectedMode],
+                })
+                .then((response) => {
+                    directionsRenderer.setDirections(response);
+                })
+                .catch((e) => window.alert("Directions request failed due to " + status));
+        }
+    </script>
+    <script>
+        new Chart(document.getElementById("doughnut-chart"), {
+            type: 'doughnut',
+            data: {
+                labels: ["PEF", "FONADIN", "FONDEN", "Estatal", "Privado"],
+                datasets: [
+                    {
+                        backgroundColor: ["#235b4e", "#330101", "#8b0000", "#d2b48c", "#ffe4c4"],
+                        data: [Math.round(7),
+                        Math.round(4),
+                        Math.round(1),
+                        Math.round(2),
+                        Math.round(4)
+                        ]
+                    }
+                ]
+            },
+            options: {
+                legend: { position: 'bottom' }
+            }
+        });
+    </script>
+}

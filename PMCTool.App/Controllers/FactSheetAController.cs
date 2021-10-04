@@ -51,11 +51,15 @@ namespace PMCTool.App.Controllers
                 //}
                 //else
                 //{
+
                     ViewBag.Projects = projectTab.OrderBy(c => c.Value).ToList();
                     p.ProjectID = null;
                     p.ProjectName = null;
 
+
                 //}
+
+
                 ViewBag.ProjectSeleted = project;
 
                 return View("~/Views/FactSheet/A/Index.cshtml", p);
@@ -146,7 +150,16 @@ namespace PMCTool.App.Controllers
 
             }
             ViewBag.ProjectSeleted = projectId;
-            return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab); 
+            //AGREGAR CONSULTA PARA OBTENER EL STATUS DEL PROYECTO Y MANDAR EJECUTAR LAS COSULTAS NECESARIAS PARA EL PARCIAL VIEW QUE SE OCUPA
+            var ProjectStatus = 1;//Ejecución
+            if(ProjectStatus == 1)
+            {
+                return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
+            }
+            else
+            {
+                return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
+            }
         }
      }
 }
