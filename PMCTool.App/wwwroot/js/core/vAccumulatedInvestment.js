@@ -64,7 +64,7 @@
                 zoomType: 'x'
             },
             title: {
-                text: 'Secuencia de inicio de construcción'
+                text: 'Secuencia de inicio de inversión'
             },
             subtitle: {
                 text: 'Inversión Instantanea Acumulada Mensual (Miles De Mdp)'
