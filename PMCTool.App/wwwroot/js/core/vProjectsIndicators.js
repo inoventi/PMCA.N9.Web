@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
-    ProjectsIndicatorsController.initGraphic();
+    //ProjectsIndicatorsController.initGraphic();
+    ProjectsIndicatorsController.initPetition();
 })
 
 const ProjectsIndicatorsController = {
@@ -93,5 +94,125 @@ const ProjectsIndicatorsController = {
                 }
             }
         });
-    }
+    },
+    initPetition: () => {
+        $('#btnReport').click(() => {
+            LoaderShow();
+            let states = $("#Entidad").val();
+            let generalDirection = $('#DireccionGral').val();
+            let projectType = $('#TipoProyecto').val();
+            let stage = $('#Etapa').val();
+            let investment = $('#Inversion').val();
+            let advertisement = $('#Anuncio').val();
+            let data = {
+                states: states.join(),
+                generalDirection: generalDirection.join(),
+                projectType: projectType.join(),
+                stage: stage.join(),
+                investment: investment.join(),
+                advertisement: advertisement.join(),
+            };
+            $.post('/ProjectIndicators/GetDataProjectIndicators', data, function (data) {
+                data == '' ? ProjectsIndicatorsController.initCustomReaction(2) : ProjectsIndicatorsController.initAcomodateData(data);
+                LoaderHide();
+            }).fail(function (e) {
+                console.log("ERROR: ", e);
+            });
+        });
+    },
+    initAcomodateData: (data) => {
+        //CICLO PARA APLICAR FORMULAS Y CONSTRUIR LA TABLA
+        for (let a = 0; a < data.length; a++) {
+            //ID DEL PROYECTO
+            let projectID = data[a].projectID;
+            //NOMBRE DEL PROYECTO
+            let projectName = data[a].name;
+            //FORMULA PARA SACAR CPI = EV/AC
+            let cpi = data[a].ev / data[a].ac;
+            cpi = cpi.toFixed(2);
+            cpi > 1.00 ? (cpi = '<td class="text-center indicadores-success">' + cpi + '</td>') : '';
+            cpi > 0.80 && cpi < 1.00 ? (cpi = '<td class="text-center indicadores-warning">' + cpi + '</td>') : '';
+            cpi < 0.80 ? (cpi = '<td class="text-center indicadores-danger">' + cpi + '</td>') : '';
+            //FORMULA PARA SACAR SPI = PV/AC
+            let spi = data[a].pv / data[a].ac;
+            spi = spi.toFixed(2); 
+            spi > 1.00 ? (spi = '<td class="text-center indicadores-success">' + spi + '</td>') : '';
+            spi > 0.80 && spi < 1.00 ? (spi = '<td class="text-center indicadores-warning">' + spi + '</td>') : '';
+            spi < 0.80 ? (spi = '<td class="text-center indicadores-danger">' + spi + '</td>') : '';
+            //VIENE DEL CEO EL VALOR DE BAC
+            let bac = Math.random() * (30 - 0);
+            bac = bac.toFixed(2);
+            //SE OCUPA SACAR LA DE LA FORMULA DE TENDENCIA PARA SACAR EL TOTAL DE PRESUPUESTO PROYECTADO
+            let eac = Math.random() * (30 - 0);
+            eac = eac.toFixed(2); 
+            //VALOR DE VAC = DIFERENCIA ENTRE EAC Y BAC
+            let vac;
+            if (eac > bac) {
+                vac = eac - bac;
+                vac = vac.toFixed(2);
+            } else if (eac < bac) {
+                vac = bac - eac;
+                vac = vac.toFixed(2);
+            } else {
+                vac = 0;
+            }
+            let endDate = data[a].endDate;
+
+            endDate != null ? endDate = endDate.split('T')[0] : endDate= '';
+            //PARA SACAR LA FECHA PROYECTADA SE OBTIENE DE LA FORMALA DE TENDENCIA HASTA QUE EV SE ACERQUE A BAC(PRESUPUESTO TOTAL PLANEADO(CEO))
+            let endDataProjected = '2021-10-06';
+            $('#tBodyProjectIndicators').append('<tr>'
+                + '<td class= "text-center">' + projectID + '</td>'
+                + '<td><a href="/ProjectIndicators/Indicator">' + projectName + '</a></td>'
+                + cpi
+                + spi
+                + '<td class="text-center">' + bac + '</td>'
+                + '<td class="text-center">' + eac + '</td>'
+                + '<td class="text-center">' + vac + '</td>'
+                + '<td class="text-center">' + endDate + '</td>'
+                + '<td class="text-center">' + endDataProjected + '</td>'
+                +'</tr>');
+
+        }
+        if (data.length > 0) {
+            ProjectsIndicatorsController.initCustomReaction(1);
+        } else {
+            ProjectsIndicatorsController.initCustomReaction(2);
+        }
+    },
+    initCustomReaction: (e) => {
+        switch (e) {
+            case 1:
+                $('#divTableProjectIndicators').removeAttr('hidden');
+                $('#TableProjectIndicators').removeAttr('hidden');
+                ProjectsIndicatorsController.ResetSelects();
+                break;
+            case 2:
+                $('#divTableProjectIndicators').removeAttr('hidden');
+                $('#divTableProjectIndicators').append('<center>No se encontraron registros.</center>');
+                ProjectsIndicatorsController.ResetSelects();
+                break;
+        }
+        $('#btnClose').click(() => {
+            window.location.href = window.location.href;
+        })
+    },
+    ResetSelects: () => {
+        $('#btnReport').hide();
+        $('#btnClose').removeAttr('hidden');
+        //$('#btnPDF').removeAttr('hidden');
+        $('#Entidad').prop('disabled', true);
+        $('#Entidad').selectpicker('refresh');
+        $('#DireccionGral').prop('disabled', true);
+        $('#DireccionGral').selectpicker('refresh');
+        $('#TipoProyecto').prop('disabled', true);
+        $('#TipoProyecto').selectpicker('refresh');
+        $('#Etapa').prop('disabled', true);
+        $('#Etapa').selectpicker('refresh');
+        $('#Inversion').prop('disabled', true);
+        $('#Inversion').selectpicker('refresh');
+        $('#Anuncio').prop('disabled', true);
+        $('#Anuncio').selectpicker('refresh');
+    },
 }
+function pad(n, width, z) { z = z || '0'; n = n + ''; return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n; }
