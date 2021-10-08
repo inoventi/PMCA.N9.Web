@@ -8,8 +8,10 @@
     var IndirectJobsGenerated = "";
     var RelevantMilestones = "";
     var Promoter = "";
+    var Advertisement = "";
+    var ProblemToSolve = "";
+    var Tdpa = "";
     var Logo = "";
-    var ActionsToBeTaken = "";
     var chartEstatal = "";
     var chartPrivada = "";
     var chartFonden = "";
@@ -26,6 +28,9 @@
         IndirectJobsGenerated = @row.IndirectJobsGenerated;
         RelevantMilestones = @row.RelevantMilestones;
         Promoter = @row.Promoter;
+        Advertisement = @row.Advertisement;
+        ProblemToSolve = row.ProblemToSolve;
+        Tdpa = @row.Tdpa;
         Logo = @row.Logo;
         chartEstatal = @row.chartEstatal;
         chartPrivada = @row.chartPrivada;
@@ -76,9 +81,6 @@
                             <p>
                                 Ampliación a una sección tipo boulevard de 22 m. de ancho de corona, para alojar 4 carriles (2 por sentido y acotamientos laterales de 2.5 m) con carpeta asfáltica.
                             </p>
-                            <p>
-                                <b style="font-weigth:bold">Problemática a resolver:</b> Altos costos generalizados de viaje de los usuarios de la carretera, congestión vial en tramos ascendentes por la imposibilidad de rebase.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +103,28 @@
                         </table>
                     </div>
                 </div>
-
+                <div class="col-md-2">
+                    <p class="title-section">
+                        <b>TDPA</b>
+                    </p>
+                    <p class="text-center">
+                        @Tdpa
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Problemática a resolver</b>
+                            </p>
+                            <p>
+                                @ProblemToSolve
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -135,11 +158,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="arrow-steps clearfix">
-                                <div class="step">
-                                    <span>Convocatoria</span> <br>
-                                    <span>06/05/2021</span>
-                                </div>
-                                <div class="step">
+                                @foreach (var item in Model.ProjectTask)
+                                {
+                                    <div class="step">
+                                        <span>@item.text</span> <br>
+                                        <span>@item.start_date</span>
+                                    </div>
+                                    @*<div class="step">
                                     <span>Presentación de propuestas</span> <br>
                                     <span>20/05/2021</span>
                                 </div>
@@ -150,7 +175,8 @@
                                 <div class="step current">
                                     <span>Fallo</span> <br>
                                     <span>30/05/2021</span>
-                                </div>
+                                </div>*@
+                                }
                             </div>
                         </div>
                     </div>
@@ -292,7 +318,7 @@
                             <p class="title-section">
                                 <b>Anuncios</b>
                             </p>
-                            <p>2do. Anuncio</p>
+                            <p>@Advertisement</p>
                         </div>
                     </div>
                 </div>

@@ -119,47 +119,68 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> getReportFactSheet(Guid? projectId)
         {
             dynamic modelProjectTab = new ExpandoObject();
-
-            if (projectId != null)
+            string stage = null;
+            if (!string.IsNullOrEmpty(projectId.ToString()))
             {
+                ViewBag.ProjectSeleted = projectId;
                 string appToken = Request.Cookies["pmctool-token-app"];
-                modelProjectTab.tabsheet  = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
-               
-                List<ProjectTask> projectTask = new List<ProjectTask>();
-                List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
-
-                projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-                foreach (var data in projectTask)
+                var tabsheet  = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                foreach (var projectTab in tabsheet)
                 {
-                    if (data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4" || data.WbsCode == "1.5") {
-                        ProjectTask taskAppend = new ProjectTask() {
-                            text =data.text,
-                            start_date = data.start_date,
-                            duration = data.duration,
-                            status = data.status
-                        };
-                        projectTaskFinally.Add(taskAppend);
-                    
-                    }
-                 
+                    stage = projectTab.Stage;
                 }
-                    modelProjectTab.ProjectTask = projectTaskFinally;
-            }
-            else
-            {
+                modelProjectTab.tabsheet = tabsheet;
+                if (!string.IsNullOrEmpty(stage))
+                {
+                    if (stage == "Preparativos de ejecución" || stage == "Ejecución")
+                    {
+                        List<ProjectTask> projectTask = new List<ProjectTask>();
+                        List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
 
+                        projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                        foreach (var data in projectTask)
+                        {
+                            if (data.WbsCode == "1.5.2.1" || data.WbsCode == "1.5.2.3" || data.WbsCode == "1.5.2.4" || data.WbsCode == "1.5.2.5")
+                            {
+                                ProjectTask taskAppend = new ProjectTask()
+                                {
+                                    text = data.text == "Convocatoria / Oficio de adjudicación" ? "Convocatoria" : data.text,
+                                    start_date = data.start_date
+                                };
+                                projectTaskFinally.Add(taskAppend);
+                            }
+                        }
+                        modelProjectTab.ProjectTask = projectTaskFinally;
+
+                        return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
+                    }
+                    else
+                    {
+                        List<ProjectTask> projectTask = new List<ProjectTask>();
+                        List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
+
+                        projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                        foreach (var data in projectTask)
+                        {
+                            if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4" || data.WbsCode == "1.5" || data.WbsCode == "1.6")
+                            {
+                                ProjectTask taskAppend = new ProjectTask()
+                                {
+                                    text = data.text,
+                                    start_date = data.start_date,
+                                    duration = data.duration,
+                                    status = data.status
+                                };
+                                projectTaskFinally.Add(taskAppend);
+                            }
+                        }
+                        modelProjectTab.ProjectTask = projectTaskFinally;
+
+                        return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
+                    }
+                } 
             }
-            ViewBag.ProjectSeleted = projectId;
-            //AGREGAR CONSULTA PARA OBTENER EL STATUS DEL PROYECTO Y MANDAR EJECUTAR LAS COSULTAS NECESARIAS PARA EL PARCIAL VIEW QUE SE OCUPA
-            var ProjectStatus = 2;//Ejecución
-            if(ProjectStatus == 1)
-            {
-                return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
-            }
-            else
-            {
-                return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
-            }
+            return RedirectToAction("Index");
         }
      }
 }

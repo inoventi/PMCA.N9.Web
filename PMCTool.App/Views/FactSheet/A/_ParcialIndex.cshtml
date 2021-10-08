@@ -8,8 +8,9 @@
     var IndirectJobsGenerated = "";
     var RelevantMilestones = "";
     var Promoter = "";
+    var ProblemToSolve = "";
+    var Tdpa = "";
     var Logo = "";
-    var ActionsToBeTaken = "";
     var chartEstatal = "";
     var chartPrivada = "";
     var chartFonden = "";
@@ -26,6 +27,8 @@
         IndirectJobsGenerated = @row.IndirectJobsGenerated;
         RelevantMilestones = @row.RelevantMilestones;
         Promoter = @row.Promoter;
+        ProblemToSolve = row.ProblemToSolve;
+        Tdpa = @row.Tdpa;
         Logo = @row.Logo;
         chartEstatal = @row.chartEstatal;
         chartPrivada = @row.chartPrivada;
@@ -66,6 +69,10 @@
                             <p>
                                 @Benefit
                             </p>
+                            @*<p>
+                        <b>TDPA:</b> @Tdpa
+                    </p>*@
+
                         </div>
                     </div>
                 </div>
@@ -78,9 +85,9 @@
                             <p>
                                 @Scope
                             </p>
-                            <p>
-                                <b style="font-weigth:bold">Problemática a resolver:</b> Altos costos generalizados de viaje de los usuarios de la carretera, congestión vial en tramos ascendentes por la imposibilidad de rebase.
-                            </p>
+                            @*<p>
+                        <b>Problemática a resolver:</b> @ProblemToSolve
+                    </p>*@
                         </div>
                     </div>
                 </div>
@@ -109,6 +116,28 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <p class="title-section">
+                        <b>TDPA</b>
+                    </p>
+                    <p class="text-center">
+                         @Tdpa
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Problemática a resolver</b>
+                            </p>
+                            <p>
+                                @ProblemToSolve
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,104 +184,59 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
-                                <b>Licitación</b>
+                                <b>Detalla de etapa</b>
                             </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="arrow-steps clearfix">
-                                <div class="step">
-                                    <span>Convocatoria</span> <br>
-                                    <span>06/05/2021</span>
-                                </div>
-                                <div class="step">
-                                    <span>Presentación de propuestas</span> <br>
-                                    <span>20/05/2021</span>
-                                </div>
-                                <div class="step">
-                                    <span>Apertura de propuestas</span> <br>
-                                    <span>23/05/2021</span>
-                                </div>
-                                <div class="step current">
-                                    <span>Fallo</span> <br>
-                                    <span>30/05/2021</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12">
-                            <p class="title-section">
-                                <b>Ejercicio acumulado</b>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table table-hover table-striped tbimpact">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" class="bg-table-green" style="border-right: 1px solid !important;">Avance acumulado</th>
-                                        <th rowspan="2" class="bg-table-green" style="text-align:center; border-right: 1px solid;">Físico</th>
-                                        <th colspan="2" class="bg-table-green" style="text-align:center; display: table-cell; border-right: 1px solid;">Financiero </th>
-
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-table-green" style="text-align:center; border-right: 1px solid !important; border-top: 1px solid !important;">mdp</th>
-                                        <th class="bg-table-green" style="text-align:center; display: table-cell !important; border-right: 1px solid !important; border-top: 1px solid !important;">%</th>
-                                    </tr>
-                                </thead>
+                            <table class="table table-sm">
                                 <tbody>
                                     <tr>
-                                        <td style="font-weight: bold;">Planeado</td>
-                                        <td style="font-weight: bold;">8%</td>
-                                        <td style="font-weight: bold;">25</td>
-                                        <td style="font-weight: bold;">20.8</td>
+                                        <td class="bg-table-green">Etapa</td>
+                                        <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
+                                        <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
+                                        <td class=""></td>
                                     </tr>
-                                    <tr>
-                                        <td style="font-weight: bold;">Ejecutado (Real)</td>
-                                        <td style="font-weight: bold;">6%</td>
-                                        <td style="font-weight: bold;">20</td>
-                                        <td style="font-weight: bold;">16.7</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="title-section">
-                                <b>Promotor</b>
-                            </p>
-                            <p style="font-weight: bold;text-align: center;">
-                                @Promoter
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="title-section">
-                                <b>Detalle de etapa</b>
-                            </p>
-                            <table class="table table-hover table-striped tbimpact">
-                                <thead>
-                                    <tr>
-                                        <th class="bg-table-green" style="border-right: 1px solid !important;">Etapa</th>
-                                        <th class="bg-table-green" style="text-align:center; border-right: 1px solid;">Fecha Inicio</th>
-                                        <th class="bg-table-green" style="text-align:center; display: table-cell; border-right: 1px solid;">Meses </th>
+                                    @foreach (var rowx in Model.ProjectTask)
+                                    {
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="font-weight: bold;">Ejecución</td>
-                                        <td style="font-weight: bold;">Jun-2021</td>
-                                        <td style="font-weight: bold;">12</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold;">Operación</td>
-                                        <td style="font-weight: bold;">Jun-2022</td>
-                                        <td style="font-weight: bold;">-</td>
-                                    </tr>
+                                        <tr style="text-align:center">
+                                            <th style="text-align:initial">
+                                                @rowx.text
+                                            </th>
+                                            <td style="text-align:center"> @rowx.duration</td>
+                                            <td style="text-align:center"> @rowx.start_date</td>
+                                            @{
+                                                var styleStatus = "";
+                                                @switch (@rowx.status)
+                                                {
+                                                    case 4:
+                                                        <td class="table-success">
+                                                            <i class="fas fa-check" style="color:white"></i>
+                                                        </td>
+                                                        break;
+                                                    case 2:
+                                                    case 3:
+                                                    case 1:
+                                                        <td class="table-danger">
+                                                            <i class="fas fa-times" style="color:white"></i>
+                                                        </td>
+                                                        break;
+                                                    case 5:
+                                                        <td class="table-danger" style="background: #000000;">
+                                                            <i class="fas fa-ban" style="color:white"></i>
+                                                        </td>
+                                                        break;
+                                                }
+                                            }
+                                            <td class="table-success">
+                                                <i class="fas fa-check" style="color:white"></i>
+                                            </td>
+                                        </tr>
+
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -278,7 +262,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
@@ -296,75 +280,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="title-section">
-                                <b>Anuncios</b>
-                            </p>
-                            <p>2do. Anuncio</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row pb-3">
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
-                                <b>Localización</b>
+                                <b>Promotor</b>
                             </p>
-                            <p>
-                                La carretera comunica al norponiente de Chihuahua con el estado de Nuevo México, en los EE.UU., a través del Puerto Fronterizo de Puerto Palomas.
-                            </p>
-                            <p><b style="font-weight: bold">Coordenadas:</b> Inicio:   22.386111º, -100.769444°; Fin:   22.652778,°, -100.605833°</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="floating-panel">
-                                <b>Modo de viaje: </b>
-                                <select id="mode">
-                                    <option value="DRIVING">Manejando</option>
-                                    <option value="WALKING">Caminando</option>
-                                    <option value="BICYCLING">Bicicleta</option>
-                                    <option value="TRANSIT">Transito</option>
-                                </select>
-                            </div>
-                            <div id="map" style="height: 534px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="title-section">
-                                <b>Reporte fotográfico</b>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row pb-2">
-                        <div class="col-md-12">
-                            <div class="row" style="border: 1px solid;height: 284px;">
-                                <div class="col-md-6 text-center">
-                                    <p style="font-weight: bold; margin-top: 33%;">Trabajos de topografia</p>
-                                </div>
-                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
-                                    <img src="https://www.ajttopografos.com/blog/wp-content/uploads/2017/02/topografos-malaga-granada.jpg" alt="" width="274px;" height="277px" style="padding: 6px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row" style="border: 1px solid;height: 284px;">
-                                <div class="col-md-6 text-center">
-                                    <p style="font-weight: bold; margin-top: 33%;">Inicio de la ejecución Conformación de cuerpo de terraplén en el Km 0+000 al 0+800 </p>
-                                </div>
-                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
-                                    <img src="https://www.gruasyaparejos.com/wp-content/uploads/2019/07/estacion-total-topografia-2.jpg" alt="" width="277px;" height="277px" style="padding: 6px;">
-                                </div>
-                            </div>
+                            <p>@Promoter</p>
                         </div>
                     </div>
                 </div>
@@ -405,40 +327,5 @@
                                         $('#project').prop('disabled', true);
                                         $('#project').selectpicker('refresh');
                                 }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&callback=initMap&libraries=&v=weekly"
-            defer></script>
-
-    <script type="text/javascript">
-        function initMap() {
-            const directionsRenderer = new google.maps.DirectionsRenderer();
-            const directionsService = new google.maps.DirectionsService();
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                center: { lat: 31.756490, lng: -107.620201 },
-            });
-            directionsRenderer.setMap(map);
-            calculateAndDisplayRoute(directionsService, directionsRenderer);
-            document.getElementById("mode").addEventListener("change", () => {
-                calculateAndDisplayRoute(directionsService, directionsRenderer);
-            });
-        }
-
-        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-            const selectedMode = document.getElementById("mode").value;
-            directionsService
-                .route({
-                    origin: { lat: 31.756490, lng: -107.620201 },
-                    destination: { lat: 31.471000, lng: -107.612186 },
-                    // Note that Javascript allows us to access the constant
-                    // using square brackets and a string value as its
-                    // "property."
-                    travelMode: google.maps.TravelMode[selectedMode],
-                })
-                .then((response) => {
-                    directionsRenderer.setDirections(response);
-                })
-                .catch((e) => window.alert("Directions request failed due to " + status));
-        }
     </script>
 }

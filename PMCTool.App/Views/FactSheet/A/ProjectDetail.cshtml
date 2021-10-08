@@ -111,7 +111,7 @@
                                                   @foreach (var r in Model.Evidences)
                                                     { 
                                                     <tr>
-                                                        <td scope="row">@r.ProjectLayerName</td>
+                                                        <th scope="row">@r.ProjectLayerName</th>
                                                         <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" onclick="factSheetA.getControlPoints(this)">@r.Description</a></td>
                                                          @{  
                                                                     @switch (@r.Status)
@@ -249,7 +249,15 @@
                                              </p>
                                           </div>
                                           <div class="col-md-12 pb-4">
-                                             @ActionsToBeTaken
+                                              @{
+                                                  string Actions = @ActionsToBeTaken;
+                                                  if (Actions != null)
+                                                  {
+                                                      Actions = @ActionsToBeTaken.Replace("|", "<br>");
+
+                                                   }
+                                              }
+                                              @Html.Raw(@Actions)
                                           </div>
                                        </div>
                                     </div>
