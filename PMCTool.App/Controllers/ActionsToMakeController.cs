@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Localization;
 using PMCTool.Models.Core;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace PMCTool.App.Controllers
 {
@@ -63,5 +65,52 @@ namespace PMCTool.App.Controllers
 
             return Json(actionsToMakeData);
         }
+        public IActionResult printReportActionsToMake(ModelFilters data)
+        {
+            string url = "/ActionsToMake/printViewReportActionsToMake?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+
+        public async Task<IActionResult> printViewReportActionsToMake(string model)
+        {
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+
+            ModelFilters data = JsonConvert.DeserializeObject<ModelFilters>(modelo);
+
+            List<ActionsToMake> actionsToMakeData = new List<ActionsToMake>();
+
+            try
+            {
+                //if (data.estadoid == null)
+                //{
+                //    data.estadoid = 0;
+                //}
+                actionsToMakeData = await restClient.Get<List<ActionsToMake>>(baseUrl,
+                   $"api/v1/actionstomake/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
+                   new Dictionary<string, string>() { { "Authorization", token } });
+             
+                
+              return PartialView("_ReportActiosToMake", actionsToMakeData);
+                
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
     }
+
 }

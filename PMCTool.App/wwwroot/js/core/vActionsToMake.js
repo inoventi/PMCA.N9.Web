@@ -2,6 +2,47 @@
     ActionsToMakeController.initPetition(); 
 });
 let ActionsToMakeController = {
+    btnReportPDF:() =>{
+        $('#btnReportPDF').click(function () {
+            LoaderShow();
+            let states = $("#Entidad").val();
+            let generalDirection = $('#DireccionGral').val();
+            let projectType = $('#TipoProyecto').val();
+            let stage = $('#Etapa').val();
+            let investment = $('#Inversion').val();
+            let advertisement = $('#Anuncio').val();
+            let data = {
+                "states": "'" + states.join() + "'",
+                "generalDirection": "'" + generalDirection.join() + "'",
+                "projectType": "'" + projectType.join() + "'",
+                "stage": "'" + stage.join() + "'",
+                "investment": "'" + investment.join() + "'",
+                "advertisement": "'" + advertisement.join() + "'" 
+            }; 
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/ActionsToMake/printReportActionsToMake",
+                type: "POST",
+                data: data,
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    LoaderHide();
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "AvencedeSucursales.pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        });
+    },
     initPetition: () => {
         $('#btnReport').click(() => {
             LoaderShow();
@@ -23,6 +64,7 @@ let ActionsToMakeController = {
             $.post('/ActionsToMake/GetDataActionsToMake', data, function (data) {
                 data == '' ? (ActionsToMakeController.initCustomReaction(2)): (ActionsToMakeController.initCustomReaction(1),ActionsToMakeController.initConstructionTable(data));
                 LoaderHide();
+                ActionsToMakeController.btnReportPDF();
             }).fail(function (e) {
                 console.log("ERROR: ", e);
             });
