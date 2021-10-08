@@ -162,7 +162,7 @@ namespace PMCTool.App.Controllers
                         projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         foreach (var data in projectTask)
                         {
-                            if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4" || data.WbsCode == "1.5" || data.WbsCode == "1.6")
+                            if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
                             {
                                 ProjectTask taskAppend = new ProjectTask()
                                 {
