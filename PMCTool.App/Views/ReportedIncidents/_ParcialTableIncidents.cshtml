@@ -1,0 +1,57 @@
+﻿@model dynamic;
+@{ 
+    <div class="col-md-12">
+        <!---->
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped tbimpact">
+                    <thead>
+                        <tr style="background-color: #235b4e;">
+                            <th>Codigo</th>
+                            <th>Proyecto</th>
+                            <th>fase</th>
+                            <th>Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
+                        <tr>
+                            <td scope="row">@i.Code</td>
+                            <td><a class="aclick" data-incidents="@i.ProjectID" onclick="vReportedIncidentsController.getIncidents(this)">@i.Name</a></td>
+                            <td>@i.Fase</td>
+                            @switch (@i.Estatus)
+                            {
+                                case 1:
+                                    <td><span class="bold ws st-entiempo ws">En tiempo</span></td>
+
+                                    break;
+                                case 2:
+                                    <td><span class="bold st-atrasado ws">Atrasado</span></td>
+
+                                    break;
+                                case 3:
+                                    <td><span class="bold ws st-cimpacto ws">Con impacto</span></td>
+
+                                    break;
+                                case 4:
+                                    <td><span class="bold ws st-cerrado ws">Cerrado</span></td>
+
+                                    break;
+                                case 5:
+                                    <td><span class="bold ws st-cancelado  ws">Cancelado</span></td>
+
+                                    break;
+                                case 6:
+                                    <td><span class="bold ws st-suspendido ws">Archivado</span></td>
+
+                                    break;
+                            }
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
