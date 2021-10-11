@@ -125,6 +125,8 @@ const ProjectsIndicatorsController = {
         for (let a = 0; a < data.length; a++) {
             //ID DEL PROYECTO
             let projectID = data[a].projectID;
+            //CODIGO DEL PROYECTO
+            let codigo = data[a].code;
             //NOMBRE DEL PROYECTO
             let projectName = data[a].name;
             //FORMULA PARA SACAR CPI = EV/AC
@@ -162,7 +164,7 @@ const ProjectsIndicatorsController = {
             //PARA SACAR LA FECHA PROYECTADA SE OBTIENE DE LA FORMALA DE TENDENCIA HASTA QUE EV SE ACERQUE A BAC(PRESUPUESTO TOTAL PLANEADO(CEO))
             let endDataProjected = '2021-10-06';
             $('#tBodyProjectIndicators').append('<tr>'
-                + '<td class= "text-center">' + projectID + '</td>'
+                + '<td class= "text-center">' + codigo + '</td>'
                 + '<td><a href="/ProjectIndicators/Indicator">' + projectName + '</a></td>'
                 + cpi
                 + spi
