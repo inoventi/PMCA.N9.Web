@@ -18,6 +18,59 @@
 });
 
 let factSheetA = {
+    savechart: function (imgbase64) {
+        let data = {
+            "chart": imgbase64 
+        }; 
+        jQuery.ajaxSettings.traditional = true;
+        $.ajax({
+            url: "/FactSheetA/LoadImage",
+            type: "POST",
+            data: data,
+            cache: false,
+            error: function (xhr, status, error) {
+                console.log(error);
+            },
+            success: function (data) {
+                LoaderHide();
+                jQuery.ajaxSettings.traditional = false;
+            }
+        });
+    },
+    btnReportPDF: function () { 
+        $('#btnReportPDF').click(function () {
+            LoaderShow();
+            debugger;
+            let project = $('#project').val();
+            //let parcialid = project.replace('-', '+')
+            let data = {
+                "project": "'" + project + "'"
+            };
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/FactSheetA/printReportFactSheetA",
+                type: "POST",
+                data: data,
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    LoaderHide();
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "AvencedeSucursales.pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        });
+
+    },
     addEventBtnVIewReport: function () {
         let boxContentReport = $('.FactSheetA');
         let btnviewReport = $('.btnviewReport');
@@ -32,7 +85,7 @@ let factSheetA = {
                 factSheetA.getReport(project);
                 btnviewReport.hide();
                 btnCloseReport.show();
-                delete totalmont;
+                delete totalmont; 
             } else {
                 Swal.fire({
                     type: 'error',
@@ -45,11 +98,12 @@ let factSheetA = {
         });
         btnCloseReport.click(function () {
             delete totalmont;
-            boxContentReport.empty();
-            btnviewReport.show();
-            btnCloseReport.hide();
-            $('#project').prop('disabled', false);
-            $('#project').selectpicker('refresh');
+            window.location.href = window.location.href;
+            //boxContentReport.empty();
+            //btnviewReport.show();
+            //btnCloseReport.hide();
+            //$('#project').prop('disabled', false);
+            //$('#project').selectpicker('refresh');
         });
 
     },

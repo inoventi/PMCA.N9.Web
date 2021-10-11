@@ -1,0 +1,344 @@
+﻿@model dynamic;
+@{
+    Layout = "_LayoutReportSct";
+    ViewData["Title"] = "FICHA DE PROYECTO";
+}
+@{
+    var ProjectName = "";
+    var Benefit = "";
+    var Scope = "";
+    var KeyDecisions = "";
+    var DirectJobsGenerated = "";
+    var IndirectJobsGenerated = "";
+    var RelevantMilestones = "";
+    var Promoter = "";
+    var ProblemToSolve = "";
+    var Tdpa = "";
+    var Logo = "";
+    var chartEstatal = "";
+    var chartPrivada = "";
+    var chartFonden = "";
+    var chartPef = "";
+    var chartFonadin = "";
+    float totalChart;
+   
+    @foreach (var row in Model.tabsheet)
+    {
+        ProjectName = @row.ProjectName;
+        Benefit = @row.Benefit;
+        Scope = @row.Scope;
+        KeyDecisions = @row.KeyDecisions;
+        DirectJobsGenerated = @row.DirectJobsGenerated;
+        IndirectJobsGenerated = @row.IndirectJobsGenerated;
+        RelevantMilestones = @row.RelevantMilestones;
+        Promoter = @row.Promoter;
+        ProblemToSolve = row.ProblemToSolve;
+        Tdpa = @row.Tdpa;
+        Logo = @row.Logo;
+        chartEstatal = @row.chartEstatal;
+        chartPrivada = @row.chartPrivada;
+        chartFonden = @row.chartFonden;
+        chartPef = @row.chartPef;
+        chartFonadin = @row.chartFonadin;
+
+        break;
+
+    } 
+     
+    <style>
+        .grid-container {
+        display: grid;
+        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        .grid-item1 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        }
+
+        .grid-item2 {
+        grid-column-start: 3;
+        grid-column-end: 6;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        }
+
+        .grid-item2 {
+        grid-column-start: 3;
+        grid-column-end: 6;
+        grid-row-start: 2;
+        grid-row-end: 2;
+        }
+
+        .grid-item4 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        }
+
+        .grid-item5 {
+        grid-column-start: 3;
+        grid-column-end: 6;
+        grid-row-start: 3;
+        grid-row-end: 3;
+        }
+
+        .grid-item6 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 4;
+        grid-row-end: 4;
+        }
+
+        .grid-item7 {
+        grid-column-start: 3;
+        grid-column-end: 6;
+        grid-row-start: 4;
+        grid-row-end: 4;
+        }
+
+        .grid-item8 {
+        grid-column-start: 1;
+        grid-column-end: 6;
+        grid-row-start: 5;
+        grid-row-end: 5;
+        }
+
+        .grid-item9 {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 6;
+        grid-row-end: 6;
+        }
+
+        .grid-item10 {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 6;
+        grid-row-end: 6;
+        }
+
+        .grid-item11 {
+        grid-column-start: 5;
+        grid-column-end: 6;
+        grid-row-start: 6;
+        grid-row-end: 6;
+        }
+    </style>
+
+    <div>
+        <div class="col-md-12 grid-container">
+            <table>
+                <tr>
+                    <td colspan="2">
+                         <h4 class="mt-1 font-weight-bold">
+                            @ProjectName
+                        </h4>
+                    </td> 
+                </tr>
+                <tr>
+                    <td width="400">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p class="title-section">
+                                        <b>Beneficios</b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     <p>
+                                @Benefit
+                            </p>
+                                </td>
+                            </tr>
+                        </table>
+                         
+                    </td>
+                    <td  width="400">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p class="title-section">
+                                        <b>Alcance</b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     <p>
+                                        @Scope
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                           
+                    </td> 
+                </tr>
+                
+                <tr>
+                    <td>
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2" class="bg-table-green" style="text-align: center;">
+                                        <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
+                                    </th>
+                                    <td>
+                                        <h6 class="h5-responsive"><b>Directos</b></h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="h5-responsive">@DirectJobsGenerated</h6>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 9px;">
+                                        <h6 class="h5-responsive"><b>Indirectos</b></h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="h5-responsive">@IndirectJobsGenerated</h6>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </td>
+                    <td>
+                          <p class="title-section">
+                                <b>TDPA</b>
+                            </p>
+                            <p class="text-center">
+                                 @Tdpa
+                            </p>
+                    </td> 
+                </tr>
+                <tr>
+                    <td>
+                         <p class="title-section">
+                                <b>Problemática a resolver</b>
+                            </p>
+                            <p>
+                                @ProblemToSolve
+                            </p>
+                    </td>
+                    <td>
+                         <p class="title-section">
+                                <b>Inversión</b>
+                            </p>
+                            <h3 class="text-responsive text-lg-center _totalmont">
+                                
+                                @{
+                                  totalChart =  float.Parse(chartPrivada) + float.Parse(chartFonden) + float.Parse(chartFonadin) + float.Parse(chartEstatal) + float.Parse(chartPef); 
+                                  
+                                } 
+                                $@totalChart mdp
+                            </h3>
+                            <br>
+                            @{
+                                    @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
+                                    {
+                                        <div class="text-center" style="    padding-bottom: 41px;"><i class="fas fa-exclamation-circle  fa-3x" style="color: #207561;"></i><br /><span style="font-size: .9em;">No se puede cargar la gráfica de inversión.<br> Favor de verificar sus datos en <a href="https://app.pmc-tool.com/">PMC-tool</a></span></div>
+                                    }
+                                    else
+                                    {
+                                             <img src="/images/chart/InversionSct.jpg">
+                                    }
+                                }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Detalla de etapa</b>
+                            </p>
+                        </div>
+                        <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="bg-table-green">Etapa</td>
+                                        <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
+                                        <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
+                                        <td class=""></td>
+                                    </tr>
+                                    @foreach (var rowx in Model.ProjectTask)
+                                    {
+
+                                        <tr style="text-align:center">
+                                            <th style="text-align:initial">
+                                                @rowx.text
+                                            </th>
+                                            <td style="text-align:center"> @rowx.duration</td>
+                                            <td style="text-align:center"> @rowx.start_date</td>
+                                            @{
+                                                var styleStatus = "";
+                                                @switch (@rowx.status)
+                                                {
+                                                    case 4:
+                                                        <td class="table-success">
+                                                            <img  src="/images/icons/check.png" style="width: 17px;height: 17px;"/>
+                                                        </td>
+                                                        break;
+                                                    case 2:
+                                                    case 3:
+                                                    case 1:
+                                                        <td class="table-danger">
+                                                            <img  src="/images/icons/close.png" style="width: 17px;height: 17px;"/>
+                                                        </td>
+                                                        break;
+                                                    case 5:
+                                                        <td class="table-danger" style="background: #000000;">
+                                                            <img  src="/images/icons/ban.png" style="width: 17px;height: 17px;"/>
+                                                        </td>
+                                                        break;
+                                                }
+                                            }
+                                            <td class="table-success">
+                                                            <img  src="/images/icons/check.png" style="width: 17px;height: 17px;"/>
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                    </td>
+                    <td>
+                        <div class="col-md-12">
+                            <p class="title-section">
+                                <b>Decisiones Claves</b>
+                            </p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="justify-text">
+                                @KeyDecisions
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="title-section">
+                                <b>Hitos Relevantes</b>
+                            </p>
+                            <p>
+                                @RelevantMilestones
+                            </p>
+                    </td>
+                    <td>
+                        <p class="title-section">
+                                <b>Promotor</b>
+                            </p>
+                            <p>@Promoter</p>
+                    </td>
+                </tr>
+            </table>
+           
+        </div>
+    </div> 
+}

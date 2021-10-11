@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
@@ -27,6 +29,7 @@ namespace PMCTool.App.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment; 
         private readonly IOptions<AppSettingsModel> _appSettings;
+
         public FactSheetAController(
             IOptions<AppSettingsModel> appSettings,
             IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
@@ -115,6 +118,32 @@ namespace PMCTool.App.Controllers
 
  
         }
+        public async Task<bool> LoadImage(string chart)
+        { 
+            var chartImagen = chart.Split(',')[1];
+            byte[] bytes = Convert.FromBase64String(chartImagen); 
+            String path = Path.Combine(_hostingEnvironment.WebRootPath, @"images\chart\"); //Path 
+
+            //Check if directory exist
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+            }
+
+            string imageName = "InversionSct.jpg";
+
+            //set the image path
+            string imgPath = Path.Combine(path, imageName);
+
+            byte[] imageBytes = Convert.FromBase64String(chartImagen);
+
+            System.IO.File.WriteAllBytes(imgPath, imageBytes);
+
+           
+
+            return true;
+        }  
+
         [HttpPost]
         public async Task<IActionResult> getReportFactSheet(Guid? projectId)
         {
@@ -124,7 +153,7 @@ namespace PMCTool.App.Controllers
             {
                 ViewBag.ProjectSeleted = projectId;
                 string appToken = Request.Cookies["pmctool-token-app"];
-                var tabsheet  = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
                 foreach (var projectTab in tabsheet)
                 {
                     stage = projectTab.Stage;
@@ -178,9 +207,71 @@ namespace PMCTool.App.Controllers
 
                         return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
                     }
-                } 
+                }
             }
             return RedirectToAction("Index");
         }
-     }
+        public IActionResult printReportFactSheetA(ProjectModelReport data)
+        {
+            string url = "/FactSheetA/printViewReportFactSheetA?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportFactSheetA(string model)
+        {
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+
+            ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
+            dynamic modelProjectTab = new ExpandoObject();
+
+            try
+            {
+                List<ProjectTask> projectTask = new List<ProjectTask>();
+                List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
+                var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } }); 
+                modelProjectTab.tabsheet = tabsheet;
+
+                projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } });
+                foreach (var data in projectTask)
+                {
+                    if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
+                    {
+                        ProjectTask taskAppend = new ProjectTask()
+                        {
+                            text = data.text,
+                            start_date = data.start_date,
+                            duration = data.duration,
+                            status = data.status
+                        };
+                        projectTaskFinally.Add(taskAppend);
+                    }
+                }
+                modelProjectTab.ProjectTask = projectTaskFinally;
+
+                return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
+                 
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+        public class ProjectModelReport
+        {
+            public string project { get; set; } 
+        }
+    }
 }
