@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Localization;
 using PMCTool.Models.Core;
+using Newtonsoft.Json;
+using System.Text.Json;
+using System.Dynamic;
 
 namespace PMCTool.App.Controllers
 {
@@ -90,6 +93,64 @@ namespace PMCTool.App.Controllers
                    new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
 
                 return PartialView("_PartialTableDetail", accumulatedInvestmentDetail);
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+        public IActionResult printReportAccumulatedInvestment(ModelFiltersInvestment data)
+        {
+            string url = "/AccumulatedInvestment/printViewReportAccumulatedInvestment?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportAccumulatedInvestment(string model)
+        {
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+
+            ModelFiltersInvestment data = JsonConvert.DeserializeObject<ModelFiltersInvestment>(modelo);
+
+            dynamic modelView = new ExpandoObject();
+
+            try
+            {
+                List<string> categories = new List<string>();
+                List<double> investmentExpected = new List<double>();
+                List<double> investmentReal = new List<double>();
+
+                var AccumulatedInvestmentChart = await restClient.Get<List<AccumulatedInvestment>>(baseUrl,
+                                   $"api/v1/accumulatedinvestment/data/chart?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&year={data.Year}",
+                   new Dictionary<string, string>() { { "Authorization", token } });
+                foreach (var item in AccumulatedInvestmentChart)
+                {
+                    categories.Add(getCategoryTranslated(item.MonthID));
+                    investmentExpected.Add(item.PlannedInvestment);
+                    investmentReal.Add(item.RealInvestment);
+                }
+                modelView.categories = categories;
+                modelView.investmentExpected = investmentExpected;
+                modelView.investmentReal = investmentReal;
+                modelView.chart = AccumulatedInvestmentChart;
+                var accumulatedInvestment = await restClient.Get<AccumulatedInvestmentSummary>(baseUrl,
+                                    $"api/v1/accumulatedinvestment/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&year={data.Year}",
+                    new Dictionary<string, string>() { { "Authorization", token } });
+                modelView.summary = accumulatedInvestment;
+
+                return PartialView("_ReportAccumulatedInvestment", modelView);
+
 
             }
             catch (HttpResponseException ex)

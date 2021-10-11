@@ -1,4 +1,45 @@
 ﻿let vAccumulatedInvestment = {
+    btnReportPDF: () => {
+        $('#export').click(function () {
+            LoaderShow();
+            let entidades = $('#Entidad').val();
+            let direccionGral = $('#DireccionGral').val();
+            let tipoProyecto = $('#TipoProyecto').val();
+            let etapa = $('#Etapa').val();
+            let inversion = $('#Inversion').val();
+            let year = $('#Year').val();
+            let data = {
+                "states": "'" + entidades.join() + "'",
+                "generalDirection": "'" + direccionGral.join() + "'",
+                "projectType": "'" + tipoProyecto.join() + "'",
+                "stage": "'" + etapa.join() + "'",
+                "investment": "'" + inversion.join() + "'",
+                "year": "'" + year + "'"
+            };
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/AccumulatedInvestment/printReportAccumulatedInvestment",
+                type: "POST",
+                data: data,
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    LoaderHide();
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "Inversión_Acumulada.pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        });
+    },
     addEventBtnSearch() {
         $('#btnSearch').click(function () {
             vAccumulatedInvestment.loadData();
@@ -124,7 +165,7 @@
             }],
             navigation: {
                 buttonOptions: {
-                    enabled: false
+                    enabled: true
                 }
             }
         });
@@ -251,6 +292,7 @@
         $('#btnClose').hide();
         vAccumulatedInvestment.addEventBtnSearch();
         vAccumulatedInvestment.addEventBtnClose();
+        vAccumulatedInvestment.btnReportPDF();
     }
 }
 

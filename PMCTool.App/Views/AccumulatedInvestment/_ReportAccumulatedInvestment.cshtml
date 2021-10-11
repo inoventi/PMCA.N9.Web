@@ -1,0 +1,116 @@
+﻿@model dynamic;
+
+@{ Layout = "_LayoutReportSct";
+    ViewData["Title"] = "Inversión Acumulada";
+    var max = 0.0;
+    if (Model != null)
+    {
+        max = Math.Max(0, 90);
+    } }
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="container" id="accumulated_investment_data">
+        @if (Model != null)
+        {
+<figure class="highcharts-figure">
+    <div id="inversion"></div>
+
+    <div id="accumulated_investment_graphics_container" class="d-flex flex-column flex-md-column flex-lg-row flex-xl-row">
+        <div class="col-sm col-md col-lg-12 col-xl-12" style="margin-top: 2em">
+            <div id="chart" style="position: relative">
+            </div>
+            <div id="accumulated_investment_bubble" class="bubble" style="display: none; position: absolute; top:0; left: 0; width: 19em !important;">
+                <div class="font-weight-bold" style="text-align:end">
+                    <span style="cursor: pointer; padding-right: 5px" onclick="vAccumulatedInvestment.closeBubble()">
+                        x
+                    </span>
+                </div>
+                <div id="accumulated_investment_bubble_table">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 center">
+        <text class="font-weight-bold">
+            <span style="background-color: #235b4e; color: white">Inversión Acumulada Real =  @Model.summary.TotalInvestmentReal.ToString("C2")  mdp</span>, <span style="background-color: #800000; color: white;">Inversión Acumulada Planeada =  @Model.summary.TotalInvestmentPlanned.ToString("C2") mdp</span>,
+        </text>
+        <text class="font-weight-bold">
+            @Model.summary.TotalProjects proyectos.
+        </text>
+    </div>
+</figure>}
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">try {
+
+        Highcharts.chart('chart', {
+            chart: {
+                animation: false
+            },
+            title: {
+                text: 'Secuencia de inicio de inversión'
+            },
+            subtitle: {
+                text: 'Inversión Instantanea Acumulada Mensual (Miles De Mdp)'
+            },
+            xAxis: {
+                categories:  @Json.Serialize(Model.categories)
+            },
+            yAxis: {
+                title: {
+                    text: 'Inversión acumulada'
+                },
+                min: 0,
+
+            },
+            tooltip: {
+                formatter: function () {
+                    return '$' + this.y.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                }
+            },
+            plotOptions: {
+                series: {
+                    animation: false
+                },
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '${point.y:,.2f}',
+                        allowOverlap: true
+                    }
+                }
+            },
+            series: [{
+                name: 'Planeado',
+                color: '#800000',
+                lineWidth: 1,
+                marker: {
+                    fillColor: '#B38E5D',
+                    radius: 5
+                },
+                data: @Json.Serialize(Model.investmentExpected),
+            }, {
+                name: 'Real',
+                color: '#235b4e',
+                lineWidth: 1,
+                marker: {
+                    fillColor: '#B38E5D',
+                    radius: 5
+                },
+                 data: @Json.Serialize(Model.investmentReal),
+            }],
+            navigation: {
+                buttonOptions: {
+                    enabled: false
+                }
+            }
+        });
+    }
+    catch (error) {
+        document.getElementById("chart").innerHTML = error.toString();
+    }</script>
