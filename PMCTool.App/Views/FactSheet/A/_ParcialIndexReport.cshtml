@@ -132,7 +132,8 @@
 
     <div>
         <div class="col-md-12 grid-container">
-            <table>
+
+            <table style="width: 100%">
                 <tr>
                     <td colspan="2">
                          <h4 class="mt-1 font-weight-bold">
@@ -141,42 +142,29 @@
                     </td> 
                 </tr>
                 <tr>
-                    <td width="400">
-                        <table>
-                            <tr>
-                                <td>
-                                    <p class="title-section">
+                    <td> <p class="title-section">
                                         <b>Beneficios</b>
                                     </p>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                     <p>
+                    <td>
+                         <p class="title-section">
+                                        <b>Alcance</b>
+                                    </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="400">
+                         
+                             <p>
                                 @Benefit
-                            </p>
-                                </td>
-                            </tr>
-                        </table>
+                            </p> 
                          
                     </td>
                     <td  width="400">
-                        <table>
-                            <tr>
-                                <td>
-                                    <p class="title-section">
-                                        <b>Alcance</b>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
+                        
                                      <p>
                                         @Scope
                                     </p>
-                                </td>
-                            </tr>
-                        </table>
                            
                     </td> 
                 </tr>
@@ -215,19 +203,23 @@
                             <p class="text-center">
                                  @Tdpa
                             </p>
+                            
                     </td> 
                 </tr>
                 <tr>
-                    <td>
-                         <p class="title-section">
+                    <td colspan="2">
+                        <p class="title-section">
                                 <b>Problemática a resolver</b>
                             </p>
                             <p>
                                 @ProblemToSolve
                             </p>
+
                     </td>
+                </tr>
+                <tr>
                     <td>
-                         <p class="title-section">
+                        <p class="title-section">
                                 <b>Inversión</b>
                             </p>
                             <h3 class="text-responsive text-lg-center _totalmont">
@@ -250,10 +242,8 @@
                                     }
                                 }
                     </td>
-                </tr>
-                <tr>
                     <td>
-                        <div class="col-md-12">
+                         <div class="col-md-12">
                             <p class="title-section">
                                 <b>Detalla de etapa</b>
                             </p>
@@ -308,7 +298,10 @@
                                 </tbody>
                             </table>
                     </td>
-                    <td>
+                </tr>
+                <tr>
+                     
+                    <td colspan="2">
                         <div class="col-md-12">
                             <p class="title-section">
                                 <b>Decisiones Claves</b>
@@ -326,16 +319,23 @@
                         <p class="title-section">
                                 <b>Hitos Relevantes</b>
                             </p>
-                            <p>
-                                @RelevantMilestones
-                            </p>
                     </td>
                     <td>
                         <p class="title-section">
                                 <b>Promotor</b>
                             </p>
+                    </td>
+                    
+                <tr>
+                    <td>
+                            <p>
+                                @RelevantMilestones
+                            </p>
+                    </td>
+                    <td>
                             <p>@Promoter</p>
                     </td>
+                </tr>
                 </tr>
             </table>
            

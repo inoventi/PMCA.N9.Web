@@ -2,8 +2,7 @@
     factSheetA.addEventBtnVIewReport();
     if (factSheetA.getUrlParameter('projectid')) {
          
-        let pp = factSheetA.getUrlParameter('projectid');
-        console.log(pp);
+        let pp = factSheetA.getUrlParameter('projectid'); 
           let boxContentReport = $('.FactSheetA');
         let btnviewReport = $('.btnviewReport');
         let btnCloseReport = $('.btnCloseReport');
@@ -16,8 +15,46 @@
         noneResultsText: 'No se encontraron resultados'
     });
 });
+const evidenceView = [];
 
 let factSheetA = {
+    btnReportPDFDetail: function () {
+        //$('#btnReportPDF').click(function () {
+            LoaderShow();
+            debugger;
+            let uniqueEvidences = [...new Set(evidenceView)]; 
+            let evidences = uniqueEvidences.join();
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            let data = {
+                "project": "'" + params.project + "'",
+                "evidences": "'" + evidences + "'"
+            };
+            jQuery.ajaxSettings.traditional = true;
+            $.ajax({
+                url: "/FactSheetA/printReportFactSheetADetail",
+                type: "POST",
+                data: data,
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(error);
+                },
+                success: function (data) {
+                    LoaderHide();
+                    jQuery.ajaxSettings.traditional = false;
+                    if (data != null) {
+                        var a = document.createElement("a");
+                        a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
+                        a.download = "FichaDeProyecto - Detalle.pdf";
+                        a.click();
+                    }
+                }
+            });
+
+
+        //});
+
+    },
     savechart: function (imgbase64) {
         let data = {
             "chart": imgbase64 
@@ -39,12 +76,18 @@ let factSheetA = {
     },
     btnReportPDF: function () { 
         $('#btnReportPDF').click(function () {
-            LoaderShow();
-            debugger;
+            LoaderShow(); 
             let project = $('#project').val();
-            //let parcialid = project.replace('-', '+')
+            let projectSelected; 
+            if (project == null || project == "") {
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                const params = Object.fromEntries(urlSearchParams.entries());
+                projectSelected = params.projectid;
+            } else {
+                projectSelected = project;
+            }
             let data = {
-                "project": "'" + project + "'"
+                "project": "'" + projectSelected + "'"
             };
             jQuery.ajaxSettings.traditional = true;
             $.ajax({
@@ -61,7 +104,7 @@ let factSheetA = {
                     if (data != null) {
                         var a = document.createElement("a");
                         a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
-                        a.download = "AvencedeSucursales.pdf";
+                        a.download = "FichaDeProyecto.pdf";
                         a.click();
                     }
                 }
@@ -135,31 +178,28 @@ let factSheetA = {
     },
     getControlPoints: function (e) {
         let element = $(e).parent().parent();
-        let position = element.index();
-        console.log('position : ' + position);
+        let position = element.index(); 
         if ($('.tbimpact  > tbody > tr').eq(position + 1).data('dinamytr') == true) {
             $('.tbimpact  > tbody > tr').eq(position + 1).remove();
         }
         let data = {
             evidence: $(e).data('evidence')
         }
-        console.log(data);
+        evidenceView.push($(e).data('evidence'));
         LoaderShow();
         $.post('/FactSheetA/getControlPointbyEvidence', data, function (r) {
             
                 $('.tbimpact  > tbody > tr').eq(position).after(r);
             
             LoaderHide();
-        });
+        }); 
         e.preventDefault();
         //$('.table  > tbody > tr').eq(position).after(templeteTRHTML());
         //$('.table  > tbody > tr').eq(position).empty();
-
     }
    ,
     closetr: function(e) {
-        let element = $(e).parent().parent();
-        console.log(element);
+        let element = $(e).parent().parent(); 
         element.remove();
     }
 }

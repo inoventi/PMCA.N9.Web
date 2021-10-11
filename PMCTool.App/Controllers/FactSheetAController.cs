@@ -103,6 +103,7 @@ namespace PMCTool.App.Controllers
             return View("~/Views/FactSheet/A/ProjectDetail.cshtml", modelDetail);
         }
         
+
         [HttpPost]
         public async Task<IActionResult> getControlPointbyEvidence(Guid? evidence)
         {
@@ -221,6 +222,78 @@ namespace PMCTool.App.Controllers
                 WriteIndented = true,
             });
         }
+        public IActionResult printReportFactSheetADetail(ProjectModelReport data)
+        {
+            string url = "/FactSheetA/printViewReportFactSheetADetail?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportFactSheetADetail(string model)
+        {
+            // xxx
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var appToken = model.Split('|')[1];
+
+            ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
+            dynamic modelProjectTab = new ExpandoObject();
+
+            try
+            {
+                ViewBag.ProjectSeleted = dataModel.project; 
+                dynamic modelDetail = new ExpandoObject();
+
+                List<ProjectTabA> pp = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Project = pp;
+                List<EvidencesLayerSpecifications> Evidences = await restClient.Get<List<EvidencesLayerSpecifications>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/evidences", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Evidences = Evidences;
+                List<IncidentsReportA> Incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Incidents = Incidents;
+
+
+                //puntos de control
+                //var e = "3b22ab5e-1c2b-4d71-92b5-0cea81e961b4,422d8ae0-bf0d-4d8c-9063-a3e6b44df251";
+                //var evidences = e.Split(',');
+                //var evidences = dataModel.evidences.Split(',');
+                List<ControlPoints> controlPointAll = new List<ControlPoints>();
+                foreach (var evidence in Evidences)
+                {
+                    List<ControlPoints> controlPointsDb = await restClient.Get<List<ControlPoints>>(baseUrl, $"/api/v1/projecttaba/getdetail/{evidence.ProjectEvidenceID}/evidences/controlpoints", new Dictionary<string, string>() { { "Authorization", appToken } });
+                    foreach (var item in controlPointsDb)
+                    {
+                        ControlPoints cp = new ControlPoints();
+                        cp.ProjectEvidenceID = item.ProjectEvidenceID;
+                        cp.Description = item.Description;
+                        cp.Status = item.Status;
+                        cp.PlannedEndDate = item.PlannedEndDate;
+                        cp.Comments = item.Comments;
+                        controlPointAll.Add(cp);
+
+                    }
+
+                }
+                modelDetail.ControlPoints = controlPointAll;
+
+
+                return View("~/Views/FactSheet/A/ProjectDetailReport.cshtml", modelDetail);
+
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
         public async Task<IActionResult> printViewReportFactSheetA(string model)
         {
             //List<ModelFilters> fullStates = new List<ModelFilters>();
@@ -272,6 +345,7 @@ namespace PMCTool.App.Controllers
         public class ProjectModelReport
         {
             public string project { get; set; } 
+            public string evidences { get; set; } 
         }
     }
 }
