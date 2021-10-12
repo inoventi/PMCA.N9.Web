@@ -1,17 +1,19 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 using PMCTool.App.Attributes;
+using System.Dynamic;
 using PMCTool.App.Models;
-using PMCTool.Common.RestConnector;
-using PMCTool.Models.Core;
 using PMCTool.Models.Environment;
+using PMCTool.Common.RestConnector;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Localization;
+using PMCTool.Models.Core;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace PMCTool.App.Controllers
 {
@@ -67,6 +69,69 @@ namespace PMCTool.App.Controllers
         {
             List<IncidentsReportA> Incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{project}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             return PartialView("~/Views/ReportedIncidents/_ParcialIncidentsByProject.cshtml", Incidents);
+        }
+        public IActionResult printReportReportedIncidents(ModelFilters data)
+        {
+            string url = "/ReportedIncidents/printViewReportReportedIncidents?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+
+        public async Task<IActionResult> printViewReportReportedIncidents(string model)
+        {
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+            ModelFilters data = JsonConvert.DeserializeObject<ModelFilters>(modelo);
+            List<ActionsToMake> reportedIncidentsData = new List<ActionsToMake>();
+            dynamic modelDetail = new ExpandoObject();
+            try
+            {
+                reportedIncidentsData = await restClient.Get<List<ActionsToMake>>(baseUrl,
+                   $"api/v1/reportedIncidents/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
+                   new Dictionary<string, string>() { { "Authorization", token } });
+
+                modelDetail.projects = reportedIncidentsData;
+                List<IncidentsReportA> arrayIncident = new List<IncidentsReportA>();
+                foreach (var i in modelDetail.projects)
+                {
+                    List<IncidentsReportA> incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{i.ProjectID}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", token } });
+                    foreach (var a in incidents)
+                    {
+                        IncidentsReportA incident = new IncidentsReportA();
+                        incident.ProjectID = a.ProjectID;
+                        incident.ActionPlan = a.ActionPlan;
+                        incident.Description = a.Description;
+                        incident.ElementType = a.ElementType;
+                        incident.EvidenceDescripcion = a.EvidenceDescripcion;
+                        incident.EvidenceID = a.EvidenceID;
+                        incident.PlannedEndDate = a.PlannedEndDate;
+                        incident.ProjectIncidentID = a.ProjectIncidentID;
+                        incident.Status = a.Status;
+                        incident.TaskDescripcion = a.TaskDescripcion;
+                        incident.TaskID = a.TaskID;
+                        arrayIncident.Add(incident);
+                    }
+                }
+                modelDetail.incidents = arrayIncident;
+
+
+                return PartialView("_ReportIncidents", modelDetail);
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
         }
     }
 }
