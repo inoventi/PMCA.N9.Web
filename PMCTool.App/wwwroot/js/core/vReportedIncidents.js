@@ -62,6 +62,18 @@ const vReportedIncidentsController = {
             $.post('/ReportedIncidents/GetDataReportedIncidents', data, function (data) {
                 //data == '' ? (ActionsToMakeController.initCustomReaction(2)) : (ActionsToMakeController.initCustomReaction(1), ActionsToMakeController.initConstructionTable(data));
                 $('#divFichaTecnicaProyecto').append(data);
+                $('.tbincidents').dataTable({
+                    "pagingType": "full_numbers",
+                    "lengthMenu": [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    responsive: true,
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Buscar registros",
+                    }
+                });
                 LoaderHide();
             }).fail(function (e) {
                 console.log("ERROR: ", e);
@@ -69,10 +81,11 @@ const vReportedIncidentsController = {
         });
     },
     getIncidents: function (e) {
+        //e.preventDefault();
         let element = $(e).parent().parent();
         let position = element.index();
-        if ($('.tbimpact  > tbody > tr').eq(position + 1).data('dinamytr') == true) {
-            $('.tbimpact  > tbody > tr').eq(position + 1).remove();
+        if ($('.tbincidents > tbody > tr').eq(position + 1).data('dinamytr') == true) {
+            $('.tbincidents > tbody > tr').eq(position + 1).remove();
         }
         let data = {
             project: $(e).data('incidents')
@@ -80,11 +93,11 @@ const vReportedIncidentsController = {
         LoaderShow();
         $.post('/ReportedIncidents/getIncidentsByProject', data, function (r) {
 
-            $('.tbimpact  > tbody > tr').eq(position).after(r);
+            $('.tbincidents  > tbody > tr').eq(position).after(r);
 
             LoaderHide();
         });
-        e.preventDefault();
+        
         //$('.table  > tbody > tr').eq(position).after(templeteTRHTML());
         //$('.table  > tbody > tr').eq(position).empty();
 

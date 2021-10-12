@@ -14466,3 +14466,6 @@ hr {
 .indicadores-warning {
     background: #ffc000;
 }
+.aclick{
+    cursor:pointer;
+}
