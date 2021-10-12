@@ -51,6 +51,11 @@
                                                                     {
                                                                         <span class="badge ws badge-secondary"><strong>Terminado</strong></span>
                                                                     }
+                                                                    
+                                                                    @if (@row.Estatus == 5)
+                                                                    {
+                                                                        <span class="badge ws st-cancelado">Cancelado</span> 
+                                                                    }
 
                                                             </td> 
                                                             <td style="    text-align: justify;">@row.ActionToMake</td> 

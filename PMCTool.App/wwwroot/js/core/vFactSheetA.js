@@ -141,7 +141,7 @@ let factSheetA = {
         });
         btnCloseReport.click(function () {
             delete totalmont;
-            window.location.href = window.location.href;
+            window.location = "/FactSheetA";
             //boxContentReport.empty();
             //btnviewReport.show();
             //btnCloseReport.hide();

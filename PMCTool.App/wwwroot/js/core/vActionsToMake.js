@@ -34,7 +34,7 @@ let ActionsToMakeController = {
                     if (data != null) {
                         var a = document.createElement("a");
                         a.href = src = 'data:application/pdf;base64,' + encodeURI(data.FileContents);
-                        a.download = "AvencedeSucursales.pdf";
+                        a.download = "Acciones a realizar.pdf";
                         a.click();
                     }
                 }
@@ -85,7 +85,7 @@ let ActionsToMakeController = {
                     status = '<span class="ws st-cimpacto">Con impacto</span>'
                     break;
                 case 4:
-                    status = '<span class="ws st-cerrado">Cerrado</span>'
+                    status = '<span class="ws st-cerrado">Terminado </span>'
                     break;
                 case 5:
                     status = '<span class="ws st-cancelado">Cancelado</span>'
