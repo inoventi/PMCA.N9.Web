@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Components;
+@using PMCTool.App.Helpers.Html;
+
 @model dynamic;
 @{ 
-    ViewData["Title"] = "Ficha de proyectos";
-      Layout = "_Layout";
+    ViewData["Title"] = "DETALLE FICHA DE PROYECTO";
+    Layout = "_LayoutReportSct";
         var ProjectName = "";
         var Benefit =  "";
         var Scope =  ""; 
@@ -40,21 +42,12 @@
                 break;
     
         }
-        @section ScriptsHeader {
-            <script src="~/js/plugins/chart/chart.min.js" asp-append-version="true"></script>
-     
-        }
+         
   <div class="content">
         <div class="container-fluid">
             <div class="row card">
-                    <div class="col-md-12 pt-2">
-                        <small class="font-weight-normal">Analytics</small>
-                        <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
-                           <span style="color: #235b4e !important;"> Ficha de proyecto crítico	</span>
-                        </h4>
-                     </div>
-                      <div class="col-md-12" id="divContainer" style="">
-                        <hr> 
+                     
+                      <div class="col-md-12" id="divContainer" style=""> 
                         <div id="divFichaTecnicaProyecto">
                             <div class="col-md-12">
                                 <div class="row">
@@ -64,26 +57,7 @@
                                           @ProjectName
                                        </h4>
                                     </div>
-                                    <div class="col-md-3 text-right">
-                                       <div class="row text-right">
-                                          <div class="col-md-12"> 
-                                             <a type="button" class="btn btn-round btn-sm btn-back" href="/FactSheetA?projectid=@ViewBag.ProjectSeleted">
-                                             <span class="btn-label">
-                                             <i class="fas fa-arrow-left"></i>
-                                             </span>Regresar
-                                             </a>
-                                          </div>
-                                          <div class="col-md-12 text-right text-right">
-                                            <button class="btn btn-social btn-tumblr btn-link" id="btnReportPDF" onclick="factSheetA.btnReportPDFDetail();">
-                                                <i class="fas fa-file-pdf"></i> Exportar en PDF
-                                            </button>
-                                        </div>
-                                       </div>
-                                       <div class="row">
-                                          <div class="col-md-12 pt-3">
-                                          </div>
-                                       </div>
-                                    </div>
+                                     
                                  </div>
                                  <div class="row">
                                     <div class="col-md-12">
@@ -101,15 +75,15 @@
                                     <div class="col-md-12">
                                     @if(Model.Evidences.Count > 0)
                                     {
-                                        <table class="table table-hover table-striped tbimpact">
+                                        <table class="table-striped" style="    width: 99%;">
                                               <thead>
-                                                 <tr style="background-color: #235b4e;">
-                                                    <th>Tipo</th>
-                                                    <th>Evidencia</th>
-                                                    <th>Estatus</th>
-                                                    <th>Fecha de Obtención</th>
-                                                    <th>Dependencia/Área que expide/autoriza</th>
-                                                    <th>Aspectos Relevantes/Comentarios</th>
+                                                 <tr style="background-color: #235b4e; color: white;">
+                                                    <th style="padding: 5px;font-weight: normal !important;">Tipo</th>
+                                                    <th style="padding: 5px;font-weight: normal !important;">Evidencia</th>
+                                                    <th style="padding: 5px;font-weight: normal !important;">Estatus</th>
+                                                    <th style="padding: 5px;font-weight: normal !important;">Fecha de Obtención</th>
+                                                    <th style="padding: 5px;font-weight: normal !important;">Dependencia/Área que expide/autoriza</th>
+                                                    <th style="padding: 5px;font-weight: normal !important;">Aspectos Relevantes/Comentarios</th>
                                                  </tr>
                                               </thead>
                                               <tbody> 
@@ -117,7 +91,7 @@
                                                     { 
                                                     <tr>
                                                         <th scope="row">@r.ProjectLayerName</th>
-                                                        <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" onclick="factSheetA.getControlPoints(this)">@r.Description</a></td>
+                                                        <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" >@r.Description</a></td>
                                                          @{  
                                                                     @switch (@r.Status)
                                                                     {
@@ -145,6 +119,71 @@
                                                         <td>@r.CompanyName</td>
                                                         <td>@r.Comment</td>
                                                      </tr>
+
+                                                    @foreach(var t in Model.ControlPoints)
+                                                    {
+                                                        @if (r.ProjectEvidenceID == t.ProjectEvidenceID)
+                                                        {
+                                                            <tr>
+                                                                <th scope='row' style="text-align: center;">
+                                                                    <img src="/images/arrow2.png" style="transform: rotate(269deg);width: 39px;top: 0px;">
+                                                                </th>
+                                                                <td colspan="5">
+                                                                    <table style="width: 97%;margin-bottom: 20px">
+                                                                        <thead>
+                                                                        <tr style="background: #193e35; color: white;">
+                                                                            <th scope="col">Punto de control</th>
+                                                                            <th scope="col">Estatus</th>
+                                                                            <th scope="col">Fecha</th>
+                                                                            <th scope="col">Comentario</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    @foreach (var row in Model.ControlPoints)
+                                                                    {
+                                                                            @if (r.ProjectEvidenceID == row.ProjectEvidenceID)
+                                                                            {
+                                                                            <tr>
+                                                                            <th scope="row">@row.Description</th>
+                                                                             @switch (@row.Status)
+                                                                            {
+                                                                                case 1:  
+                                                                                        <td><span class="bold ws st-entiempo ws">En tiempo</span></td> 
+                                                                                    break;
+                                                                                case 2:  
+                                                                                        <td><span class="bold st-atrasado ws">Atrasado</span></td> 
+                                                                                    break;
+                                                                                case 3: 
+                                                                                        <td><span class="bold ws st-cimpacto ws">Con impacto</span></td> 
+                                                                                    break;
+                                                                                case 4: 
+                                                                                        <td><span class="bold ws st-cerrado ws">Cerrado</span></td> 
+                                                                                    break;
+                                                                                case 5:  
+                                                                                        <td><span class="bold ws st-cancelado  ws">Cancelado</span></td> 
+                                                                                    break;
+                                                                                case 6:  
+                                                                                        <td><span class="bold ws st-suspendido ws">Archivado</span></td> 
+                                                                                    break;
+                                                                            }
+                                                                             <td>@row.PlannedEndDate</td>
+                                                                            <td class="td-cp">@row.Comments</td>
+                                                                        </tr>        
+                                                                            }
+                                                                        
+
+                                                                    }   
+                                                                
+                                                                    </table>
+                                                                </td>
+                                                          </tr>
+                                                            break;
+                                                        }
+                                                    }
+
+
+                                                       
+                                                           
+                                                         
                                                     }
 
                                               </tbody>
@@ -276,10 +315,4 @@
 }
 
 
-
-@section Scripts {
-    <script src="~/js/core/vFactSheetA.js" asp-append-version="true"></script>
-  
-}
- 
  

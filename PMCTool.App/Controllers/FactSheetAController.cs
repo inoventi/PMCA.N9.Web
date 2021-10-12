@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
@@ -27,6 +29,7 @@ namespace PMCTool.App.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment; 
         private readonly IOptions<AppSettingsModel> _appSettings;
+
         public FactSheetAController(
             IOptions<AppSettingsModel> appSettings,
             IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
@@ -100,6 +103,7 @@ namespace PMCTool.App.Controllers
             return View("~/Views/FactSheet/A/ProjectDetail.cshtml", modelDetail);
         }
         
+
         [HttpPost]
         public async Task<IActionResult> getControlPointbyEvidence(Guid? evidence)
         {
@@ -115,6 +119,32 @@ namespace PMCTool.App.Controllers
 
  
         }
+        public async Task<bool> LoadImage(string chart)
+        { 
+            var chartImagen = chart.Split(',')[1];
+            byte[] bytes = Convert.FromBase64String(chartImagen); 
+            String path = Path.Combine(_hostingEnvironment.WebRootPath, @"images\chart\"); //Path 
+
+            //Check if directory exist
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+            }
+
+            string imageName = "InversionSct.jpg";
+
+            //set the image path
+            string imgPath = Path.Combine(path, imageName);
+
+            byte[] imageBytes = Convert.FromBase64String(chartImagen);
+
+            System.IO.File.WriteAllBytes(imgPath, imageBytes);
+
+           
+
+            return true;
+        }  
+
         [HttpPost]
         public async Task<IActionResult> getReportFactSheet(Guid? projectId)
         {
@@ -124,7 +154,7 @@ namespace PMCTool.App.Controllers
             {
                 ViewBag.ProjectSeleted = projectId;
                 string appToken = Request.Cookies["pmctool-token-app"];
-                var tabsheet  = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", appToken } });
                 foreach (var projectTab in tabsheet)
                 {
                     stage = projectTab.Stage;
@@ -178,9 +208,144 @@ namespace PMCTool.App.Controllers
 
                         return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
                     }
-                } 
+                }
             }
             return RedirectToAction("Index");
         }
-     }
+        public IActionResult printReportFactSheetA(ProjectModelReport data)
+        {
+            string url = "/FactSheetA/printViewReportFactSheetA?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public IActionResult printReportFactSheetADetail(ProjectModelReport data)
+        {
+            string url = "/FactSheetA/printViewReportFactSheetADetail?model=";
+            string requestParametersModel = JsonConvert.SerializeObject(data);
+
+            return Json(ExportToPDF(requestParametersModel, url, _hostingEnvironment), new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            });
+        }
+        public async Task<IActionResult> printViewReportFactSheetADetail(string model)
+        {
+            // xxx
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var appToken = model.Split('|')[1];
+
+            ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
+            dynamic modelProjectTab = new ExpandoObject();
+
+            try
+            {
+                ViewBag.ProjectSeleted = dataModel.project; 
+                dynamic modelDetail = new ExpandoObject();
+
+                List<ProjectTabA> pp = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Project = pp;
+                List<EvidencesLayerSpecifications> Evidences = await restClient.Get<List<EvidencesLayerSpecifications>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/evidences", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Evidences = Evidences;
+                List<IncidentsReportA> Incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.Incidents = Incidents;
+
+
+                //puntos de control
+                //var e = "3b22ab5e-1c2b-4d71-92b5-0cea81e961b4,422d8ae0-bf0d-4d8c-9063-a3e6b44df251";
+                //var evidences = e.Split(',');
+                //var evidences = dataModel.evidences.Split(',');
+                List<ControlPoints> controlPointAll = new List<ControlPoints>();
+                foreach (var evidence in Evidences)
+                {
+                    List<ControlPoints> controlPointsDb = await restClient.Get<List<ControlPoints>>(baseUrl, $"/api/v1/projecttaba/getdetail/{evidence.ProjectEvidenceID}/evidences/controlpoints", new Dictionary<string, string>() { { "Authorization", appToken } });
+                    foreach (var item in controlPointsDb)
+                    {
+                        ControlPoints cp = new ControlPoints();
+                        cp.ProjectEvidenceID = item.ProjectEvidenceID;
+                        cp.Description = item.Description;
+                        cp.Status = item.Status;
+                        cp.PlannedEndDate = item.PlannedEndDate;
+                        cp.Comments = item.Comments;
+                        controlPointAll.Add(cp);
+
+                    }
+
+                }
+                modelDetail.ControlPoints = controlPointAll;
+
+
+                return View("~/Views/FactSheet/A/ProjectDetailReport.cshtml", modelDetail);
+
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+        public async Task<IActionResult> printViewReportFactSheetA(string model)
+        {
+            //List<ModelFilters> fullStates = new List<ModelFilters>();
+            var modelo = model.Split('|')[0];
+            var token = model.Split('|')[1];
+
+            ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
+            dynamic modelProjectTab = new ExpandoObject();
+
+            try
+            {
+                List<ProjectTask> projectTask = new List<ProjectTask>();
+                List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
+                var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } }); 
+                modelProjectTab.tabsheet = tabsheet;
+
+                projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } });
+                foreach (var data in projectTask)
+                {
+                    if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
+                    {
+                        ProjectTask taskAppend = new ProjectTask()
+                        {
+                            text = data.text,
+                            start_date = data.start_date,
+                            duration = data.duration,
+                            status = data.status
+                        };
+                        projectTaskFinally.Add(taskAppend);
+                    }
+                }
+                modelProjectTab.ProjectTask = projectTaskFinally;
+
+                return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
+                 
+
+
+            }
+            catch (HttpResponseException ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { hasError = true, message = ex.Message });
+            }
+        }
+        public class ProjectModelReport
+        {
+            public string project { get; set; } 
+            public string evidences { get; set; } 
+        }
+    }
 }
