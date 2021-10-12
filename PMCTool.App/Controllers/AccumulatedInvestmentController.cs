@@ -117,14 +117,10 @@ namespace PMCTool.App.Controllers
         }
         public async Task<IActionResult> printViewReportAccumulatedInvestment(string model)
         {
-            //List<ModelFilters> fullStates = new List<ModelFilters>();
             var modelo = model.Split('|')[0];
             var token = model.Split('|')[1];
-
             ModelFiltersInvestment data = JsonConvert.DeserializeObject<ModelFiltersInvestment>(modelo);
-
             dynamic modelView = new ExpandoObject();
-
             try
             {
                 List<string> categories = new List<string>();
@@ -150,13 +146,10 @@ namespace PMCTool.App.Controllers
                 modelView.summary = accumulatedInvestment;
 
                 return PartialView("_ReportAccumulatedInvestment", modelView);
-
-
             }
             catch (HttpResponseException ex)
             {
                 return Json(new { hasError = true, message = ex.Message });
-
             }
             catch (Exception ex)
             {
