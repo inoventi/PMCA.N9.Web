@@ -22,6 +22,7 @@ namespace PMCTool.App.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
         }
+        [PMCToolAuthentication]
         public async Task<IActionResult> Index()
         {
             SetActiveOption("4004");

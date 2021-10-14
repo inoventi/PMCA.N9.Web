@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     vReportedIncidentsController.initPetition();
+    vReportedIncidentsController.CleanReport();
 });
 
 const vReportedIncidentsController = {
@@ -42,7 +43,8 @@ const vReportedIncidentsController = {
     },
     initPetition: () => {
         $('#btnReport').click(() => {
-            $('#divFichaTecnicaProyecto').empty();
+            $('#btnReport').hide();
+            $('#btnClose').removeAttr('hidden');
             LoaderShow();
             let states = $("#Entidad").val();
             let generalDirection = $('#DireccionGral').val();
@@ -58,7 +60,6 @@ const vReportedIncidentsController = {
                 investment: investment.join(),
                 advertisement: advertisement.join(),
             };
-            console.log(data);
             $.post('/ReportedIncidents/GetDataReportedIncidents', data, function (data) {
                 //data == '' ? (ActionsToMakeController.initCustomReaction(2)) : (ActionsToMakeController.initCustomReaction(1), ActionsToMakeController.initConstructionTable(data));
                 $('#divFichaTecnicaProyecto').append(data);
@@ -80,7 +81,7 @@ const vReportedIncidentsController = {
             });
         });
     },
-    getIncidents: function (e) {
+    getIncidents: (e) => {
         //e.preventDefault();
         let element = $(e).parent().parent();
         let position = element.index();
@@ -102,8 +103,13 @@ const vReportedIncidentsController = {
         //$('.table  > tbody > tr').eq(position).empty();
 
     },
-    closetr: function (e) {
+    closetr: (e) => {
         let element = $(e).parent().parent();
         element.remove();
+    },
+    CleanReport: () => {
+        $('#btnClose').click(() => {
+            window.location.href = window.location.href;
+        });
     }
 }

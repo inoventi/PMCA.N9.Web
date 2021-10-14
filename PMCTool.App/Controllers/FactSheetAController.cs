@@ -38,6 +38,7 @@ namespace PMCTool.App.Controllers
             _hostingEnvironment = hostingEnvironment;
 
         }
+        [PMCToolAuthentication]
         [HttpGet]
         public async Task<IActionResult> Index(Guid? project)
         {
@@ -83,7 +84,7 @@ namespace PMCTool.App.Controllers
 
            
         }
-
+        [PMCToolAuthentication]
         [HttpGet]
         public async Task<IActionResult> ProjectDetail(Guid? project)
         {
