@@ -21,7 +21,6 @@ let factSheetA = {
     btnReportPDFDetail: function () {
         //$('#btnReportPDF').click(function () {
             LoaderShow();
-            debugger;
             let uniqueEvidences = [...new Set(evidenceView)]; 
             let evidences = uniqueEvidences.join();
             const urlSearchParams = new URLSearchParams(window.location.search);
@@ -56,14 +55,15 @@ let factSheetA = {
 
     },
     savechart: function (imgbase64) {
+        let projectID = $('#project').val();
         let data = {
-            "chart": imgbase64 
+            "chart": imgbase64
         }; 
         jQuery.ajaxSettings.traditional = true;
         $.ajax({
             url: "/FactSheetA/LoadImage",
             type: "POST",
-            data: data,
+            data: { chart: imgbase64, projectID : projectID},
             cache: false,
             error: function (xhr, status, error) {
                 console.log(error);

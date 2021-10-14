@@ -41,6 +41,7 @@ namespace PMCTool.App.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Guid? project)
         {
+            SetActiveOption("4007");
             ProjectTabViewModel p = new ProjectTabViewModel();
             try
             {
@@ -119,7 +120,7 @@ namespace PMCTool.App.Controllers
 
  
         }
-        public async Task<bool> LoadImage(string chart)
+        public async Task<bool> LoadImage(string chart, string projectID)
         { 
             var chartImagen = chart.Split(',')[1];
             byte[] bytes = Convert.FromBase64String(chartImagen); 
@@ -131,7 +132,7 @@ namespace PMCTool.App.Controllers
                 System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
             }
 
-            string imageName = "InversionSct.jpg";
+            string imageName = projectID + ".jpg";
 
             //set the image path
             string imgPath = Path.Combine(path, imageName);
@@ -164,10 +165,12 @@ namespace PMCTool.App.Controllers
                 {
                     if (stage == "Preparativos de ejecución" || stage == "Ejecución")
                     {
-                        List<ProjectTask> projectTask = new List<ProjectTask>();
-                        List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
+                       List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
 
-                        projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                        var projectEvidences = await restClient.Get<List<FactSheetA_Evidences>>(baseUrl, $"/api/v1/projecttaba/{projectId}/evidences", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                        modelProjectTab.ProjectEvidences = projectEvidences;
+
+                        var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         foreach (var data in projectTask)
                         {
                             if (data.WbsCode == "1.5.2.1" || data.WbsCode == "1.5.2.3" || data.WbsCode == "1.5.2.4" || data.WbsCode == "1.5.2.5")
@@ -301,6 +304,7 @@ namespace PMCTool.App.Controllers
             var token = model.Split('|')[1];
 
             ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
+            ViewBag.ProjectSeleted = dataModel.project;
             dynamic modelProjectTab = new ExpandoObject();
 
             try

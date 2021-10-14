@@ -42,7 +42,7 @@ namespace PMCTool.App.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(Guid? projectId)
         {
-            SetActiveOption("4007");
+            SetActiveOption("4003");
             ProjectTabViewModel p = new ProjectTabViewModel();
             try
             {

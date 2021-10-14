@@ -785,9 +785,9 @@ input:focus {
 }
 
 .sidebar .nav .nav-item.active .nav-link {
-    color: #FFFFFF;
+    /*color: #FFFFFF;*/
     opacity: 1;
-    background: rgba(255, 255, 255, 0.23);
+    background: rgba(6, 6, 6, 0.03);
 }
 
 .sidebar .nav .nav-item.separator {

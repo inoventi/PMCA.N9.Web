@@ -238,7 +238,9 @@
                                     }
                                     else
                                     {
-                                             <img src="/images/chart/InversionSct.jpg">
+                                        var @projectID = ViewBag.ProjectSeleted;
+                                        var @imageName = string.Concat(@projectID, ".jpg");
+                                        <img src="/images/chart/@imageName">
                                     }
                                 }
                     </td>

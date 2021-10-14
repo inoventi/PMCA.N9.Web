@@ -107,7 +107,7 @@
                     <p class="title-section">
                         <b>TDPA</b>
                     </p>
-                    <p class="text-center">
+                    <p>
                         @Tdpa
                     </p>
                 </div>
@@ -199,36 +199,47 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Registro en cartera de la SHCP</td>
-                                        <td>Jun-2020</td>
-                                        <td>90 días</td>
-                                        <td class="status-ontime">En tiempo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Proyecto ejecutivo</td>
-                                        <td>Sep-2020</td>
-                                        <td>120 días</td>
-                                        <td class="status-ontime">En tiempo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Liberación del Derecho de Vía</td>
-                                        <td>Ene-2021</td>
-                                        <td>180 días</td>
-                                        <td class="status-delayed">Atrasado</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Manifestación de Impacto Ambiental</td>
-                                        <td>Ene-2021</td>
-                                        <td>150 días</td>
-                                        <td class="status-withimpact">Con impacto</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Acreditación de Laboratorios</td>
-                                        <td>jun-2021</td>
-                                        <td>150 días</td>
-                                        <td class="status-delayed">Atrasado</td>
-                                    </tr>
+                                    @foreach (var item in Model.ProjectEvidences)
+                                    {
+                                           <tr>
+                                                <th> @item.Description</th>
+                                                <td>  @item.StartDate</td>
+                                                <td>  @item.Duration días</td>
+                                                @{
+                                                    @if (@item.Status == 1)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-success"><strong>En tiempo</strong></span>
+                                                        </td>
+                                                    }
+                                                    @if (@item.Status == 2)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-warning"><strong>Atrasado</strong></span>
+                                                        </td>
+                                                    }
+                                                    @if (@item.Status == 3)
+                                                    {
+                                                    <td>
+                                                        <span class="badge ws badge-danger"><strong>Con impacto</strong></span>
+                                                    </td>
+                                                    }
+                                                    @if (@item.Status == 4)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-secondary"><strong>Terminado</strong></span>
+                                                        </td>
+                                                    }
+
+                                                    @if (@item.Status == 5)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws st-cancelado">Cancelado</span>
+                                                        </td>
+                                                    }
+                                                }
+                                           </tr>
+                                      }
                                 </tbody>
                             </table>
                         </div>
