@@ -75,6 +75,7 @@ const vReportedIncidentsController = {
                         searchPlaceholder: "Buscar registros",
                     }
                 });
+                vReportedIncidentsController.resetSelects();
                 LoaderHide();
             }).fail(function (e) {
                 console.log("ERROR: ", e);
@@ -111,5 +112,23 @@ const vReportedIncidentsController = {
         $('#btnClose').click(() => {
             window.location.href = window.location.href;
         });
+    },
+    resetSelects: () => {
+        $('#Entidad').prop('disabled', true);
+        $('#Entidad').selectpicker('refresh');
+        $('#DireccionGral').prop('disabled', true);
+        $('#DireccionGral').selectpicker('refresh');
+        $('#TipoProyecto').prop('disabled', true);
+        $('#TipoProyecto').selectpicker('refresh');
+        $('#Etapa').prop('disabled', true);
+        $('#Etapa').selectpicker('refresh');
+        $('#Inversion').prop('disabled', true);
+        $('#Inversion').selectpicker('refresh');
+        $('#Anuncio').prop('disabled', true);
+        $('#Anuncio').selectpicker('refresh');
     }
 }
+$.fn.selectpicker.defaults = {
+    selectAllText: 'Seleccionar Todo',
+    deselectAllText: 'Deseleccionar Todo'
+};
