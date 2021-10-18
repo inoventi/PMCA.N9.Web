@@ -98,6 +98,8 @@ namespace PMCTool.App.Controllers
             modelDetail.Evidences = Evidences;
             List<IncidentsReportA> Incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{project}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", appToken } });
             modelDetail.Incidents = Incidents;
+            List<ActionPlanReportA> ActionPlan = await restClient.Get<List<ActionPlanReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{project}/actionsplan", new Dictionary<string, string>() { { "Authorization", appToken } });
+            modelDetail.ActionPlan = ActionPlan;
 
             //List<ProjectTabA> pp2 = await restClient.Get<List<ProjectTabA>>(baseUrl, $"api/v1/projects/{project}/evidences", new Dictionary<string, string>() { { "Authorization", appToken } });
 
@@ -151,6 +153,7 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> getReportFactSheet(Guid? projectId)
         {
             dynamic modelProjectTab = new ExpandoObject();
+            List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
             string stage = null;
             if (!string.IsNullOrEmpty(projectId.ToString()))
             {
@@ -162,12 +165,11 @@ namespace PMCTool.App.Controllers
                     stage = projectTab.Stage;
                 }
                 modelProjectTab.tabsheet = tabsheet;
+                
                 if (!string.IsNullOrEmpty(stage))
                 {
                     if (stage == "Preparativos de ejecución" || stage == "Ejecución")
                     {
-                       List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
-
                         var projectEvidences = await restClient.Get<List<FactSheetA_Evidences>>(baseUrl, $"/api/v1/projecttaba/{projectId}/evidences", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         modelProjectTab.ProjectEvidences = projectEvidences;
 
@@ -191,10 +193,7 @@ namespace PMCTool.App.Controllers
                     }
                     else
                     {
-                        List<ProjectTask> projectTask = new List<ProjectTask>();
-                        List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
-
-                        projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                       var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         foreach (var data in projectTask)
                         {
                             if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
@@ -215,7 +214,8 @@ namespace PMCTool.App.Controllers
                     }
                 }
             }
-            return RedirectToAction("Index");
+            modelProjectTab.ProjectTask = projectTaskFinally;
+            return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
         }
         public IActionResult printReportFactSheetA(ProjectModelReport data)
         {
@@ -258,6 +258,8 @@ namespace PMCTool.App.Controllers
                 modelDetail.Evidences = Evidences;
                 List<IncidentsReportA> Incidents = await restClient.Get<List<IncidentsReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/evidences/incidents", new Dictionary<string, string>() { { "Authorization", appToken } });
                 modelDetail.Incidents = Incidents;
+                List<ActionPlanReportA> ActionPlan = await restClient.Get<List<ActionPlanReportA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}/actionsplan", new Dictionary<string, string>() { { "Authorization", appToken } });
+                modelDetail.ActionPlan = ActionPlan;
 
 
                 //puntos de control
