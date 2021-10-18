@@ -178,10 +178,11 @@ namespace PMCTool.App.Controllers
                         {
                             if (data.WbsCode == "1.5.2.1" || data.WbsCode == "1.5.2.3" || data.WbsCode == "1.5.2.4" || data.WbsCode == "1.5.2.5")
                             {
+                                 
                                 ProjectTask taskAppend = new ProjectTask()
                                 {
                                     text = data.text == "Convocatoria / Oficio de adjudicación" ? "Convocatoria" : data.text,
-                                    start_date = data.start_date,
+                                    EndDateClient = data.EndDateClient,
                                     status = data.status
                                 };
                                 projectTaskFinally.Add(taskAppend);
