@@ -160,7 +160,14 @@
                             <div class="arrow-steps clearfix">
                                 @foreach (var item in Model.ProjectTask)
                                 {
-                                    <div class="step">
+                                    string classActive = "";
+                                    if (item.status == 4)
+                                    {
+                                        classActive = "current";
+                                    }else{
+                                        classActive = "";
+                                    }
+                                    <div class="step @classActive">
                                         <span>@item.text</span> <br>
                                         <span>@item.start_date</span>
                                     </div>

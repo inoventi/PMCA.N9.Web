@@ -179,7 +179,8 @@ namespace PMCTool.App.Controllers
                                 ProjectTask taskAppend = new ProjectTask()
                                 {
                                     text = data.text == "Convocatoria / Oficio de adjudicación" ? "Convocatoria" : data.text,
-                                    start_date = data.start_date
+                                    start_date = data.start_date,
+                                    status = data.status
                                 };
                                 projectTaskFinally.Add(taskAppend);
                             }
