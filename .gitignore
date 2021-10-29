@@ -85,3 +85,7 @@ PMCTool.App/bin/Debug/netcoreapp2.2/References/PMCTool.Models/PMCTool.Models.dep
 /PMCTool.App/bin/Debug/netcoreapp3.1
 /PMCTool.App/.config
 /PMCTool.App/bin/Release/netcoreapp3.1
+/desktop.ini
+PMCTool.App/Properties/PublishProfiles/FolderProfile1.pubxml
+PMCTool.App/wwwroot/client/
+PMCTool.App/wwwroot/images/chart/
