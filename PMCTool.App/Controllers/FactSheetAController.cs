@@ -9,6 +9,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -29,13 +30,19 @@ namespace PMCTool.App.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment; 
         private readonly IOptions<AppSettingsModel> _appSettings;
+        private IHttpContextAccessor _httpContextAccessor;
+
+
 
         public FactSheetAController(
             IOptions<AppSettingsModel> appSettings,
-            IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
+            IStringLocalizer<SharedResource> localizer,
+            IHostingEnvironment hostingEnvironment,
+            IHttpContextAccessor httpContextAccessor) : base(appSettings, localizer)
         {
             _appSettings = appSettings;
             _hostingEnvironment = hostingEnvironment;
+            _httpContextAccessor = httpContextAccessor;
 
         }
         [PMCToolAuthentication]
@@ -155,6 +162,14 @@ namespace PMCTool.App.Controllers
             dynamic modelProjectTab = new ExpandoObject();
             List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
             string stage = null;
+            ParticipantUser participantUser = new ParticipantUser();
+            string userId = GetTokenValue("UserId");
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                participantUser = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+            }
+
             if (!string.IsNullOrEmpty(projectId.ToString()))
             {
                 ViewBag.ProjectSeleted = projectId;
@@ -188,7 +203,9 @@ namespace PMCTool.App.Controllers
                                 projectTaskFinally.Add(taskAppend);
                             }
                         }
+                        ViewBag.ProjectID = projectId;
                         modelProjectTab.ProjectTask = projectTaskFinally;
+                        modelProjectTab.participantUser = participantUser;
 
                         return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
                     }
@@ -209,6 +226,8 @@ namespace PMCTool.App.Controllers
                                 projectTaskFinally.Add(taskAppend);
                             }
                         }
+
+                        ViewBag.ProjectID = projectId;
                         modelProjectTab.ProjectTask = projectTaskFinally;
 
                         return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
@@ -351,10 +370,79 @@ namespace PMCTool.App.Controllers
                 return Json(new { hasError = true, message = ex.Message });
             }
         }
+        [HttpPatch]
+        public async Task<JsonResult> UploadFileA(FactSheetA Request)
+        {
+            ParticipantUser data = new ParticipantUser();
+ 
+            ResponseModel response = new ResponseModel()
+            {
+                IsSuccess = false,
+            };
+
+            try
+            {
+                string userId = GetTokenValue("UserId");
+                data = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                if (data != null && Request.ProjectID != null)
+                {
+                    if (Request.Image != null)
+                    {
+                        
+                        string FileName = Request.Type.ToString() + "-" + Request.ProjectID.ToString().Replace("-", "") + Path.GetExtension(Request.Image.FileName);
+                        string PathRelativeImagen = "/client/sct/factsheeta/" + FileName;
+                        string Pathfilename = Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/factsheeta/", FileName); 
+                        using (FileStream DestinationStream = new FileStream(Pathfilename, FileMode.Create))
+                        {
+                            await Request.Image.CopyToAsync(DestinationStream);
+                        }
+                        //Guardar en DB
+                        data.Image = @"client/sct/factsheeta/" + FileName;
+                        switch (Request.Type) {
+                            case "A":
+                                break;
+                            case "B":
+                                break;
+                        }
+                        //var result = await restClient.Patch<ParticipantUser, ParticipantUser>(baseUrl, $"/api/v1/participantusers/file/" + data.ParticipantID.ToString(), data, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                        response.IsSuccess = true;
+                        response.ValueString = PathRelativeImagen;
+                        response.ValueString1 = Request.Type;
+                        response.SuccessMessage = "Guardado correctamente";
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.SuccessMessage = "Error en los datos";
+                    }
+
+                }
+                else {
+                    response.IsSuccess = false;
+                    response.SuccessMessage = "Error en los datos";
+                }
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                response.ErrorCode = apiError.ErrorCode;
+                response.ErrorMessage = localizer.GetString(response.ErrorCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = ex.Source + ": " + ex.Message;
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+            }
+
+            return Json(response);
+        }
         public class ProjectModelReport
         {
             public string project { get; set; } 
             public string evidences { get; set; } 
-        }
+        } 
     }
+    
 }

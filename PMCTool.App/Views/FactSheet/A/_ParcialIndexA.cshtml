@@ -42,9 +42,11 @@
         break;
 
     }
+    
 
-
+    
     <div>
+        <input type="hidden" id="ProjectIDx"  value="@ViewBag.ProjectID" /> 
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-9">
@@ -311,7 +313,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
@@ -330,7 +332,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
@@ -341,69 +343,64 @@
                     </div>
                 </div>
             </div>
-            <div class="row pb-3">
-                <div class="col-md-12">
-                    <iframe src="http://doc.pmc-tool.mx/PMCAnalytics/sctv1.1/Factsheet2/" width="100%" height="300px"></iframe>
+            <div class="row pb-3"> 
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-warning btn-sm btnmodalone" data-modal="1">Actualizar información 1</button>
+                </div>
+                <div class="col-md-12 contentA">
+                     CONTENIDO IMG 1
+                </div>
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-warning btn-sm btnmodaltwo" data-modal="2">Actualizar información 2</button>
+                </div>
+                <div class="col-md-12 contentB">
+                     CONTENIDO IMG 2
                 </div>
             </div>
             <div class="row pb-3">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="title-section">
-                                <b>Localización</b>
-                            </p>
-                            <p>
-                                La carretera comunica al norponiente de Chihuahua con el estado de Nuevo México, en los EE.UU., a través del Puerto Fronterizo de Puerto Palomas.
-                            </p>
-                            <p><b style="font-weight: bold">Coordenadas:</b> Inicio:   22.386111º, -100.769444°; Fin:   22.652778,°, -100.605833°</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="floating-panel">
-                                <b>Modo de viaje: </b>
-                                <select id="mode">
-                                    <option value="DRIVING">Manejando</option>
-                                    <option value="WALKING">Caminando</option>
-                                    <option value="BICYCLING">Bicicleta</option>
-                                    <option value="TRANSIT">Transito</option>
-                                </select>
-                            </div>
-                            <div id="map" style="height: 534px;"></div>
+                 
+                 
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalimgOne" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card horizontal-form" style="border:none;">
+                        <div class="card-body ">
+                            <form id="formimgOne"> 
+                                <div class="form-group">
+                                    <label>@Localizer["Logo"]</label>
+                                    @Html.TextBox("Image", "", new { @id = "Image", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
+                                </div> 
+                                <div class="card-footer text-right">
+                                    <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                    <button type="button" id="btnUpload" onclick="factSheetA.uploadImgOne(); return false;" class="btn btn-default btn-fill">@Localizer["Upload"]</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="title-section">
-                                <b>Reporte fotográfico</b>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row pb-2">
-                        <div class="col-md-12">
-                            <div class="row" style="border: 1px solid;height: 284px;">
-                                <div class="col-md-6 text-center">
-                                    <p style="font-weight: bold; margin-top: 33%;">Trabajos de topografia</p>
+            </div>
+        </div>
+    </div>
+        <div class="modal fade" id="modalimgTwo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card horizontal-form" style="border:none;">
+                        <div class="card-body ">
+                            <form id="formimgTwo"> 
+                                <div class="form-group">
+                                    <label>@Localizer["Logo"]</label>
+                                    @Html.TextBox("Image", "", new { @id = "ImageTwo", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
+                                </div> 
+                                <div class="card-footer text-right">
+                                    <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                    <button type="button" id="btnUpload" onclick="factSheetA.uploadImgTwo(); return false;" class="btn btn-default btn-fill">@Localizer["Upload"]</button>
                                 </div>
-                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
-                                    <img src="https://www.ajttopografos.com/blog/wp-content/uploads/2017/02/topografos-malaga-granada.jpg" alt="" width="274px;" height="277px" style="padding: 6px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row" style="border: 1px solid;height: 284px;">
-                                <div class="col-md-6 text-center">
-                                    <p style="font-weight: bold; margin-top: 33%;">Inicio de la ejecución Conformación de cuerpo de terraplén en el Km 0+000 al 0+800 </p>
-                                </div>
-                                <div class="col-md-6 text-center" style="padding-right: 0px;padding-left: 0px;">
-                                    <img src="https://www.gruasyaparejos.com/wp-content/uploads/2019/07/estacion-total-topografia-2.jpg" alt="" width="277px;" height="277px" style="padding: 6px;">
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -445,41 +442,7 @@
                                         $('#project').selectpicker('refresh');
                                 }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT4_lYZoSRsv9h_reS4rR8lBgzY6ZchYI&callback=initMap&libraries=&v=weekly"
-            defer></script>
-
-    <script type="text/javascript">
-        function initMap() {
-            const directionsRenderer = new google.maps.DirectionsRenderer();
-            const directionsService = new google.maps.DirectionsService();
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                center: { lat: 31.756490, lng: -107.620201 },
-            });
-            directionsRenderer.setMap(map);
-            calculateAndDisplayRoute(directionsService, directionsRenderer);
-            document.getElementById("mode").addEventListener("change", () => {
-                calculateAndDisplayRoute(directionsService, directionsRenderer);
-            });
-        }
-
-        function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-            const selectedMode = document.getElementById("mode").value;
-            directionsService
-                .route({
-                    origin: { lat: 31.756490, lng: -107.620201 },
-                    destination: { lat: 31.471000, lng: -107.612186 },
-                    // Note that Javascript allows us to access the constant
-                    // using square brackets and a string value as its
-                    // "property."
-                    travelMode: google.maps.TravelMode[selectedMode],
-                })
-                .then((response) => {
-                    directionsRenderer.setDirections(response);
-                })
-                .catch((e) => window.alert("Directions request failed due to " + status));
-        }
-    </script>
+ 
     <script>
         new Chart(document.getElementById("doughnut-chart"), {
             type: 'doughnut',
@@ -501,5 +464,6 @@
                 legend: { position: 'bottom' }
             }
         });
+        factSheetA.addEventOpenModals();
     </script>
 }
