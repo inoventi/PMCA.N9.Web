@@ -156,7 +156,7 @@ let factSheetA = {
 
     },
     savechart: function (imgbase64) {
-        let projectID = $('#project').val();
+        let projectID = $('#ProjectIDx').val();
         let data = {
             "chart": imgbase64
         }; 
@@ -170,6 +170,7 @@ let factSheetA = {
                 console.log(error);
             },
             success: function (data) {
+                console.log(data);
                 LoaderHide();
                 jQuery.ajaxSettings.traditional = false;
             }
@@ -178,7 +179,7 @@ let factSheetA = {
     btnReportPDF: function () { 
         $('#btnReportPDF').click(function () {
             LoaderShow(); 
-            let project = $('#project').val();
+            let project = $('#ProjectIDx').val();
             let projectSelected; 
             if (project == null || project == "") {
                 const urlSearchParams = new URLSearchParams(window.location.search);

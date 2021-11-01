@@ -130,30 +130,51 @@ namespace PMCTool.App.Controllers
 
  
         }
-        public async Task<bool> LoadImage(string chart, string projectID)
-        { 
+        public async Task<ResponseModel> LoadImage(string chart, string projectID)
+        {
+            ResponseModel response = new ResponseModel()
+            {
+                IsSuccess = false,
+            };
             var chartImagen = chart.Split(',')[1];
             byte[] bytes = Convert.FromBase64String(chartImagen); 
-            String path = Path.Combine(_hostingEnvironment.WebRootPath, @"images\chart\"); //Path 
-
-            //Check if directory exist
-            if (!System.IO.Directory.Exists(path))
+            String path = Path.Combine(_hostingEnvironment.WebRootPath, @"images/chart/"); //Path 
+            try
             {
-                System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+                //Check if directory exist
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+                }
+
+                string imageName = projectID + ".jpg";
+
+                //set the image path
+                string imgPath = Path.Combine(path, imageName);
+
+                byte[] imageBytes = Convert.FromBase64String(chartImagen);
+
+                System.IO.File.WriteAllBytes(imgPath, imageBytes);
+                response.ErrorCode = 200;
+                response.ErrorMessage = "todo ok";
             }
-
-            string imageName = projectID + ".jpg";
-
-            //set the image path
-            string imgPath = Path.Combine(path, imageName);
-
-            byte[] imageBytes = Convert.FromBase64String(chartImagen);
-
-            System.IO.File.WriteAllBytes(imgPath, imageBytes);
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                response.ErrorCode = apiError.ErrorCode;
+                response.ErrorMessage = localizer.GetString(response.ErrorCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = ex.Source + ": " + ex.Message;
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+            }
+            
 
            
 
-            return true;
+            return response;
         }  
 
         [HttpPost]
