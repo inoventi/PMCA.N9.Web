@@ -420,14 +420,10 @@ namespace PMCTool.App.Controllers
                         }
                         //Guardar en DB
                         data.Image = @"client/sct/factsheeta/" + FileName;
-                        switch (Request.Type) {
-                            case "A":
-                                break;
-                            case "B":
-                                break;
-                        }
-                        //var result = await restClient.Patch<ParticipantUser, ParticipantUser>(baseUrl, $"/api/v1/participantusers/file/" + data.ParticipantID.ToString(), data, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-                        response.IsSuccess = true;
+                        //gurdamos en la bse de datos
+                        bool statusApi = await restClient.Get<bool>(baseUrl, $"/api/v1/FactSheets/upload/imagen/" + Request.ProjectID + "?pathFile=" + data.Image + "&type=" + Request.Type, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                        response.IsSuccess = statusApi;
                         response.ValueString = PathRelativeImagen;
                         response.ValueString1 = Request.Type;
                         response.SuccessMessage = "Guardado correctamente";

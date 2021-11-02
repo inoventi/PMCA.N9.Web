@@ -17,6 +17,8 @@
     var chartFonden = "";
     var chartPef = "";
     var chartFonadin = "";
+    var imagenA = "";
+    var imagenB = "";
 
     @foreach (var row in Model.tabsheet)
     {
@@ -37,7 +39,8 @@
         chartFonden = @row.chartFonden;
         chartPef = @row.chartPef;
         chartFonadin = @row.chartFonadin;
-
+        imagenA = @row.imagenA;
+        imagenB = @row.imagenB;
 
         break;
 
@@ -70,7 +73,7 @@
                             <p class="title-section">
                                 <b>Beneficios</b>
                             </p>
-                            <p>Reducción de los tiempos de viaje de 90 min a 50 min, se aumentará la seguridad del usuario y mejora de la operación del tramo.</p>
+                            <p>@Benefit</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
                                 <b>Alcance</b>
                             </p>
                             <p>
-                                Ampliación a una sección tipo boulevard de 22 m. de ancho de corona, para alojar 4 carriles (2 por sentido y acotamientos laterales de 2.5 m) con carpeta asfáltica.
+                                @Scope
                             </p>
                         </div>
                     </div>
@@ -94,12 +97,20 @@
                                     <th rowspan="2" class="bg-table-green" style="text-align: center;">
                                         <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
                                     </th>
-                                    <td><h6 class="h5-responsive"><b>Directos</b></h6></td>
-                                    <td><h6 class="h5-responsive">1120</h6></td>
+                                    <td>
+                                        <h6 class="h5-responsive"><b>Directos</b></h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="h5-responsive">@DirectJobsGenerated</h6>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><h6 class="h5-responsive"><b>Indirectos</b></h6></td>
-                                    <td><h6 class="h5-responsive">510</h6></td>
+                                    <td style="padding-left: 9px;">
+                                        <h6 class="h5-responsive"><b>Indirectos</b></h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="h5-responsive">@IndirectJobsGenerated</h6>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -139,12 +150,29 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="text-responsive text-lg-center">
-                                $9265 mdp / FONADIN
+                            <h3 class="text-responsive text-lg-center _totalmont"> 
                             </h3>
                             <p>
-                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                                <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+                                <div class="chartjs-size-monitor">
+                                    <div class="chartjs-size-monitor-expand">
+                                        <div class=""></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink">
+                                        <div class=""></div>
+                                    </div>
+                                </div>
+                                 @{
+                                    @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
+                                    {
+                                        <div class="text-center" style="    padding-bottom: 41px;"><i class="fas fa-exclamation-circle  fa-3x" style="color: #207561;"></i><br /><span style="font-size: .9em;">No se puede cargar la gráfica de inversión.<br> Favor de verificar sus datos en <a href="https://app.pmc-tool.com/">PMC-tool</a></span></div>
+                                    }
+                                    else
+                                    {
+                                        <canvas id="doughnut-chart" width="525" height="295" style="display: block; width: 525px; height: 295px;" class="chartjs-render-monitor"></canvas>
+
+                                    }
+                                }
+                                  <p id="hpp"><p>
                             </p>
                         </div>
                     </div>
@@ -254,42 +282,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <p class="title-section">
                                 <b>Promotor</b>
                             </p>
                             <p style="font-weight: bold;text-align: center;">
-                                Gobierno del Estado de Chihuahua
+                                @Promoter
 
                             </p>
                         </div>
-                        <div class="col-md-6">
-                            <p class="title-section">
-                                <b>Detalle de etapa</b>
-                            </p>
-                            <table class="table table-hover table-striped tbimpact">
-                                <thead>
-                                    <tr>
-                                        <th class="bg-table-green" style="border-right: 1px solid !important;">Etapa</th>
-                                        <th class="bg-table-green" style="text-align:center; border-right: 1px solid;">Fecha Inicio</th>
-                                        <th class="bg-table-green" style="text-align:center; display: table-cell; border-right: 1px solid;">Meses </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="font-weight: bold;">Ejecución</td>
-                                        <td style="font-weight: bold;">Jun-2021</td>
-                                        <td style="font-weight: bold;">12</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: bold;">Operación</td>
-                                        <td style="font-weight: bold;">Jun-2022</td>
-                                        <td style="font-weight: bold;">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                         
                     </div>
                 </div>
             </div>
@@ -305,7 +307,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p class="justify-text">
-                                1.- Aprobación de la manifestación de impacto ambiental jun-2021: SEMARNAT // 2.- Asignación de contrato y pago de anticipo 02 julio 2021: SCT // 3.-Concluir la liberación del derecho de vía: SEDATU
+                                @KeyDecisions
                             </p>
                         </div>
                     </div>
@@ -320,7 +322,7 @@
                                 <b>Hitos Relevantes</b>
                             </p>
                             <p>
-                                Ejecución 28 abril 21 Visto bueno SHCP: concluyó en enero 2021
+                                  @RelevantMilestones
                             </p>
                         </div>
                     </div>
@@ -345,16 +347,48 @@
             </div>
             <div class="row pb-3"> 
                 <div class="col-md-12 text-right">
-                    @*<button class="btn btn-warning btn-sm btnmodalone" data-modal="1">Actualizar información 1</button>*@
+                     @if (Model.participantUser.Type == 2 || Model.participantUser.Login =="norma.zamudio")
+                    {
+                        <button class="btn btn-warning btn-sm btnmodalone" data-modal="1">Actualizar información 1</button>
+                    }
+                    
+                    <br />
+                    @if (imagenA != null)
+                    {
+                     var LastUpdate = imagenA.Split('|')[1];
+                        <span>Última actualización: @LastUpdate.Substring(0, 10)</span>
+                    }
                 </div>
                 <div class="col-md-12 contentA">
-                     CONTENIDO IMG 1
+                    @if (imagenA != null)
+                    {
+                         var imagenDB = imagenA.Split('|')[0]; 
+                         <center>
+                             <img src="@imagenDB" class="img-fluid" alt="Responsive image"> 
+                         </center>
+                    }
+                     
                 </div>
                 <div class="col-md-12 text-right">
-                    @*<button class="btn btn-warning btn-sm btnmodaltwo" data-modal="2">Actualizar información 2</button>*@
+                     @if (Model.participantUser.Type == 2 || Model.participantUser.Login =="norma.zamudio")
+                    {
+                    <button class="btn btn-warning btn-sm btnmodaltwo" data-modal="2">Actualizar información 2</button>
+                    }
+                    <br />
+                    @if (imagenB != null)
+                    {
+                     var LastUpdateB = imagenB.Split('|')[1];  
+                        <span>Última actualización: @LastUpdateB.Substring(0, 10)</span>
+                    }
                 </div>
                 <div class="col-md-12 contentB">
-                     CONTENIDO IMG 2
+                    @if (imagenB != null)
+                    {
+                         var imagenDB = imagenB.Split('|')[0]; 
+                         <center>
+                             <img src="@imagenDB" class="img-fluid" alt="Responsive image"> 
+                         </center>
+                    }
                 </div>
             </div>
             <div class="row pb-3">
@@ -371,7 +405,7 @@
                         <div class="card-body ">
                             <form id="formimgOne"> 
                                 <div class="form-group">
-                                    <label>@Localizer["Logo"]</label>
+                                    <label>IMAGEN 1</label>
                                     @Html.TextBox("Image", "", new { @id = "Image", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
                                 </div> 
                                 <div class="card-footer text-right">
@@ -393,7 +427,7 @@
                         <div class="card-body ">
                             <form id="formimgTwo"> 
                                 <div class="form-group">
-                                    <label>@Localizer["Logo"]</label>
+                                    <label>IMAGEN 2</label>
                                     @Html.TextBox("Image", "", new { @id = "ImageTwo", @class = "form-control", @style = "", type = "file", @required = "required", accept = "image/*" })
                                 </div> 
                                 <div class="card-footer text-right">
