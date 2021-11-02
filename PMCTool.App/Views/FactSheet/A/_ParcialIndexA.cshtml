@@ -17,8 +17,8 @@
     var chartFonden = "";
     var chartPef = "";
     var chartFonadin = "";
-    var imagenA = "";
-    var imagenB = "";
+    string imagenA = "";
+    string imagenB = "";
 
     @foreach (var row in Model.tabsheet)
     {
@@ -39,8 +39,28 @@
         chartFonden = @row.chartFonden;
         chartPef = @row.chartPef;
         chartFonadin = @row.chartFonadin;
-        imagenA = @row.imagenA;
-        imagenB = @row.imagenB;
+        imagenA = "";
+        if (string.IsNullOrEmpty(@row.imagenA))
+        {
+            imagenA = null;
+        }
+        else
+        {
+            imagenA = @row.imagenA; 
+        }
+        imagenB = "";
+        if (string.IsNullOrEmpty(@row.imagenB))
+        {
+          
+            imagenB = null;
+        }
+        else
+        {
+             imagenB = @row.imagenB;
+        }
+        
+   
+                
 
         break;
 
@@ -353,7 +373,7 @@
                     }
                     
                     <br />
-                    @if (imagenA != null)
+                    @if (imagenA !=null)
                     {
                      var LastUpdate = imagenA.Split('|')[1];
                         <span>Última actualización: @LastUpdate.Substring(0, 10)</span>
