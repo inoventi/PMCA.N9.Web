@@ -413,7 +413,12 @@ namespace PMCTool.App.Controllers
                         
                         string FileName = Request.Type.ToString() + "-" + Request.ProjectID.ToString().Replace("-", "") + Path.GetExtension(Request.Image.FileName);
                         string PathRelativeImagen = "/client/sct/factsheeta/" + FileName;
-                        string Pathfilename = Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/factsheeta/", FileName); 
+                        string Pathfilename = Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/factsheeta/", FileName);
+                        //Check if directory exist
+                        if (!System.IO.Directory.Exists(Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/factsheeta/")))
+                        {
+                            System.IO.Directory.CreateDirectory(Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/factsheeta/")); //Create directory if it doesn't exist
+                        }
                         using (FileStream DestinationStream = new FileStream(Pathfilename, FileMode.Create))
                         {
                             await Request.Image.CopyToAsync(DestinationStream);
