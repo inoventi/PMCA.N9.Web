@@ -384,7 +384,7 @@
                     {
                          var imagenDB = imagenA.Split('|')[0]; 
                          <center>
-                             <img src="@imagenDB" class="img-fluid" alt="Responsive image"> 
+                             <img src="/@imagenDB" class="img-fluid" alt="Responsive image" asp-append-version="true" > 
                          </center>
                     }
                      
@@ -406,7 +406,7 @@
                     {
                          var imagenDB = imagenB.Split('|')[0]; 
                          <center>
-                             <img src="@imagenDB" class="img-fluid" alt="Responsive image"> 
+                             <img src="/@imagenDB" class="img-fluid" alt="Responsive image" asp-append-version="true" > 
                          </center>
                     }
                 </div>
@@ -461,63 +461,56 @@
             </div>
         </div>
     </div>
-    <script>
-                               if (typeof variable === 'undefined') {
-                                   let totalmont = 0;
-                                }
-                                totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
-                                $('._totalmont').empty();
-                                $('._totalmont').html("$ "+totalmont+ " mdp");
-                              new Chart(document.getElementById("doughnut-chart"), {
-                                  type: 'doughnut',
-                                  data: {
-                                      labels: ["Privados", "Fonden", "Fonadin", "Estatal", "PEF"],
-                                      datasets: [
-                                          {
-                                              backgroundColor: ["#330101", "#8B0000", "#D2B48C", "#FFE4C4"],
-                                              data: [
-                                                Math.round(@chartPrivada * 100/ totalmont ),
-                                                Math.round(@chartFonden * 100 / totalmont ),
-                                                Math.round(@chartFonadin * 100/ totalmont ),
-                                                Math.round(@chartEstatal * 100/ totalmont ),
-                                                Math.round(@chartPef * 100/ totalmont )
-                                              ]
-                                          }
-                                      ]
-                                  },
-                                  options: {
-                                      legend: { position: 'bottom' }
-                                  }
-                              });
-                              if (factSheetA.getUrlParameter('projectid')) {
-                                      let pp = factSheetA.getUrlParameter('projectid');
-                                        $('#project').val("'" + pp + "'");
-                                        $('#project').prop('disabled', true);
-                                        $('#project').selectpicker('refresh');
-                                }
-    </script>
+      @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
+                                    {
+                                     }
+                                    else
+                                    {
+                                        <script>
+                                                           if (typeof variable === 'undefined') {
+                                                               let totalmont = 0;
+                                                            }
+                                
+                                                            totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+                                                            $('._totalmont').empty();
+                                                            $('._totalmont').html("$ "+totalmont+ " mdp");
+                                                          let  myChartx = new Chart(document.getElementById("doughnut-chart"), {
+                                                              type: 'doughnut', 
+                                                              data: {
+                                                                  labels: ["Privados", "Fonden", "Fonadin", "Estatal", "PEF"],
+                                                                  datasets: [
+                                                                      {
+                                                                          backgroundColor: ["#330101", "#8B0000", "#D2B48C", "#FFE4C4"],
+                                                                          data: [
+                                                                            Math.round(@chartPrivada * 100/ totalmont ),
+                                                                            Math.round(@chartFonden * 100 / totalmont ),
+                                                                            Math.round(@chartFonadin * 100/ totalmont ),
+                                                                            Math.round(@chartEstatal * 100/ totalmont ),
+                                                                            Math.round(@chartPef * 100/ totalmont )
+                                                                          ]
+                                                                      }
+                                                                  ]
+                                                              },
+                                                              options: {
+                                                                  legend: { position: 'bottom' },
+                                                                   animation: false
+                                                              }
+                                                          });
+                                                          if (factSheetA.getUrlParameter('projectid')) {
+                                                                  let pp = factSheetA.getUrlParameter('projectid');
+                                                                    $('#project').val("'" + pp + "'");
+                                                                    $('#project').prop('disabled', true);
+                                                                    $('#project').selectpicker('refresh');
+                                                            }
+                                                            factSheetA.btnReportPDF(); 
+                                                            let chartxx = myChartx.toBase64Image();
+                                                             factSheetA.savechart(chartxx);
+                                                            delete myChartx;
+                                                            factSheetA.addEventOpenModals();
+                                </script>
  
-    <script>
-        new Chart(document.getElementById("doughnut-chart"), {
-            type: 'doughnut',
-            data: {
-                labels: ["PEF", "FONADIN", "FONDEN", "Estatal", "Privado"],
-                datasets: [
-                    {
-                        backgroundColor: ["#235b4e", "#330101", "#8b0000", "#d2b48c", "#ffe4c4"],
-                        data: [Math.round(7),
-                        Math.round(4),
-                        Math.round(1),
-                        Math.round(2),
-                        Math.round(4)
-                        ]
-                    }
-                ]
-            },
-            options: {
-                legend: { position: 'bottom' }
-            }
-        });
-        factSheetA.addEventOpenModals();
-    </script>
+                                    }
+        
+ 
+     
 }

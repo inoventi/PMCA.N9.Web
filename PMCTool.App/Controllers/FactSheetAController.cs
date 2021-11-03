@@ -427,9 +427,9 @@ namespace PMCTool.App.Controllers
                         data.Image = @"client/sct/factsheeta/" + FileName;
                         //gurdamos en la bse de datos
                         bool statusApi = await restClient.Get<bool>(baseUrl, $"/api/v1/FactSheets/upload/imagen/" + Request.ProjectID + "?pathFile=" + data.Image + "&type=" + Request.Type, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-
+                        Random rnd = new Random();
                         response.IsSuccess = statusApi;
-                        response.ValueString = PathRelativeImagen;
+                        response.ValueString = PathRelativeImagen+"?v="+ rnd.Next(10000).ToString();
                         response.ValueString1 = Request.Type;
                         response.SuccessMessage = "Guardado correctamente";
                     }
