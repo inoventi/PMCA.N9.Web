@@ -4,6 +4,7 @@
     ViewData["Title"] = "FICHA DE PROYECTO";
 }
 @{
+    var chartImage = ViewBag.ProjectID + ".jpg";
     var ProjectName = "";
     var Benefit = "";
     var Scope = "";
@@ -12,6 +13,7 @@
     var IndirectJobsGenerated = "";
     var RelevantMilestones = "";
     var Promoter = "";
+    var Advertisement = "";
     var ProblemToSolve = "";
     var Tdpa = "";
     var Logo = "";
@@ -20,8 +22,9 @@
     var chartFonden = "";
     var chartPef = "";
     var chartFonadin = "";
-    float totalChart;
-   
+    string imagenA = "";
+    string imagenB = "";
+
     @foreach (var row in Model.tabsheet)
     {
         ProjectName = @row.ProjectName;
@@ -32,6 +35,7 @@
         IndirectJobsGenerated = @row.IndirectJobsGenerated;
         RelevantMilestones = @row.RelevantMilestones;
         Promoter = @row.Promoter;
+        Advertisement = @row.Advertisement;
         ProblemToSolve = row.ProblemToSolve;
         Tdpa = @row.Tdpa;
         Logo = @row.Logo;
@@ -40,307 +44,392 @@
         chartFonden = @row.chartFonden;
         chartPef = @row.chartPef;
         chartFonadin = @row.chartFonadin;
+        imagenA = "";
+        if (string.IsNullOrEmpty(@row.imagenA))
+        {
+            imagenA = null;
+        }
+        else
+        {
+            imagenA = @row.imagenA;
+        }
+        imagenB = "";
+        if (string.IsNullOrEmpty(@row.imagenB))
+        {
+
+            imagenB = null;
+        }
+        else
+        {
+            imagenB = @row.imagenB;
+        }
+
+
+
 
         break;
 
-    } 
-     
-    <style>
-        .grid-container {
+    }
+<style>
+    .grid-container {
         display: grid;
         grid-template-rows: auto auto auto auto auto auto;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-        }
+    }
 
-        .grid-item1 {
+    .grid-item1 {
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 1;
         grid-row-end: 1;
-        }
+    }
 
-        .grid-item2 {
+    .grid-item2 {
         grid-column-start: 3;
         grid-column-end: 6;
         grid-row-start: 1;
         grid-row-end: 1;
-        }
+    }
 
-        .grid-item2 {
+    .grid-item2 {
         grid-column-start: 3;
         grid-column-end: 6;
         grid-row-start: 2;
         grid-row-end: 2;
-        }
+    }
 
-        .grid-item4 {
+    .grid-item4 {
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 3;
         grid-row-end: 3;
-        }
+    }
 
-        .grid-item5 {
+    .grid-item5 {
         grid-column-start: 3;
         grid-column-end: 6;
         grid-row-start: 3;
         grid-row-end: 3;
-        }
+    }
 
-        .grid-item6 {
+    .grid-item6 {
         grid-column-start: 1;
         grid-column-end: 3;
         grid-row-start: 4;
         grid-row-end: 4;
-        }
+    }
 
-        .grid-item7 {
+    .grid-item7 {
         grid-column-start: 3;
         grid-column-end: 6;
         grid-row-start: 4;
         grid-row-end: 4;
-        }
+    }
 
-        .grid-item8 {
+    .grid-item8 {
         grid-column-start: 1;
         grid-column-end: 6;
         grid-row-start: 5;
         grid-row-end: 5;
-        }
+    }
 
-        .grid-item9 {
+    .grid-item9 {
         grid-column-start: 1;
         grid-column-end: 2;
         grid-row-start: 6;
         grid-row-end: 6;
-        }
+    }
 
-        .grid-item10 {
+    .grid-item10 {
         grid-column-start: 3;
         grid-column-end: 4;
         grid-row-start: 6;
         grid-row-end: 6;
-        }
+    }
 
-        .grid-item11 {
+    .grid-item11 {
         grid-column-start: 5;
         grid-column-end: 6;
         grid-row-start: 6;
         grid-row-end: 6;
-        }
-    </style>
+    }
+</style>
 
-    <div>
-        <div class="col-md-12 grid-container">
+<div>
+    <div class="col-md-12 grid-container">
 
-            <table style="width: 100%">
-                <tr>
-                    <td colspan="2">
-                         <h4 class="mt-1 font-weight-bold">
-                            @ProjectName
-                        </h4>
-                    </td> 
-                </tr>
-                <tr>
-                    <td> <p class="title-section">
-                                        <b>Beneficios</b>
-                                    </p>
+        <table style="width: 100%">
+            <tr>
+                <td colspan="2">
+                    <h4 class="mt-1 font-weight-bold">
+                        @ProjectName
+                    </h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="title-section">
+                        <b>Beneficios</b>
+                    </p>
+                </td>
+                <td>
+                    <p class="title-section">
+                        <b>Alcance</b>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width="400">
+                    <p style="font-weight: 100 !important;">
+                        @Benefit
+                    </p>
+
+                </td>
+                <td width="400">
+
+                    <p style="font-weight: 100 !important;">
+                        @Scope
+                    </p>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" class="bg-table-green" style="text-align: center;">
+                                    <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
+                                </th>
+                                <td>
+                                    <h6 class="h5-responsive"><b>Directos</b></h6>
                                 </td>
-                    <td>
-                         <p class="title-section">
-                                        <b>Alcance</b>
-                                    </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="400">
-                         
-                             <p>
-                                @Benefit
-                            </p> 
-                         
-                    </td>
-                    <td  width="400">
-                        
-                                     <p>
-                                        @Scope
-                                    </p>
-                           
-                    </td> 
-                </tr>
-                
-                <tr>
-                    <td>
-                        <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <th rowspan="2" class="bg-table-green" style="text-align: center;">
-                                        <h5 class="h5-responsive"><b>Empleos Generados</b></h5>
-                                    </th>
-                                    <td>
-                                        <h6 class="h5-responsive"><b>Directos</b></h6>
-                                    </td>
-                                    <td>
-                                        <h6 class="h5-responsive">@DirectJobsGenerated</h6>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 9px;">
-                                        <h6 class="h5-responsive"><b>Indirectos</b></h6>
-                                    </td>
-                                    <td>
-                                        <h6 class="h5-responsive">@IndirectJobsGenerated</h6>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                    </td>
-                    <td>
-                          <p class="title-section">
-                                <b>TDPA</b>
-                            </p>
-                            <p class="text-center">
-                                 @Tdpa
-                            </p>
-                            
-                    </td> 
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <p class="title-section">
-                                <b>Problemática a resolver</b>
-                            </p>
-                            <p>
-                                @ProblemToSolve
-                            </p>
+                                <td>
+                                    <h6 class="h5-responsive">@DirectJobsGenerated</h6>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 9px;">
+                                    <h6 class="h5-responsive"><b>Indirectos</b></h6>
+                                </td>
+                                <td>
+                                    <h6 class="h5-responsive">@IndirectJobsGenerated</h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+                </td>
+                <td>
+                    <p class="title-section">
+                        <b>TDPA</b>
+                    </p>
+                    <p class="text-center info">
+                        @Tdpa
+                    </p>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p class="title-section">
+                        <b>Problemática a resolver</b>
+                    </p>
+                    <p class="info">
+                        @ProblemToSolve
+                    </p>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="title-section">
+                        <b>Inversión</b>
+                    </p>
+                    <h3 class="text-responsive text-lg-center _totalmont">
+                        
+                    </h3>
+                    <br>
+                    <center>
+                        <img src="~/images/chart/@chartImage" class="img-fluid" alt="Responsive image" asp-append-version="true">
+                    </center>
+                </td>
+                <td>
+                    <div class="col-md-12">
                         <p class="title-section">
-                                <b>Inversión</b>
-                            </p>
-                            <h3 class="text-responsive text-lg-center _totalmont">
-                                
-                                @{
-                                  totalChart =  float.Parse(chartPrivada) + float.Parse(chartFonden) + float.Parse(chartFonadin) + float.Parse(chartEstatal) + float.Parse(chartPef); 
-                                  
-                                } 
-                                $@totalChart mdp
-                            </h3>
-                            <br>
-                            @{
-                                    @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
+                            <b>Licitación</b>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="arrow-steps clearfix">
+                                @foreach (var item in Model.ProjectTask)
+                                {
+                                    string classActive = "";
+                                    if (item.status == 4)
                                     {
-                                        <div class="text-center" style="    padding-bottom: 41px;"><i class="fas fa-exclamation-circle  fa-3x" style="color: #207561;"></i><br /><span style="font-size: .9em;">No se puede cargar la gráfica de inversión.<br> Favor de verificar sus datos en <a href="https://app.pmc-tool.com/">PMC-tool</a></span></div>
+                                        classActive = "current";
                                     }
                                     else
                                     {
-                                        var @projectID = ViewBag.ProjectSeleted;
-                                        var @imageName = string.Concat(@projectID, ".jpg");
-                                        <img src="/images/chart/@imageName">
+                                        classActive = "";
                                     }
+                                    <div class="step @classActive">
+                                        <span>@item.text</span> <br>
+                                        <span>@item.EndDateClient.ToString("yyyy-MM-dd")</span>
+                                    </div>
                                 }
-                    </td>
-                    <td>
-                         <div class="col-md-12">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
                             <p class="title-section">
-                                <b>Detalla de etapa</b>
+                                <b>Actividades Previas a la Ejecución</b>
                             </p>
                         </div>
-                        <table class="table table-sm">
-                                <tbody>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover table-striped tbimpact">
+                                <thead>
                                     <tr>
-                                        <td class="bg-table-green">Etapa</td>
-                                        <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
-                                        <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
-                                        <td class=""></td>
+                                        <th class="bg-table-green">Concepto</th>
+                                        <th class="bg-table-green">Inicio</th>
+                                        <th class="bg-table-green">Duración </th>
+                                        <th class="bg-table-green">Estatus </th>
                                     </tr>
-                                    @foreach (var rowx in Model.ProjectTask)
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ProjectEvidences)
                                     {
-
-                                        <tr style="text-align:center">
-                                            <th style="text-align:initial">
-                                                @rowx.text
-                                            </th>
-                                            <td style="text-align:center"> @rowx.duration</td>
-                                            <td style="text-align:center"> @rowx.start_date</td>
+                                        <tr>
+                                            <th> @item.Description</th>
+                                            <td>  @item.StartDate</td>
+                                            <td>  @item.Duration días</td>
                                             @{
-                                                var styleStatus = "";
-                                                @switch (@rowx.status)
+                                                @if (@item.Status == 1)
                                                 {
-                                                    case 4:
-                                                        <td class="table-success">
-                                                            <img  src="/images/icons/check.png" style="width: 17px;height: 17px;"/>
-                                                        </td>
-                                                        break;
-                                                    case 2:
-                                                    case 3:
-                                                    case 1:
-                                                        <td class="table-danger">
-                                                            <img  src="/images/icons/close.png" style="width: 17px;height: 17px;"/>
-                                                        </td>
-                                                        break;
-                                                    case 5:
-                                                        <td class="table-danger" style="background: #000000;">
-                                                            <img  src="/images/icons/ban.png" style="width: 17px;height: 17px;"/>
-                                                        </td>
-                                                        break;
+                                                    <td>
+                                                        <span class="badge ws badge-success"><strong>En tiempo</strong></span>
+                                                    </td>
+                                                }
+                                                @if (@item.Status == 2)
+                                                {
+                                                    <td>
+                                                        <span class="badge ws badge-warning"><strong>Atrasado</strong></span>
+                                                    </td>
+                                                }
+                                                @if (@item.Status == 3)
+                                                {
+                                                    <td>
+                                                        <span class="badge ws badge-danger"><strong>Con impacto</strong></span>
+                                                    </td>
+                                                }
+                                                @if (@item.Status == 4)
+                                                {
+                                                    <td>
+                                                        <span class="badge ws badge-secondary"><strong>Terminado</strong></span>
+                                                    </td>
+                                                }
+
+                                                @if (@item.Status == 5)
+                                                {
+                                                    <td>
+                                                        <span class="badge ws st-cancelado">Cancelado</span>
+                                                    </td>
                                                 }
                                             }
-                                            <td class="table-success">
-                                                            <img  src="/images/icons/check.png" style="width: 17px;height: 17px;"/>
-                                            </td>
                                         </tr>
-
                                     }
-
                                 </tbody>
                             </table>
-                    </td>
-                </tr>
-                <tr>
-                     
-                    <td colspan="2">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <p class="title-section">
-                                <b>Decisiones Claves</b>
-                            </p>
-                        </div>
-                        <div class="col-md-12">
-                            <p class="justify-text">
-                                @KeyDecisions
-                            </p>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="title-section">
-                                <b>Hitos Relevantes</b>
-                            </p>
-                    </td>
-                    <td>
-                        <p class="title-section">
                                 <b>Promotor</b>
                             </p>
-                    </td>
-                    
-                <tr>
-                    <td>
-                            <p>
-                                @RelevantMilestones
+                            <p style="font-weight: bold;text-align: center;">
+                                @Promoter
+
                             </p>
-                    </td>
-                    <td>
-                            <p>@Promoter</p>
-                    </td>
-                </tr>
-                </tr>
-            </table>
-           
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td colspan="2">
+                    <div class="col-md-12">
+                        <p class="title-section">
+                            <b>Decisiones Claves</b>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="justify-text info">
+                            @KeyDecisions
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="title-section">
+                        <b>Hitos Relevantes</b>
+                    </p>
+                </td>
+                <td>
+                    <p class="title-section">
+                        <b>Anuncios</b>
+                    </p>
+                </td>
+
+            <tr>
+                <td>
+                    <p class="info">
+                        @RelevantMilestones
+                    </p>
+                </td>
+                <td>
+                    <p class="info">@Advertisement</p>
+                </td>
+            </tr>
+            </tr>
+        </table>
+        <div class="row pb-3">
+            <div class="col-md-12 contentA">
+                @if (imagenA != null)
+                {
+                    var imagenDB = imagenA.Split('|')[0];
+                    <center>
+                        <img src="/@imagenDB" class="img-fluid" alt="Responsive image" style="max-width:950px" asp-append-version="true">
+                    </center>
+                }
+
+            </div>
+            <div class="col-md-12 contentB">
+                @if (imagenB != null)
+                {
+                    var imagenDB = imagenB.Split('|')[0];
+                    <center>
+                        <img src="/@imagenDB" class="img-fluid" alt="Responsive image" style="max-width:950px" asp-append-version="true">
+                    </center>
+                }
+            </div>
         </div>
-    </div> 
+        <div class="row pb-3">
+
+
+        </div>
+    </div>
+</div>
+<script>
+    totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+    $('._totalmont').empty();
+    $('._totalmont').html("$ "+totalmont+ " mdp");
+</script>
 }

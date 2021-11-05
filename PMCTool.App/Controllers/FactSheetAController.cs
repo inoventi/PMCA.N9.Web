@@ -349,37 +349,85 @@ namespace PMCTool.App.Controllers
             var token = model.Split('|')[1];
 
             ProjectModelReport dataModel = JsonConvert.DeserializeObject<ProjectModelReport>(modelo);
-            ViewBag.ProjectSeleted = dataModel.project;
             dynamic modelProjectTab = new ExpandoObject();
-
+            List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
+            string stage = null;
+            string projectId = dataModel.project;
+            ParticipantUser participantUser = new ParticipantUser();
+            string userId = GetTokenValue("UserId");
             try
             {
-                List<ProjectTask> projectTask = new List<ProjectTask>();
-                List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
-                var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } }); 
-                modelProjectTab.tabsheet = tabsheet;
-
-                projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{dataModel.project}", new Dictionary<string, string>() { { "Authorization", token } });
-                foreach (var data in projectTask)
+                if (!string.IsNullOrWhiteSpace(userId))
                 {
-                    if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
+                    participantUser = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", token } });
+
+                }
+
+                if (!string.IsNullOrEmpty(projectId.ToString()))
+                {
+                    ViewBag.ProjectSeleted = projectId;
+                    var tabsheet = await restClient.Get<List<ProjectTabA>>(baseUrl, $"/api/v1/projecttaba/getdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", token } });
+                    foreach (var projectTab in tabsheet)
                     {
-                        ProjectTask taskAppend = new ProjectTask()
+                        stage = projectTab.Stage;
+                    }
+                    modelProjectTab.tabsheet = tabsheet;
+
+                    if (!string.IsNullOrEmpty(stage))
+                    {
+                        if (stage == "Preparativos de ejecución" || stage == "Ejecución")
                         {
-                            text = data.text,
-                            start_date = data.start_date,
-                            duration = data.duration,
-                            status = data.status
-                        };
-                        projectTaskFinally.Add(taskAppend);
+                            var projectEvidences = await restClient.Get<List<FactSheetA_Evidences>>(baseUrl, $"/api/v1/projecttaba/{projectId}/evidences", new Dictionary<string, string>() { { "Authorization", token } });
+                            modelProjectTab.ProjectEvidences = projectEvidences;
+
+                            var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", token } });
+                            foreach (var data in projectTask)
+                            {
+                                if (data.WbsCode == "1.5.2.1" || data.WbsCode == "1.5.2.3" || data.WbsCode == "1.5.2.4" || data.WbsCode == "1.5.2.5")
+                                {
+
+                                    ProjectTask taskAppend = new ProjectTask()
+                                    {
+                                        text = data.text == "Convocatoria / Oficio de adjudicación" ? "Convocatoria" : data.text,
+                                        EndDateClient = data.EndDateClient,
+                                        status = data.status
+                                    };
+                                    projectTaskFinally.Add(taskAppend);
+                                }
+                            }
+                            ViewBag.ProjectID = projectId;
+                            modelProjectTab.ProjectTask = projectTaskFinally;
+                            modelProjectTab.participantUser = participantUser;
+
+                            return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
+                        }
+                        else
+                        {
+                            var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", token } });
+                            foreach (var data in projectTask)
+                            {
+                                if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
+                                {
+                                    ProjectTask taskAppend = new ProjectTask()
+                                    {
+                                        text = data.text,
+                                        start_date = data.start_date,
+                                        duration = data.duration,
+                                        status = data.status
+                                    };
+                                    projectTaskFinally.Add(taskAppend);
+                                }
+                            }
+
+                            ViewBag.ProjectID = projectId;
+                            modelProjectTab.ProjectTask = projectTaskFinally;
+
+                            return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
+                        }
                     }
                 }
                 modelProjectTab.ProjectTask = projectTaskFinally;
-
                 return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
-                 
-
-
             }
             catch (HttpResponseException ex)
             {
