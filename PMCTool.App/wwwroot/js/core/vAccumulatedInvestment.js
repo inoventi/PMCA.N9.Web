@@ -252,15 +252,16 @@
         let inversion = $('#Inversion').val();
         let year = $('#Year').val();
         let data = {
-            states: entidades,
-            generalDirection: direccionGral,
-            projectType: tipoProyecto,
-            stage: etapa,
-            investment: inversion,
+            states: entidades.join(),
+            generalDirection: direccionGral.join(),
+            projectType: tipoProyecto.join(),
+            stage: etapa.join(),
+            investment: inversion.join(),
             year: year,
             montID: xValue + 1,
             type: serieName,
         };
+
         LoaderShow();
         $.post('/AccumulatedInvestment/GetDataAccumulatedInvestmentDetail', data, function (dataResult) {
             LoaderHide();
