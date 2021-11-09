@@ -13,12 +13,12 @@ const vReportedIncidentsController = {
             let investment = $('#Inversion').val();
             let advertisement = $('#Anuncio').val();
             let data = {
-                states: states.join(),
-                generalDirection: generalDirection.join(),
-                projectType: projectType.join(),
-                stage: stage.join(),
-                investment: investment.join(),
-                advertisement: advertisement.join(),
+                "states": "'" + states.join() + "'",
+                "generalDirection": "'" + generalDirection.join() + "'",
+                "projectType": "'" + projectType.join() + "'",
+                "stage": "'" + stage.join() + "'",
+                "investment": "'" + investment.join() + "'",
+                "advertisement": "'" + advertisement.join() + "'"
             };
             jQuery.ajaxSettings.traditional = true;
             $.ajax({
