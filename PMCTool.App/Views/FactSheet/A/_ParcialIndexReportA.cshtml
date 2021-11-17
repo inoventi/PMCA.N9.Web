@@ -4,6 +4,7 @@
     ViewData["Title"] = "FICHA DE PROYECTO";
 }
 @{
+    var chartImage = ViewBag.ProjectID + ".jpg";
     var ProjectName = "";
     var Benefit = "";
     var Scope = "";
@@ -12,6 +13,7 @@
     var IndirectJobsGenerated = "";
     var RelevantMilestones = "";
     var Promoter = "";
+    var Advertisement = "";
     var ProblemToSolve = "";
     var Tdpa = "";
     var Logo = "";
@@ -20,7 +22,8 @@
     var chartFonden = "";
     var chartPef = "";
     var chartFonadin = "";
-    float totalChart;
+    string imagenA = "";
+    string imagenB = "";
 
     @foreach (var row in Model.tabsheet)
     {
@@ -32,6 +35,7 @@
         IndirectJobsGenerated = @row.IndirectJobsGenerated;
         RelevantMilestones = @row.RelevantMilestones;
         Promoter = @row.Promoter;
+        Advertisement = @row.Advertisement;
         ProblemToSolve = row.ProblemToSolve;
         Tdpa = @row.Tdpa;
         Logo = @row.Logo;
@@ -40,6 +44,29 @@
         chartFonden = @row.chartFonden;
         chartPef = @row.chartPef;
         chartFonadin = @row.chartFonadin;
+        imagenA = "";
+        if (string.IsNullOrEmpty(@row.imagenA))
+        {
+            imagenA = null;
+        }
+        else
+        {
+            imagenA = @row.imagenA;
+        }
+        imagenB = "";
+        if (string.IsNullOrEmpty(@row.imagenB))
+        {
+
+            imagenB = null;
+        }
+        else
+        {
+            imagenB = @row.imagenB;
+        }
+
+
+
+
         break;
 
     }
@@ -221,78 +248,116 @@
                             <b>Inversión</b>
                         </p>
                         <h3 class="text-responsive text-lg-center _totalmont">
-                            @{
-                                totalChart = float.Parse(chartPrivada) + float.Parse(chartFonden) + float.Parse(chartFonadin) + float.Parse(chartEstatal) + float.Parse(chartPef);
-                            }
-                            $@totalChart mdp
                         </h3>
                         <br>
-                        <br>
-                        @{
-                            @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
-                            {
-                                <div class="text-center" style="    padding-bottom: 41px;"><i class="fas fa-exclamation-circle  fa-3x" style="color: #207561;"></i><br /><span style="font-size: .9em;">No se puede cargar la gráfica de inversión.<br> Favor de verificar sus datos en <a href="https://app.pmc-tool.com/">PMC-tool</a></span></div> }
-                            else
-                            {
-                                var @projectID = ViewBag.ProjectSeleted;
-                                var @imageName = string.Concat(@projectID, ".jpg");
-                                <img src="/images/chart/@imageName">
-                            }
-                        }
+                        <center>
+                            <img src="~/images/chart/@chartImage" class="img-fluid" alt="Responsive image" asp-append-version="true">
+                        </center>
                     </td>
                     <td>
                         <div class="col-md-12">
                             <p class="title-section">
-                                <b>Detalla de etapa</b>
+                                <b>Licitación</b>
                             </p>
                         </div>
-                        <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <td class="bg-table-green">Etapa</td>
-                                    <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
-                                    <td class="bg-table-green" style="text-align:center">Fecha Inicio (dd/mm/aaa)</td>
-                                    <td class=""></td>
-                                </tr>
-                                @foreach (var rowx in Model.ProjectTask)
-                                {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="arrow-steps clearfix">
+                                    @foreach (var item in Model.ProjectTask)
+                                    {
+                                        string classActive = "";
+                                        if (item.status == 4)
+                                        {
+                                            classActive = "current";
+                                        }
+                                        else
+                                        {
+                                            classActive = "";
+                                        }
+                                        <div class="step @classActive">
+                                            <span>@item.text</span> <br>
+                                            <span>@item.EndDateClient.ToString("yyyy-MM-dd")</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <p class="title-section">
+                                    <b>Actividades Previas a la Ejecución</b>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-hover table-striped tbimpact">
+                                    <thead>
+                                        <tr>
+                                            <th class="bg-table-green">Concepto</th>
+                                            <th class="bg-table-green">Inicio</th>
+                                            <th class="bg-table-green">Duración </th>
+                                            <th class="bg-table-green">Estatus </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ProjectEvidences)
+                                        {
+                                            <tr>
+                                                <th> @item.Description</th>
+                                                <td>  @item.StartDate</td>
+                                                <td>  @item.Duration días</td>
+                                                @{
+                                                    @if (@item.Status == 1)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-success"><strong>En tiempo</strong></span>
+                                                        </td>
+                                                    }
+                                                    @if (@item.Status == 2)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-warning"><strong>Atrasado</strong></span>
+                                                        </td>
+                                                    }
+                                                    @if (@item.Status == 3)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-danger"><strong>Con impacto</strong></span>
+                                                        </td>
+                                                    }
+                                                    @if (@item.Status == 4)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws badge-secondary"><strong>Terminado</strong></span>
+                                                        </td>
+                                                    }
 
-                                    <tr style="text-align:center">
-                                        <th style="text-align:initial">
-                                            @rowx.text
-                                        </th>
-                                        <td style="text-align:center"> @rowx.duration</td>
-                                        <td style="text-align:center"> @rowx.start_date</td>
-                                        @{ 
-                                            var styleStatus = "";
-                                            @switch (@rowx.status)
-                                            {
-                                                case 4:
-                                                    <td class="table-success">
-                                                        <img src="/images/icons/check.png" style="width: 17px;height: 17px;" />
-                                                    </td>
-                                                    break;
-                                                case 2:
-                                                case 3:
-                                                case 1:
-                                                    <td class="table-danger">
-                                                        <img src="/images/icons/close.png" style="width: 17px;height: 17px;" />
-                                                    </td>
-                                                    break;
-                                                case 5:
-                                                    <td class="table-danger" style="background: #000000;">
-                                                        <img src="/images/icons/ban.png" style="width: 17px;height: 17px;" />
-                                                    </td>
-                                                    break;
-                                            } }
-                                        <td class="table-success">
-                                            <img src="/images/icons/check.png" style="width: 17px;height: 17px;" />
-                                        </td>
-                                    </tr>
-                                }
+                                                    @if (@item.Status == 5)
+                                                    {
+                                                        <td>
+                                                            <span class="badge ws st-cancelado">Cancelado</span>
+                                                        </td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="title-section">
+                                    <b>Promotor</b>
+                                </p>
+                                <p style="font-weight: bold;text-align: center;">
+                                    @Promoter
 
-                            </tbody>
-                        </table>
+                                </p>
+                            </div>
+
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -318,7 +383,7 @@
                     </td>
                     <td>
                         <p class="title-section">
-                            <b>Promotor</b>
+                            <b>Anuncios</b>
                         </p>
                     </td>
 
@@ -329,11 +394,41 @@
                         </p>
                     </td>
                     <td>
-                        <p class="info">@Promoter</p>
+                        <p class="info">@Advertisement</p>
                     </td>
                 </tr>
                 </tr>
             </table>
+            <div class="row pb-3">
+                <div class="col-md-12 contentA">
+                    @if (imagenA != null)
+                    {
+                        var imagenDB = imagenA.Split('|')[0];
+                        <center>
+                            <img src="/@imagenDB" class="img-fluid" alt="Responsive image" style="max-width:950px" asp-append-version="true">
+                        </center>
+                    }
+
+                </div>
+                <div class="col-md-12 contentB">
+                    @if (imagenB != null)
+                    {
+                        var imagenDB = imagenB.Split('|')[0];
+                        <center>
+                            <img src="/@imagenDB" class="img-fluid" alt="Responsive image" style="max-width:950px" asp-append-version="true">
+                        </center>
+                    }
+                </div>
+            </div>
+            <div class="row pb-3">
+
+
+            </div>
         </div>
     </div>
+    <script>
+    totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+    $('._totalmont').empty();
+    $('._totalmont').html("$ "+totalmont+ " mdp");
+    </script>
 }

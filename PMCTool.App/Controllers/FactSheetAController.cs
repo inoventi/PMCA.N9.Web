@@ -399,7 +399,7 @@ namespace PMCTool.App.Controllers
                             modelProjectTab.ProjectTask = projectTaskFinally;
                             modelProjectTab.participantUser = participantUser;
 
-                            return View("~/Views/FactSheet/A/_ParcialIndexReport.cshtml", modelProjectTab);
+                            return View("~/Views/FactSheet/A/_ParcialIndexReportA.cshtml", modelProjectTab);
                         }
                         else
                         {
