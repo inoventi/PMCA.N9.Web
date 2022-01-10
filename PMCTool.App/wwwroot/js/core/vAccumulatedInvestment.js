@@ -108,7 +108,7 @@
                 text: 'Secuencia de inicio de inversión'
             },
             subtitle: {
-                text: 'Inversión Instantanea Acumulada Mensual (Miles De Mdp)'
+                text: 'Inversión instantánea acumulada mensual (MDP).'
             },
             xAxis: {
                 categories: categories
