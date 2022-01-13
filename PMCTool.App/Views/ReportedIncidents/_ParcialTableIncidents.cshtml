@@ -21,9 +21,25 @@
                     <tbody>
                         @foreach (var i in Model)
                         {
+                            string styleRow = "";
+                            string styleRowIcon = "";
+                            string styleRowClassEvent = "";
+                            if (@i.TotalIncidents > 0)
+                            {
+                                styleRow = "style='font-weight: bold;'";
+                                styleRowIcon = "<i class='fas fa-arrow-circle-right'></i>";
+                                styleRowClassEvent = "class='aclick' onclick='vReportedIncidentsController.getIncidents(this)'";
+                            }
+                            else
+                            {
+                                styleRow = "";
+                                styleRowIcon = "";
+                                styleRowClassEvent = "";
+                                
+                            }
                             <tr>
-                                <td scope="row">@i.Code</td>
-                                <td><a class="aclick" data-incidents="@i.ProjectID" onclick="vReportedIncidentsController.getIncidents(this)">@i.Name</a></td>
+                                <td scope="row" @Html.Raw(@styleRow) >@Html.Raw(@styleRowIcon) @i.Code</td>
+                                <td><a data-incidents="@i.ProjectID" @Html.Raw(@styleRowClassEvent)  @Html.Raw(@styleRow)>@i.Name</a></td>
                                 <td>@i.Fase</td>
                                 @switch (@i.Estatus)
                                 {

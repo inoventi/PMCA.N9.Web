@@ -124,55 +124,54 @@ const ProjectsIndicatorsController = {
         //CICLO PARA APLICAR FORMULAS Y CONSTRUIR LA TABLA
         for (let a = 0; a < data.length; a++) {
             //ID DEL PROYECTO
-            let projectID = data[a].projectID;
-            //CODIGO DEL PROYECTO
-            let codigo = data[a].code;
-            //NOMBRE DEL PROYECTO
-            let projectName = data[a].name;
+            //let projectID = data[a].projectID;
+            ////CODIGO DEL PROYECTO
+            //let codigo = data[a].code;
+            ////NOMBRE DEL PROYECTO
+            //let projectName = data[a].name;
             //FORMULA PARA SACAR CPI = EV/AC
-            let cpi = data[a].ev / data[a].ac;
+            let cpi = data[a].cpi;
             cpi = cpi.toFixed(2);
             cpi > 1.00 ? (cpi = '<td class="text-center indicadores-success">' + cpi + '</td>') : '';
             cpi > 0.80 && cpi < 1.00 ? (cpi = '<td class="text-center indicadores-warning">' + cpi + '</td>') : '';
             cpi < 0.80 ? (cpi = '<td class="text-center indicadores-danger">' + cpi + '</td>') : '';
-            //FORMULA PARA SACAR SPI = PV/AC
-            let spi = data[a].pv / data[a].ac;
+            ////FORMULA PARA SACAR SPI = PV/AC
+            let spi = data[a].spi;
             spi = spi.toFixed(2); 
             spi > 1.00 ? (spi = '<td class="text-center indicadores-success">' + spi + '</td>') : '';
             spi > 0.80 && spi < 1.00 ? (spi = '<td class="text-center indicadores-warning">' + spi + '</td>') : '';
             spi < 0.80 ? (spi = '<td class="text-center indicadores-danger">' + spi + '</td>') : '';
-            //VIENE DEL CEO EL VALOR DE BAC
-            let bac = Math.random() * (30 - 0);
-            bac = bac.toFixed(2);
-            //SE OCUPA SACAR LA DE LA FORMULA DE TENDENCIA PARA SACAR EL TOTAL DE PRESUPUESTO PROYECTADO
-            let eac = Math.random() * (30 - 0);
-            eac = eac.toFixed(2); 
-            //VALOR DE VAC = DIFERENCIA ENTRE EAC Y BAC
-            let vac;
-            if (eac > bac) {
-                vac = eac - bac;
-                vac = vac.toFixed(2);
-            } else if (eac < bac) {
-                vac = bac - eac;
-                vac = vac.toFixed(2);
-            } else {
-                vac = 0;
-            }
-            let endDate = data[a].endDate;
+            ////VIENE DEL CEO EL VALOR DE BAC
+            //let bac = Math.random() * (30 - 0);
+            //bac = bac.toFixed(2);
+            ////SE OCUPA SACAR LA DE LA FORMULA DE TENDENCIA PARA SACAR EL TOTAL DE PRESUPUESTO PROYECTADO
+            //let eac = Math.random() * (30 - 0);
+            //eac = eac.toFixed(2); 
+            ////VALOR DE VAC = DIFERENCIA ENTRE EAC Y BAC
+            //let vac;
+            //if (eac > bac) {
+            //    vac = eac - bac;
+            //    vac = vac.toFixed(2);
+            //} else if (eac < bac) {
+            //    vac = bac - eac;
+            //    vac = vac.toFixed(2);
+            //} else {
+            //    vac = 0;
+            //}
+            //let endDate = data[a].endDate;
 
-            endDate != null ? endDate = endDate.split('T')[0] : endDate= '';
+            //endDate != null ? endDate = endDate.split('T')[0] : endDate= '';
             //PARA SACAR LA FECHA PROYECTADA SE OBTIENE DE LA FORMALA DE TENDENCIA HASTA QUE EV SE ACERQUE A BAC(PRESUPUESTO TOTAL PLANEADO(CEO))
-            let endDataProjected = '2021-10-06';
-            $('#tBodyProjectIndicators').append('<tr>'
-                + '<td class= "text-center">' + codigo + '</td>'
-                + '<td><a href="/ProjectIndicators/Indicator">' + projectName + '</a></td>'
-                + cpi
-                + spi
-                + '<td class="text-center">' + bac + '</td>'
-                + '<td class="text-center">' + eac + '</td>'
-                + '<td class="text-center">' + vac + '</td>'
-                + '<td class="text-center">' + endDate + '</td>'
-                + '<td class="text-center">' + endDataProjected + '</td>'
+             $('#tBodyProjectIndicators').append('<tr>'
+                + '<td class= "text-center">' + data[a].code + '</td>'
+                + '<td><a href="/ProjectIndicators/Indicator">' + data[a].name + '</a></td>'
+                 + cpi
+                 + spi
+                + '<td class="text-center">' + data[a].bac + '</td>'
+                + '<td class="text-center">' + data[a].eac + '</td>'
+                + '<td class="text-center">' + data[a].vac + '</td>'
+                + '<td class="text-center">' + data[a].endDate + '</td>'
+                + '<td class="text-center">' + data[a].projectedDate + '</td>'
                 +'</tr>');
 
         }
