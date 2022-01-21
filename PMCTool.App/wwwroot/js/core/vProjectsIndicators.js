@@ -131,16 +131,17 @@ const ProjectsIndicatorsController = {
             //let projectName = data[a].name;
             //FORMULA PARA SACAR CPI = EV/AC
             let cpi = data[a].cpi;
+            console.log('::'+cpi);
             cpi = cpi.toFixed(2);
-            cpi > 1.00 ? (cpi = '<td class="text-center indicadores-success">' + cpi + '</td>') : '';
-            cpi > 0.80 && cpi < 1.00 ? (cpi = '<td class="text-center indicadores-warning">' + cpi + '</td>') : '';
-            cpi < 0.80 ? (cpi = '<td class="text-center indicadores-danger">' + cpi + '</td>') : '';
+            cpi >= .95 ? (cpi = '<td class="text-center indicadores-success">' + cpi + '</td>') : '';
+            cpi >= 0.85 && cpi < .95 ? (cpi = '<td class="text-center indicadores-warning">' + cpi + '</td>') : '';
+            cpi < 0.85 ? (cpi = '<td class="text-center indicadores-danger">' + cpi + '</td>') : '';
             ////FORMULA PARA SACAR SPI = PV/AC
             let spi = data[a].spi;
             spi = spi.toFixed(2); 
-            spi > 1.00 ? (spi = '<td class="text-center indicadores-success">' + spi + '</td>') : '';
-            spi > 0.80 && spi < 1.00 ? (spi = '<td class="text-center indicadores-warning">' + spi + '</td>') : '';
-            spi < 0.80 ? (spi = '<td class="text-center indicadores-danger">' + spi + '</td>') : '';
+            spi >= .95 ? (spi = '<td class="text-center indicadores-success">' + spi + '</td>') : '';
+            spi >= 0.85 && spi < .95 ? (spi = '<td class="text-center indicadores-warning">' + spi + '</td>') : '';
+            spi < 0.85 ? (spi = '<td class="text-center indicadores-danger">' + spi + '</td>') : '';
             ////VIENE DEL CEO EL VALOR DE BAC
             //let bac = Math.random() * (30 - 0);
             //bac = bac.toFixed(2);
@@ -159,12 +160,12 @@ const ProjectsIndicatorsController = {
             //    vac = 0;
             //}
             //let endDate = data[a].endDate;
-
+            console.log(':::::' +cpi);
             //endDate != null ? endDate = endDate.split('T')[0] : endDate= '';
             //PARA SACAR LA FECHA PROYECTADA SE OBTIENE DE LA FORMALA DE TENDENCIA HASTA QUE EV SE ACERQUE A BAC(PRESUPUESTO TOTAL PLANEADO(CEO))
              $('#tBodyProjectIndicators').append('<tr>'
                 + '<td class= "text-center">' + data[a].code + '</td>'
-                + '<td><a href="/ProjectIndicators/Indicator">' + data[a].name + '</a></td>'
+                 + '<td><a href="/ProjectIndicators/Indicator?project=' + data[a].code +'" target="_blank">' + data[a].name + '</a></td>'
                  + cpi
                  + spi
                 + '<td class="text-center">' + data[a].bac + '</td>'
@@ -217,3 +218,7 @@ const ProjectsIndicatorsController = {
     },
 }
 function pad(n, width, z) { z = z || '0'; n = n + ''; return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n; }
+$.fn.selectpicker.defaults = {
+    selectAllText: 'Seleccionar Todo',
+    deselectAllText: 'Deseleccionar Todo'
+};

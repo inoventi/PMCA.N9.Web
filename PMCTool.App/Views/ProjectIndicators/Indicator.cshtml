@@ -1,21 +1,63 @@
-﻿@model PMCTool.Models.Core.Location
+﻿@using Microsoft.AspNetCore.Components;
+@model dynamic;
 @{
-    ViewData["Title"] = "Indicator";
-    Layout = "_Layout";
-}
+    ViewData["Title"] = "Detalle de indicardores de proyecto";
+    Layout = "_Layout"; 
+        var Code = "";
+        var Name =  ""; 
+        double? CPI = null;  
+        double? SPI = null;  
+        double? BAC = null;  
+        double? EAC = null;  
+        double? VAC = null;  
+        var EndDate =  "";  
+        var ProjectedDate =  "";   
+        @foreach (var row in Model.Indicators)
+        {
+              Code = @row.Code; 
+              Name = @row.Name; 
+              CPI = @row.CPI; 
+              SPI = @row.SPI; 
+              BAC = @row.BAC; 
+              EAC = @row.EAC; 
+              VAC = @row.VAC; 
+              EndDate = @row.EndDate; 
+              ProjectedDate = @row.ProjectedDate; 
+                break;
+    
+        }
+
+<script type="text/javascript">
+    const dataReport = [];
+    const ProjectName = "@Name";
+    @foreach (var d in Model.Chart)
+        {
+            @:dataReport.push({"month":"@d.Month","anio":"@d.Anio","ac":"@d.AC","pc":"@d.ETC","av":"@d.AFRP","prc":"@d.AFRPMC","pv":"@d.PV"});
+        } 
+
+</script>   
 <div class="content">
     <div class="container-fluid">
         <div class="row card">
-            <div class="col-md-12 pt-4">
-                <small class="font-weight-normal">Analytics</small>
-                <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
-                    <span style="color: #235b4e !important;"> Indicador	</span>
-                </h4>
-                <small class="font-weight-normal">Proyecto</small>
-                <h4 class="mt-1 font-weight-bold">
-                    Carretera: Nuevo Casas Grandes – Puerto Palomas
-                </h4>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-10 pt-4">
+                        <small class="font-weight-normal">Analytics</small>
+                        <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                            <span style="color: #235b4e !important;"> Detalle de indicardores de proyecto	</span>
+                        </h4>
+                        <small class="font-weight-normal">Proyecto</small>
+                        <h4 class="mt-1 font-weight-bold">
+                            @Name
+                        </h4>
+                    </div>
+                    <div class="col-md-2 text-right pt-2">
+                        @*<a href="/ProjectIndicators/Index" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>*@
+                    </div>
+
+                </div>
             </div>
+            
             <div class="col-md-12" id="divContainer" style="">
                 <div id="divFichaTecnicaProyecto">
                     <div class="row justify-content-center mt-4">
@@ -24,35 +66,54 @@
                                 <div class="card-body ">
                                     <div class="row justify-content-center">
                                         <div class="col-12">
-                                            <figure class="highcharts-figure">
-                                                <div id="inversion"></div>
-                                            </figure>
+                                            
+                                                @{
+                                                        if (@Name!="")
+                                                        {
+                                                            <figure class="highcharts-figure">
+                                                             <div id="inversion"></div>
+                                                            </figure>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center pb-3"><h3 style="font-weight: 500;">No hay dados del proyecto</h3></div>
+                                                            </div> 
+                                                        }
+                                                }
+                                             
                                         </div>
                                         <div class="col-8">
-                                            <table class="table table-hover table-striped tbimpact">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
-                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
-                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
-                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
-                                                        <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
-                                                        <th class="bg-table-green">Fecha Final </th>
-                                                        <th class="bg-table-green">Fecha Proyectada </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="indicadores-danger">0.47</td>
-                                                        <td class="indicadores-danger">0.69</td>
-                                                        <td class="indicadores-danger">12.5</td>
-                                                        <td class="indicadores-danger">13.2</td>
-                                                        <td class="indicadores-warning">1.0</td>
-                                                        <td>Dic-2021</td>
-                                                        <td>Dic-2022</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                             @{
+                                                        if (@Name!="")
+                                                        {
+                                                            <table class="table table-hover table-striped tbimpact">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
+                                                                    <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
+                                                                    <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
+                                                                    <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
+                                                                    <th class="bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
+                                                                    <th class="bg-table-green">Fecha Final </th>
+                                                                    <th class="bg-table-green">Fecha Proyectada </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody> 
+                                                                <tr>
+                                                                    <td class="indicadores-danger">@CPI</td>
+                                                                    <td class="indicadores-danger">@SPI</td>
+                                                                    <td class="indicadores-danger">@BAC</td>
+                                                                    <td class="indicadores-danger">@EAC</td>
+                                                                    <td class="indicadores-warning">@VAC</td>
+                                                                    <td>@EndDate</td>
+                                                                    <td>@ProjectedDate</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        } 
+                                                }
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -64,107 +125,13 @@
         </div>
     </div>
 </div>
+}
 @section scripts
 {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/highcharts.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.src.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/export-data.min.js" type="text/javascript"></script>
-    <script src="~/js/core/vProjectsIndicators.js" asp-append-version="true"></script>
+    <script src="~/js/core/vProjectsIndicatorsDetail.js" asp-append-version="true"></script>
 }
-<script type="text/javascript">
-$(document).ready(function() {
-    Highcharts.chart('inversion', {
-    chart: {
-        type: 'line',
-        zoomType: 'x'
-    },
-    title: {
-        text: 'Carretera: Nuevo Casas Grandes – Puerto Palomas'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        categories: ['Enero 2021', 'Febrero 2021', 'Marzo 2021', 'Abril 2021', 'Mayo 2021', 'Junio 2021', 'Julio 2021', 'Agosto 2021', 'Septiembre 2021', 'Octubre 2021', 'Noviembre 2021', 'Diciembre 2021','Enero 2022', 'Febrero 2022', 'Marzo 2022']
-    },
-    yAxis: {
-        title: {
-            text: ''
-        },
-        min: 0,
-        
-    },
-    tooltip: {
-        formatter: function () {
-            return  this.y.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-        }
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true,
-                format: '{point.y:,.2f}',
-                allowOverlap: true
-            }
-        }
-    },
-    series: [{
-        name: 'AC(Costo Real)',
-        color: '#800000',
-        lineWidth: 1,
-            marker: {
-                fillColor: 'red',
-                radius: 5
-            },
-        data: [2.6,3.5,4.7, 6.7, 8, 9.5, 11.5]
-        },{
-        name: 'PC(Costo Proyectado)',
-        color: '#800000',
-        lineWidth: 1,
-            marker: {
-                fillColor: 'red',
-                radius: 5
-            },
-        dashStyle: 'dash',
-        data: [null,null,null,null,null,null,11.5,12.5,13.9, 14.5, 15.5, 16.5, 17.5, 18.5, 19.5]
-        },{ 
-        name: 'AV(Valor Real)',
-            color: '#800000',
-            lineWidth: 1,
-                marker: {
-                    fillColor: 'gray',
-                    radius: 5
-                },
-            data: [1,2,2.8,3.2,4.2,4.7,5.5]
-        },{
-        name: 'PRC(Valor Proyectado)',
-        color: '#235b4e',
-        lineWidth: 1,
-            marker: {
-                fillColor: '#B38E5D',
-                radius: 5
-            },
-        dashStyle: 'dash',
-        data: [null,null,null,null,null,null,5.7,6.9,7.5,8,11,12,12.5,13,14]
-        },{
-        name: 'PV(Valor planeado)',
-            color: '#800000',
-            lineWidth: 1,
-                marker: {
-                    fillColor: '#92d050',
-                    radius: 5
-                },
-            data: [1.5,2.5,3.5,4.5,5.3,6.7,7.9,9.5,11,12,13,14]
-        }],
-    navigation: {
-        buttonOptions: {
-            enabled: false
-        }
-    }
-});
-
-});
-
  
-</script>
