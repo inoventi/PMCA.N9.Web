@@ -1,123 +1,136 @@
-﻿@model PMCTool.Models.Core.Location
+﻿@model PMCTool.Models.Core.Location;
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
-    <div class="content">
-        <div class="container-fluid">
+<div class="content">
+    <div class="container-fluid">
 
-            <div class="row card">
-                <div class="col-md-12 pt-4">
-                    <small class="font-weight-normal">Analytics</small>
-                    <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
-                        <span style="color: #235b4e !important;"> Indicadores de proyectos	</span>
-                    </h4>
-                </div>
-                <div class="col-md-12" id="divContainer" style="">
-                    <div class="row justify-content-center mt-3">
-                        <div class="col-12">
-                            <div class="row">
-                                 <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { multiple = true, @id = "Entidad", @class = "selectpicker", @data_style = "btn-default btn-outline", @data_title = "Entidad Federativa", @data_live_search = true, @data_actions_box = true }) 
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple data-live-search="true" data-actions-box="true">
-                                        <option value="ARTF">Agencia Reguladora de Transporte Ferroviario</option>
-                                        <option value="DGCF">Dirección General de Carreteras Federales (DGCF)</option>
-                                        <option value="DGCRyA">Dirección General de Caminos Rurales y Alimentadores (DGCRyA)</option>
-                                        <option value="DGCC">DG Conservación de Carreteras</option>
-                                        <option value="DGDC">DG Desarrollo carretero</option>
-                                        <option value="DGTFM">DG Transporte Ferroviario y Multimodal</option>
-                                        <option value="Otros">Otros</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                        <option value="1">Infraestructura para el bienestar</option>
-                                        <option value="2">Reactivación Económica</option>
-                                        <option value="3">Accesorio</option>
-                                        <option value="4">Territorio Yaqui</option>
-                                        <option value="5">Compromisos de presiones sociales</option>
-                                        <option value="6">Obras de compromiso sectorial</option>
-                                        <option value="7">Por Definir</option>
-                                    </select>
-                                </div>
+        <div class="row card">
+            <div class="col-md-12 pt-4">
+                <small class="font-weight-normal">Analytics</small>
+                <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
+                    <span style="color: #235b4e !important;"> Indicadores de proyectos	</span>
+                </h4>
+            </div>
+            <div class="col-md-12" id="divContainer" style="">
+                <div class="row justify-content-center mt-3">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { multiple = true, @id = "Entidad", @class = "selectpicker", @data_style = "btn-default btn-outline", @data_title = "Entidad Federativa", @data_live_search = true, @data_actions_box = true })
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <select name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" multiple data-live-search="true" data-actions-box="true">
+                                    <option value="ARTF">Agencia Reguladora de Transporte Ferroviario</option>
+                                    <option value="DGCF">Dirección General de Carreteras Federales (DGCF)</option>
+                                    <option value="DGCRyA">Dirección General de Caminos Rurales y Alimentadores (DGCRyA)</option>
+                                    <option value="DGCC">DG Conservación de Carreteras</option>
+                                    <option value="DGDC">DG Desarrollo carretero</option>
+                                    <option value="DGTFM">DG Transporte Ferroviario y Multimodal</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
+                                    <option value="1">Infraestructura para el bienestar</option>
+                                    <option value="2">Reactivación Económica</option>
+                                    <option value="3">Accesorio</option>
+                                    <option value="4">Territorio Yaqui</option>
+                                    <option value="5">Compromisos de presiones sociales</option>
+                                    <option value="6">Obras de compromiso sectorial</option>
+                                    <option value="7">Por Definir</option>
+                                </select>
+                            </div>
 
-                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                        <option value="1">Potenciales</option>
-                                        <option value="2">Preparación</option>
-                                        <option value="3">En proceso de análisis</option>
-                                        <option value="4">Autorización</option>
-                                        <option value="5">Preparativos de ejecución</option>
-                                        <option value="6">Ejecución</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                        <option value="PEF">PEF</option>
-                                        <option value="FONADIN">FONADIN</option>
-                                        <option value="FONDEN">FONDEN</option>
-                                        <option value="ESTATAL">ESTATAL</option>
-                                        <option value="PRIVADA">PRIVADA</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <select multiple name="Anuncio" id="Anuncio" class="selectpicker" data-title="Anuncio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                        <option value="1">Plurianualidades</option>
-                                        <option value="2">Tercer Anuncio</option>
-                                        <option value="3">Primer Anuncio</option>
-                                        <option value="4">Segundo Anuncio</option>
-                                        <option value="5">Autopista Mitla - Tehuantepec II</option>
-                                        <option value="6">Autopista Barranca Larga - Ventanilla</option>
-                                        <option value="7">AIFA</option>
-                                        <option value="8">No Aplica</option>
-                                        <option value="9">PNS</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                    <button id="btnReport" type="button" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
-                                        <span class="btn-label">
-                                            <i class="fa fa-file-alt"></i>
-                                        </span>
-                                        Mostrar Reporte
-                                    </button>
-                                    <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1" hidden>
-                                        <span class="btn-label">
-                                            <i class="fas fa-times"></i>
-                                        </span>
-                                        Cerrar Reporte
-                                    </button>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
+                                    <option value="1">Potenciales</option>
+                                    <option value="2">Preparación</option>
+                                    <option value="3">En proceso de análisis</option>
+                                    <option value="4">Autorización</option>
+                                    <option value="5">Preparativos de ejecución</option>
+                                    <option value="6">Ejecución</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Inversión" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
+                                    <option value="PEF">PEF</option>
+                                    <option value="FONADIN">FONADIN</option>
+                                    <option value="FONDEN">FONDEN</option>
+                                    <option value="ESTATAL">ESTATAL</option>
+                                    <option value="PRIVADA">PRIVADA</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <select multiple name="Anuncio" id="Anuncio" class="selectpicker" data-title="Anuncio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
+                                    <option value="1">Plurianualidades</option>
+                                    <option value="2">Tercer Anuncio</option>
+                                    <option value="3">Primer Anuncio</option>
+                                    <option value="4">Segundo Anuncio</option>
+                                    <option value="5">Autopista Mitla - Tehuantepec II</option>
+                                    <option value="6">Autopista Barranca Larga - Ventanilla</option>
+                                    <option value="7">AIFA</option>
+                                    <option value="8">No Aplica</option>
+                                    <option value="9">PNS</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-1 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <button id="btnReport" type="button" class="btn btn-default btn-default" style="background-color: #235B4E!important;">
+                                            <span class="btn-label">
+                                                <i class="fa fa-file-alt"></i>
+                                            </span>
+                                            Mostrar Reporte
+                                        </button>
+                                        <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1" hidden>
+                                            <span class="btn-label">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                            Cerrar Reporte
+                                        </button>
+                                    </div>
+                                    @if (ViewBag.participantUser.Type == 2 || ViewBag.participantUser.Login == "norma.zamudio")
+                                    {
+                                        <div class="col-md-6 text-right">
+                                            <button type="button" id="btnExcel" for="file" class="btn btn-wd btn-info btn-default">
+                                                <span class="btn-label">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                Importar Excel
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <!--Sección de PartialView-->
+                </div>
+                <hr>
+                <!--Sección de PartialView-->
 
-                    <div id="divTableProjectIndicators" hidden>
-                        <div class="row justify-content-center mt-4">
-                            <div class="col-md-12">
-                                <div class="table-responsive" id="TableProjectIndicators" hidden>
-                                    <table class="table table-hover table-striped tbimpact">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center bg-table-green">Código</th>
-                                                <th class="text-center bg-table-green">Proyecto</th>
-                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
-                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
-                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
-                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
-                                                <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
-                                                <th class="text-center bg-table-green">Fecha Final</th>
-                                                <th class="text-center bg-table-green">Fecha Proyectada</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tBodyProjectIndicators">
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
+                <div id="divTableProjectIndicators" hidden>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-12">
+                            <div class="table-responsive" id="TableProjectIndicators" hidden>
+                                <table class="table table-hover table-striped tbimpact">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center bg-table-green">Código</th>
+                                            <th class="text-center bg-table-green">Proyecto</th>
+                                            <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño de costo respecto al plan">CPI</th>
+                                            <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Índice de desempeño respecto al avance físico">SPI</th>
+                                            <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto total planeado">BAC </th>
+                                            <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Presupuesto proyectado para concluir">EAC </th>
+                                            <th class="text-center bg-table-green" data-toggle="tooltip" data-placement="top" title="Variación de costo proyectado para concluir">VAC </th>
+                                            <th class="text-center bg-table-green">Fecha Final</th>
+                                            <th class="text-center bg-table-green">Fecha Proyectada</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tBodyProjectIndicators">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -125,6 +138,29 @@
             </div>
         </div>
     </div>
-@section scripts{ 
+</div>
+<div class="modal fade" id="modalExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card horizontal-form" style="border:none;">
+                    <div class="card-body ">
+                        <form id="formexcel">
+                            <div class="form-group">
+                                <label>Importar Excel</label>
+                                @Html.TextBox("fileExcel", "", new { @id = "fileExcel", @class = "form-control", @style = "", type = "file", @required = "required", accept = ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" })
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="button" class="btn btn-info btn-fill" data-dismiss="modal">@Localizer["Cancel"]</button>
+                                <button type="button" id="btnUpload" onclick="ProjectsIndicatorsController.uploadExcel(); return false;" class="btn btn-default btn-fill">@Localizer["Upload"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
     <script src="~/js/core/vProjectsIndicators.js" asp-append-version="true"></script>
 }

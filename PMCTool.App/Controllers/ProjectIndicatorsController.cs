@@ -29,8 +29,16 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication]
         public async Task<IActionResult> Index()
         {
+            ParticipantUser participantUser = new ParticipantUser();
+            string userId = GetTokenValue("UserId");
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                participantUser = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+            }
             List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             ViewBag.States = states;
+            ViewBag.participantUser = participantUser;
             return View();
         }
         [HttpPost]
@@ -87,8 +95,6 @@ namespace PMCTool.App.Controllers
 
             try
             {
-
-
                 int requesData = project;
                 string fileName = "ProjectIndicatorsData.xlsx";
                 string pathFile = Path.Combine(path, fileName);
@@ -196,7 +202,6 @@ namespace PMCTool.App.Controllers
 
                     } // end IF
                 } // end FOR
-
                 Model.Chart = projectIndicators;
             }
             catch (HttpResponseException ex)
@@ -206,6 +211,84 @@ namespace PMCTool.App.Controllers
             {
             }
             return View("~/Views/ProjectIndicators/Indicator.cshtml", Model);
+        }
+        public async Task<JsonResult> UploadFileExcel(ProjectIndicatorsExcel Request)
+        {
+            ParticipantUser data = new ParticipantUser();
+
+            ResponseModel response = new ResponseModel()
+            {
+                IsSuccess = false,
+            };
+
+            try
+            {
+                string userId = GetTokenValue("UserId");
+                data = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                if (data != null && Request.ProjectID != null)
+                {
+                    if (Request.Excel != null)
+                    {
+
+                        string FileName = "ProjectIndicatorsData.xlsx";
+                        string PathRelativeImagen = "/client/sct/projectIndicators/" + FileName;
+                        string sourcePath = @"client/sct/projectIndicators/";
+                        string Pathfilename = Path.Combine(_hostingEnvironment.WebRootPath, sourcePath, FileName);
+                        //Check if directory exist
+                        if (!System.IO.Directory.Exists(Path.Combine(_hostingEnvironment.WebRootPath, sourcePath)))
+                        {
+                            System.IO.Directory.CreateDirectory(Path.Combine(_hostingEnvironment.WebRootPath, sourcePath)); //Create directory if it doesn't exist
+                        }
+                        // Delete a file by using File class static method...
+                        if (System.IO.File.Exists(Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/projectIndicators/ProjectIndicatorsData.xlsx")))
+                        {
+                            try
+                            {
+                                System.IO.File.Delete(Path.Combine(_hostingEnvironment.WebRootPath, @"client/sct/projectIndicators/ProjectIndicatorsData.xlsx"));
+
+
+                                using (FileStream DestinationStream = new FileStream(Pathfilename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                                {
+                                    await Request.Excel.CopyToAsync(DestinationStream);
+                                }
+                                response.IsSuccess = true;
+                                response.SuccessMessage = "Guardado correctamente";
+                            }
+                            catch (System.IO.IOException e)
+                            {
+                                response.IsSuccess = false;
+                                response.SuccessMessage = e.Message;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.SuccessMessage = "Error en los datos";
+                    }
+
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.SuccessMessage = "Error en los datos";
+                }
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                response.ErrorCode = apiError.ErrorCode;
+                response.ErrorMessage = localizer.GetString(response.ErrorCode.ToString());
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = ex.Source + ": " + ex.Message;
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+            }
+
+            return Json(response);
         }
     }
 }

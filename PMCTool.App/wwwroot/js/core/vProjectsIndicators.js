@@ -1,8 +1,11 @@
 ﻿$(document).ready(function () {
     //ProjectsIndicatorsController.initGraphic();
     ProjectsIndicatorsController.initPetition();
+    $('#btnExcel').click(function (e) {
+        let modal = $(this).data('modal');
+        ProjectsIndicatorsController.openModal();
+    });
 })
-
 const ProjectsIndicatorsController = {
     initGraphic: () => {
         Highcharts.chart('inversion', {
@@ -215,6 +218,66 @@ const ProjectsIndicatorsController = {
         $('#Inversion').selectpicker('refresh');
         $('#Anuncio').prop('disabled', true);
         $('#Anuncio').selectpicker('refresh');
+    },
+    openModal: () => {
+        $('#modalExcel').modal('show');
+    },
+    uploadExcel: () => {
+        var form = $("#formexcel");
+        if (!form.valid())
+            return;
+        let ProjectID = $('#ProjectIDx').val();;
+
+        formData = new FormData();
+        formData.append("ProjectID", ProjectID);
+        formData.append("Excel", $("#fileExcel")[0].files[0]);
+        ProjectsIndicatorsController.saveImagen(formData);
+    },
+    saveImagen: (formData) => {
+        $.ajax({
+            type: 'PATCH',
+            url: '/ProjectIndicators/UploadFileExcel',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                LoaderShow();
+            },
+            success: function (data) {
+                if (data.isSuccess) {
+                    Swal.fire({
+                        type: 'success',
+                        title: '',
+                        text: data.successMessage,
+                        footer: '',
+                        onAfterClose: function () {
+                            $('#modalExcel').modal('toggle');
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: data.errorMessage,
+                        footer: ''
+                    });
+                }
+            },
+            complete: function (data) {
+                LoaderHide();
+            },
+            error: function (xhr, status, error) {
+                LoaderHide();
+                Swal.fire({
+                    type: 'error',
+                    title: '',
+                    text: error,
+                    footer: ''
+                });
+            }
+        })
+
     },
 }
 function pad(n, width, z) { z = z || '0'; n = n + ''; return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n; }
