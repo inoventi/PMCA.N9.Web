@@ -101,8 +101,30 @@
                                                             </thead>
                                                             <tbody> 
                                                                 <tr>
-                                                                    <td class="indicadores-danger">@CPI</td>
-                                                                    <td class="indicadores-danger">@SPI</td>
+                                                                    @if (CPI >= .95)
+                                                                    {
+                                                                        <td class="text-center indicadores-success"> @CPI </td>
+                                                                    }
+                                                                    @if (CPI >= 0.85 && CPI < .95)
+                                                                    {
+                                                                        <td class="text-center indicadores-warning"> @CPI </td>
+                                                                    }
+                                                                    @if (CPI < 0.85)
+                                                                    {
+                                                                        <td class="text-center indicadores-danger"> @CPI </td>
+                                                                    }
+                                                                    @if (SPI >= .95)
+                                                                    {
+                                                                        <td class="text-center indicadores-success"> @SPI </td>
+                                                                    }
+                                                                    @if (SPI >= 0.85 && SPI < .95)
+                                                                    {
+                                                                        <td class="text-center indicadores-warning"> @SPI </td>
+                                                                    }
+                                                                    @if (SPI < 0.85)
+                                                                    {
+                                                                        <td class="text-center indicadores-danger"> @SPI </td>
+                                                                    }
                                                                     <td class="indicadores-danger">@BAC</td>
                                                                     <td class="indicadores-danger">@EAC</td>
                                                                     <td class="indicadores-warning">@VAC</td>
