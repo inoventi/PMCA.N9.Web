@@ -1,77 +1,88 @@
-﻿@model dynamic;
-@{ 
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12 text-right text-right">
-                <button class="btn btn-social btn-tumblr btn-link" onclick="vReportedIncidentsController.btnReportPDF();">
-                    <i class="fas fa-file-pdf"></i> Exportar en PDF
-                </button>
-            </div>
+﻿@model IEnumerable<PMCTool.Models.Environment.ActionsToMake>;
+@{
+    <div class="fresh-datatables">
+        <div class="col-md-12">
+            <div class="row">
+                @if (Model.Count() > 0)
+                {
+                    <div class="col-md-12 text-right text-right">
+                        <button class="btn btn-social btn-tumblr btn-link" onclick="vReportedIncidentsController.btnReportPDF();">
+                            <i class="fas fa-file-pdf"></i> Exportar en PDF
+                        </button>
+                    </div>
 
-            <div class="col-md-12">
-                <table class="table table-hover table-striped tbincidents">
-                    <thead>
-                        <tr style="background-color: #235b4e;">
-                            <th>Codigo</th>
-                            <th>Proyecto</th>
-                            <th>fase</th>
-                            <th>Estatus</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var i in Model)
-                        {
-                            string styleRow = "";
-                            string styleRowIcon = "";
-                            string styleRowClassEvent = "";
-                            if (@i.TotalIncidents > 0)
-                            {
-                                styleRow = "style='font-weight: bold;'";
-                                styleRowIcon = "<i class='fas fa-arrow-circle-right'></i>";
-                                styleRowClassEvent = "class='aclick' onclick='vReportedIncidentsController.getIncidents(this)'";
-                            }
-                            else
-                            {
-                                styleRow = "";
-                                styleRowIcon = "";
-                                styleRowClassEvent = "";
-                                
-                            }
-                            <tr>
-                                <td scope="row" @Html.Raw(@styleRow) >@Html.Raw(@styleRowIcon) @i.Code</td>
-                                <td><a data-incidents="@i.ProjectID" @Html.Raw(@styleRowClassEvent)  @Html.Raw(@styleRow)>@i.Name</a></td>
-                                <td>@i.Fase</td>
-                                @switch (@i.Estatus)
+                    <div class="col-md-12">
+                        <table class="table table-hover table-striped tbincidents">
+                            <thead>
+                                <tr style="background-color: #235b4e;">
+                                    <th>Codigo</th>
+                                    <th>Proyecto</th>
+                                    <th>fase</th>
+                                    <th>Estatus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model)
                                 {
-                                    case 1:
-                                        <td><span class="bold ws st-entiempo ws">En tiempo</span></td>
+                                    string styleRow = "";
+                                    string styleRowIcon = "";
+                                    string styleRowClassEvent = "";
+                                    if (@i.TotalIncidents > 0)
+                                    {
+                                        styleRow = "style='font-weight: bold;'";
+                                        styleRowIcon = "<i class='fas fa-arrow-circle-right'></i>";
+                                        styleRowClassEvent = "class='aclick' onclick='vReportedIncidentsController.getIncidents(this)'";
+                                    }
+                                    else
+                                    {
+                                        styleRow = "";
+                                        styleRowIcon = "";
+                                        styleRowClassEvent = "";
 
-                                        break;
-                                    case 2:
-                                        <td><span class="bold st-atrasado ws">Atrasado</span></td>
+                                    }
+                                    <tr>
+                                        <td scope="row" @Html.Raw(@styleRow)>@Html.Raw(@styleRowIcon) @i.Code</td>
+                                        <td><a data-incidents="@i.ProjectID" @Html.Raw(@styleRowClassEvent) @Html.Raw(@styleRow)>@i.Name</a></td>
+                                        <td>@i.Fase</td>
+                                        @switch (@i.Estatus)
+                                        {
+                                            case 1:
+                                                <td><span class="bold ws st-entiempo ws">En tiempo</span></td>
 
-                                        break;
-                                    case 3:
-                                        <td><span class="bold ws st-cimpacto ws">Con impacto</span></td>
+                                                break;
+                                            case 2:
+                                                <td><span class="bold st-atrasado ws">Atrasado</span></td>
 
-                                        break;
-                                    case 4:
-                                        <td><span class="bold ws st-cerrado ws">Terminado</span></td>
+                                                break;
+                                            case 3:
+                                                <td><span class="bold ws st-cimpacto ws">Con impacto</span></td>
 
-                                        break;
-                                    case 5:
-                                        <td><span class="bold ws st-cancelado  ws">Cancelado</span></td>
+                                                break;
+                                            case 4:
+                                                <td><span class="bold ws st-cerrado ws">Terminado</span></td>
 
-                                        break;
-                                    case 6:
-                                        <td><span class="bold ws st-suspendido ws">Archivado</span></td>
+                                                break;
+                                            case 5:
+                                                <td><span class="bold ws st-cancelado  ws">Cancelado</span></td>
 
-                                        break;
+                                                break;
+                                            case 6:
+                                                <td><span class="bold ws st-suspendido ws">Archivado</span></td>
+
+                                                break;
+                                        }
+                                    </tr>
                                 }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                <div class="col-12 text-center">
+                    <h5 class="color-font-global">No se encontraron resultados para los filtros ingresados</h5>
+                </div>
+                }
             </div>
         </div>
     </div>
