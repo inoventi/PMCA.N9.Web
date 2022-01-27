@@ -91,9 +91,9 @@
                                             Cerrar Reporte
                                         </button>
                                     </div>
-                                    @if (ViewBag.participantUser.Type == 2 || ViewBag.participantUser.Login == "norma.zamudio")
+                                    @if (ViewBag.participantUser.Type == 2)
                                     {
-                                        <div class="col-md-6 text-right">
+                                         <div class="col-md-6 text-right">
                                             <button type="button" id="btnExcel" for="file" class="btn btn-wd btn-info btn-default">
                                                 <span class="btn-label">
                                                     <i class="fas fa-upload"></i>
@@ -109,7 +109,6 @@
                 </div>
                 <hr>
                 <!--Sección de PartialView-->
-
                 <div id="divTableProjectIndicators" hidden>
                     <div class="row justify-content-center mt-4">
                         <div class="col-md-12">
