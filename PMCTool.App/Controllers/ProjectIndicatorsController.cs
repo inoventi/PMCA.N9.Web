@@ -188,6 +188,18 @@ namespace PMCTool.App.Controllers
                             pv = Convert.ToDouble(worksheet.Cells[$"I{iRow}"].Value.ToString().Trim());
                         }
 
+                        double? cp = null;
+                        if (worksheet.Cells["J" + iRow.ToString()].Value != null)
+                        {
+                            cp = Convert.ToDouble(worksheet.Cells[$"J{iRow}"].Value.ToString().Trim());
+                        }
+
+                        double? ap = null;
+                        if (worksheet.Cells["K" + iRow.ToString()].Value != null)
+                        {
+                            ap = Convert.ToDouble(worksheet.Cells[$"K{iRow}"].Value.ToString().Trim());
+                        }
+
                         ProjectIndicatorsDetail pIndicator = new ProjectIndicatorsDetail();
                         pIndicator.Code = code;
                         pIndicator.ProjectName = projectName;
@@ -198,6 +210,8 @@ namespace PMCTool.App.Controllers
                         pIndicator.AFRP = afrp;
                         pIndicator.AFRPMC = afrpmc;
                         pIndicator.PV = pv;
+                        pIndicator.CP = cp;
+                        pIndicator.AP = ap;
                         projectIndicators.Add(pIndicator);
 
                     } // end IF

@@ -10,7 +10,9 @@ let pid = {
             pc: [],
             av: [],
             prc: [],
-            pv: []
+            pv: [],
+            cp: [],
+            ap: []
         };
         let date = [];
         let ac = [];
@@ -18,6 +20,8 @@ let pid = {
         let av = [];
         let pv = [];
         let prc = [];
+        let cp = [];
+        let ap = [];
         data.forEach(function (value, index, array) {
             const month = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
             date.push(month[value.month-1] +" "+ value.anio);
@@ -48,6 +52,19 @@ let pid = {
             } else {
                 pv.push(null)
             }
+            //Fill CP
+            if (value.cp != '') {
+                cp.push(Math.round(value.cp * 100) / 100)
+            } else {
+                cp.push(null)
+            }
+
+            //Fill AP
+            if (value.ap != '') {
+                ap.push(Math.round(value.ap * 100) / 100)
+            } else {
+                ap.push(null)
+            }
         }); // end foreach 
         let aclength = (ac.length) - 1;  
         let avlength = (av.length) - 1;  
@@ -61,6 +78,8 @@ let pid = {
         dataClean.av.push(av);
         dataClean.prc.push(prc);
         dataClean.pv.push(pv);
+        dataClean.cp.push(cp);
+        dataClean.ap.push(ap);
 
         return dataClean;
     },
@@ -147,7 +166,25 @@ let pid = {
                     radius: 5
                 },
                 data: data.pv[0]
-            }],
+                }, {
+                    name: 'CP(Costo Programado)',
+                color: '#5B2C6F',
+                    lineWidth: 1,
+                    marker: {
+                        fillColor: '#92d050',
+                        radius: 5
+                    },
+                    data: data.cp[0]
+                }, {
+                    name: 'AP(Avance Programado)',
+                color: '#21618C',
+                    lineWidth: 1,
+                    marker: {
+                        fillColor: '#92d050',
+                        radius: 5
+                    },
+                    data: data.ap[0]
+                }],
             navigation: {
                 buttonOptions: {
                     enabled: false
