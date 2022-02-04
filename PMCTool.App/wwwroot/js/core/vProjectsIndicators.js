@@ -194,7 +194,7 @@ const ProjectsIndicatorsController = {
                 break;
             case 2:
                 $('#divTableProjectIndicators').removeAttr('hidden');
-                $('#divTableProjectIndicators').append('<center>No se encontraron registros.</center>');
+                $('#divTableProjectIndicators').append('<div class="col-12 text-center"><h5 class= "color-font-global">No se encontraron resultados para los filtros ingresados</h5 ></div>');
                 ProjectsIndicatorsController.ResetSelects();
                 break;
         }
