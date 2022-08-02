@@ -1,0 +1,124 @@
+﻿@model dynamic;
+@{
+    ViewData["Title"] = "Top Project Library";
+    Layout = "_Layout";
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+
+}
+<link rel="stylesheet" href="~/css/projectLibrary.css" asp-append-version="true" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="row">
+                    <div class="col-md-10 pt-4 pb-4">
+                        <small class="font-weight-normal">Analytics</small>
+                        <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                            <span class="title-report">Ranking de proyectos</span>
+                        </h4>
+                    </div>
+                    <div class="col-md-2 pt-4 text-right">
+                        <a type="button" class="btn btn-round btn-sm btn-back" href="/ProjectLibrary/Index">
+                            <span class="btn-label">  <i class="fas fa-arrow-left"></i> </span>Regresar
+                        </a>
+                    </div>
+                </div>
+                <!-- allow-->
+
+            </div>    <!-- end allow-->
+            <!-- new table-->
+            <div class="row">
+
+                <div class="col-md-12 mb-4">
+                    <table class="ttable" style="font-size: 11px;" border="1">
+                        <tbody>
+                            <tr>
+                                <td rowspan="2" class="bg-1 c-write bold"> Prioridad</td>
+                                <td rowspan="2" class="bg-1 c-write bold"> Nombre del Proyecto  </td>
+                                <td rowspan="2" class="bg-1 c-write bold"> Tipo </td>
+                                <td rowspan="2" class="bg-1 c-write bold"> Monto total de inversión (mdp)  </td>
+                                <td colspan="4" class="bg-3 c-write bold"> Proceso de una PNS </td>
+                                <td colspan="5" class="bg-2 c-write bold"> Factibilidades </td>
+                                <td rowspan="2" class="bg-1 c-write bold">
+                                    Total de avance  (%) <p></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-3 c-write bold"> Manifestación de interés  </td>
+                                <td class="bg-3 c-write bold"> Presentación PNS </td>
+                                <td class="bg-3 c-write bold"> Análisis y evaluación </td>
+                                <td class="bg-3 c-write bold"> Opinión de viabilidad </td>
+                                <td class="bg-2 c-write bold"> Técnica </td>
+                                <td class="bg-2 c-write bold"> Económica </td>
+                                <td class="bg-2 c-write bold"> Legal </td>
+                                <td class="bg-2 c-write bold"> Ambiental </td>
+                                <td class="bg-2 c-write bold"> Social  </td>
+                            </tr>
+                            @if (Model != null)
+                            {
+
+                                int count = 1;
+                                decimal totalmdp = 0;
+                                foreach (var row in Model.top)
+                                {
+                                    totalmdp = totalmdp + Convert.ToDecimal(row.FuenteFinanciamiento);
+                                    <tr>
+                                        <td>@count</td>
+                                        <td style="text-align: left;">@row.Name</td>
+                                        <td>@row.TypeProject</td>
+                                        <!--<td>@row.Progress%</td>-->
+                                        <td>@row.FuenteFinanciamiento</td>
+                                        <td>@row.Manifestacion%</td>
+                                        <td>@row.PresentacionPNS%</td>
+                                        <td>@row.AnalisisyEvaluacion%</td>
+                                        <td>@row.OpinionViabilidad%</td>
+                                        <td>@row.Tecnica%</td>
+                                        <td>@row.Economica%</td>
+                                        <td>@row.Legal%</td>
+                                        <td>@row.Ambiental%</td>
+                                        <td>@row.Social%</td>
+                                        <td>@row.TotalRow%</td>
+
+                                    </tr>
+
+                                    count++;
+                                }
+                                <tr>
+                                    <td colspan="3" width="297">
+                                        <strong>Total</strong><strong> de Inversión (mdp)</strong>
+                                    </td>
+
+                                    <td>@totalmdp</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            }
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- end new table -->
+        </div>
+    </div>
+</div>
+ <script>
+     $(function () {
+         setTimeout(() => {
+             document.getElementById('minimizeSidebar').click();
+             console.log("1 Segundo esperado")
+         }, 400);
+        
+     });
+ </script>

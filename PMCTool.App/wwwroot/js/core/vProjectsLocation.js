@@ -121,7 +121,7 @@ let projectsLocationController = {
                 let html = '<div class="container-fluid"><div class="row">'
                     + '<div class="col-12">'
                     + '<div class="row text-center">'
-                    + '<div class="col-12" style="background: #235b4e;color: white;background: #235b4e;padding: 6px;">'
+                    + '<div class="col-12" style="background: #9F2241;color: white;background: #9F2241;padding: 6px;">'
                     + '<h5 style="margin-bottom: 2px;margin-top: 2px;font-weight: 500;text-transform: uppercase;">' + marker.title + '</h5>'
                     + '</div>'
                     + '</div>'

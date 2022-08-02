@@ -403,13 +403,16 @@ input:focus {
 }
 
 .title-report {
-    color: #235b4e;
+    color: #9F2241;
 }
+    .title-report-green {
+        color: #245c4f;
+    }
 
 .div-detail-head {
     font-size: 12px !important;
     font-weight: bold;
-    background-color: #235b4e;
+    background-color: #9F2241;
     color: #ffffff;
 }
 
@@ -1908,11 +1911,11 @@ input:focus {
 
     .arrow-steps .step.current {
         color: #ffffff;
-        background-color: #235b4e;
+        background-color: #9F2241;
     }
 
         .arrow-steps .step.current:after {
-            border-left: 17px solid #235b4e;
+            border-left: 17px solid #9F2241;
         }
 
 .form-wizard .btn {
@@ -2132,9 +2135,9 @@ input:focus {
     background-color: transparent;
     font-weight: 400;
     padding: 8px 16px;
-    border: 1px solid #005b4c;
+    border: 1px solid #691C32;
     color: #FFFFFF;
-    background-color: #005b4c;
+    background-color: #691C32;
     cursor: pointer;
     margin-bottom: 5px;
     font-size: 0.875rem;
@@ -2146,9 +2149,9 @@ input:focus {
     .btn:active,
     .btn.active,
     .open > .btn.dropdown-toggle {
-        background-color: #3c78ad;
-        color: #FFFFFF;
-        border-color: #3c78ad;
+        background-color: #6F7271;
+    color: #FFFFFF;
+    border-color: #6F7271;
     }
 
     .btn.disabled,
@@ -14149,7 +14152,7 @@ select.selectpicker {
 }
 
 .txt-blue {
-    color: #205180 !important;
+    color: #9F2241 !important;
 }
 
 .bg-yellow {
@@ -14192,7 +14195,7 @@ select.selectpicker {
 }
 
 .bg-table-green {
-    background-color: #235b4e;
+    background-color: #9F2241;
     color: #ffffff;
 }
 
@@ -14468,4 +14471,23 @@ hr {
 }
 .aclick{
     cursor:pointer;
+}
+.delayed {
+     color: rgb(230, 199, 2);
+}
+.ontime {
+    color: #4CAF50;
+}
+.with-impact {
+    color: #dc3545;
+}
+.closed {
+    color: #d0d0d0;
+}
+.canceled {
+    color: #545454;
+}
+
+.archived {
+    color: #545454;
 }

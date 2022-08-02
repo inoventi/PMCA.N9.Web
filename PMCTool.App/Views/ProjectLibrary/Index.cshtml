@@ -1,0 +1,152 @@
+﻿@model dynamic;
+@{
+    ViewData["Title"] = "Project Library";
+    Layout = "_Layout";
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+
+}
+<link rel="stylesheet" href="~/css/projectLibrary.css" asp-append-version="true" />
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="col-md-12 pt-4 pb-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="title-report">Biblioteca de proyectos</span>
+                    </h4>
+                </div>
+                <div class="col-md-12 text-right text-right">
+                    <a class="btn btn-round btn-sm  btn-info" href="/ProjectLibrary/Top">
+                        <span class="btn-label">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </span> Ranking de proyectos
+                    </a>
+                </div>
+                <!-- allow-->
+                <div class="container-fluid pl-0 ml-0">
+                    <div class="row justify-content-center mt-3 pt-4">
+                        <div class="col-md-10">
+                            <div>
+                                <table class="ttable" border="1" cellspacing="0" cellpadding="0" style="font-size: 12px;width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2" class="bg-1 c-write bold" width="150">
+                                                Concepto
+                                            </td>
+                                            <td colspan="3" class="bg-2 c-write bold">
+                                                Proyectos SICT
+                                            </td>
+                                            <td colspan="2" class="bg-3 c-write bold">
+                                                Proyectos
+                                                PNS
+                                            </td>
+                                            <td rowspan="2" class="bg-1 c-write bold" width="150">
+                                                Totales
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100">
+                                                Federales
+                                            </td>
+                                            <td width="100">
+                                                Concesionados
+                                            </td>
+                                            <td width="100">
+                                                APP
+                                            </td>
+                                            <td width="100">
+                                                Concesionados
+                                            </td>
+                                            <td width="100">
+                                                APP
+                                            </td>
+                                        </tr>
+                                        @if (Model != null)
+                                        {
+                                            int count = 0;
+                                            foreach (var row in Model.table)
+                                            {
+                                                if (count == 0)
+                                                {
+                                                    int total1 = Convert.ToInt32(@row.SictFederal) + Convert.ToInt32(@row.SictConsesion) + Convert.ToInt32(@row.SictApp) + Convert.ToInt32(@row.PnsFederal) + Convert.ToInt32(@row.PnsApp);
+                                                    <tr>
+                                                        <td>Cantidad</td>
+                                                        <td>@row.SictFederal</td>
+                                                        <td>@row.SictConsesion</td>
+                                                        <td>@row.SictApp</td>
+                                                        <td>@row.PnsFederal</td>
+                                                        <td>@row.PnsApp</td>
+                                                        <td>@total1</td>
+                                                    </tr>
+
+                                                }
+                                                if (count == 1)
+                                                {
+                                                    <tr>
+                                                        <td>Inversión (mdp)</td>
+                                                        <td>@row.SictFederal</td>
+                                                        <td>@row.SictConsesion</td>
+                                                        <td>@row.SictApp</td>
+                                                        <td>@row.PnsFederal</td>
+                                                        <td>@row.PnsApp</td>
+                                                        <td>@row.Total</td>
+                                                    </tr>
+
+                                                }
+
+                                                count++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  justify-content-center mt-3 pt-4">
+                        <div class="col-md-12 pt-4">
+                            <figure class="highcharts-figure">
+                                <div id="container"></div>
+
+                            </figure>
+                            <div class="row pb-4 mb-4">
+                                <div class="col-md-12 text-center pb-4 mb-4 bold">
+                                    <span><i class="fas fa-square title-report-green"></i> Proyectos SICT </span>
+                                    <span style="padding-left: 27px;"><i class="fas fa-square c-gray"></i> Propuestas no solicitadas </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>    <!-- end allow-->
+            <!-- new table-->
+            <div class="row">
+
+
+            </div>
+            <!-- end new table -->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+    let dataChart = [];
+    @foreach (var d in Model.chart)
+    { 
+        @:dataChart.push({ state: "@d.State", sict:"@d.SICT", pns:"@d.PNS"});
+
+         
+    }
+    
+    </script>
+    <!--Sección de scripts-->
+    @section scripts{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/highcharts.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.src.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/exporting.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/export-data.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.1.2/modules/accessibility.js" type="text/javascript"></script>
+        <script src="~/js/core/ProjectLibrary.js" asp-append-version="true"></script>
+    }

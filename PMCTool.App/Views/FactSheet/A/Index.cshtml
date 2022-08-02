@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Ficha de proyectos";
       Layout = "_Layout";
+       var envName = Context.Request.Cookies["pmctool-name-env"]; 
 } 
 
 @section ScriptsHeader {
@@ -9,12 +10,12 @@
      
 }
 <div class="content">
-               <div class="container-fluid">
-                  <div class="row card">
+               <div class="container-fluid card">
+                  <div class="row">
                      <div class="col-md-12 pt-4">
                         <small class="font-weight-normal">Analytics</small>
                         <h4 class="Chapala align-items-center font-weight-bold  mb-0 mt-0">
-                           <span style="color: #235b4e !important;"> Ficha de proyectos	</span>
+                           <span class="title-report"> Ficha de proyectos	</span>
                         </h4>
                      </div>
                      <div class="col-md-12" id="divContainer" style="">
@@ -55,6 +56,14 @@
                         </div>
                      </div>
                   </div>
+                   @if (envName == "Sct")
+                        {
+                            <div class="row pt-4">
+                                <div class="col-md-12 text-right">
+                                    <img src="/images/ricardofm.png?v=1" style="max-height: 100px;">
+                                </div>
+                             </div>
+                        }    
                </div>
             </div>
 

@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<PMCTool.Models.Environment.GlobalStatusDetail>;
+@{ 
+    var envName = Context.Request.Cookies["pmctool-name-env"]; 
+}
 <div class="row">
     <div class="col-md-12 mt-3">
         <h5 class="title-report">
@@ -67,6 +70,14 @@
         </tbody>
     </table>
 </div>
+ @if (envName == "Sct")
+                        {
+                            <div class="row pt-1">
+                                <div class="col-md-12 text-right">
+                                    <img src="/images/ricardofm.png?v=1" style="max-height: 100px;">
+                                </div>
+                             </div>
+                        } 
 <script>
     vGlobalStatus.iniDataTableDetail();
 </script>

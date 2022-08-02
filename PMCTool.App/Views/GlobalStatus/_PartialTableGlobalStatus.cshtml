@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<PMCTool.Models.Environment.GlobalStatus>;
+@{
+         var envName = Context.Request.Cookies["pmctool-name-env"]; 
+}
     <div class="fresh-datatables">
         @if (Model.Count() > 0)
         {
@@ -7,7 +10,7 @@
                     <tr class="div-detail-head">
                         <th>DIRECCIÓN GENERAL</th>
                         <th class="text-center">EN EJECUCIÓN</th>
-                        <th class="text-center">EN PROCESO PARA EJECUCIÓN</th>
+                        <th class="text-center">PREINVERSIÓN</th>
                         <th class="text-center">TOTAL</th>
                     </tr>
                 </thead>
@@ -61,6 +64,14 @@
                 <h5 class="color-font-global">No se encontraron resultados para los filtros ingresados</h5>
             </div>
         }
+    @if (envName == "Sct")
+    {
+        <div class="row pt-4">
+            <div class="col-md-12 text-right">
+                <img src="/images/ricardofm.png?v=1" style="max-height: 100px;">
+            </div>
+         </div>
+    }    
     </div>
     <script>
         vGlobalStatus.iniDataTable();
