@@ -118,7 +118,14 @@
                                                     <tr>
                                                         <th scope="row">@r.ProjectLayerName</th>
                                                         <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" onclick="factSheetA.getControlPoints(this)">@r.Description</a></td>
-                                                         @{  
+                                                         @{
+                                                             string date ="";
+                                                             if (@r.Status == 4) {
+                                                                   date = r.RealEndDate;
+                                                             }else{
+
+                                                                   date = r.PlannedEndDate;
+                                                             }
                                                                     @switch (@r.Status)
                                                                     {
                                                                         case 1:  
@@ -141,7 +148,7 @@
                                                                             break;
                                                                     }
                                                             }
-                                                        <td>@r.PlannedEndDate</td>
+                                                        <td>@date</td>
                                                         <td>@r.CompanyName</td>
                                                         <td>@r.Comment</td>
                                                      </tr>

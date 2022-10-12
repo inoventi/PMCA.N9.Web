@@ -89,36 +89,53 @@
                                               <tbody> 
                                                   @foreach (var r in Model.Evidences)
                                                     { 
-                                                    <tr>
-                                                        <th scope="row">@r.ProjectLayerName</th>
-                                                        <td><a class="aclick" data-evidence="@r.ProjectEvidenceID" >@r.Description</a></td>
-                                                         @{  
-                                                                    @switch (@r.Status)
-                                                                    {
-                                                                        case 1:  
-                                                                                <td><span class="bold ws st-entiempo ws">En tiempo</span></td> 
-                                                                            break;
-                                                                        case 2:  
-                                                                                <td><span class="bold st-atrasado ws">Atrasado</span></td> 
-                                                                            break;
-                                                                        case 3: 
-                                                                                <td><span class="bold ws st-cimpacto ws">Con impacto</span></td> 
-                                                                            break;
-                                                                        case 4: 
-                                                                                <td><span class="bold ws st-cerrado ws">Terminado</span></td> 
-                                                                            break;
-                                                                        case 5:  
-                                                                                <td><span class="bold ws st-cancelado  ws">Cancelado</span></td> 
-                                                                            break;
-                                                                        case 6:  
-                                                                                <td><span class="bold ws st-suspendido ws">Archivado</span></td> 
-                                                                            break;
-                                                                    }
-                                                            }
-                                                        <td>@r.PlannedEndDate</td>
-                                                        <td>@r.CompanyName</td>
-                                                        <td>@r.Comment</td>
-                                                     </tr>
+                                                  <tr>
+                                                      <th scope="row">@r.ProjectLayerName</th>
+                                                      <td><a class="aclick" data-evidence="@r.ProjectEvidenceID">@r.Description</a></td>
+                                                      @{
+
+                                                          string date = "";
+                                                          if (@r.Status == 4)
+                                                          {
+                                                              date = r.RealEndDate;
+                                                          }
+                                                          else
+                                                          {
+
+                                                              date = r.PlannedEndDate;
+                                                          }
+                                                          @switch (@r.Status)
+                                                          {
+                                                              case 1:
+                                                                  <td><span class="bold ws st-entiempo ws">En tiempo</span></td>
+
+                                                                  break;
+                                                              case 2:
+                                                                  <td><span class="bold st-atrasado ws">Atrasado</span></td>
+
+                                                                  break;
+                                                              case 3:
+                                                                  <td><span class="bold ws st-cimpacto ws">Con impacto</span></td>
+
+                                                                  break;
+                                                              case 4:
+                                                                  <td><span class="bold ws st-cerrado ws">Terminado</span></td>
+
+                                                                  break;
+                                                              case 5:
+                                                                  <td><span class="bold ws st-cancelado  ws">Cancelado</span></td>
+
+                                                                  break;
+                                                              case 6:
+                                                                  <td><span class="bold ws st-suspendido ws">Archivado</span></td>
+
+                                                                  break;
+                                                          }
+                                                      }
+                                                      <td>@date</td>
+                                                      <td>@r.CompanyName</td>
+                                                      <td>@r.Comment</td>
+                                                  </tr>
 
                                                     @foreach(var t in Model.ControlPoints)
                                                     {
