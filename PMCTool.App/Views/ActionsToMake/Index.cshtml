@@ -5,15 +5,18 @@
     var envName = Context.Request.Cookies["pmctool-name-env"]; 
 
 }
+@section ScriptsHeader
+{ 
+    <link href="~/css/vcore/global-estatus.css" rel="stylesheet" asp-append-version="true" />
+}
 <div class="content">
     <div class="container-fluid">
-
         <div class="col-md-12 card">
             <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
                 <div class="col-md-12 pt-4">
                     <small class="font-weight-normal">Analytics</small>
                     <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
-                        <span class="title-report"> Acciones a realizar	</span>
+                        <span class="title-report">Estatus global </span>
                     </h4>
                 </div>
                 <div class="">
@@ -22,127 +25,61 @@
                         <div class="row justify-content-center mt-3">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        @Html.DropDownListFor(m => m.Name, new SelectList(ViewBag.States, "Key", "Value"), new { multiple = true, @id = "Entidad", @class = "selectpicker", @data_style = "btn-default btn-outline", @data_title = "Entidad Federativa", @data_live_search = true, @data_actions_box = true })
-                                    </div>
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <select multiple name="DireccionG" id="DireccionGral" class="selectpicker" data-title="Dirección General" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                             <option value="CF">Dirección de Carreteras Federales (CF)</option>
-                                            <option value="CRyA">Dirección de Caminos Rurales y Alimentadores (CRyA)</option>
-                                            <option value="DGCC">Dirección General de Conservación de Carreteras (DGCC)</option>
-                                            <option value="DGDC">Dirección General de Desarrollo Carretero (DGDC)</option> 
-                                            <option value="DGDFM">Dirección General de Desarrollo Ferroviario y Multimodal (DGDFM)</option>
+                                    <div class="col-12 col-sm-5">
+                                        <select name="Entidad" class="selectpicker sel-portafolio" id="selportafolio" data-title="Selecciona un portafolio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                            <option value="id">Aguascalientes</option>
+                                            <option value="ms">Baja California</option>
+                                            <option value="ca"> Baja California Sur</option>
+                                            <option value="da">Campeche</option>
+                                            <option value="da">Chiapas</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <select multiple name="TipoP" id="TipoProyecto" class="selectpicker" data-title="Tipo de proyecto" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                            <option value="1">Plan Estratégico para el Bienestar</option>
-                                            <option value="2">Reactivación Económica</option>
-                                            <option value="3">Obra Social</option>
-                                            <option value="4">Programa Nacional de Infraestructura Ferroviaria</option>
-                                            <option value="6">Obras de Continuidad</option>
-                                            <option value="5">Por Definir</option>
+                                    <div class="col-12 col-sm-5">
+                                        <select name="DireccionG" class="selectpicker programa" id="selprograma" data-title="Selecciona un programa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                            <option value="id">DG Desarrollo Carretero (UI)</option>
+                                            <option value="ms">DG Desarollo Ferroviario</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <select multiple name="Etapa" id="Etapa" class="selectpicker" data-title="Etapa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                             <option value="1">Biblioteca de proyectos</option>
-                                            <option value="2">Preparación</option>
-                                            <option value="3">Análisis</option>
-                                            <option value="4">Autorización</option>
-                                            <option value="5">Ejecución</option> 
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <select multiple name="Inversion" id="Inversion" class="selectpicker" data-title="Fuente de Financiamiento" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                            <option value="PEF">PEF</option>
-                                            <option value="FONADIN">FONADIN</option> 
-                                            <option value="ESTATAL">ESTATAL</option>
-                                            <option value="PRIVADA">PRIVADA</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <select multiple name="Anuncio" id="Anuncio" class="selectpicker" data-title="Anuncio / Contrato" data-style="btn-default btn-outline" data-menu-style="dropdown-blue" data-live-search="true" data-actions-box="true">
-                                            <option value="1">Plurianualidades</option>
-                                            <option value="2">Primer Anuncio</option>
-                                            <option value="3">Segundo Anuncio</option>
-                                            <option value="4">Tercer Anuncio</option>
-                                            <option value="5">Obra Pública Tradicional</option>
-                                            <option value="6">Concesión Pública</option>
-                                            <option value="7">Concesión</option>
-                                            <option value="8">APP</option>
-                                            <option value="9">PPS</option>
-                                            <option value="10">Carga constructiva</option>
-                                            <option value="11">No Aplica</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 mt-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <button id="btnReport" type="button" class="btn btn-default btn-default">
-                                            <span class="btn-label">
-                                                <i class="fa fa-file-alt"></i>
-                                            </span>
-                                            Mostrar Reporte
-                                        </button>
-                                        <button type="button" id="btnClose" class="btn btn-wd btn-default btn-default mr-1" hidden>
-                                            <span class="btn-label">
-                                                <i class="fas fa-times"></i>
-                                            </span>
-                                            Cerrar Reporte
+                                    <div class="col-sm-2 pt-2">
+                                        <button type="button" class="btn btn-default btn-default btn-report">
+                                            <i class="fas fa-file-pdf"></i> Generar reporte
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center mt-4">
+                        <div class="row justify-content-center mt-1">
                             <div class="col-md-12 text-right text-right">
-                                <button class="btn btn-social btn-tumblr btn-link" id="btnPDF" hidden>
-                                    <i class="fas fa-file-pdf"></i> Exportar en PDF
-                                </button>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <button type="button" class="btn btn-default btn-default">
+                                            <i class="fas fa-file-pdf"></i> Exportar
+                                        </button>
+                                        <a href="http://doc.pmc-tool.mx/PMCAnalytics/demo25/1B/" class="btn btn-default btn-success">
+                                            <i class="fas fa-file-pdf"></i> Table cuando se selecione un Programa
+                                        </a>
+                                        <button type="button" class="btn btn-default btn-default">
+                                            <i class="fas fa-file-pdf"></i> Cerrar reporte
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <figure class="highcharts-figure">
+                                    <div id="container1" style="height: 500px;"></div>
+                                    <p class="highcharts-description"></p>
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <figure class="highcharts-figure">
+                                    <div id="container2" style="height: 500px;"></div>
+                                    <p class="highcharts-description"></p>
+                                </figure>
                             </div>
                             <div class="col-12">
-                                <div class="card" id="cardTable" hidden>
-                                    <div class="card-body " id="messageBox">
-                                        <div class="row justify-content-center" id="rowTable">
-                                            <div class="col-12">
-                                                <div class="card data-tables">
-                                                    <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
-                                                        <div class="toolbar">
-                                                            <!--        Here you can write extra buttons/actions for the toolbar              -->
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12 text-right text-right">
-                                                                  
-                                                                <button class="btn btn-social btn-tumblr btn-link" id="btnReportPDF">
-                                                                <i class="fas fa-file-pdf"></i> Exportar en PDF
-                                                                </button>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                       
-                                                        <div class="fresh-datatables">
-                                                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%">
-                                                                <thead>
-                                                                    <tr class="div-detail-head">
-                                                                        <th>Código</th>
-                                                                        <th>Proyecto</th>
-                                                                        <th>Inversión MDP</th>
-                                                                        <th>Inicio de obra</th>
-                                                                        <th>Fase</th>
-                                                                        <th>Estatus</th>
-                                                                        <th>Acciones a realizar</th>
-                                                                        <th>Nota aclaratoria</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody id="datatable">
-                                                                    
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body ">
+                                        <div id="regularMap" class="map"></div>
                                     </div>
                                 </div>
                             </div>
@@ -150,22 +87,63 @@
                     </div>
                     <!-- end allow-->
                 </div>
-                @if (envName == "Sct")
-                        {
-                            <div class="row pt-1">
-                                <div class="col-md-12 text-right">
-                                    <img src="/images/ricardofm.png?v=1" style="max-height: 100px;">
-                                </div>
-                             </div>
-                        } 
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">DETALLE DEL REPORTE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr style="background: #c1c1c1;">
+                            <th>PROGRAMA</th>
+                            <th>NOMBRE DE PROYECTO</th>
+                            <th>ESTATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>PROFECO</th>
+                            <td>PROFECO COMPUTO</td>
+                            <td>EN CONFIGURACION</td>
+                        </tr>
+                        <tr>
+                            <th>PROFECO</th>
+                            <td>PROFECO COMPUTO</td>
+                            <td>EN CONFIGURACION</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+            </div>
+        </div>
+    </div>
+</div> 
+
 <!--Sección de scripts-->
 @section scripts
 {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
     <!--  DataTable Plugin -->
     <script src="~/js/plugins/jquery.dataTables.min.js"></script>
-    <script src="~/js/core/vActionsToMake.js" asp-append-version="true"></script>
+    <script src="~/js/core/analitycs/vActionsToMake.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        
+    </script>
 }
+ 

@@ -30,57 +30,65 @@ namespace PMCTool.App.Controllers
             ViewBag.States = states;
             return View();
         }
+        //[PMCToolAuthentication]
+        //public async Task<IActionResult> Index()
+        //{
+        //    SetActiveOption("4004");
+        //    List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+        //    ViewBag.States = states;
+        //    return View();
+        //}
 
-        [HttpPost]
-        [PMCToolAuthentication]
-        public async Task<IActionResult> GetDataGlobalStatus(ModelFilters data)
-        {
-            List<GlobalStatus> globalStatusData = new List<GlobalStatus>();
-            try
-            {
-                globalStatusData = await restClient.Get<List<GlobalStatus>>(baseUrl,
-                                   $"api/v1/globalstatus/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
-                   new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+        //[HttpPost]
+        //[PMCToolAuthentication]
+        //public async Task<IActionResult> GetDataGlobalStatus(ModelFilters data)
+        //{
+        //    List<GlobalStatus> globalStatusData = new List<GlobalStatus>();
+        //    try
+        //    {
+        //        globalStatusData = await restClient.Get<List<GlobalStatus>>(baseUrl,
+        //                           $"api/v1/globalstatus/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
+        //           new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 
-                return PartialView("_PartialTableGlobalStatus", globalStatusData);
+        //        return PartialView("_PartialTableGlobalStatus", globalStatusData);
 
-            }
-            catch (HttpResponseException ex)
-            {
-                return Json(new { hasError = true, message = ex.Message });
+        //    }
+        //    catch (HttpResponseException ex)
+        //    {
+        //        return Json(new { hasError = true, message = ex.Message });
 
-            }
-            catch (Exception ex)
-            {
-                return Json(new { hasError = true, message = ex.Message });
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { hasError = true, message = ex.Message });
+        //    }
+        //}
 
-        [HttpPost]
-        [PMCToolAuthentication]
-        public async Task<IActionResult> GetDataGlobalStatusDetail(ModelFilters data)
-        {
-            List<GlobalStatusDetail> globalStatusDetailData = new List<GlobalStatusDetail>();
+        //[HttpPost]
+        //[PMCToolAuthentication]
+        //public async Task<IActionResult> GetDataGlobalStatusDetail(ModelFilters data)
+        //{
+        //    List<GlobalStatusDetail> globalStatusDetailData = new List<GlobalStatusDetail>();
 
-            try
-            {
-                globalStatusDetailData = await restClient.Get<List<GlobalStatusDetail>>(baseUrl,
-                                    $"api/v1/globalstatus/detail/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
-                   new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+        //    try
+        //    {
+        //        globalStatusDetailData = await restClient.Get<List<GlobalStatusDetail>>(baseUrl,
+        //                            $"api/v1/globalstatus/detail/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
+        //           new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
 
-                return PartialView("_PartialTableGlobalStatusDetail", globalStatusDetailData);
+        //        return PartialView("_PartialTableGlobalStatusDetail", globalStatusDetailData);
 
-            }
-            catch (HttpResponseException ex)
-            {
-                return Json(new { hasError = true, message = ex.Message });
+        //    }
+        //    catch (HttpResponseException ex)
+        //    {
+        //        return Json(new { hasError = true, message = ex.Message });
 
-            }
-            catch (Exception ex)
-            {
-                return Json(new { hasError = true, message = ex.Message });
-            }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { hasError = true, message = ex.Message });
+        //    }
             
-        }
+        //}
     }
 }

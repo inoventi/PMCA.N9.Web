@@ -20,7 +20,7 @@
                 <th rowspan="1" colspan="1">Proyecto</th>
                 <th rowspan="1" colspan="1">Etapa</th>
                 <th rowspan="1" colspan="1">Dirección general</th>
-                <th rowspan="1" colspan="1">Tipo de proyecto</th>
+                @*<th rowspan="1" colspan="1">Tipo de proyecto</th>*@
                 <th rowspan="1" colspan="1">Estatus</th>
                 <th rowspan="1" colspan="1">Avance</th>
             </tr>
@@ -34,7 +34,7 @@
                         <td><a href="/FactSheetA?projectid=@item.ProjectID">@item.ProjectName</a></td>
                         <td>@item.Stage</td>
                         <td>@item.GeneralDirection</td>
-                        <td>@item.ProjectType</td>
+                        @*<td>@item.ProjectType</td>*@
                         <td class="text-center">
                             @if (@item.Status == 1)
                             {

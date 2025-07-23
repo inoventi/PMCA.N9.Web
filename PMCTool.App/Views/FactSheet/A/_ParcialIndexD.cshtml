@@ -1,0 +1,272 @@
+﻿@model dynamic;
+@{
+    var ProjectName = "";
+    var Benefit = "";
+    var Scope = "";
+    var KeyDecisions = "";
+    var DirectJobsGenerated = "";
+    var IndirectJobsGenerated = "";
+    var RelevantMilestones = "";
+    var Promoter = "";
+    var ActionsToBeTaken = "";
+    var Tdpa = "";
+    var Logo = "";
+    var chartEstatal = "";
+    var chartPrivada = "";
+    var chartFonden = "";
+    var chartPef = "";
+    var chartFonadin = ""; 
+    var Descripcion = ""; 
+    var EntidadFederativa = ""; 
+
+    @foreach (var row in Model.tabsheet)
+    {
+        ProjectName = @row.ProjectName;
+        Descripcion = @row.Descripcion;
+        Benefit = @row.Beneficios;
+        RelevantMilestones = @row.Hitosrelevantes;
+        Scope = "";
+        KeyDecisions = @row.KeyDecisions;
+        DirectJobsGenerated = @row.EmpleosDirectos;
+        IndirectJobsGenerated = @row.EmpleosIndirectos;
+        Promoter = @row.Promotor;
+        ActionsToBeTaken = row.ActionsToBeTaken;
+
+        chartEstatal = @row.chartEstatal;
+        chartPrivada = @row.chartPrivada;
+        chartFonden = @row.chartFonden;
+        chartPef = @row.chartPef;
+        chartFonadin = @row.chartFonadin;
+        EntidadFederativa = @row.EntidadFederativa;
+
+        break;
+
+    }
+
+
+<div>
+    <input type="hidden" id="ProjectIDx" value="@ViewBag.ProjectID" />
+
+    <!-- -->
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a class="btn btn-round btn-sm  btn-danger" href="/FactSheetA/ProjectDetail?project=@ViewBag.ProjectSeleted">
+                    <span class="btn-label">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </span>Detalle de Proyecto
+                </a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <small class="font-weight-normal">Proyecto</small>
+                <div class="row">
+
+                    <div class="col-md-8" style="background-color: #6b1b33;color: white;">
+                        <h4 class="mt-1 font-weight-bold mb-0">
+                            @ProjectName
+                        </h4>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3 text-right" style="background-color: #6b1b33;color: white;">
+                        <h4 class="mt-1 font-weight-bold mb-0">
+                            @EntidadFederativa
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 text-right text-right pt-2 pb-3">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row  pb-3">
+
+                    <div class="col-md-2">
+                        <img src="/client/sct/recursos/1.png" class="img-fluid" alt="Responsive image" asp-append-version="true">
+                    </div>
+                    <div class="col-md-10">
+                        <b>Descripción</b>
+                        <p>
+                             @Descripcion
+                        </p>
+                    </div>
+                </div>
+                <div class="row  pb-3">
+
+                    <div class="col-md-2">
+                        <img src="/client/sct/recursos/2.png" class="img-fluid" alt="Responsive image" asp-append-version="true">
+                    </div>
+                    <div class="col-md-10">
+                        <b>Beneficios:</b>
+                        <p>
+                           @Benefit
+                        </p>
+                    </div>
+                </div>
+                <div class="row pb-3">
+
+                    <div class="col-md-2">
+                        <img src="/client/sct/recursos/3.png" class="img-fluid" alt="Responsive image" asp-append-version="true">
+                    </div>
+                    <div class="col-md-10">
+                        <b>Empleos Generados:</b>
+                        <p>
+                            Directos: @DirectJobsGenerated
+                            <br> Indirectos: @IndirectJobsGenerated
+                        </p>
+                    </div>
+                </div>
+                <!-- -->
+
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-3 pb-2">
+                    <div class="col-md-12">
+                        <p class="title-section">
+                            <b>Descisiones clave</b>
+                        </p>
+                        <p>
+                            @KeyDecisions
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="title-section">
+                            <b>Hitos relevantes</b>
+                        </p>
+                        <p>
+                           @RelevantMilestones
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-5">
+                <p class="title-section text-center">
+                    <b>Inversión total</b>
+                </p>
+                <div style="width: 600px;"><canvas id="doughnut-chart"></canvas></div>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="title-section">
+                            <b>Programación del proyecto</b>
+                        </p>
+                        <p>
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="bg-table-green">Etapa</td>
+                                        <td class="bg-table-green" style="text-align:center">Fecha Inicio (aaa/mm/dd)</td>
+                                        <td class="bg-table-green" style="text-align:center">Duración (Dias)</td>
+                                    </tr>
+                                    @foreach (var rowx in Model.ProjectTask)
+                                    {
+
+                                        <tr style="text-align:center">
+                                            <th style="text-align:initial">
+                                                @rowx.text
+                                            </th>
+
+                                            <td style="text-align:center"> @rowx.start_date</td>
+                                            <td style="text-align:center"> @rowx.duration</td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="title-section">
+                            <b>Promotor</b>
+                        </p>
+                        <p>
+                             @Promoter
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <img src="/images/villa.png">
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- -->
+    <div class="col-md-12">
+ 
+    </div>
+</div>
+                            
+                                    @if (@chartPrivada == "" || @chartFonden == "" || @chartFonadin == "" || @chartEstatal == "" || @chartPef == "")
+                                    {
+                                     }
+                                    else
+                                    {
+                                        <script>
+                                                           if (typeof variable === 'undefined') {
+                                                               let totalmont = 0;
+                                                            }
+                                
+                                                            totalmont =  @chartPrivada + @chartFonden +  @chartFonadin +  @chartEstatal + @chartPef;
+                                                            $('._totalmont').empty();
+                                                            $('._totalmont').html("$ "+totalmont+ " mdp");
+                                                          let  myChartx = new Chart(document.getElementById("doughnut-chart"), {
+                                                              type: 'doughnut', 
+                                                              data: {
+                                                                  labels: ["Privados", "Otro", "Fonadin", "Estatal", "PEF"],
+                                                                  datasets: [
+                                                                      {
+                                                                          backgroundColor: ["#330101", "#8B0000", "#D2B48C", "#FFE4C4"],
+                                                                          data: [
+                                                                            Math.round(@chartPrivada * 100/ totalmont ),
+                                                                            Math.round(@chartFonden * 100 / totalmont ),
+                                                                            Math.round(@chartFonadin * 100/ totalmont ),
+                                                                            Math.round(@chartEstatal * 100/ totalmont ),
+                                                                            Math.round(@chartPef * 100/ totalmont )
+                                                                          ]
+                                                                      }
+                                                                  ]
+                                                              },
+                                                              options: {
+                                                                  legend: { position: 'bottom' },
+                                                                   animation: false
+                                                              }
+                                                          });
+                                                          if (factSheetA.getUrlParameter('projectid')) {
+                                                                  let pp = factSheetA.getUrlParameter('projectid');
+                                                                    $('#project').val("'" + pp + "'");
+                                                                    $('#project').prop('disabled', true);
+                                                                    $('#project').selectpicker('refresh');
+                                                            }
+                                                            factSheetA.btnReportPDF(); 
+                                                            let chartxx = myChartx.toBase64Image();
+                                                             factSheetA.savechart(chartxx);
+                                                            delete myChartx;
+                                </script>
+ 
+                                    }
+                                
+    
+}

@@ -6,11 +6,13 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -31,6 +33,7 @@ namespace PMCTool.App.Controllers
         private readonly IHostingEnvironment _hostingEnvironment; 
         private readonly IOptions<AppSettingsModel> _appSettings;
         private IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
 
 
@@ -38,11 +41,13 @@ namespace PMCTool.App.Controllers
             IOptions<AppSettingsModel> appSettings,
             IStringLocalizer<SharedResource> localizer,
             IHostingEnvironment hostingEnvironment,
-            IHttpContextAccessor httpContextAccessor) : base(appSettings, localizer)
+            IHttpContextAccessor httpContextAccessor,
+            IConfiguration configuration) : base(appSettings, localizer)
         {
             _appSettings = appSettings;
             _hostingEnvironment = hostingEnvironment;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
 
         }
         [PMCToolAuthentication]
@@ -51,6 +56,7 @@ namespace PMCTool.App.Controllers
         {
             SetActiveOption("4007");
             ProjectTabViewModel p = new ProjectTabViewModel();
+
             try
             {
                 var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/projecttaba/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
@@ -73,6 +79,18 @@ namespace PMCTool.App.Controllers
 
 
                 ViewBag.ProjectSeleted = project;
+                var urlPath = _configuration.GetValue<string>("AppSettings:UrlLoginPoe");  
+                var httpClient = new HttpClient(new HttpClientHandler());
+                var values = new List<KeyValuePair<string, string>>
+                    {
+                    new KeyValuePair<string, string>("Token", "?KX06eTh]th0QD_dqtB="),
+                    };
+                HttpResponseMessage response = await httpClient.PostAsync(urlPath.ToString(), new FormUrlEncodedContent(values));
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<QsToken>(responseString);
+                ViewBag.TokenQS = result.id_token;
+
 
                 return View("~/Views/FactSheet/A/Index.cshtml", p);
             }
@@ -178,7 +196,7 @@ namespace PMCTool.App.Controllers
         }  
 
         [HttpPost]
-        public async Task<IActionResult> getReportFactSheet(Guid? projectId)
+        public async Task<IActionResult> getReportFactSheet(Guid? projectId, string token)
         {
             dynamic modelProjectTab = new ExpandoObject();
             List<ProjectTask> projectTaskFinally = new List<ProjectTask>();
@@ -200,7 +218,7 @@ namespace PMCTool.App.Controllers
                 {
                     stage = projectTab.Stage;
                 }
-                modelProjectTab.tabsheet = tabsheet;
+                 modelProjectTab.tabsheet = tabsheet;
                 
                 if (!string.IsNullOrEmpty(stage))
                 {
@@ -212,30 +230,34 @@ namespace PMCTool.App.Controllers
                         var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         foreach (var data in projectTask)
                         {
-                            if (data.WbsCode == "1.5.2.1" || data.WbsCode == "1.5.2.3" || data.WbsCode == "1.5.2.4" || data.WbsCode == "1.5.2.5")
+                            if (data.WbsCode == "1" || data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
                             {
                                  
                                 ProjectTask taskAppend = new ProjectTask()
                                 {
-                                    text = data.text == "Convocatoria / Oficio de adjudicación" ? "Convocatoria" : data.text,
+                                    text =  data.text,
                                     EndDateClient = data.EndDateClient,
-                                    status = data.status
+                                    status = data.status,
+                                    duration = data.duration
+                                    
                                 };
                                 projectTaskFinally.Add(taskAppend);
                             }
                         }
                         ViewBag.ProjectID = projectId;
+                        ViewBag.TokenQS = token;
+                         
                         modelProjectTab.ProjectTask = projectTaskFinally;
                         modelProjectTab.participantUser = participantUser;
 
-                        return PartialView("~/Views/FactSheet/A/_ParcialIndexA.cshtml", modelProjectTab);
+                        return PartialView("~/Views/FactSheet/A/_ParcialIndexQS.cshtml", modelProjectTab);
                     }
                     else
                     {
                        var projectTask = await restClient.Get<List<ProjectTask>>(baseUrl, $"/api/v1/projecttaba/gettaskdetail/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                         foreach (var data in projectTask)
                         {
-                            if (data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
+                            if (data.WbsCode == "1" || data.WbsCode == "1.1" || data.WbsCode == "1.2" || data.WbsCode == "1.3" || data.WbsCode == "1.4")
                             {
                                 ProjectTask taskAppend = new ProjectTask()
                                 {
@@ -251,7 +273,7 @@ namespace PMCTool.App.Controllers
                         ViewBag.ProjectID = projectId;
                         modelProjectTab.ProjectTask = projectTaskFinally;
 
-                        return PartialView("~/Views/FactSheet/A/_ParcialIndex.cshtml", modelProjectTab);
+                        return PartialView("~/Views/FactSheet/A/_ParcialIndexD.cshtml", modelProjectTab);
                     }
                 }
             }

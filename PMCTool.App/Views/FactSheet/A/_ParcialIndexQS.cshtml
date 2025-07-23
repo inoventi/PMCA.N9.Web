@@ -1,0 +1,78 @@
+﻿@model dynamic;
+@{
+     
+    string message = "";
+    string PoeID = "";
+
+    @foreach (var row in Model.tabsheet)
+    {
+        
+        if (string.IsNullOrEmpty(@row.PoeID))
+        {
+            PoeID = null;
+            message = "Este proyecto no contiene PoeID";
+        }
+        else
+        {
+            message = string.Empty;
+            PoeID = @row.PoeID;
+        }
+
+
+
+
+        break;
+
+    }
+    
+
+    
+    <div>
+        <input type="hidden" id="ProjectIDx"  value="@ViewBag.ProjectID" /> 
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    @{
+                        if (!string.IsNullOrEmpty(PoeID))
+                        {
+                            string _poeid = PoeID.Trim();
+                            <iframe src="https://demo.quarksoft.net/ficha-obra?obra=@_poeid&token=@ViewBag.TokenQS" frameborder="0" allowfullscreen style="width: 100%; height: 3000px;"></iframe>
+                            @*<iframe src="https://demo.quarksoft.net/ficha-mixta/@_poeid" frameborder="0" allowfullscreen style="width: 100%; height: 3000px;"></iframe>*@
+                            @*<iframe title="iFrame sending additional headers"></iframe>
+                            <script>
+                                async function getSrc() {
+                                    const res = await fetch("https://demo.quarksoft.net/ficha-obra?obra=@_poeid", {
+                                        method: 'GET',
+                                        headers: {
+                                            // Here you can set any headers you want
+                                            'Authorization': $('#qatoken').val()
+                                        }
+                                    });
+                                    const blob = await res.blob();
+                                    const urlObject = URL.createObjectURL(blob);
+                                    document.querySelector('iframe').setAttribute("src", urlObject)
+                                }
+                                getSrc();
+                            </script>*@
+                                  
+
+                        }
+                        else
+                        {
+
+                            <div class="boxPoeid "><span>Este proyecto no contiene POE ID </span> 🥲</div>
+
+                        }
+
+                    }
+                </div>
+                </div>
+              
+             
+            <div class="row pb-3">
+                 
+                 
+            </div>
+        </div>
+    </div>
+     }

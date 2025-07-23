@@ -14,10 +14,14 @@
     $('.selectpicker').selectpicker({
         noneResultsText: 'No se encontraron resultados'
     });
+
+    
 });
+
+
 const evidenceView = [];
 
-let factSheetA = {
+let factSheetA = { 
     addEventOpenModals: function () {
         $('.btnmodaltwo').click(function (e) {
             let modal = $(this).data('modal');
@@ -257,7 +261,7 @@ let factSheetA = {
         LoaderShow();
         boxContentReport.empty();
         boxContentReport.html('');
-        $.post('/FactSheetA/getReportFactSheet', { projectId: project }, function (r) {
+        $.post('/FactSheetA/getReportFactSheet', { projectId: project, token: $('#qatoken').val() }, function (r) {
             boxContentReport.html(r);
             LoaderHide();
 

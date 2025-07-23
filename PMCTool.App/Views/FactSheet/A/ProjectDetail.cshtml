@@ -20,25 +20,10 @@
         var chartFonadin =  "";  
         @foreach (var row in Model.Project)
         {
-              ProjectName = @row.ProjectName;
-              Benefit = @row.Benefit;
-              Scope = @row.Scope;
-              KeyDecisions = @row.KeyDecisions;
-              DirectJobsGenerated = @row.DirectJobsGenerated;
-              IndirectJobsGenerated = @row.IndirectJobsGenerated;
-              RelevantMilestones = @row.RelevantMilestones;
-              Promoter = @row.Promoter;
-              Logo = @row.Logo;
-              ActionsToBeTaken = @row.ActionsToBeTaken;
-              chartEstatal =@row.chartEstatal;
-              chartPrivada = @row.chartPrivada; 
-              chartFonden = @row.chartFonden;
-              chartPef = @row.chartPef; 
-              chartFonadin = @row.chartFonadin;
+            ProjectName = @row.ProjectName;
 
-             
-                break;
-    
+            break;
+
         }
         @section ScriptsHeader {
             <script src="~/js/plugins/chart/chart.min.js" asp-append-version="true"></script>
