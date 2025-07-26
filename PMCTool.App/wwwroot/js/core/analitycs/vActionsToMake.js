@@ -1,22 +1,80 @@
-﻿$(document).ready(() => {
-    atm.init(); 
-});
-let atm = {
-    init: function () { 
-        $(document).on('click', '.btn-report', atm.executeReport);
+﻿class atm {
+    constructor() {
+        //let formatter = new Intl.NumberFormat('en-US', {
+        //    style: 'currency',
+        //    currency: 'USD',
 
-   
-    },
-    executeReport: function () {
+        //    // These options are needed to round to whole numbers if that's what you want.
+        //    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+        //});
+        $.fn.selectpicker.defaults = {
+            selectAllText: 'Seleccionar Todo',
+            deselectAllText: 'Deseleccionar Todo'
+        };
+        //Config Charts
+        this.coloresEstatusProject = {
+            'En tiempo': '#4CAF50',           // Verde
+            'Atrasado': '#e6c702',            // Amarillo
+            'Con impacto': '#dc3545',         // Rojo
+            'Cerrado': '#d0d0d0',             // Gris claro
+            'Cancelado': '#545454',                 // Gris oscuro
+            'En configuracion': '#F1F5F9'     // Gris mas clarito
+        };
+        this.init();
+    }
+    /**
+     * @description Inicializa eventos o funciones.
+     */
+    init() {
+        $(document).on('click', '.btn-report', this.executeReport.bind(this));
+        $('#selportafolio').on('changed.bs.select', this.getPrograms.bind(this));
+    }
+    /**
+     * @description Trae los programas que pertenece al portafolio y manda llamar la funcion que reconstruye el selector de programas
+     */
+    async getPrograms() {
+        let idPortfolio = $('#selportafolio').val();
+        try {
+            const response = await fetch(`/ActionsToMake/GetPrograms?idPortfolio=${idPortfolio}`);
+            const data = await response.json();
+            this.construcSelectPrograms(data);
+        } catch (e) {
+            console.error("ERROR:", e);
+        }
+
+    }
+    /**
+     * @description Reconstruccion del selector de programas
+     * @param {Object} programs Referencia a la lista que regrese para la contruccion del selector de programas
+     */
+    construcSelectPrograms(programs) {
+        $('#selprograma').empty();
+        $('#selprograma').append('<option value="">Selecciona un programa</option>');
+        programs.forEach(program => {
+            $('#selprograma').append(`<option value="${program.key}">${program.value}</option>`);
+        });
+        $('#selprograma').selectpicker('refresh'); // Refresca el selectpicker para mostrar los nuevos datos
+    }
+    /**
+     * @description Valida opcion seleccionada y manda llamar la funcion que construye los pie
+     */
+    async executeReport() {
+        //Tendra que ser una funcion async para esperar la respuesta de la api
         let portafolio = $('#selportafolio').val();
         if (portafolio) {
-            atm.getCharts();
+            // await this.reqDataCharts(); ejemplo donde this.getCharts(param); mandaremos el parametro de la data ya estructurada para la construcion de los Pie
+            this.getCharts();
         } else {
-               alert("Debenes elegir un portafolio")
+            alert("Debenes elegir un portafolio");
         }
-     
-    },
-    getCharts: function () {
+    }
+    /**
+     * @description Contruye las graficas de los pie
+     * @param { Object } seriesSP Referencia a la data ya estructurada para construir la grafica pie de estatus de proyecto
+     * @param { Object } seriesPP Referencia a la data ya estructurada para construir la grafica pue de proyectos en programa
+     */
+    getCharts(seriesSP,seriesPP) {
         Highcharts.chart('container2', {
             chart: {
                 type: 'pie',
@@ -44,6 +102,16 @@ let atm = {
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
+                    borderColor: 'white',
+                    borderWidth: 0,
+                    slicedOffset: 10, // separación más visible
+                    states: {
+                        hover: {
+                            enabled: true,
+                            halo: false,
+                            brightness: 0,
+                        }
+                    },
                     dataLabels: [{
                         enabled: true,
                         distance: 20
@@ -66,34 +134,53 @@ let atm = {
             },
             series: [
                 {
+                    states: {
+                        inactive: {
+                            enabled: false // Esto es lo que realmente previene el opacado
+                        }
+                    },
                     name: 'Percentage',
                     colorByPoint: true,
                     data: [
                         {
                             name: 'En tiempo',
-                            y: 55.02
+                            y: 55.02,
+                            color: this.coloresEstatusProject['En tiempo']
                         },
                         {
                             name: 'Atrasado',
-                            sliced: true,
-                            selected: true,
-                            y: 26.71
+                            y: 26.71,
+                            color: this.coloresEstatusProject['Atrasado'],
                         },
                         {
                             name: 'Con impacto',
-                            y: 1.09
+                            y: 1.09,
+                            color: this.coloresEstatusProject['Con impacto'],
                         },
                         {
-                            name: 'Cerrados',
-                            y: 15.5
+                            name: 'Cerrado',
+                            y: 15.5,
+                            color: this.coloresEstatusProject['Cerrado'],
+                        },
+                        {
+                            name: 'Cancelado',
+                            y: 15.5,
+                            color: this.coloresEstatusProject['Cancelado'],
                         },
                         {
                             name: 'En configuracion',
-                            y: 1.68
+                            y: 8.68,
+                            color: this.coloresEstatusProject['En configuracion'],
                         }
                     ],
                     point: {
                         events: {
+                            mouseOver: function () {
+                                this.slice(true); // separa al pasar el mouse
+                            },
+                            mouseOut: function () {
+                                this.slice(false); // regresa cuando se quita el mouse
+                            },
                             click: function (event) {
                                 $('#exampleModal').modal('show')
                             }
@@ -128,6 +215,8 @@ let atm = {
             },
             plotOptions: {
                 pie: {
+                    borderColor: null, //Quitamos color negro en los bordes
+                    borderWidth: 0, //Aseguramos que no se pinte el borde
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: [{
@@ -208,15 +297,10 @@ let atm = {
         });
     }
 }
-var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+/**
+ * @description Inicializa la clase cuando ya todo el DOM este cargado
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    new atm();
 });
-$.fn.selectpicker.defaults = {
-    selectAllText: 'Seleccionar Todo',
-    deselectAllText: 'Deseleccionar Todo'
-};
+

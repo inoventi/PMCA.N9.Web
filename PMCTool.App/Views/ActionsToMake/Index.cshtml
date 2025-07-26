@@ -26,18 +26,16 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12 col-sm-5">
-                                        <select name="Entidad" class="selectpicker sel-portafolio" id="selportafolio" data-title="Selecciona un portafolio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                            <option value="id">Aguascalientes</option>
-                                            <option value="ms">Baja California</option>
-                                            <option value="ca"> Baja California Sur</option>
-                                            <option value="da">Campeche</option>
-                                            <option value="da">Chiapas</option>
+                                        <select name="portfolio" class="selectpicker sel-portafolio" id="selportafolio" data-title="Selecciona un portafolio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                            @foreach (var portfolio in ViewBag.portfolios)
+                                            {
+                                                <option value="@portfolio.Key">@portfolio.Value</option>
+                                            }
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-5">
-                                        <select name="DireccionG" class="selectpicker programa" id="selprograma" data-title="Selecciona un programa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
-                                            <option value="id">DG Desarrollo Carretero (UI)</option>
-                                            <option value="ms">DG Desarollo Ferroviario</option>
+                                        <select name="program"  class="selectpicker programa" id="selprograma" data-title="Selecciona un programa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                            
                                         </select>
                                     </div>
                                     <div class="col-sm-2 pt-2">

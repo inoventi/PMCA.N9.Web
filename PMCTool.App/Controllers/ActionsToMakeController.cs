@@ -27,9 +27,43 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> Index()
         {
             SetActiveOption("4008");
-            List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            ViewBag.States = states;
+            //List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            ViewBag.portfolios = portfolios;
+            //ViewBag.States = states;
             return View();
+        }
+        [HttpGet]
+        [Route("ActionsToMake/GetPrograms")]
+        public async Task<IActionResult> GetGlobalStatusSelectProgramsByPortfolioAsync(string idPortfolio)
+        {
+            List<SelectionListItem> programs = new List<SelectionListItem>();
+            try
+            {
+                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/"+idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(programs);
         }
         [HttpPost]
         public async Task<IActionResult> GetDataActionsToMake(ModelFilters data)
@@ -75,7 +109,6 @@ namespace PMCTool.App.Controllers
                 WriteIndented = true,
             });
         }
-
         public async Task<IActionResult> printViewReportActionsToMake(string model)
         {
             //List<ModelFilters> fullStates = new List<ModelFilters>();
