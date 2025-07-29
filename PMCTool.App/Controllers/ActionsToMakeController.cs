@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Presentation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.Web.CodeGeneration.Design;
@@ -178,7 +179,7 @@ namespace PMCTool.App.Controllers
                     rowTable += @"<tr>
                                     <th>" + projects.Program+ @"</th>
                                     <td>" + projects.Name + @"</td>
-                                    <td>" + projects.Status + @"</td>
+                                    <td>" + localizer[$"F01-0{projects.Status}"] + @"</td>
                                 </tr>";
                 }
             }
