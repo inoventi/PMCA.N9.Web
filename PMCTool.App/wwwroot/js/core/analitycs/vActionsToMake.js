@@ -57,17 +57,51 @@
         $('#selprograma').selectpicker('refresh'); // Refresca el selectpicker para mostrar los nuevos datos
     }
     /**
-     * @description Valida opcion seleccionada, manda un await para traer la data estructurada de las graficas y manda llamar la funcion que construye los pie
+     * @description Valida opcion seleccionada, manda un await para traer la data estructurada de las graficas y manda llamar la funcion que construye los pie / Manda traer la info para el detalle de la tabla
      * Destructura el response del req para la construccion de la grafica
      */
     async executeReport() {
         let portafolio = $('#selportafolio').val();
+        let programa = $('#selprograma').val();
         if (portafolio) {
-            let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
-            this.getCharts(graphicStatusProjects, graphicProjectsInProgram);
+            if (programa) {
+                LoaderShow();
+                $('.charts').attr('hidden', 'true');
+                $('#table').removeAttr('hidden');
+                let data = await this.reqDataTableProjects(programa);
+                this.construcTableProjects(data);
+                LoaderHide();
+                
+            } else {
+                LoaderShow();
+                $('#table').attr('hidden', 'true');
+                $('.charts').removeAttr('hidden');
+                let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
+                this.getCharts(graphicStatusProjects, graphicProjectsInProgram);
+                LoaderHide();
+            }
+            
         } else {
             alert("Debenes elegir un portafolio");
         }
+    }
+    /**
+     * @description Mandda una peticion para traer la data del detalle de la tabla
+     * @param {string} program Hace referencia al id del programa.
+     * @returns Retorna los rows para construir el detalle de la tabla
+     */
+    async reqDataTableProjects(program) {
+        let response = await fetch(`/ActionsToMake/ProjectsTableDetail?programa=${program}`);
+        let data = await response.json();
+        return data;
+    }
+    /**
+     * @description Funcion donde limpia la tabla y la reconstruye.
+     * @param {string} rows Hace refencia a un paramatro string donde viene incrustado el html ya de los rows para pintarlos en la tabla
+     */
+    construcTableProjects(rows) {
+        $('.body-table-projects').empty();
+        $('.body-table-projects').append(rows);
     }
     /** 
      * @description Manda una peticion para traer la data estructurada para la construccion de las graficas pie

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using DocumentFormat.OpenXml.Presentation;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -41,7 +42,7 @@ namespace PMCTool.App.Controllers
             List<SelectionListItem> programs = new List<SelectionListItem>();
             try
             {
-                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/" + idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -178,6 +179,62 @@ namespace PMCTool.App.Controllers
                                     <th>" + projects.Program+ @"</th>
                                     <td>" + projects.Name + @"</td>
                                     <td>" + projects.Status + @"</td>
+                                </tr>";
+                }
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(rowTable);
+        }
+        [HttpGet]
+        [Route("ActionsToMake/ProjectsTableDetail")]
+        public async Task<IActionResult> GetProjectsTableDetailAsync(string programa)
+        {
+            var rowTable = "";
+            try
+            {
+                Dictionary<string, string> colors = new Dictionary<string, string>
+                {
+                    { "1", "#4CAF50"},           // Verde
+                    { "2", "#e6c702"},           // Amarillo
+                    { "3", "#dc3545"},           // Rojo
+                    { "4", "#d0d0d0"},           // Gris claro
+                    { "5", "#545454"},           // Gris oscuro
+                    { "6", "#F1F5F9"}
+                };
+                List<ReportStatusGlobalDetailMainbit004> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/globalstatus/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                foreach(var project in report)
+                {
+                    rowTable += @"<tr>
+                                    <th>" + project.Code + @"</th>
+                                    <td>" + project.Name + @"</td>
+                                    <td>" + project.Stage + @"</td>
+                                    <td>" + project.Phase + @"</td>
+                                    <td>" + project.ProjectManagerName + @"</td>
+                                    <td>" + project.LeaderName + @"</td>
+                                    <td>" + project.StartDate?.ToString("yyyy-MM-dd") + @"</td>
+                                    <td>" + project.EndDate?.ToString("yyyy-MM-dd") + @"</td>
+                                    <td style='background-color:" + colors[project.Status.ToString()] +"'>" + localizer[$"F01-0{project.Status}"] + @"</td>
+                                    <td>" + project.PlannedProgress?.ToString("F2") + @"%</td>
+                                    <td>" + project.Progress?.ToString("F2") + @"%</td>
                                 </tr>";
                 }
             }
