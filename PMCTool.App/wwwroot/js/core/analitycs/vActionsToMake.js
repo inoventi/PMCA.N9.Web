@@ -191,9 +191,7 @@
                                 this.slice(false); // regresa cuando se quita el mouse
                             },
                             click: async function (event) {
-                                console.log(this.name + " " + this.y + this.t);
-                                console.log(event);
-                                console.log(this.t);
+                                LoaderShow();
                                 let data = await self.reqDataProjectsByStatus(this.t, this.name);
                                 let headers = `<tr style="background: #c1c1c1;">
                                                     <th>PROGRAMA</th>
@@ -201,7 +199,7 @@
                                                     <th>ESTATUS</th>
                                                 </tr>`;
                                 self.construcTableDetailGraphic(headers, data);
-
+                                LoaderHide();
                             }
                         }
                     }
@@ -280,16 +278,14 @@
                                 this.slice(false); // regresa cuando se quita el mouse
                             },
                             click: async function (event) {
-                                console.log(this.name + " " + this.y + this.t);
-                                console.log(event);
-                                console.log(this.t);
+                                LoaderShow();
                                 let data = await self.reqDataProjectsByProgram(this.t);
-                                console.log(data);
                                 let headers = `<tr style="background: #c1c1c1;">
                                                     <th>PROGRAMA</th>
                                                     <th>NOMBRE DE PROYECTO</th>
                                                 </tr>`;
                                 self.construcTableDetailGraphic(headers, data);
+                                LoaderHide();
                             }
                         }
                     }
