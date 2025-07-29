@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
+using Newtonsoft.Json;
 using PMCTool.App.Attributes;
 using PMCTool.App.Models;
-using PMCTool.Models.Environment;
 using PMCTool.Common.RestConnector;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Localization;
 using PMCTool.Models.Core;
-using Newtonsoft.Json;
+using PMCTool.Models.Environment;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace PMCTool.App.Controllers
 {
@@ -81,12 +82,12 @@ namespace PMCTool.App.Controllers
             Dictionary<string, object> graphics = new Dictionary<string, object>();
             try
             {
-                List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/"+idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 var graphicStatusProjects = report.Where(x => x.ChartId == 2).Select(x => new Dictionary<string, object>
                 {
                     { "name", x.NameProgramOrLabelStatus },
                     { "y", x.Total },
-                    { "t", x.ChartId },
+                    { "t", x.ElementId },
                     { "color", colors[x.NameProgramOrLabelStatus] }
                 }).ToList();
 
@@ -94,7 +95,7 @@ namespace PMCTool.App.Controllers
                 {
                     { "name", x.NameProgramOrLabelStatus },
                     { "y", x.Total },
-                    { "t", x.ChartId },
+                    { "t", x.ElementId },
                 }).ToList();
 
                 graphics.Add("graphicStatusProjects", graphicStatusProjects);
@@ -122,6 +123,85 @@ namespace PMCTool.App.Controllers
                 return Json(response);
             }
             return Json(graphics);
+        }
+        [HttpGet]
+        [Route("ActionsToMake/DetailProjectsByProgram")]
+        public async Task<IActionResult> GetDetailProjectsByProgramAsync(string idProgram)
+        {
+            var rowTable = "";
+            try
+            {
+                List<ReportStatusGlobalDetailMainbit002_ByProject> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit002_ByProject>>(baseUrl, $"api/v1/globalstatus/detail/projects/{idProgram}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                foreach(var projects in report)
+                {
+                    rowTable += @"<tr>
+                                    <th>" + projects.ProgramName +@"</th>
+                                    <td>"+projects.Name+@"</td>
+                                </tr>";
+                }
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(rowTable);
+        }
+        [HttpGet]
+        [Route("ActionsToMake/DetailProjectsByStatus")]
+        public async Task<IActionResult> GetDetailProjectsByStatusAsync(string portfolio, string status)
+        {
+            var rowTable = "";
+            try
+            {
+                List<ReportStatusGlobalDetailMainbit003> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit003>>(baseUrl, $"api/v1/globalstatus/detail/projects/status/{portfolio}/{status}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                foreach (var projects in report)
+                {
+                    rowTable += @"<tr>
+                                    <th>" + projects.Program+ @"</th>
+                                    <td>" + projects.Name + @"</td>
+                                    <td>" + projects.Status + @"</td>
+                                </tr>";
+                }
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(rowTable);
         }
         [HttpPost]
         public async Task<IActionResult> GetDataActionsToMake(ModelFilters data)

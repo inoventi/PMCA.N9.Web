@@ -64,7 +64,7 @@
         let portafolio = $('#selportafolio').val();
         if (portafolio) {
             let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
-            this.getCharts(graphicStatusProjects,graphicProjectsInProgram );
+            this.getCharts(graphicStatusProjects, graphicProjectsInProgram);
         } else {
             alert("Debenes elegir un portafolio");
         }
@@ -75,7 +75,7 @@
      * @returns Regresa la data con los dos objectos para las dos graficas
      */
     async reqDataCharts(portfolio) {
-        let response = await fetch('/ActionsToMake/Graphics?idPortfolio=' + portfolio);
+        let response = await fetch(`/ActionsToMake/Graphics?idPortfolio=${portfolio}`);
         let data = await response.json();
         return data;
     }
@@ -84,7 +84,8 @@
      * @param { Object } seriesSP Referencia a la data ya estructurada para construir la grafica pie de estatus de proyecto
      * @param { Object } seriesPP Referencia a la data ya estructurada para construir la grafica pue de proyectos en programa
      */
-    getCharts(seriesSP,seriesPP) {
+    getCharts(seriesSP, seriesPP) {
+        let self = this; // guarda el contexto de la clase
         Highcharts.chart('container2', {
             chart: {
                 type: 'pie',
@@ -133,11 +134,6 @@
                             fontSize: '1.2em',
                             textOutline: 'none',
                             opacity: 0.7
-                        },
-                        filter: {
-                            operator: '>',
-                            property: 'percentage',
-                            value: 10
                         }
                     }]
                 }
@@ -160,8 +156,18 @@
                             mouseOut: function () {
                                 this.slice(false); // regresa cuando se quita el mouse
                             },
-                            click: function (event) {
-                                $('#exampleModal').modal('show')
+                            click: async function (event) {
+                                console.log(this.name + " " + this.y + this.t);
+                                console.log(event);
+                                console.log(this.t);
+                                let data = await self.reqDataProjectsByStatus(this.t, this.name);
+                                let headers = `<tr style="background: #c1c1c1;">
+                                                    <th>PROGRAMA</th>
+                                                    <th>NOMBRE DE PROYECTO</th>
+                                                    <th>ESTATUS</th>
+                                                </tr>`;
+                                self.construcTableDetailGraphic(headers, data);
+
                             }
                         }
                     }
@@ -217,11 +223,6 @@
                             fontSize: '1.2em',
                             textOutline: 'none',
                             opacity: 0.7
-                        },
-                        filter: {
-                            operator: '>',
-                            property: 'percentage',
-                            value: 10
                         }
                     }]
                 }
@@ -244,18 +245,57 @@
                             mouseOut: function () {
                                 this.slice(false); // regresa cuando se quita el mouse
                             },
-                            click: function (event) {
+                            click: async function (event) {
                                 console.log(this.name + " " + this.y + this.t);
                                 console.log(event);
                                 console.log(this.t);
-
-                                $('#exampleModal').modal('show')
+                                let data = await self.reqDataProjectsByProgram(this.t);
+                                console.log(data);
+                                let headers = `<tr style="background: #c1c1c1;">
+                                                    <th>PROGRAMA</th>
+                                                    <th>NOMBRE DE PROYECTO</th>
+                                                </tr>`;
+                                self.construcTableDetailGraphic(headers, data);
                             }
                         }
                     }
                 }
             ]
         });
+    }
+    /**
+     * @description Request que hace al endpoint para traer el detalle de los proyectos por estatus
+     * @param {string} portfolio Hace referencia al id del portafolio
+     * @param {string} status Hace referencia al nombre del estado
+     * @returns Retorna los rows ya estructurados para la tabla
+     */
+    async reqDataProjectsByStatus(portfolio, status) {
+        let response = await fetch(`/ActionsToMake/DetailProjectsByStatus?portfolio=${portfolio}&status=${status}`);
+        let data = await response.json();
+        return data;
+    }
+    /**
+     * @description Request que hace al endpoint para traer el detalle de los proyectos que se encuentran en el programa
+     * @param {string} program Hace referencia al id del programa
+     * @returns retorna los rows ya estructurados para la tabla
+     */
+    async reqDataProjectsByProgram(program) {
+        let response = await fetch(`/ActionsToMake/DetailProjectsByProgram?idProgram=${program}`);
+        let data = await response.json();
+        return data;
+    }
+    /**
+     * @description Contruccion de la tabla detalle de las graficas Reutilizable
+     * @param {string} headers Hace referencia a la cabecera de la tabla con las columnas
+     * @param {string} rows Hace referencias a los renglones de la tabla
+     */
+    construcTableDetailGraphic(headers,rows) {
+        $('.header-table-graphic').empty();
+        $('.header-table-graphic').append(headers);
+        $('.body-table-graphic').empty();
+        $('.body-table-graphic').append(rows);
+        $('#exampleModal').modal('show');
+
     }
 }
 /**
