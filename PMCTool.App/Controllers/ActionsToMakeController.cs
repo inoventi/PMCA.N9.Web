@@ -40,7 +40,7 @@ namespace PMCTool.App.Controllers
             List<SelectionListItem> programs = new List<SelectionListItem>();
             try
             {
-                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/"+idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/" + idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -64,6 +64,64 @@ namespace PMCTool.App.Controllers
                 return Json(response);
             }
             return Json(programs);
+        }
+        [HttpGet]
+        [Route("ActionsToMake/Graphics")]
+        public async Task<IActionResult> GetGraphicsGlobalStatusAsync(string idPortfolio)
+        {
+            Dictionary<string, string> colors = new Dictionary<string, string>
+            {
+                { "OnTime", "#4CAF50"},           // Verde
+                { "Delayed", "#e6c702"},          // Amarillo
+                { "WithImpact", "#dc3545"},       // Rojo
+                { "Closed", "#d0d0d0"},           // Gris claro
+                { "Cancel", "#545454"},           // Gris oscuro
+                { "Onsettings", "#F1F5F9"}
+            };
+            Dictionary<string, object> graphics = new Dictionary<string, object>();
+            try
+            {
+                List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/"+idPortfolio, new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                var graphicStatusProjects = report.Where(x => x.ChartId == 2).Select(x => new Dictionary<string, object>
+                {
+                    { "name", x.NameProgramOrLabelStatus },
+                    { "y", x.Total },
+                    { "t", x.ChartId },
+                    { "color", colors[x.NameProgramOrLabelStatus] }
+                }).ToList();
+
+                var graphicProjectsInProgram = report.Where(x => x.ChartId == 1).Select(x => new Dictionary<string, object>
+                {
+                    { "name", x.NameProgramOrLabelStatus },
+                    { "y", x.Total },
+                    { "t", x.ChartId },
+                }).ToList();
+
+                graphics.Add("graphicStatusProjects", graphicStatusProjects);
+                graphics.Add("graphicProjectsInProgram", graphicProjectsInProgram);
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(graphics);
         }
         [HttpPost]
         public async Task<IActionResult> GetDataActionsToMake(ModelFilters data)

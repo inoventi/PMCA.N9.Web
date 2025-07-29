@@ -14,12 +14,12 @@
         };
         //Config Charts
         this.coloresEstatusProject = {
-            'En tiempo': '#4CAF50',           // Verde
-            'Atrasado': '#e6c702',            // Amarillo
-            'Con impacto': '#dc3545',         // Rojo
-            'Cerrado': '#d0d0d0',             // Gris claro
-            'Cancelado': '#545454',                 // Gris oscuro
-            'En configuracion': '#F1F5F9'     // Gris mas clarito
+            'OnTime': '#4CAF50',           // Verde
+            'Delayed': '#e6c702',            // Amarillo
+            'WithImpact': '#dc3545',         // Rojo
+            'Closed': '#d0d0d0',             // Gris claro
+            'Cancel': '#545454',                 // Gris oscuro
+            'Onsettings': '#F1F5F9'     // Gris mas clarito
         };
         this.init();
     }
@@ -57,17 +57,27 @@
         $('#selprograma').selectpicker('refresh'); // Refresca el selectpicker para mostrar los nuevos datos
     }
     /**
-     * @description Valida opcion seleccionada y manda llamar la funcion que construye los pie
+     * @description Valida opcion seleccionada, manda un await para traer la data estructurada de las graficas y manda llamar la funcion que construye los pie
+     * Destructura el response del req para la construccion de la grafica
      */
     async executeReport() {
-        //Tendra que ser una funcion async para esperar la respuesta de la api
         let portafolio = $('#selportafolio').val();
         if (portafolio) {
-            // await this.reqDataCharts(); ejemplo donde this.getCharts(param); mandaremos el parametro de la data ya estructurada para la construcion de los Pie
-            this.getCharts();
+            let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
+            this.getCharts(graphicStatusProjects,graphicProjectsInProgram );
         } else {
             alert("Debenes elegir un portafolio");
         }
+    }
+    /** 
+     * @description Manda una peticion para traer la data estructurada para la construccion de las graficas pie
+     * @param {string} portfolio Referencia al id del portafolio
+     * @returns Regresa la data con los dos objectos para las dos graficas
+     */
+    async reqDataCharts(portfolio) {
+        let response = await fetch('/ActionsToMake/Graphics?idPortfolio=' + portfolio);
+        let data = await response.json();
+        return data;
     }
     /**
      * @description Contruye las graficas de los pie
@@ -92,7 +102,7 @@
                 text: 'Estatus de proyecto'
             },
             tooltip: {
-                valueSuffix: '%'
+                valueSuffix: ''
             },
             subtitle: {
                 text:
@@ -139,40 +149,9 @@
                             enabled: false // Esto es lo que realmente previene el opacado
                         }
                     },
-                    name: 'Percentage',
+                    name: 'Projects',
                     colorByPoint: true,
-                    data: [
-                        {
-                            name: 'En tiempo',
-                            y: 55.02,
-                            color: this.coloresEstatusProject['En tiempo']
-                        },
-                        {
-                            name: 'Atrasado',
-                            y: 26.71,
-                            color: this.coloresEstatusProject['Atrasado'],
-                        },
-                        {
-                            name: 'Con impacto',
-                            y: 1.09,
-                            color: this.coloresEstatusProject['Con impacto'],
-                        },
-                        {
-                            name: 'Cerrado',
-                            y: 15.5,
-                            color: this.coloresEstatusProject['Cerrado'],
-                        },
-                        {
-                            name: 'Cancelado',
-                            y: 15.5,
-                            color: this.coloresEstatusProject['Cancelado'],
-                        },
-                        {
-                            name: 'En configuracion',
-                            y: 8.68,
-                            color: this.coloresEstatusProject['En configuracion'],
-                        }
-                    ],
+                    data: seriesSP,
                     point: {
                         events: {
                             mouseOver: function () {
@@ -207,7 +186,7 @@
                 text: 'Portafolio: proyectos en programa'
             },
             tooltip: {
-                valueSuffix: '%'
+                valueSuffix: ''
             },
             subtitle: {
                 text:
@@ -215,10 +194,18 @@
             },
             plotOptions: {
                 pie: {
-                    borderColor: null, //Quitamos color negro en los bordes
-                    borderWidth: 0, //Aseguramos que no se pinte el borde
                     allowPointSelect: true,
                     cursor: 'pointer',
+                    borderColor: 'white',
+                    borderWidth: 0,
+                    slicedOffset: 10, // separación más visible
+                    states: {
+                        hover: {
+                            enabled: true,
+                            halo: false,
+                            brightness: 0,
+                        }
+                    },
                     dataLabels: [{
                         enabled: true,
                         distance: 20
@@ -241,48 +228,22 @@
             },
             series: [
                 {
-                    name: 'Percentage',
-                    colorByPoint: true,
-                    data: [
-                        {
-                            name: 'PROFECO',
-                            y: 55.02,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'ASF',
-                            sliced: true,
-                            selected: true,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'BUAP',
-                            y: 1.09,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'FOCIR',
-                            y: 15.5,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'GUARDIA NACIONAL',
-                            y: 1.68,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'INAI',
-                            y: 1.68,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
-                        },
-                        {
-                            name: 'IPAB',
-                            y: 1.68,
-                            t: '9fe43f30-feb7-4589-b167-2e55987615e4'
+                    states: {
+                        inactive: {
+                            enabled: false // Esto es lo que realmente previene el opacado
                         }
-                    ],
+                    },
+                    name: 'Projects',
+                    colorByPoint: true,
+                    data: seriesPP,
                     point: {
                         events: {
+                            mouseOver: function () {
+                                this.slice(true); // separa al pasar el mouse
+                            },
+                            mouseOut: function () {
+                                this.slice(false); // regresa cuando se quita el mouse
+                            },
                             click: function (event) {
                                 console.log(this.name + " " + this.y + this.t);
                                 console.log(event);
