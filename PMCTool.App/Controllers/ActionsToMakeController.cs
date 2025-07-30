@@ -179,7 +179,7 @@ namespace PMCTool.App.Controllers
                     rowTable += @"<tr>
                                     <th>" + projects.Program+ @"</th>
                                     <td>" + projects.Name + @"</td>
-                                    <td>" + localizer[$"F01-0{projects.Status}"] + @"</td>
+                                    <td style='width: 150px;'>" + localizer[$"StatusString-{projects.Phase}"] + @"</td>
                                 </tr>";
                 }
             }
@@ -224,18 +224,21 @@ namespace PMCTool.App.Controllers
                 List<ReportStatusGlobalDetailMainbit004> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/globalstatus/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 foreach(var project in report)
                 {
+                    decimal? progress = Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100,2); // Math.Round(originalValue)
+                    decimal? progressreal = Math.Round((Convert.ToDecimal(project.Progress)) * 100,2); // Math.Round(originalValue)
+                     
                     rowTable += @"<tr>
                                     <th>" + project.Code + @"</th>
                                     <td>" + project.Name + @"</td>
-                                    <td>" + project.Stage + @"</td>
+                                    <td>" + localizer[$"phase-{project.Stage}"] + @"</td>
                                     <td>" + project.Phase + @"</td>
                                     <td>" + project.ProjectManagerName + @"</td>
                                     <td>" + project.LeaderName + @"</td>
                                     <td>" + project.StartDate?.ToString("yyyy-MM-dd") + @"</td>
                                     <td>" + project.EndDate?.ToString("yyyy-MM-dd") + @"</td>
                                     <td style='background-color:" + colors[project.Status.ToString()] +"'>" + localizer[$"F01-0{project.Status}"] + @"</td>
-                                    <td>" + project.PlannedProgress?.ToString("F2") + @"%</td>
-                                    <td>" + project.Progress?.ToString("F2") + @"%</td>
+                                    <td>" + progress.ToString()+ @"%</td>
+                                    <td>" + progressreal.ToString() + @"%</td>
                                 </tr>";
                 }
             }

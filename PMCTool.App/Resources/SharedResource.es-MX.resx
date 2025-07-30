@@ -1746,6 +1746,45 @@
   <data name="E01-17" xml:space="preserve">
     <value>Comentarios</value>
   </data>
+  <data name="detail-report" xml:space="preserve">
+    <value>Detalle del reporte</value>
+  </data>
+  <data name="phase-OnConfiguration" xml:space="preserve">
+    <value>En Configuración</value>
+  </data>
+  <data name="phase-Execution" xml:space="preserve">
+    <value>Ejecución</value>
+  </data>
+  <data name="phase-Canceled" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="phase-Suspended" xml:space="preserve">
+    <value>Suspendido</value>
+  </data>
+  <data name="phase-Close" xml:space="preserve">
+    <value>Cerrado</value>
+  </data>
+  <data name="phase-others" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="StatusString-OnTime" xml:space="preserve">
+    <value>En tiempo</value>
+  </data>
+  <data name="StatusString-Delayed" xml:space="preserve">
+    <value>Atrasado</value>
+  </data>
+  <data name="StatusString-WithImpact" xml:space="preserve">
+    <value>Con impacto</value>
+  </data>
+  <data name="StatusString-Closed" xml:space="preserve">
+    <value>Cerrado</value>
+  </data>
+  <data name="StatusString-others" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="StatusString-Onsettings" xml:space="preserve">
+    <value>En Configuración</value>
+  </data>
   <data name="F01-01" xml:space="preserve">
     <value>En tiempo</value>
   </data>

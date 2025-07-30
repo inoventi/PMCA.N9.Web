@@ -1770,6 +1770,9 @@
   <data name="E02-07" xml:space="preserve">
     <value>Real end date</value>
   </data>
+  <data name="detail-report" xml:space="preserve">
+    <value>Detail report</value>
+  </data>
   <data name="E02-08" xml:space="preserve">
     <value>Planned progress percentage</value>
   </data>
@@ -1790,6 +1793,42 @@
   </data>
   <data name="E02-14" xml:space="preserve">
     <value>Comments</value>
+  </data>
+  <data name="phase-OnConfiguration" xml:space="preserve">
+    <value>OnConfiguration</value>
+  </data>
+  <data name="phase-Execution" xml:space="preserve">
+    <value>Execution</value>
+  </data>
+  <data name="phase-Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="phase-Suspended" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
+  <data name="phase-Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="phase-others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="StatusString-OnTime" xml:space="preserve">
+    <value>On time</value>
+  </data>
+  <data name="StatusString-Delayed" xml:space="preserve">
+    <value>Delayed</value>
+  </data>
+  <data name="StatusString-WithImpact" xml:space="preserve">
+    <value>WithImpact</value>
+  </data>
+  <data name="StatusString-Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="StatusString-others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="StatusString-Onsettings" xml:space="preserve">
+    <value>Onsettings</value>
   </data>
   <data name="F01-01" xml:space="preserve">
     <value>On time</value>
