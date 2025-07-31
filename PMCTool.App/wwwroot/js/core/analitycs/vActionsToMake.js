@@ -29,6 +29,8 @@
     init() {
         $(document).on('click', '.btn-report', this.executeReport.bind(this));
         $('#selportafolio').on('changed.bs.select', this.getPrograms.bind(this));
+
+        $(document).on('click', '.btn-report-close', this.closeReport.bind(this));
     }
     /**
      * @description Trae los programas que pertenece al portafolio y manda llamar la funcion que reconstruye el selector de programas
@@ -56,11 +58,21 @@
         });
         $('#selprograma').selectpicker('refresh'); // Refresca el selectpicker para mostrar los nuevos datos
     }
+    async closeReport() {
+        window.location.href = window.location.href;
+    }
     /**
      * @description Valida opcion seleccionada, manda un await para traer la data estructurada de las graficas y manda llamar la funcion que construye los pie / Manda traer la info para el detalle de la tabla
      * Destructura el response del req para la construccion de la grafica
      */
     async executeReport() {
+       
+        let headers = `<tr style="background: #c1c1c1;">
+                                                    <th>PROGRAMA</th>
+                                                    <th>TOTAL</th>
+                                                </tr>`;
+        let table = "";
+        let chart1 = "visible";
         let portafolio = $('#selportafolio').val();
         let programa = $('#selprograma').val();
         if (portafolio) {
@@ -77,7 +89,28 @@
                 $('#table').attr('hidden', 'true');
                 $('.charts').removeAttr('hidden');
                 let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
-                this.getCharts(graphicStatusProjects, graphicProjectsInProgram);
+                console.log(graphicProjectsInProgram);
+                const objectLength = Object.keys(graphicProjectsInProgram).length;
+               
+                if (objectLength > 26) {
+                    let tablecontainet = $(".pp1");
+                    tablecontainet.empty();
+                    console.log("sddfsdf");
+                    let row = "";
+                    Object.keys(graphicProjectsInProgram).forEach(key => {
+                        row = row + `<tr">
+                                                    <td>${graphicProjectsInProgram[key].name}</td>
+                                                    <td>${graphicProjectsInProgram[key].y}</td>
+                                                </tr>`;
+
+                    });
+                    console.log(row);
+                    tablecontainet.append("<center><table class='table' style='width: 50%;'>" + headers + row + "</table></center>");
+                    chart1 = "hidden";
+                } else {
+                    chart1 = "visible";
+                }
+                this.getCharts(graphicStatusProjects, graphicProjectsInProgram, chart1);
                 LoaderHide();
             }
             
@@ -118,7 +151,7 @@
      * @param { Object } seriesSP Referencia a la data ya estructurada para construir la grafica pie de estatus de proyecto
      * @param { Object } seriesPP Referencia a la data ya estructurada para construir la grafica pue de proyectos en programa
      */
-    getCharts(seriesSP, seriesPP) {
+    getCharts(seriesSP, seriesPP, chart1) {
         let self = this; // guarda el contexto de la clase
         Highcharts.chart('container2', {
             chart: {
@@ -207,91 +240,93 @@
             ]
         });
 
-        Highcharts.chart('container1', {
-            chart: {
-                type: 'pie',
-                zooming: {
-                    type: 'xy'
+        if (chart1 == "visible") {
+            Highcharts.chart('container1', {
+                chart: {
+                    type: 'pie',
+                    zooming: {
+                        type: 'xy'
+                    },
+                    panning: {
+                        enabled: true,
+                        type: 'xy'
+                    },
+                    panKey: 'shift',
+                    backgroundColor: 'white'
                 },
-                panning: {
-                    enabled: true,
-                    type: 'xy'
+                title: {
+                    text: 'Portafolio: proyectos en programa'
                 },
-                panKey: 'shift',
-                backgroundColor: 'white'
-            },
-            title: {
-                text: 'Portafolio: proyectos en programa'
-            },
-            tooltip: {
-                valueSuffix: ''
-            },
-            subtitle: {
-                text:
-                    ''
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    borderColor: 'white',
-                    borderWidth: 0,
-                    slicedOffset: 10, // separación más visible
-                    states: {
-                        hover: {
+                tooltip: {
+                    valueSuffix: ''
+                },
+                subtitle: {
+                    text:
+                        ''
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderColor: 'white',
+                        borderWidth: 0,
+                        slicedOffset: 10, // separación más visible
+                        states: {
+                            hover: {
+                                enabled: true,
+                                halo: false,
+                                brightness: 0,
+                            }
+                        },
+                        dataLabels: [{
                             enabled: true,
-                            halo: false,
-                            brightness: 0,
-                        }
-                    },
-                    dataLabels: [{
-                        enabled: true,
-                        distance: 20
-                    }, {
-                        enabled: true,
-                        distance: -40,
-                        format: '{point.percentage:.1f}%',
-                        style: {
-                            fontSize: '1.2em',
-                            textOutline: 'none',
-                            opacity: 0.7
-                        }
-                    }]
-                }
-            },
-            series: [
-                {
-                    states: {
-                        inactive: {
-                            enabled: false // Esto es lo que realmente previene el opacado
-                        }
-                    },
-                    name: 'Projects',
-                    colorByPoint: true,
-                    data: seriesPP,
-                    point: {
-                        events: {
-                            mouseOver: function () {
-                                this.slice(true); // separa al pasar el mouse
-                            },
-                            mouseOut: function () {
-                                this.slice(false); // regresa cuando se quita el mouse
-                            },
-                            click: async function (event) {
-                                LoaderShow();
-                                let data = await self.reqDataProjectsByProgram(this.t);
-                                let headers = `<tr style="background: #c1c1c1;">
+                            distance: 20
+                        }, {
+                            enabled: true,
+                            distance: -40,
+                            format: '{point.percentage:.1f}%',
+                            style: {
+                                fontSize: '1.2em',
+                                textOutline: 'none',
+                                opacity: 0.7
+                            }
+                        }]
+                    }
+                },
+                series: [
+                    {
+                        states: {
+                            inactive: {
+                                enabled: false // Esto es lo que realmente previene el opacado
+                            }
+                        },
+                        name: 'Projects',
+                        colorByPoint: true,
+                        data: seriesPP,
+                        point: {
+                            events: {
+                                mouseOver: function () {
+                                    this.slice(true); // separa al pasar el mouse
+                                },
+                                mouseOut: function () {
+                                    this.slice(false); // regresa cuando se quita el mouse
+                                },
+                                click: async function (event) {
+                                    LoaderShow();
+                                    let data = await self.reqDataProjectsByProgram(this.t);
+                                    let headers = `<tr style="background: #c1c1c1;">
                                                     <th>PROGRAMA</th>
                                                     <th>NOMBRE DE PROYECTO</th>
                                                 </tr>`;
-                                self.construcTableDetailGraphic(headers, data);
-                                LoaderHide();
+                                    self.construcTableDetailGraphic(headers, data);
+                                    LoaderHide();
+                                }
                             }
                         }
                     }
-                }
-            ]
-        });
+                ]
+            });
+        }
     }
     /**
      * @description Request que hace al endpoint para traer el detalle de los proyectos por estatus

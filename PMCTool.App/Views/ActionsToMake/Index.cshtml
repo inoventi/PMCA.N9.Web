@@ -12,7 +12,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="col-md-12 card">
-            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0" style="    min-height: 1500px">
                 <div class="col-md-12 pt-4">
                     <small class="font-weight-normal">Analytics</small>
                     <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
@@ -33,14 +33,18 @@
                                             }
                                         </select>
                                     </div>
-                                    <div class="col-12 col-sm-5">
+                                    <div class="col-12 col-sm-4">
                                         <select name="program"  class="selectpicker programa" id="selprograma" data-title="Selecciona un programa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                             
                                         </select>
                                     </div>
-                                    <div class="col-sm-2 pt-2">
+                                    <div class="col-sm-3 pt-2 text-right">
+                                      
                                         <button type="button" class="btn btn-default btn-default btn-report">
                                             <i class="fas fa-file-pdf"></i> Generar reporte
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-default  btn-report-close" style="    background: black;">
+                                            Cerrar reporte
                                         </button>
                                     </div>
                                 </div>
@@ -49,17 +53,12 @@
                         <div class="row justify-content-center mt-1">
                             <div class="col-md-12 text-right text-right">
                                 <div class="row">
-                                    <div class="col-md-6 text-left">
-                                        <button type="button" class="btn btn-default btn-default">
-                                            <i class="fas fa-file-pdf"></i> Exportar
-                                        </button>
-                                        <button type="button" class="btn btn-default btn-default">
-                                            <i class="fas fa-file-pdf"></i> Cerrar reporte
-                                        </button>
+                                    <div class="col-md-6 text-left"> 
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 charts">
+                            <div class="col-md-6 charts pp1">
                                 <figure class="highcharts-figure">
                                     <div id="container1" style="height: 500px;"></div>
                                     <p class="highcharts-description"></p>
