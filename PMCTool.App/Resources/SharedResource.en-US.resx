@@ -2977,4 +2977,82 @@
   <data name="AnalyticsAcceesNotAllowed" xml:space="preserve">
     <value>Your user does not have access to PMC-Tool Analytics</value>
   </data>
+  <data name="Analytics5_001" xml:space="preserve">
+    <value>Select a portfolio</value>
+  </data>
+  <data name="Analytics5_002" xml:space="preserve">
+    <value>Select a program</value>
+  </data>
+  <data name="OnConfiguration" xml:space="preserve">
+    <value>On configuration</value>
+  </data>
+  <data name="Execution" xml:space="preserve">
+    <value>Execution</value>
+  </data>
+  <data name="Suspended" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
+  <data name="Onsettings" xml:space="preserve">
+    <value>Onsettings</value>
+  </data>
+  <data name="Analytics5_003" xml:space="preserve">
+    <value>Please select a portfolio</value>
+  </data>
+  <data name="Analytics5_004" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="Analytics5_005" xml:space="preserve">
+    <value>Name of project</value>
+  </data>
+  <data name="Analytics5_006" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Analytics5_007" xml:space="preserve">
+    <value>Portfolio: Projects in Program</value>
+  </data>
+  <data name="Analytics5_008" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="Analytics5_009" xml:space="preserve">
+    <value>Status of project</value>
+  </data>
+  <data name="Analytics5_010" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Analytics5_011" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="Analytics5_012" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Analytics5_013" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="Analytics5_014" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="Analytics5_015" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="Analytics5_016" xml:space="preserve">
+    <value>Planned Start Date</value>
+  </data>
+  <data name="Analytics5_017" xml:space="preserve">
+    <value>Planned End Date</value>
+  </data>
+  <data name="Analytics5_018" xml:space="preserve">
+    <value>Planned Progress</value>
+  </data>
+  <data name="Analytics5_019" xml:space="preserve">
+    <value>Actual Progress</value>
+  </data>
+  <data name="Analytics5_020" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="Analytics5_021" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Analytics5_022" xml:space="preserve">
+    <value>Global Status</value>
+  </data>
 </root>

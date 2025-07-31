@@ -21,6 +21,22 @@
             'Cancel': '#545454',                 // Gris oscuro
             'Onsettings': '#F1F5F9'     // Gris mas clarito
         };
+        this.coloresEstatusProjectNumber = {
+            'On time': '#4CAF50',           // Verde
+            'Delayed': '#e6c702',            // Amarillo
+            'WithImpact': '#dc3545',         // Rojo
+            'Closed': '#d0d0d0',             // Gris claro
+            'Cancel': '#545454',                 // Gris oscuro
+            'Onsettings': '#F1F5F9'     // Gris mas clarito
+        }
+        this.status = {
+            'Onsettings': 'Onsettings',
+            'Delayed': 'Delayed',
+            'Closed': 'Closed',
+            'OnTime': 'OnTime',
+            'WithImpact': 'WithImpact',
+            'Cancel': 'Cancel'
+        }
         this.init();
     }
     /**
@@ -29,8 +45,77 @@
     init() {
         $(document).on('click', '.btn-report', this.executeReport.bind(this));
         $('#selportafolio').on('changed.bs.select', this.getPrograms.bind(this));
-
         $(document).on('click', '.btn-report-close', this.closeReport.bind(this));
+        this.initDataTableProject();
+    }
+    initDataTableProject() {
+        $('.table-projects').DataTable({
+            paging: true,
+            searching: true,
+            processing: true,
+            responsive: true,
+            order: [],
+            columns: [
+                { data: 'code' },
+                { data: 'name' },
+                {
+                    data: 'stage', render: (data) => {
+                        return $.i18n._(`${data}`);
+                    }
+                },
+                { data: 'phase' },
+                { data: 'projectManagerName' },
+                { data: 'leaderName' },
+                {
+                    data: 'startDate',
+                    defaultContent: '',       // si viene null o la propiedad no existe
+                    render: (data) => {
+                        return data?.split('T')[0];
+                    }
+                },
+                {
+                    data: 'endDate',
+                    defaultContent: '',       // si viene null o la propiedad no existe
+                    render: (data) => {
+                        return data?.split('T')[0];
+                    }
+                },
+                {
+                    data: 'status', render: (data) => {
+                        let color = this.coloresEstatusProjectNumber[$.i18n._("elementStatusName_" + data)];
+                        console.log(color, this.coloresEstatusProjectNumber, $.i18n._("elementStatusName_" + data));
+                        return `<div style="width: 100%; background:${color}; font-weight: 500;">${$.i18n._(`elementStatusName_${data}`)}</div>`;
+                    }
+                },
+                {
+                    data: 'plannedProgress', render: (data) => {
+                        return `${data}%`;
+                    }
+                },
+                {
+                    data: 'progress', render: (data) => {
+                        return `${data}%`;
+                    }
+                }
+            ],
+            language: {
+                url: "../json/" + Cookies.get('pmctool-lang-app') + ".json"
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar a Excel',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all',       // exporta todas las páginas
+                            search: 'applied'  // respeta el filtro activo (opcional)
+                        },
+                        columns: ':visible'   // sólo columnas visibles (opcional)
+                    }
+                }
+            ],
+        });
     }
     /**
      * @description Trae los programas que pertenece al portafolio y manda llamar la funcion que reconstruye el selector de programas
@@ -52,14 +137,14 @@
      */
     construcSelectPrograms(programs) {
         $('#selprograma').empty();
-        $('#selprograma').append('<option value="">Selecciona un programa</option>');
+        $('#selprograma').append(`<option value="">${$.i18n._('Analytics5_002') }</option>`);
         programs.forEach(program => {
             $('#selprograma').append(`<option value="${program.key}">${program.value}</option>`);
         });
         $('#selprograma').selectpicker('refresh'); // Refresca el selectpicker para mostrar los nuevos datos
     }
     async closeReport() {
-        window.location.href = window.location.href;
+        window.location.reload();
     }
     /**
      * @description Valida opcion seleccionada, manda un await para traer la data estructurada de las graficas y manda llamar la funcion que construye los pie / Manda traer la info para el detalle de la tabla
@@ -68,7 +153,7 @@
     async executeReport() {
        
         let headers = `<tr style="background: #c1c1c1;">
-                                                    <th>PROGRAMA</th>
+                                                    <th>${ $.i18n._("Analytics5_004") }</th>
                                                     <th>TOTAL</th>
                                                 </tr>`;
         let table = "";
@@ -89,7 +174,7 @@
                 $('#table').attr('hidden', 'true');
                 $('.charts').removeAttr('hidden');
                 let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
-                console.log(graphicProjectsInProgram);
+                console.log(graphicProjectsInProgram, graphicStatusProjects);
                 const objectLength = Object.keys(graphicProjectsInProgram).length;
                
                 if (objectLength > 26) {
@@ -115,7 +200,12 @@
             }
             
         } else {
-            alert("Debenes elegir un portafolio");
+            Swal.fire({
+                type: 'error',
+                title: '',
+                text: $.i18n._("Analytics5_003"),
+                footer: ''
+            });
         }
     }
     /**
@@ -132,9 +222,10 @@
      * @description Funcion donde limpia la tabla y la reconstruye.
      * @param {string} rows Hace refencia a un paramatro string donde viene incrustado el html ya de los rows para pintarlos en la tabla
      */
-    construcTableProjects(rows) {
-        $('.body-table-projects').empty();
-        $('.body-table-projects').append(rows);
+    construcTableProjects(data) {
+        $('.table-projects').DataTable().clear().draw();
+        $('.table-projects').DataTable().columns.adjust().draw();
+        $('.table-projects').DataTable().rows.add(data).draw();
     }
     /** 
      * @description Manda una peticion para traer la data estructurada para la construccion de las graficas pie
@@ -167,7 +258,7 @@
                 backgroundColor: 'white'
             },
             title: {
-                text: 'Estatus de proyecto'
+                text: $.i18n._("Analytics5_009")
             },
             tooltip: {
                 valueSuffix: ''
@@ -212,7 +303,7 @@
                             enabled: false // Esto es lo que realmente previene el opacado
                         }
                     },
-                    name: 'Projects',
+                    name: $.i18n._("Analytics5_008"),
                     colorByPoint: true,
                     data: seriesSP,
                     point: {
@@ -225,11 +316,12 @@
                             },
                             click: async function (event) {
                                 LoaderShow();
+                                this.name = self.status[this.name];
                                 let data = await self.reqDataProjectsByStatus(this.t, this.name);
                                 let headers = `<tr style="background: #c1c1c1;">
-                                                    <th>PROGRAMA</th>
-                                                    <th>NOMBRE DE PROYECTO</th>
-                                                    <th>ESTATUS</th>
+                                                    <th>${$.i18n._("Analytics5_004") }</th>
+                                                    <th>${$.i18n._("Analytics5_005") }</th>
+                                                    <th>${$.i18n._("Analytics5_006") }</th>
                                                 </tr>`;
                                 self.construcTableDetailGraphic(headers, data);
                                 LoaderHide();
@@ -255,7 +347,7 @@
                     backgroundColor: 'white'
                 },
                 title: {
-                    text: 'Portafolio: proyectos en programa'
+                    text: $.i18n._("Analytics5_007")
                 },
                 tooltip: {
                     valueSuffix: ''
@@ -300,7 +392,7 @@
                                 enabled: false // Esto es lo que realmente previene el opacado
                             }
                         },
-                        name: 'Projects',
+                        name: $.i18n._("Analytics5_008"),
                         colorByPoint: true,
                         data: seriesPP,
                         point: {
@@ -315,8 +407,8 @@
                                     LoaderShow();
                                     let data = await self.reqDataProjectsByProgram(this.t);
                                     let headers = `<tr style="background: #c1c1c1;">
-                                                    <th>PROGRAMA</th>
-                                                    <th>NOMBRE DE PROYECTO</th>
+                                                    <th>${$.i18n._("Analytics5_004") }</th>
+                                                    <th>${$.i18n._("Analytics5_005") }</th>
                                                 </tr>`;
                                     self.construcTableDetailGraphic(headers, data);
                                     LoaderHide();

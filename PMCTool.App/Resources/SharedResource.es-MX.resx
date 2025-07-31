@@ -546,9 +546,6 @@
   <data name="Key" xml:space="preserve">
     <value>Llave</value>
   </data>
-  <data name="Newf" xml:space="preserve">
-    <value>Nueva</value>
-  </data>
   <data name="Order" xml:space="preserve">
     <value>Orden</value>
   </data>
@@ -582,8 +579,8 @@
   <data name="Image" xml:space="preserve">
     <value>Imagen</value>
   </data>
-  <data name="BulkLoad" xml:space="preserve">
-    <value>Carga Masiva</value>
+  <data name="UploadFiles" xml:space="preserve">
+    <value>Cargar archivos</value>
   </data>
   <data name="Companies" xml:space="preserve">
     <value>Empresas</value>
@@ -984,21 +981,6 @@
   <data name="EnumProjectRiskProbability_3" xml:space="preserve">
     <value>Alta</value>
   </data>
-  <data name="EnumProjectElementStatus_1" xml:space="preserve">
-    <value>En tiempo</value>
-  </data>
-  <data name="EnumProjectElementStatus_2" xml:space="preserve">
-    <value>Atrasado</value>
-  </data>
-  <data name="EnumProjectElementStatus_3" xml:space="preserve">
-    <value>Con impacto</value>
-  </data>
-  <data name="EnumProjectElementStatus_4" xml:space="preserve">
-    <value>Cerrado</value>
-  </data>
-  <data name="EnumProjectElementStatus_5" xml:space="preserve">
-    <value>Cancelado</value>
-  </data>
   <data name="Impact" xml:space="preserve">
     <value>Impacto</value>
   </data>
@@ -1070,6 +1052,21 @@
   </data>
   <data name="StatusIndicators" xml:space="preserve">
     <value>Indicadores de estado</value>
+  </data>
+  <data name="EnumProjectElementStatus_1" xml:space="preserve">
+    <value>En tiempo</value>
+  </data>
+  <data name="EnumProjectElementStatus_2" xml:space="preserve">
+    <value>Atrasado</value>
+  </data>
+  <data name="EnumProjectElementStatus_3" xml:space="preserve">
+    <value>Con impacto</value>
+  </data>
+  <data name="EnumProjectElementStatus_4" xml:space="preserve">
+    <value>Cerrado</value>
+  </data>
+  <data name="EnumProjectElementStatus_5" xml:space="preserve">
+    <value>Cancelado</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>Acciones</value>
@@ -1491,6 +1488,9 @@
   <data name="MeetingTemplate" xml:space="preserve">
     <value>Plantilla Minuta</value>
   </data>
+  <data name="ViewTitleMyDashboard" xml:space="preserve">
+    <value>Mi Tableros</value>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>Calendario</value>
   </data>
@@ -1518,9 +1518,6 @@
   <data name="Timesheet" xml:space="preserve">
     <value>Registrar horas</value>
   </data>
-  <data name="ViewTitleMyDashboard" xml:space="preserve">
-    <value>Mi Tableros</value>
-  </data>
   <data name="ViewTitleMyDashboardLabel_01" xml:space="preserve">
     <value>Conteo de elementos por estado</value>
   </data>
@@ -1533,11 +1530,23 @@
   <data name="Workload" xml:space="preserve">
     <value>Horas asignadas</value>
   </data>
-  <data name="ActivityDesctiption" xml:space="preserve">
-    <value>Descripción de actividad</value>
-  </data>
   <data name="FilterByElement" xml:space="preserve">
     <value>Filtrar por elemento</value>
+  </data>
+  <data name="HoursRecord" xml:space="preserve">
+    <value>Registro de horas</value>
+  </data>
+  <data name="IdWBS" xml:space="preserve">
+    <value>ID WBS</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Fecha registro</value>
+  </data>
+  <data name="SelectPendingStates" xml:space="preserve">
+    <value>Seleccione los estados pendientes que desea ver</value>
+  </data>
+  <data name="ActivityDesctiption" xml:space="preserve">
+    <value>Descripción de actividad</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>De</value>
@@ -1551,12 +1560,6 @@
   <data name="HoursPerProject" xml:space="preserve">
     <value>Horas por proyecto</value>
   </data>
-  <data name="HoursRecord" xml:space="preserve">
-    <value>Registro de horas</value>
-  </data>
-  <data name="IdWBS" xml:space="preserve">
-    <value>ID WBS</value>
-  </data>
   <data name="LoadMore" xml:space="preserve">
     <value>Cargar más</value>
   </data>
@@ -1569,14 +1572,8 @@
   <data name="RegisterHours" xml:space="preserve">
     <value>Registrar horas</value>
   </data>
-  <data name="RegistrationDate" xml:space="preserve">
-    <value>Fecha registro</value>
-  </data>
   <data name="Search" xml:space="preserve">
     <value>Buscar</value>
-  </data>
-  <data name="SelectPendingStates" xml:space="preserve">
-    <value>Seleccione los estados pendientes que desea ver</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Título</value>
@@ -1695,6 +1692,12 @@
   <data name="E10" xml:space="preserve">
     <value>Puntos de control</value>
   </data>
+  <data name="AvailableModules" xml:space="preserve">
+    <value>Módulos disponibles</value>
+  </data>
+  <data name="ChooseColumns" xml:space="preserve">
+    <value>Elige columnas</value>
+  </data>
   <data name="E01-01" xml:space="preserve">
     <value>Descripción</value>
   </data>
@@ -1746,8 +1749,50 @@
   <data name="E01-17" xml:space="preserve">
     <value>Comentarios</value>
   </data>
+  <data name="E02-01" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="E02-02" xml:space="preserve">
+    <value>Fecha línea base de inicio</value>
+  </data>
+  <data name="E02-03" xml:space="preserve">
+    <value>Fecha línea base de fin</value>
+  </data>
+  <data name="E02-04" xml:space="preserve">
+    <value>Fecha planeada de inicio</value>
+  </data>
+  <data name="E02-05" xml:space="preserve">
+    <value>Fecha planeada de fin</value>
+  </data>
+  <data name="E02-06" xml:space="preserve">
+    <value>Fecha real de inicio</value>
+  </data>
+  <data name="E02-07" xml:space="preserve">
+    <value>Fecha real de fin</value>
+  </data>
   <data name="detail-report" xml:space="preserve">
     <value>Detalle del reporte</value>
+  </data>
+  <data name="E02-08" xml:space="preserve">
+    <value>Porcentaje de avance planeado</value>
+  </data>
+  <data name="E02-09" xml:space="preserve">
+    <value>Porcentaje de avance real</value>
+  </data>
+  <data name="E02-10" xml:space="preserve">
+    <value>Responsable principal</value>
+  </data>
+  <data name="E02-11" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="E02-12" xml:space="preserve">
+    <value>Ponderación</value>
+  </data>
+  <data name="E02-13" xml:space="preserve">
+    <value>N° de control de cambios</value>
+  </data>
+  <data name="E02-14" xml:space="preserve">
+    <value>Comentarios</value>
   </data>
   <data name="phase-OnConfiguration" xml:space="preserve">
     <value>En Configuración</value>
@@ -1799,54 +1844,6 @@
   </data>
   <data name="F01-05" xml:space="preserve">
     <value>Cancelado</value>
-  </data>
-  <data name="AvailableModules" xml:space="preserve">
-    <value>Módulos disponibles</value>
-  </data>
-  <data name="ChooseColumns" xml:space="preserve">
-    <value>Elige columnas</value>
-  </data>
-  <data name="E02-01" xml:space="preserve">
-    <value>Descripción</value>
-  </data>
-  <data name="E02-02" xml:space="preserve">
-    <value>Fecha línea base de inicio</value>
-  </data>
-  <data name="E02-03" xml:space="preserve">
-    <value>Fecha línea base de fin</value>
-  </data>
-  <data name="E02-04" xml:space="preserve">
-    <value>Fecha planeada de inicio</value>
-  </data>
-  <data name="E02-05" xml:space="preserve">
-    <value>Fecha planeada de fin</value>
-  </data>
-  <data name="E02-06" xml:space="preserve">
-    <value>Fecha real de inicio</value>
-  </data>
-  <data name="E02-07" xml:space="preserve">
-    <value>Fecha real de fin</value>
-  </data>
-  <data name="E02-08" xml:space="preserve">
-    <value>Porcentaje de avance planeado</value>
-  </data>
-  <data name="E02-09" xml:space="preserve">
-    <value>Porcentaje de avance real</value>
-  </data>
-  <data name="E02-10" xml:space="preserve">
-    <value>Responsable principal</value>
-  </data>
-  <data name="E02-11" xml:space="preserve">
-    <value>Estado</value>
-  </data>
-  <data name="E02-12" xml:space="preserve">
-    <value>Ponderación</value>
-  </data>
-  <data name="E02-13" xml:space="preserve">
-    <value>N° de control de cambios</value>
-  </data>
-  <data name="E02-14" xml:space="preserve">
-    <value>Comentarios</value>
   </data>
   <data name="F02-01" xml:space="preserve">
     <value>En tiempo</value>
@@ -2355,9 +2352,6 @@
   <data name="GoHomePage" xml:space="preserve">
     <value>Ir a la página de inicio</value>
   </data>
-  <data name="Programs" xml:space="preserve">
-    <value>Programas</value>
-  </data>
   <data name="DashboardProgress" xml:space="preserve">
     <value>Avance del tablero</value>
   </data>
@@ -2378,6 +2372,9 @@
   </data>
   <data name="ProgramProgress" xml:space="preserve">
     <value>Avance del programa</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programas</value>
   </data>
   <data name="ProgramStartDate" xml:space="preserve">
     <value>Inicio del programa</value>
@@ -2707,9 +2704,6 @@
   <data name="Return" xml:space="preserve">
     <value>Regresar</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Analytics3_001" xml:space="preserve">
     <value>Resultado</value>
   </data>
@@ -2818,8 +2812,11 @@
   <data name="CumulativeDeviationPercentage" xml:space="preserve">
     <value>Porcentaje desviación acumulada</value>
   </data>
-  <data name="UploadFiles" xml:space="preserve">
-    <value>Cargar archivos</value>
+  <data name="BulkLoad" xml:space="preserve">
+    <value>Carga Masiva</value>
+  </data>
+  <data name="Newf" xml:space="preserve">
+    <value>Nueva</value>
   </data>
   <data name="Analytics4_004" xml:space="preserve">
     <value>Debe tener al menos un área sin escala</value>
@@ -2974,10 +2971,91 @@
   <data name="Logout" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="AnalyticdTerminosNoFirmados" xml:space="preserve">
+    <value>Debes aceptar terminos y condiciones del PMC-Tool, Dirigete a http://app.pmc-tool.com</value>
+  </data>
   <data name="AnalyticsAcceesNotAllowed" xml:space="preserve">
     <value>Tu usuario no tiene acceso a PMC-Tool Analytics</value>
   </data>
-  <data name="AnalyticdTerminosNoFirmados" xml:space="preserve">
-    <value>Debes aceptar terminos y condiciones del PMC-Tool, Dirigete a http://app.pmc-tool.com</value>
+  <data name="Analytics5_001" xml:space="preserve">
+    <value>Seleccione un portafolio</value>
+  </data>
+  <data name="Analytics5_002" xml:space="preserve">
+    <value>Seleccione un programa</value>
+  </data>
+  <data name="OnConfiguration" xml:space="preserve">
+    <value>En configuración</value>
+  </data>
+  <data name="Execution" xml:space="preserve">
+    <value>Ejecución</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Suspended" xml:space="preserve">
+    <value>Suspendido</value>
+  </data>
+  <data name="Onsettings" xml:space="preserve">
+    <value>En ajustes</value>
+  </data>
+  <data name="Analytics5_003" xml:space="preserve">
+    <value>Debenes elegir un portafolio</value>
+  </data>
+  <data name="Analytics5_004" xml:space="preserve">
+    <value>Programa</value>
+  </data>
+  <data name="Analytics5_005" xml:space="preserve">
+    <value>Nombre de proyecto</value>
+  </data>
+  <data name="Analytics5_006" xml:space="preserve">
+    <value>Estatus</value>
+  </data>
+  <data name="Analytics5_007" xml:space="preserve">
+    <value>Portafolio: proyectos en programa</value>
+  </data>
+  <data name="Analytics5_008" xml:space="preserve">
+    <value>Proyectos</value>
+  </data>
+  <data name="Analytics5_009" xml:space="preserve">
+    <value>Estado de proyecto</value>
+  </data>
+  <data name="Analytics5_010" xml:space="preserve">
+    <value>Codigo</value>
+  </data>
+  <data name="Analytics5_011" xml:space="preserve">
+    <value>Etapa</value>
+  </data>
+  <data name="Analytics5_012" xml:space="preserve">
+    <value>Proyecto</value>
+  </data>
+  <data name="Analytics5_013" xml:space="preserve">
+    <value>Fase</value>
+  </data>
+  <data name="Analytics5_014" xml:space="preserve">
+    <value>Administrador del proyecto</value>
+  </data>
+  <data name="Analytics5_015" xml:space="preserve">
+    <value>Lider</value>
+  </data>
+  <data name="Analytics5_016" xml:space="preserve">
+    <value>Fecha planeada de inicio</value>
+  </data>
+  <data name="Analytics5_017" xml:space="preserve">
+    <value>Fecha planeada de fin</value>
+  </data>
+  <data name="Analytics5_018" xml:space="preserve">
+    <value>Avance planeado</value>
+  </data>
+  <data name="Analytics5_019" xml:space="preserve">
+    <value>Avance real</value>
+  </data>
+  <data name="Analytics5_020" xml:space="preserve">
+    <value>Generar Reporte</value>
+  </data>
+  <data name="Analytics5_021" xml:space="preserve">
+    <value>Cerrar Reporte</value>
+  </data>
+  <data name="Analytics5_022" xml:space="preserve">
+    <value>Estatus Global</value>
   </data>
 </root>

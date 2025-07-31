@@ -16,7 +16,7 @@
                 <div class="col-md-12 pt-4">
                     <small class="font-weight-normal">Analytics</small>
                     <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
-                        <span class="title-report">Estatus global </span>
+                        <span class="title-report">@Localizer["Analytics5_022"] </span>
                     </h4>
                 </div>
                 <div class="">
@@ -26,7 +26,7 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12 col-sm-5">
-                                        <select name="portfolio" class="selectpicker sel-portafolio" id="selportafolio" data-title="Selecciona un portafolio" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <select name="portfolio" class="selectpicker sel-portafolio" id="selportafolio" data-title="@Localizer["Analytics5_001"]" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                             @foreach (var portfolio in ViewBag.portfolios)
                                             {
                                                 <option value="@portfolio.Key">@portfolio.Value</option>
@@ -34,17 +34,17 @@
                                         </select>
                                     </div>
                                     <div class="col-12 col-sm-4">
-                                        <select name="program"  class="selectpicker programa" id="selprograma" data-title="Selecciona un programa" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                        <select name="program" class="selectpicker programa" id="selprograma" data-title="@Localizer["Analytics5_002"]" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
                                             
                                         </select>
                                     </div>
                                     <div class="col-sm-3 pt-2 text-right">
                                       
                                         <button type="button" class="btn btn-default btn-default btn-report">
-                                            <i class="fas fa-file-pdf"></i> Generar reporte
+                                            <i class="fas fa-file-pdf"></i> @Localizer["Analytics5_020"]
                                         </button>
                                         <button type="button" class="btn btn-default btn-default  btn-report-close" style="    background: black;">
-                                            Cerrar reporte
+                                            @Localizer["Analytics5_021"]
                                         </button>
                                     </div>
                                 </div>
@@ -72,26 +72,28 @@
                             </div>
                             <div class="col-12" id="table" hidden>
                                 <div class="card">
-                                    <div class="card-body ">
-                                        <table class="table">
-                                            <thead class="thead-light header-table-projects">
-                                                <tr style="background: #c1c1c1;">
-                                                    <th>CODIGO</th>
-                                                    <th>PROYECTO</th>
-                                                    <th>ETAPA</th>
-                                                    <th>FASE</th>
-                                                    <th>ADMINISTRADOR DEL PROYECTO</th>
-                                                    <th>LIDER</th>
-                                                    <th>FECHA PLANEADA DE INICIO</th>
-                                                    <th>FECHA PLANEADA DE FIN</th>
-                                                    <th>ESTATUS</th>
-                                                    <th>AVANCE PLANEADO</th>
-                                                    <th>AVANCE REAL</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="body-table-projects">
-                                            </tbody>
-                                        </table>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-projects" width="100%">
+                                                <thead class="thead-light header-table-projects" stry>
+                                                    <tr style="background: #c1c1c1;">
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_010"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_012"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_011"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_013"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_014"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_015"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_016"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_017"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_006"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_018"]</th>
+                                                        <th style=" height: 50px;vertical-align: middle;">@Localizer["Analytics5_019"]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="body-table-projects">
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +131,7 @@
         </div>
     </div>
 </div> 
-
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
 <!--Sección de scripts-->
 @section scripts
 {
@@ -138,7 +140,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/themes/adaptive.js"></script>
     <!--  DataTable Plugin -->
-    <script src="~/js/plugins/jquery.dataTables.min.js"></script>
+    @* <script src="~/js/plugins/jquery.dataTables.min.js"></script> *@
     <script src="~/js/core/analitycs/vActionsToMake.js" asp-append-version="true"></script>
     <script type="text/javascript">
         

@@ -87,7 +87,7 @@ namespace PMCTool.App.Controllers
                 List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 var graphicStatusProjects = report.Where(x => x.ChartId == 2).Select(x => new Dictionary<string, object>
                 {
-                    { "name", x.NameProgramOrLabelStatus },
+                    { "name", localizer[x.NameProgramOrLabelStatus].Value },
                     { "y", x.Total },
                     { "t", x.ElementId },
                     { "color", colors[x.NameProgramOrLabelStatus] }
@@ -169,6 +169,15 @@ namespace PMCTool.App.Controllers
         [Route("ActionsToMake/DetailProjectsByStatus")]
         public async Task<IActionResult> GetDetailProjectsByStatusAsync(string portfolio, string status)
         {
+            Dictionary<string, string> colors = new Dictionary<string, string>
+            {
+                { "OnTime", "#4CAF50"},           // Verde
+                { "Delayed", "#e6c702"},           // Amarillo
+                { "WithImpact", "#dc3545"},           // Rojo
+                { "Closed", "#d0d0d0"},           // Gris claro
+                { "Cancel", "#545454"},           // Gris oscuro
+                { "Onsettings", "#F1F5F9"}
+            };
             var rowTable = "";
             try
             {
@@ -179,7 +188,7 @@ namespace PMCTool.App.Controllers
                     rowTable += @"<tr>
                                     <th>" + projects.Program+ @"</th>
                                     <td>" + projects.Name + @"</td>
-                                    <td style='width: 150px;'>" + localizer[$"StatusString-{projects.Phase}"] + @"</td>
+                                    <td style='width: 150px; background: " + colors[projects.Phase] +";font-weight: 500;'>" + localizer[$"{projects.Phase}"] + @"</td>
                                 </tr>";
                 }
             }
@@ -209,37 +218,14 @@ namespace PMCTool.App.Controllers
         [Route("ActionsToMake/ProjectsTableDetail")]
         public async Task<IActionResult> GetProjectsTableDetailAsync(string programa)
         {
-            var rowTable = "";
+            List<ReportStatusGlobalDetailMainbit004> report = new List<ReportStatusGlobalDetailMainbit004>();
             try
             {
-                Dictionary<string, string> colors = new Dictionary<string, string>
+                report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/globalstatus/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                foreach (var project in report)
                 {
-                    { "1", "#4CAF50"},           // Verde
-                    { "2", "#e6c702"},           // Amarillo
-                    { "3", "#dc3545"},           // Rojo
-                    { "4", "#d0d0d0"},           // Gris claro
-                    { "5", "#545454"},           // Gris oscuro
-                    { "6", "#F1F5F9"}
-                };
-                List<ReportStatusGlobalDetailMainbit004> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/globalstatus/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-                foreach(var project in report)
-                {
-                    decimal? progress = Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100,2); // Math.Round(originalValue)
-                    decimal? progressreal = Math.Round((Convert.ToDecimal(project.Progress)) * 100,2); // Math.Round(originalValue)
-                     
-                    rowTable += @"<tr>
-                                    <th>" + project.Code + @"</th>
-                                    <td>" + project.Name + @"</td>
-                                    <td>" + localizer[$"phase-{project.Stage}"] + @"</td>
-                                    <td>" + project.Phase + @"</td>
-                                    <td>" + project.ProjectManagerName + @"</td>
-                                    <td>" + project.LeaderName + @"</td>
-                                    <td>" + project.StartDate?.ToString("yyyy-MM-dd") + @"</td>
-                                    <td>" + project.EndDate?.ToString("yyyy-MM-dd") + @"</td>
-                                    <td style='background-color:" + colors[project.Status.ToString()] +"'>" + localizer[$"F01-0{project.Status}"] + @"</td>
-                                    <td>" + progress.ToString()+ @"%</td>
-                                    <td>" + progressreal.ToString() + @"%</td>
-                                </tr>";
+                    project.PlannedProgress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100, 2)); // Math.Round(originalValue)
+                    project.Progress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.Progress)) * 100, 2)); // Math.Round(originalValue)
                 }
             }
             catch (HttpResponseException ex)
@@ -262,7 +248,7 @@ namespace PMCTool.App.Controllers
                     response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
                 return Json(response);
             }
-            return Json(rowTable);
+            return Json(report);
         }
         [HttpPost]
         public async Task<IActionResult> GetDataActionsToMake(ModelFilters data)
