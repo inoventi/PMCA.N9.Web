@@ -364,6 +364,7 @@
     "Analytics5_020": "Generate",
     "Analytics5_021": "Close",
     "Analytics5_022": "Global Status",
+    "Analytics5_023": "Export to Excel",
     "OnConfiguration": "On configuration",
     "Onsettings": "On settings",
     "Execution": "Execution",

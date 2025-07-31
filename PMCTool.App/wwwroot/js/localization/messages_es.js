@@ -365,6 +365,7 @@
     "Analytics5_020": "Generar Reporte",
     "Analytics5_021": "Cerrar Reporte",
     "Analytics5_022": "Estatus Global",
+    "Analytics5_023": "Exportar a Excel",
     "OnConfiguration": "En Configuracion",
     "Onsettings": "En Ajustes",
     "Execution": "Ejecucion",

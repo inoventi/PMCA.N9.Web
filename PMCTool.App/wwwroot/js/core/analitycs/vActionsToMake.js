@@ -105,7 +105,7 @@
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    text: 'Exportar a Excel',
+                    text: $.i18n._(`Analytics5_023`),
                     exportOptions: {
                         modifier: {
                             page: 'all',       // exporta todas las páginas

@@ -3055,4 +3055,7 @@
   <data name="Analytics5_022" xml:space="preserve">
     <value>Global Status</value>
   </data>
+  <data name="Analytics5_023" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
 </root>
