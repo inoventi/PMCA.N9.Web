@@ -74,12 +74,12 @@ namespace PMCTool.App.Controllers
         {
             Dictionary<string, string> colors = new Dictionary<string, string>
             {
-                { "OnTime", "#4CAF50"},           // Verde
-                { "Delayed", "#e6c702"},          // Amarillo
-                { "WithImpact", "#dc3545"},       // Rojo
-                { "Closed", "#d0d0d0"},           // Gris claro
-                { "Cancel", "#545454"},           // Gris oscuro
-                { "Onsettings", "#F1F5F9"}
+                { "Entiempo", "#4CAF50"},           // Verde
+                { "Atrasado", "#e6c702"},          // Amarillo
+                { "Conimpacto", "#dc3545"},       // Rojo
+                { "Cerrado", "#d0d0d0"},           // Gris claro
+                { "Cancelado", "#545454"},           // Gris oscuro
+                { "EnConfiguracion", "#F1F5F9"}
             };
             Dictionary<string, object> graphics = new Dictionary<string, object>();
             try
@@ -87,7 +87,7 @@ namespace PMCTool.App.Controllers
                 List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 var graphicStatusProjects = report.Where(x => x.ChartId == 2).Select(x => new Dictionary<string, object>
                 {
-                    { "name", localizer[x.NameProgramOrLabelStatus].Value },
+                    { "name", x.NameProgramOrLabelStatus },
                     { "y", x.Total },
                     { "t", x.ElementId },
                     { "color", colors[x.NameProgramOrLabelStatus] }
@@ -171,12 +171,12 @@ namespace PMCTool.App.Controllers
         {
             Dictionary<string, string> colors = new Dictionary<string, string>
             {
-                { "OnTime", "#4CAF50"},           // Verde
-                { "Delayed", "#e6c702"},           // Amarillo
-                { "WithImpact", "#dc3545"},           // Rojo
-                { "Closed", "#d0d0d0"},           // Gris claro
-                { "Cancel", "#545454"},           // Gris oscuro
-                { "Onsettings", "#F1F5F9"}
+                { "Entiempo", "#4CAF50"},           // Verde
+                { "Atrasado", "#e6c702"},           // Amarillo
+                { "Conimpacto", "#dc3545"},           // Rojo
+                { "Cerrado", "#d0d0d0"},           // Gris claro
+                { "Cancelado", "#545454"},           // Gris oscuro
+                { "EnConfiguracion", "#F1F5F9"}
             };
             var rowTable = "";
             try
@@ -188,7 +188,7 @@ namespace PMCTool.App.Controllers
                     rowTable += @"<tr>
                                     <th>" + projects.Program+ @"</th>
                                     <td>" + projects.Name + @"</td>
-                                    <td style='width: 150px; background: " + colors[projects.Phase] +";font-weight: 500;'>" + localizer[$"{projects.Phase}"] + @"</td>
+                                    <td style='width: 150px; background: " + colors[projects.Phase] +";font-weight: 500;'>" + projects.Phase + @"</td>
                                 </tr>";
                 }
             }

@@ -29,14 +29,14 @@
             'Cancel': '#545454',                 // Gris oscuro
             'Onsettings': '#F1F5F9'     // Gris mas clarito
         }
-        this.status = {
-            'Onsettings': 'Onsettings',
-            'Delayed': 'Delayed',
-            'Closed': 'Closed',
-            'OnTime': 'OnTime',
-            'WithImpact': 'WithImpact',
-            'Cancel': 'Cancel'
-        }
+        //this.status = {
+        //    'Onsettings': 'Onsettings',
+        //    'Delayed': 'Delayed',
+        //    'Closed': 'Closed',
+        //    'OnTime': 'OnTime',
+        //    'WithImpact': 'WithImpact',
+        //    'Cancel': 'Cancel'
+        //}
         this.init();
     }
     /**
@@ -316,7 +316,7 @@
                             },
                             click: async function (event) {
                                 LoaderShow();
-                                this.name = self.status[this.name];
+                                //this.name = self.status[this.name];
                                 let data = await self.reqDataProjectsByStatus(this.t, this.name);
                                 let headers = `<tr style="background: #c1c1c1;">
                                                     <th>${$.i18n._("Analytics5_004") }</th>
