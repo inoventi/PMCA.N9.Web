@@ -74,12 +74,12 @@ namespace PMCTool.App.Controllers
         {
             Dictionary<string, string> colors = new Dictionary<string, string>
             {
-                { "Entiempo", "#4CAF50"},           // Verde
+                { "En-tiempo", "#4CAF50"},           // Verde
                 { "Atrasado", "#e6c702"},          // Amarillo
-                { "Conimpacto", "#dc3545"},       // Rojo
+                { "Con-Impacto", "#dc3545"},       // Rojo
                 { "Cerrado", "#d0d0d0"},           // Gris claro
                 { "Cancelado", "#545454"},           // Gris oscuro
-                { "EnConfiguracion", "#F1F5F9"}
+                { "En-Configuracion", "#F1F5F9"}
             };
             Dictionary<string, object> graphics = new Dictionary<string, object>();
             try
@@ -171,12 +171,12 @@ namespace PMCTool.App.Controllers
         {
             Dictionary<string, string> colors = new Dictionary<string, string>
             {
-                { "Entiempo", "#4CAF50"},           // Verde
-                { "Atrasado", "#e6c702"},           // Amarillo
-                { "Conimpacto", "#dc3545"},           // Rojo
+                { "En-tiempo", "#4CAF50"},           // Verde
+                { "Atrasado", "#e6c702"},          // Amarillo
+                { "Con-Impacto", "#dc3545"},       // Rojo
                 { "Cerrado", "#d0d0d0"},           // Gris claro
                 { "Cancelado", "#545454"},           // Gris oscuro
-                { "EnConfiguracion", "#F1F5F9"}
+                { "En-Configuracion", "#F1F5F9"}
             };
             var rowTable = "";
             try
@@ -227,6 +227,21 @@ namespace PMCTool.App.Controllers
                     project.PlannedProgress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100, 2)); // Math.Round(originalValue)
                     project.Progress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.Progress)) * 100, 2)); // Math.Round(originalValue)
                 }
+                var temp = report.Select(r => new ReportStatusGlobalDetailMainbit004() {
+                    ProjectId = r.ProjectId,
+                    Code = r.Code,
+                    Name = r.Name,
+                    Stage = localizer[r.Stage],
+                    Phase = r.Phase,
+                    ProjectManagerName = r.ProjectManagerName,
+                    LeaderName = r.LeaderName,
+                    StartDate = r.StartDate,
+                    EndDate = r.EndDate,
+                    Status = r.Status,
+                    PlannedProgress = r.PlannedProgress,
+                    Progress = r.Progress,
+                }).ToList();
+                return Json(temp);
             }
             catch (HttpResponseException ex)
             {
