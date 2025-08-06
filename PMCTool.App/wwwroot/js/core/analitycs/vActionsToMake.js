@@ -46,8 +46,12 @@
         $(document).on('click', '.btn-report', this.executeReport.bind(this));
         $('#selportafolio').on('changed.bs.select', this.getPrograms.bind(this));
         $(document).on('click', '.btn-report-close', this.closeReport.bind(this));
+        $(document).on('click', '.event-detail', this.eventDetailProgram.bind(this));
         this.initDataTableProject();
     }
+    /**
+     * @description Inicializa la tabla de proyectos con datatable
+     */
     initDataTableProject() {
         $('.table-projects').DataTable({
             paging: true,
@@ -183,15 +187,17 @@
                     console.log("sddfsdf");
                     let row = "";
                     Object.keys(graphicProjectsInProgram).forEach(key => {
+                        console.log(graphicProjectsInProgram[key].t);
                         row = row + `<tr">
-                                                    <td>${graphicProjectsInProgram[key].name}</td>
-                                                    <td>${graphicProjectsInProgram[key].y}</td>
+                                                    <td><a href='#' class='event-detail' data-idprogram='${graphicProjectsInProgram[key].t}'>${graphicProjectsInProgram[key].name}</a></td>
+                                                    <td><a href='#' class='event-detail' data-idprogram='${graphicProjectsInProgram[key].t}'>${graphicProjectsInProgram[key].y}</a></td>
                                                 </tr>`;
 
                     });
                     console.log(row);
                     tablecontainet.append("<center><table class='table' style='width: 50%;'>" + headers + row + "</table></center>");
                     chart1 = "hidden";
+                    
                 } else {
                     chart1 = "visible";
                 }
@@ -207,6 +213,20 @@
                 footer: ''
             });
         }
+    }
+    /**
+     * @description Manda traer los proyectos del programa y construir el modal con la tabla
+     * @param {string} e Se refiere donde vamos a obtener el elemento para obtener el id del programa y pasarlo a funcion que  trae los proyectos del programa
+     */
+    async eventDetailProgram(e) {
+        LoaderShow();
+        let data = await this.reqDataProjectsByProgram(e.target.dataset.idprogram);
+        let headers = `<tr style="background: #c1c1c1;">
+                                                    <th>${$.i18n._("Analytics5_004")}</th>
+                                                    <th>${$.i18n._("Analytics5_005")}</th>
+                                                </tr>`;
+        this.construcTableDetailGraphic(headers, data);
+        LoaderHide();
     }
     /**
      * @description Mandda una peticion para traer la data del detalle de la tabla
