@@ -82,9 +82,27 @@
                     }
                 },
                 {
-                    data: 'description', render: (description, data,{projectId,elementId}) => {
-                        console.log(projectId,elementId);
-                        return `<a target="_blank" href="${window.baseUrl}/Execution/Milestone?projectId=${projectId}&milestoneId=${elementId}">${description}</a>`;
+                    data: 'description', render: (description, data, { projectId, elementId, elementType }) => {
+                        //console.log(projectId, elementId, elementType);
+                        let url = '';
+                        switch (elementType) {
+                            case 1:
+                                url = `/Execution/Activity?projectId=${projectId}&activityId=${elementId}`;
+                                break;
+                            case 2:
+                                url = `/Execution/Milestone?projectId=${projectId}&milestoneId=${elementId}`;
+                                break;
+                            case 3:
+                                url = `/Execution/Evidence?projectId=${projectId}&evidenceId=${elementId}`;
+                                break;
+                            case 4:
+                                url = `/Execution/Incident?projectId=${projectId}&incidentId=${elementId}`;
+                                break;
+                            case 5:
+                                url = `/Execution/Risk?projectId=${projectId}&riskId=${elementId}`;
+                                break;
+                        }
+                        return `<a target="_blank" href="${window.baseUrl}${url}">${description}</a>`;
                     }
                 },
                 {
