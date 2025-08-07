@@ -31,7 +31,7 @@ namespace PMCTool.App.Controllers
         {
             SetActiveOption("4008");
             //List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             ViewBag.portfolios = portfolios;
             //ViewBag.States = states;
             return View();
@@ -43,7 +43,7 @@ namespace PMCTool.App.Controllers
             List<SelectionListItem> programs = new List<SelectionListItem>();
             try
             {
-                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/globalstatus/select/programs/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/programs/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -84,7 +84,7 @@ namespace PMCTool.App.Controllers
             Dictionary<string, object> graphics = new Dictionary<string, object>();
             try
             {
-                List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/globalstatus/graphics/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                List<ReportStatusGlobalMainbit001_ByProject> report = await restClient.Get<List<ReportStatusGlobalMainbit001_ByProject>>(baseUrl, $"api/v1/actionstomake/graphics/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 var graphicStatusProjects = report.Where(x => x.ChartId == 2).Select(x => new Dictionary<string, object>
                 {
                     { "name", x.NameProgramOrLabelStatus },
@@ -133,7 +133,7 @@ namespace PMCTool.App.Controllers
             var rowTable = "";
             try
             {
-                List<ReportStatusGlobalDetailMainbit002_ByProject> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit002_ByProject>>(baseUrl, $"api/v1/globalstatus/detail/projects/{idProgram}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                List<ReportStatusGlobalDetailMainbit002_ByProject> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit002_ByProject>>(baseUrl, $"api/v1/actionstomake/detail/projects/{idProgram}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
 
                 foreach(var projects in report)
                 {
@@ -181,7 +181,7 @@ namespace PMCTool.App.Controllers
             var rowTable = "";
             try
             {
-                List<ReportStatusGlobalDetailMainbit003> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit003>>(baseUrl, $"api/v1/globalstatus/detail/projects/status/{portfolio}/{status}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                List<ReportStatusGlobalDetailMainbit003> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit003>>(baseUrl, $"api/v1/actionstomake/detail/projects/status/{portfolio}/{status}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
 
                 foreach (var projects in report)
                 {
@@ -221,7 +221,7 @@ namespace PMCTool.App.Controllers
             List<ReportStatusGlobalDetailMainbit004> report = new List<ReportStatusGlobalDetailMainbit004>();
             try
             {
-                report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/globalstatus/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                report = await restClient.Get<List<ReportStatusGlobalDetailMainbit004>>(baseUrl, $"api/v1/actionstomake/reportTableProjecs/{programa}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 foreach (var project in report)
                 {
                     project.PlannedProgress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100, 2)); // Math.Round(originalValue)
@@ -344,6 +344,51 @@ namespace PMCTool.App.Controllers
                 return Json(new { hasError = true, message = ex.Message });
             }
         }
+
+        [PMCToolAuthentication]
+        public async Task<IActionResult> ElementsToVerify()
+        {
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            SetActiveOption("4008");
+            ViewBag.projects = projectTab;
+            return View();
+        }
+        [HttpGet]
+        [Route("ActionsToMake/GetProjectElementsCheck005")]
+        public async Task<IActionResult> GetProjectElementsCheck005(string projectId, string startDate, string endDate)
+        {
+            Dictionary<string, List<ReportGetProjectElementsCheck005>> result = new Dictionary<string, List<ReportGetProjectElementsCheck005>>();
+            try
+            {
+                List<ReportGetProjectElementsCheck005> elements = await restClient.Get<List<ReportGetProjectElementsCheck005>>(baseUrl, $"/api/v1/actionstomake/reportGetProjectElementsCheck005/{projectId}/{startDate}/{endDate}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+                result.Add("indicatorTable1", elements.Where(x => x.IndicatorTable.Equals(1)).ToList());
+                result.Add("indicatorTable2", elements.Where(x => x.IndicatorTable.Equals(2)).ToList());
+                result.Add("indicatorTable3", elements.Where(x => x.IndicatorTable.Equals(3)).ToList());
+            } 
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+
     }
 
 }

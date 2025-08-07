@@ -1,0 +1,148 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Acciones a realizar";
+    Layout = "_Layout";
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+
+}
+@section ScriptsHeader
+{
+<link href="~/css/vcore/global-estatus.css" rel="stylesheet" asp-append-version="true" />
+}
+<style>
+    .st-in-blue {
+        background-color: #205180;
+        color: black;
+        padding: 2px 5px 2px 5px;
+        border-radius: 3px;
+        color: white;
+    }
+</style>
+<div class="content bg-whitebg-white">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="row">
+                <div class="col-md-10 pt-4 mb-4">
+                    <small class="font-weight-normal subtitle-detalle">Project performance</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="txt-blue"> Sitio Web ECLine / Inteligencia Artificial	</span>
+                    </h4>
+                </div>
+                <div class="col-md-2 text-right pt-2">
+                    <a href="/Analytics/Projects" class="btn btn-sm btn-default  btn-outline"><i class="fas fa-arrow-left"></i> Back</a> <br><br>
+                    <!-- <a type="submit" class="btn  btn-sm btn-default" onclick="window.print();">Imprimir</a> -->
+                </div>
+                <div class=" col-12 mt-4">
+                    <!-- uno .-->
+                    <div class="row">
+                        <div class="col-3">
+                            <select name="projects" class="selectpicker sel-projects" id="selprojects" data-title="Proyectos" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                @foreach (var project in ViewBag.projects)
+                                {
+                                <option value="@project.Key">@project.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">FECHA INICIO</span>
+                                </div>
+                                <input type="text" class="form-control datepicker" id="startDate" name="startDate">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3">FECHA FIN</span>
+                                </div>
+                                <input type="text" class="form-control datepicker" id="endDate" name="endDate">
+                            </div>
+                        </div>
+                        <div class="col-3">
+
+                            <button type="button" class="btn btn-default btn-default btn-report">
+                                <i class="fas fa-file-pdf"></i> @Localizer["Analytics5_020"]
+                            </button>
+                            @*<button type="button" class="btn btn-default btn-default  btn-report-close" style="    background: black;">
+                                @Localizer["Analytics5_021"]
+                            </button>*@
+                        </div>
+                    </div>
+                    <div class="row  justify-content-center pt-0">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 pb-4">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">ELEMENTOS EN CURSO O POR FINALIZAR</h6>
+                                    <table class="table table-elements-in-progress">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ELEMENTO DE CONTROL</th>
+                                                <th scope="col">DESCRIPCION</th>
+                                                <th scope="col">FECHA PLANEADA DE FIN</th>
+                                                <th scope="col">ESTADO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body-elements-in-progress">
+
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pb-4">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">ELEMENTOS ATRASADOS O CON IMPACTO</h6>
+                                    <table class="table table-elements-delayed">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ELEMENTO DE CONTROL</th>
+                                                <th scope="col">DESCRIPCION</th>
+                                                <th scope="col">FECHA PLANEADA DE FIN</th>
+                                                <th scope="col">ESTADO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body-elements-delayed">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pb-4">
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">PRONTO COMENZARA</h6>
+                                    <table class="table table-elements-soon">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ELEMENTO DE CONTROL</th>
+                                                <th scope="col">DESCRIPCION</th>
+                                                <th scope="col">FECHA DE INICIO PLANEADA</th>
+                                                <th scope="col">ESTADO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body-elements-soon">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+<!--Sección de scripts-->
+@section scripts
+{
+<script src="~/js/plugins/bootstrap-datetimepicker.js"></script>
+
+<!--  DataTable Plugin -->
+<script src="~/js/plugins/jquery.dataTables.min.js"></script>
+<script src="~/js/core/analitycs/vElementsToVerify.js" asp-append-version="true"></script>
+<script type="text/javascript">
+
+</script>
+}
+
