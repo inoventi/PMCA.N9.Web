@@ -299,6 +299,7 @@
     "Analytics1_029": "Actividades del plan de mitigación y contingencia atrasados o con impacto sin comentario actualizado",
     "Analytics1_030": "Acuerdos atrasados o con impacto sin comentario actualizado",
     "Analytics1_031": "Sin participantes asignados",
+    "Analytics1_032": "Pronto para empezar",
 
 
     "Analytics2_001": "Seleccione el periodo que desea verificar",
@@ -366,6 +367,7 @@
     "Analytics5_021": "Cerrar Reporte",
     "Analytics5_022": "Estatus Global",
     "Analytics5_023": "Exportar a Excel",
+    "Analytics5_024": "Seleccione un proyecto",
     "OnConfiguration": "En Configuracion",
     "Onsettings": "En Ajustes",
     "Execution": "Ejecucion",

@@ -3058,4 +3058,7 @@
   <data name="Analytics5_023" xml:space="preserve">
     <value>Export to Excel</value>
   </data>
+  <data name="Analytics5_024" xml:space="preserve">
+    <value>Select a project</value>
+  </data>
 </root>

@@ -2989,9 +2989,6 @@
   <data name="Execution" xml:space="preserve">
     <value>Ejecución</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Suspended" xml:space="preserve">
     <value>Suspendido</value>
   </data>
@@ -3060,5 +3057,11 @@
   </data>
   <data name="Analytics5_023" xml:space="preserve">
     <value>Exportar a Excel</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Analytics5_024" xml:space="preserve">
+    <value>Seleccione un proyecto</value>
   </data>
 </root>

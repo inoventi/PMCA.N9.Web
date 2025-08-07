@@ -299,6 +299,7 @@
     "Analytics1_029": "Delayed or impact mitigation and contingency plan activities without updated comment",
     "Analytics1_030": "Delayed or impact agreements without updated comment",
     "Analytics1_031": "No assigned participants",
+    "Analytics1_032": "Soon to get started",
 
     "Analytics2_001": "Select timeframe to check",
     "Analytics2_002": "Generate",
@@ -365,6 +366,7 @@
     "Analytics5_021": "Close",
     "Analytics5_022": "Global Status",
     "Analytics5_023": "Export to Excel",
+    "Analytics5_024": "Select a project",
     "OnConfiguration": "On configuration",
     "Onsettings": "On settings",
     "Execution": "Execution",
