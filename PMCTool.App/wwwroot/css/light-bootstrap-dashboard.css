@@ -13621,3 +13621,57 @@ select.selectpicker {
 .dropdown-item.active, .dropdown-item:active {
     background-color: #a3a3a3 !important;
 }
+/* Banderas de estatus */
+.kdelayed {
+    color: #f7d408;
+}
+
+.kontime {
+    color: #4CAF50;
+}
+
+.kclosed {
+    color: #d0d0d0;
+}
+
+.kwimpact {
+    color: #dc3545;
+}
+
+.kcancel {
+    color: #545454;
+}
+
+.karchived {
+    color: gray;
+}
+/*background*/
+.bg-delayed {
+    background-color: #f7d408;
+    color: black;
+}
+
+.bg-kontime {
+    background-color: #4CAF50;
+    color:white;
+}
+
+.bg-kclosed {
+    background-color: #d0d0d0;
+    color:black;
+}
+
+.bg-kwimpact {
+    background-color: #dc3545;
+    color:white;
+}
+
+.bg-kcancel {
+    background-color: #545454;
+    color:white;
+}
+
+.bg-karchived {
+    background-color: gray;
+    color:white;
+}

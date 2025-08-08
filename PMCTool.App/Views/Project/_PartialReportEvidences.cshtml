@@ -1,0 +1,140 @@
+﻿@model IEnumerable<PMCTool.Models.Environment.ReportEvidencesByProjecID006>;
+@{
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+}
+@if (Model.Count() > 0)
+{ 
+    string classStatus = "";
+   
+
+    var Leader = Model.First().LeaderName;
+    var Pm = Model.First().ProjectManagerName;
+
+
+    <div class="card pt-2">
+        <div class="card-body p-1">
+            <h5 class="media align-items-center font-weight-bold  mb-0 mt-0" style="background: #d4d4d4;padding: 6px;">
+                <span class="title-report">ACTINVER</span>
+            </h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-2 pt-0 text-center">
+                            <i class="fas fa-user pt-3" style="font-size: 3em;color: #205280;"></i>
+                        </div>
+                        <div class="col-md-10 pt-0">
+                            <div class="row  pt-3">ADMINISTRADOR DEL PROYECTO</div>
+                            <div class="row" style="font-weight: 600;">@Pm</div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 pt-0">
+
+                    <div class="row">
+                        <div class="col-md-2 pt-0  text-center">
+                            <i class="fas fa-user  pt-3" style="font-size: 3em;color: #205280;"></i>
+                        </div>
+                        <div class="col-md-10 pt-0">
+                            <div class="row  pt-3">LIDER DEL PROYECTO</div>
+                            <div class="row" style="font-weight: 600;">@Leader</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 pt-4">
+                <table class="table pt-4 table-projects">
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="bg txt-center">Tipo</td>
+                            <td class="bg txt-center">Evidencia</td>
+                            <td class="bg txt-center">Estatus</td>
+                            <td class="bg txt-center">Fecha planeada de aprobación</td>
+                            <td class="bg txt-center">Responsable de Elaboración</td>
+                            <td class="bg txt-center">Responsable de Aprobación</td>
+                            <td class="bg txt-center">Ponderación</td>
+                            <td class="bg txt-center">Aspectos Relevantes / Comentarios</td>
+                            <td class="bg txt-center">Detalle del elemento</td>
+                        </tr>
+                        @foreach (var item in Model)
+                        { 
+                            string traduccionStatus = "EnumProjectElementStatus_" + item.Status;
+                            string tt = item.PlannedEndDate.ToString();
+                            string[] PlannedEndDate = tt.Split(" ");
+
+                            switch (item.Status)
+                            {
+                                case 1: // Por definir  
+                                    classStatus = "bg-kontime";
+                                    break;
+                                case 2: //
+                                    classStatus = "bg-kdelayed";
+                                    break;
+                                case 3:
+                                    classStatus = "bg-kwimpact";
+                                    break;
+                                case 4:
+                                    classStatus = "bg-kclosed";
+                                    break;
+                                case 5:
+                                    classStatus = "bg-kcancel";
+                                    break;
+                                case 6:
+                                    classStatus = "bg-karchived";
+                                    break;
+                            }
+                            <tr>
+                                <td scope="row">@item.EvidenceTypeName </td>
+                                <td class="">@item.Description</td>
+                                <td class="txt-center @classStatus" style="width:100px">@Localizer[traduccionStatus]</td>
+                                <td class="txt-center"> @PlannedEndDate[0]</td>
+                                <td class="txt-center">@item.ResponsibleElaborationName</td>
+                                <td class="txt-center"> @item.ResponsibleApprovalName</td>
+                                <td class="txt-center">@item.Weight</td>
+                                <td>@item.Comment</td>
+                                <td class="txt-center"><a href="http://app.pmc-tool.mx/Execution/Evidences?id=@item.ProjectEvidenceID" target="_black">IR</a></td>
+                            </tr>
+                            traduccionStatus = ""; 
+                        } 
+                        
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('.table-projects').DataTable({
+                paging: true,
+                searching: true,
+                processing: true,
+                responsive: true,
+                order: [],
+                language: {
+                    url: "../json/" + Cookies.get('pmctool-lang-app') + ".json"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: $.i18n._(`Analytics5_023`),
+                        exportOptions: {
+                            modifier: {
+                                page: 'all',       // exporta todas las páginas
+                                search: 'applied'  // respeta el filtro activo (opcional)
+                            },
+                            columns: ':visible'   // sólo columnas visibles (opcional)
+                        }
+                    }
+                ],
+            });
+        })
+    </script>
+}
+

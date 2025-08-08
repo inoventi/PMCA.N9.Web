@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PMCTool.App.Controllers
 {
@@ -345,7 +346,6 @@ namespace PMCTool.App.Controllers
             }
         }
 
-        [PMCToolAuthentication]
         public async Task<IActionResult> ElementsToVerify()
         {
             var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
@@ -365,7 +365,7 @@ namespace PMCTool.App.Controllers
                 result.Add("indicatorTable1", elements.Where(x => x.IndicatorTable.Equals(1)).ToList());
                 result.Add("indicatorTable2", elements.Where(x => x.IndicatorTable.Equals(2)).ToList());
                 result.Add("indicatorTable3", elements.Where(x => x.IndicatorTable.Equals(3)).ToList());
-            } 
+            }
             catch (HttpResponseException ex)
             {
                 var apiError = GetApiError(ex.ServiceContent.ToString());
@@ -388,6 +388,7 @@ namespace PMCTool.App.Controllers
             }
             return Json(result);
         }
+        
 
     }
 
