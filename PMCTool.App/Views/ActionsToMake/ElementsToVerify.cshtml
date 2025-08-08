@@ -23,9 +23,9 @@
         <div class="col-md-12 card">
             <div class="row">
                 <div class="col-md-10 pt-4 mb-4">
-                    <small class="font-weight-normal subtitle-detalle">Project performance</small>
+                    <small class="font-weight-normal subtitle-detalle">Analytics</small>
                     <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
-                        <span class="txt-blue"> Sitio Web ECLine / Inteligencia Artificial	</span>
+                        <span class="txt-blue"> Actions to Make	</span>
                     </h4>
                 </div>
                 <div class="col-md-2 text-right pt-2">
@@ -46,7 +46,7 @@
                         <div class="col-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon3">FECHA INICIO</span>
+                                    <span class="input-group-text" id="basic-addon3">@Localizer["StartDate"]</span>
                                 </div>
                                 <input type="text" class="form-control datepicker" id="startDate" name="startDate">
                             </div>
@@ -54,7 +54,7 @@
                         <div class="col-3">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon3">FECHA FIN</span>
+                                    <span class="input-group-text" id="basic-addon3">@Localizer["EndDate"]</span>
                                 </div>
                                 <input type="text" class="form-control datepicker" id="endDate" name="endDate">
                             </div>
@@ -73,17 +73,17 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12 pb-4">
-                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">ELEMENTOS EN CURSO O POR FINALIZAR</h6>
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_015"]</h6>
                                     <table class="table table-elements-in-progress">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ELEMENTO DE CONTROL</th>
-                                                <th scope="col">DESCRIPCION</th>
-                                                <th scope="col">FECHA PLANEADA DE FIN</th>
-                                                <th scope="col">ESTADO</th>
+                                                <th scope="col">@Localizer["Analytics2_015"]</th>
+                                                <th scope="col">@Localizer["description"]</th>
+                                                <th scope="col">@Localizer["plannedEndDate"]</th>
+                                                <th scope="col">@Localizer["status"]</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="table-body-elements-in-progress">
+                                        <tbody>
 
                                             
                                         </tbody>
@@ -92,17 +92,17 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-4">
-                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">ELEMENTOS ATRASADOS O CON IMPACTO</h6>
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_016"]</h6>
                                     <table class="table table-elements-delayed">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ELEMENTO DE CONTROL</th>
-                                                <th scope="col">DESCRIPCION</th>
-                                                <th scope="col">FECHA PLANEADA DE FIN</th>
-                                                <th scope="col">ESTADO</th>
+                                                <th scope="col">@Localizer["Analytics2_015"]</th>
+                                                <th scope="col">@Localizer["description"]</th>
+                                                <th scope="col">@Localizer["plannedEndDate"]</th>
+                                                <th scope="col">@Localizer["status"]</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="table-body-elements-delayed">
+                                        <tbody>
                                             
                                         </tbody>
                                     </table>
@@ -110,17 +110,17 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 pb-4">
-                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">PRONTO COMENZARA</h6>
+                                    <h6 class="tx-normal tx-rubik tx-color-03 lh-2 mg-b-0 bold st-in-blue col-12">@Localizer["Analytics1_020"]</h6>
                                     <table class="table table-elements-soon">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ELEMENTO DE CONTROL</th>
-                                                <th scope="col">DESCRIPCION</th>
-                                                <th scope="col">FECHA DE INICIO PLANEADA</th>
-                                                <th scope="col">ESTADO</th>
+                                                <th scope="col">@Localizer["Analytics2_015"]</th>
+                                                <th scope="col">@Localizer["description"]</th>
+                                                <th scope="col">@Localizer["plannedStartDate"]</th>
+                                                <th scope="col">@Localizer["status"]</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="table-body-elements-soon">
+                                        <tbody>
                                         </tbody>
                                     </table>
                                 </div>
@@ -138,11 +138,11 @@
 {
 <script src="~/js/plugins/bootstrap-datetimepicker.js"></script>
 
-<!--  DataTable Plugin -->
-<script src="~/js/plugins/jquery.dataTables.min.js"></script>
 <script src="~/js/core/analitycs/vElementsToVerify.js" asp-append-version="true"></script>
 <script type="text/javascript">
-
+    document.addEventListener("DOMContentLoaded", () => {
+        window.baseUrl = "@ViewBag.baseUrlPmctool";
+    });
 </script>
 }
 

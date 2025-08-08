@@ -31,6 +31,7 @@ namespace PMCTool.App.Controllers
         public string pdfUrl; 
         public string PlatformRun; 
         public ResponseModel responseModel;
+        public string baseUrlPMCTool;
 
         public BaseController(
                     IOptions<AppSettingsModel> appSettings,
@@ -41,6 +42,7 @@ namespace PMCTool.App.Controllers
             this.pdfUrl = appSettings.Value.UrlPDFViews;  
             this.localizer = localizer;
             this.PlatformRun = appSettings.Value.PlatformRun;
+            this.baseUrlPMCTool = appSettings.Value.UrlPMCTool;
 
         }
 
