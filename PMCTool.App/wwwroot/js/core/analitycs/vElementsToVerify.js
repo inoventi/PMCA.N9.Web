@@ -55,14 +55,15 @@
                 startDate: $('#startDate').val(),
                 endDate: $('#endDate').val()
             };
+            $('#report').removeAttr('hidden');
+            this.initsDataTables('table-elements-in-progress');
+            this.initsDataTables('table-elements-delayed');
+            this.initsDataTables('table-elements-soon');
             let elements = await this.reqElementsProject(data);
-            console.log(elements);
+            
             this.constructTables(elements);
             LoaderHide();
         });
-        this.initsDataTables('table-elements-in-progress');
-        this.initsDataTables('table-elements-delayed');
-        this.initsDataTables('table-elements-soon');
     }
     /**
      * @description Funcion que inicializa las tablas de datatables
@@ -70,6 +71,7 @@
      */
     initsDataTables(table) {
         $(`.${table}`).DataTable({
+            destroy: true,
             paging: true,
             searching: true,
             processing: true,
@@ -83,7 +85,6 @@
                 },
                 {
                     data: 'description', render: (description, data, { projectId, elementId, elementType }) => {
-                        //console.log(projectId, elementId, elementType);
                         let url = '';
                         switch (elementType) {
                             case 1:
