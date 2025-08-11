@@ -87,7 +87,6 @@
                 {
                     data: 'status', render: (data) => {
                         let color = this.coloresEstatusProjectNumber[$.i18n._("elementStatusName_" + data)];
-                        console.log(color, this.coloresEstatusProjectNumber, $.i18n._("elementStatusName_" + data));
                         return `<div style="width: 100%; background:${color}; font-weight: 500;">${$.i18n._(`elementStatusName_${data}`)}</div>`;
                     }
                 },
@@ -178,23 +177,19 @@
                 $('#table').attr('hidden', 'true');
                 $('.charts').removeAttr('hidden');
                 let { graphicProjectsInProgram, graphicStatusProjects } = await this.reqDataCharts(portafolio);
-                console.log(graphicProjectsInProgram, graphicStatusProjects);
                 const objectLength = Object.keys(graphicProjectsInProgram).length;
                
                 if (objectLength > 26) {
                     let tablecontainet = $(".pp1");
                     tablecontainet.empty();
-                    console.log("sddfsdf");
                     let row = "";
                     Object.keys(graphicProjectsInProgram).forEach(key => {
-                        console.log(graphicProjectsInProgram[key].t);
                         row = row + `<tr">
                                                     <td><a href='#' class='event-detail' data-idprogram='${graphicProjectsInProgram[key].t}'>${graphicProjectsInProgram[key].name}</a></td>
                                                     <td><a href='#' class='event-detail' data-idprogram='${graphicProjectsInProgram[key].t}'>${graphicProjectsInProgram[key].y}</a></td>
                                                 </tr>`;
 
                     });
-                    console.log(row);
                     tablecontainet.append("<center><table class='table' style='width: 50%;'>" + headers + row + "</table></center>");
                     chart1 = "hidden";
                     
