@@ -43,6 +43,8 @@ namespace PMCTool.App.Controllers
             var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
+            ViewBag.baseUrlPmctool = baseUrlPMCTool;
+
             return View();
         }
         //[HttpPost]
@@ -83,9 +85,10 @@ namespace PMCTool.App.Controllers
                 reportData = await restClient.Get<List<ReportEvidencesByProjecID006>>(baseUrl, $"/api/v1/actionstomake/reportEvidencesByProjecID006/{projectID}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 ViewBag.Leader= reportData.First().LeaderName;
                 ViewBag.Pm= reportData.First().ProjectManagerName;
+                ViewBag.BaseUrlPmctool = baseUrlPMCTool;
                 //_response.Data = elements;
                 //_response.IsSuccess = true;
-                
+
 
             }
             catch (HttpResponseException ex)

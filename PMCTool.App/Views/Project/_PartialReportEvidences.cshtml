@@ -45,19 +45,21 @@
             </div>
 
             <div class="col-12 pt-4">
-                <table class="table pt-4 table-projects">
-                    <tbody>
-                        <tr>
-                            <td scope="row" class="bg txt-center">Tipo</td>
-                            <td class="bg txt-center">Evidencia</td>
-                            <td class="bg txt-center">Estatus</td>
-                            <td class="bg txt-center">Fecha planeada de aprobación</td>
-                            <td class="bg txt-center">Responsable de Elaboración</td>
-                            <td class="bg txt-center">Responsable de Aprobación</td>
-                            <td class="bg txt-center">Ponderación</td>
-                            <td class="bg txt-center">Aspectos Relevantes / Comentarios</td>
-                            <td class="bg txt-center">Detalle del elemento</td>
+                <table id="table-projects" class="table pt-4 ">
+                    <thead>
+                        <tr> 
+                            <th scope="row" class="bg txt-center">Tipo</th>
+                            <th class="bg txt-center">Evidencia</th>
+                            <th class="bg txt-center">Estatus</th>
+                            <th class="bg txt-center">Fecha planeada de aprobación</th>
+                            <th class="bg txt-center">Responsable de Elaboración</th>
+                            <th class="bg txt-center">Responsable de Aprobación</th>
+                            <th class="bg txt-center">Ponderación</th>
+                            <th class="bg txt-center">Aspectos Relevantes / Comentarios</th>
+                            <th class="bg txt-center">Detalle del elemento</th>
                         </tr>
+                    </thead>
+                    <tbody> 
                         @foreach (var item in Model)
                         { 
                             string traduccionStatus = "EnumProjectElementStatus_" + item.Status;
@@ -94,7 +96,7 @@
                                 <td class="txt-center"> @item.ResponsibleApprovalName</td>
                                 <td class="txt-center">@item.Weight</td>
                                 <td>@item.Comment</td>
-                                <td class="txt-center"><a href="http://app.pmc-tool.mx/Execution/Evidences?id=@item.ProjectEvidenceID" target="_black">IR</a></td>
+                                <td class="txt-center"><a href="@ViewBag.BaseUrlPmctool/Execution/Evidences?id=@item.ProjectEvidenceID" target="_black">IR</a></td>
                             </tr>
                             traduccionStatus = ""; 
                         } 
@@ -110,7 +112,8 @@
 
     <script>
         $(function () {
-            $('.table-projects').DataTable({
+            console.log("sdfsdf"); 
+            $('#table-projects').DataTable({
                 paging: true,
                 searching: true,
                 processing: true,
