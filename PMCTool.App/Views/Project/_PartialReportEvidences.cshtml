@@ -42,8 +42,7 @@
 
                     </div>
                 </div>
-            </div>
-
+            </div> 
             <div class="col-12 pt-4">
                 <table id="table-projects" class="table pt-4 ">
                     <thead>
@@ -96,7 +95,7 @@
                                 <td class="txt-center"> @item.ResponsibleApprovalName</td>
                                 <td class="txt-center">@item.Weight</td>
                                 <td>@item.Comment</td>
-                                <td class="txt-center"><a href="@ViewBag.BaseUrlPmctool/Execution/Evidences?id=@item.ProjectEvidenceID" target="_black">IR</a></td>
+                                <td class="txt-center"><a href="@item.urlEvidence" target="_black">IR</a></td>
                             </tr>
                             traduccionStatus = ""; 
                         } 

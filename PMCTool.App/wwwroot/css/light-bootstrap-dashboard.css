@@ -13646,7 +13646,7 @@ select.selectpicker {
     color: gray;
 }
 /*background*/
-.bg-delayed {
+.bg-kdelayed {
     background-color: #f7d408;
     color: black;
 }
