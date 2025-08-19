@@ -135,11 +135,11 @@ namespace PMCTool.App.Controllers
             {
                 List<ReportStatusGlobalDetailMainbit002_ByProject> report = await restClient.Get<List<ReportStatusGlobalDetailMainbit002_ByProject>>(baseUrl, $"api/v1/actionstomake/detail/projects/{idProgram}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
 
-                foreach(var projects in report)
+                foreach (var projects in report)
                 {
                     rowTable += @"<tr>
-                                    <th>" + projects.ProgramName +@"</th>
-                                    <td>"+projects.Name+@"</td>
+                                    <th>" + projects.ProgramName + @"</th>
+                                    <td>" + projects.Name + @"</td>
                                 </tr>";
                 }
             }
@@ -186,9 +186,9 @@ namespace PMCTool.App.Controllers
                 foreach (var projects in report)
                 {
                     rowTable += @"<tr>
-                                    <th>" + projects.Program+ @"</th>
+                                    <th>" + projects.Program + @"</th>
                                     <td>" + projects.Name + @"</td>
-                                    <td style='width: 150px; background: " + colors[projects.Phase] +";font-weight: 500;'>" + projects.Phase + @"</td>
+                                    <td style='width: 150px; background: " + colors[projects.Phase] + ";font-weight: 500;'>" + projects.Phase + @"</td>
                                 </tr>";
                 }
             }
@@ -227,7 +227,8 @@ namespace PMCTool.App.Controllers
                     project.PlannedProgress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.PlannedProgress)) * 100, 2)); // Math.Round(originalValue)
                     project.Progress = Convert.ToDouble(Math.Round((Convert.ToDecimal(project.Progress)) * 100, 2)); // Math.Round(originalValue)
                 }
-                var temp = report.Select(r => new ReportStatusGlobalDetailMainbit004() {
+                var temp = report.Select(r => new ReportStatusGlobalDetailMainbit004()
+                {
                     ProjectId = r.ProjectId,
                     Code = r.Code,
                     Name = r.Name,
@@ -328,10 +329,10 @@ namespace PMCTool.App.Controllers
                 actionsToMakeData = await restClient.Get<List<ActionsToMake>>(baseUrl,
                    $"api/v1/actionstomake/data?states={data.States}&generaldirection={data.GeneralDirection}&projecttype={data.ProjectType}&stage={data.Stage}&investment={data.Investment}&advertisement={data.Advertisement}",
                    new Dictionary<string, string>() { { "Authorization", token } });
-             
-                
-              return PartialView("_ReportActiosToMake", actionsToMakeData);
-                
+
+
+                return PartialView("_ReportActiosToMake", actionsToMakeData);
+
 
             }
             catch (HttpResponseException ex)
@@ -366,7 +367,49 @@ namespace PMCTool.App.Controllers
                 result.Add("indicatorTable1", elements.Where(x => x.IndicatorTable.Equals(1)).ToList());
                 result.Add("indicatorTable2", elements.Where(x => x.IndicatorTable.Equals(2)).ToList());
                 result.Add("indicatorTable3", elements.Where(x => x.IndicatorTable.Equals(3)).ToList());
-            } 
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+
+        [PMCToolAuthentication]
+        public async Task<IActionResult> ProjectSheet()
+        {
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            SetActiveOption("4008");
+            ViewBag.projects = projectTab;
+            ViewBag.baseUrlPmctool = baseUrlPMCTool;
+            return View();
+        }
+
+        [HttpGet]
+        [Route("ActionsToMake/ReportGetProjectSheetByID")]
+        public async Task<IActionResult> ReportGetProjectSheetByID(Guid projectId)
+        {
+            ReportGetProjectSheetByID result = new ReportGetProjectSheetByID();
+            try
+            {
+                result = await restClient.Get<ReportGetProjectSheetByID>(baseUrl, $"/api/v1/actionstomake/reportGetProjectSheedById/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
             catch (HttpResponseException ex)
             {
                 var apiError = GetApiError(ex.ServiceContent.ToString());

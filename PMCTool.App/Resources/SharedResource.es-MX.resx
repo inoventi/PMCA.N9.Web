@@ -3061,10 +3061,13 @@
   <data name="Analytics5_024" xml:space="preserve">
     <value>Seleccione un proyecto</value>
   </data>
+  <data name="ActionsToMake" xml:space="preserve">
+    <value>Acciones a Realizar</value>
+  </data>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
-  <data name="ActionsToMake" xml:space="preserve">
-    <value>Acciones a Realizar</value>
+  <data name="ProjectSheet" xml:space="preserve">
+    <value>Ficha de proyecto</value>
   </data>
 </root>
