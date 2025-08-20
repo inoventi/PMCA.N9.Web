@@ -3064,10 +3064,37 @@
   <data name="ActionsToMake" xml:space="preserve">
     <value>Acciones a Realizar</value>
   </data>
+  <data name="ProjectSheet" xml:space="preserve">
+    <value>Ficha de proyecto</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Projectleader" xml:space="preserve">
+    <value>Líder del proyecto</value>
+  </data>
+  <data name="ProjectIdentifier" xml:space="preserve">
+    <value>Identificador del proyecto</value>
+  </data>
+  <data name="MinimumContractAmount" xml:space="preserve">
+    <value>Monto mínimo del contrato</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="ProjectAdministrator" xml:space="preserve">
+    <value>Administrador del proyecto</value>
+  </data>
+  <data name="ProjectSize" xml:space="preserve">
+    <value>Dimensión del proyecto</value>
+  </data>
+  <data name="MaximumContractAmount" xml:space="preserve">
+    <value>Monto máximo del contrato</value>
+  </data>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
-  <data name="ProjectSheet" xml:space="preserve">
-    <value>Ficha de proyecto</value>
+  <data name="Overview" xml:space="preserve">
+    <value>Descripción general</value>
   </data>
 </root>

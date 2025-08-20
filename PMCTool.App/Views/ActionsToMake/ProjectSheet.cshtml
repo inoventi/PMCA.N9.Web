@@ -116,7 +116,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-2 col-sm-2 text-right">
+                                    <div class="col-2 col-sm-2 text-right pt-2">
                                         <button type="button" class="btn btn-default btn-default btn-report">
                                             <i class="fas fa-file-pdf"></i> Buscar
                                         </button>
@@ -128,7 +128,7 @@
 
                             <div class="col-md-12">
                             </div>
-                            <div class="col-12 pt-4">
+                            <div class="col-12 pt-4" id="report" hidden>
                                 <div class="card pt-2">
                                     <div class="card-body p-1">
                                         <div class="col-md-12 p-0">
@@ -141,33 +141,33 @@
                                             <table class="table">
                                                 <tbody>
                                                     <tr>
-                                                        <td scope="row" class="bg txt-center">CLIENTE</td>
-                                                        <td class="bg txt-center">LİDER DEL PROYECTO</td>
-                                                        <td class="bg txt-center">IDENTIFICADOR DEL PROYECTO</td>
-                                                        <td class="bg txt-center">FECHA DE INICIO</td>
-                                                        <td class="bg txt-center">MONTO MINIMO DEL CONTRATО</td>
+                                                        <td scope="row" class="bg txt-center">@Localizer["Client"]</td>
+                                                        <td class="bg txt-center">@Localizer["Projectleader"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectIdentifier"]</td>
+                                                        <td class="bg txt-center">@Localizer["StartDate"]</td>
+                                                        <td class="bg txt-center">@Localizer["MinimumContractAmount"]</td>
                                                     </tr>
                                                     <tr>
-                                                        <td scope="row" class="txt-center" id="clientRow">ACTINVER</td>
-                                                        <td class="txt-center" id="leaderRow">ÓSCAR BUCIO CRUZ</td>
-                                                        <td class="txt-center" id="idProjectClientRow">OC 21-0819 ID 1202</td>
-                                                        <td class="txt-center" id="startDateProjectRow">26/08/2021 </td>
-                                                        <td class="txt-center" id="amountMinOfContractRow">0</td>
+                                                        <td scope="row" class="txt-center" id="clientRow"></td>
+                                                        <td class="txt-center" id="leaderRow"></td>
+                                                        <td class="txt-center" id="idProjectClientRow"></td>
+                                                        <td class="txt-center" id="startDateProjectRow"></td>
+                                                        <td class="txt-center" id="amountMinOfContractRow"></td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td scope="row" class="bg txt-center">PRIORIDAD</td>
-                                                        <td class="bg txt-center">ADMINISTRADOR DEL PROYECTO</td>
-                                                        <td class="bg txt-center">DIMENSIÓN DEL PROYECTO </td>
-                                                        <td class="bg txt-center">FECHA DE FIN </td>
-                                                        <td class="bg txt-center">MONTO MAXIMO DEL CONTRATO</td>
+                                                        <td scope="row" class="bg txt-center">@Localizer["Priority"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectAdministrator"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectSize"]</td>
+                                                        <td class="bg txt-center">@Localizer["EndDate"]</td>
+                                                        <td class="bg txt-center">@Localizer["MaximumContractAmount"]</td>
                                                     </tr>
                                                     <tr>
-                                                        <td scope="row" class="txt-center" id="priorityRow">MEDIA</td>
-                                                        <td class="txt-center" id="projectManagerRow">JOSÉ EDUARDO BARRIGA SÁNCHEZ</td>
-                                                        <td class="txt-center" id="projectDimensionRow">MEDIANO</td>
-                                                        <td class="txt-center" id="endDateProjectRow">25/07/2025 </td>
-                                                        <td class="txt-center" id="maxContractAmountRow">0</td>
+                                                        <td scope="row" class="txt-center" id="priorityRow"></td>
+                                                        <td class="txt-center" id="projectManagerRow"></td>
+                                                        <td class="txt-center" id="projectDimensionRow"></td>
+                                                        <td class="txt-center" id="endDateProjectRow"></td>
+                                                        <td class="txt-center" id="maxContractAmountRow"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -177,10 +177,10 @@
                                                 <table class="table">
                                                     <tbody>
                                                         <tr>
-                                                            <td scope="row" class="bg txt-center">DESCRIPCIÓN GENERAL</td>
+                                                            <td scope="row" class="bg txt-center">@Localizer["Overview"]</td>
                                                         </tr>
                                                         <tr>
-                                                            <td scope="row" class="txt-center">Suministro y Prestación de Servicios.</td>
+                                                            <td scope="row" class="txt-center" id="projectOverviewRow"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

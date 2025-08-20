@@ -3067,4 +3067,31 @@
   <data name="ProjectSheet" xml:space="preserve">
     <value>Project sheet</value>
   </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Projectleader" xml:space="preserve">
+    <value>Project leader</value>
+  </data>
+  <data name="ProjectIdentifier" xml:space="preserve">
+    <value>Project identifier</value>
+  </data>
+  <data name="MinimumContractAmount" xml:space="preserve">
+    <value>Minimum contract amount</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="ProjectAdministrator" xml:space="preserve">
+    <value>Project administrator</value>
+  </data>
+  <data name="ProjectSize" xml:space="preserve">
+    <value>Project size</value>
+  </data>
+  <data name="MaximumContractAmount" xml:space="preserve">
+    <value>Maximum contract amount</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
 </root>
