@@ -70,8 +70,8 @@
             console.log(duration, endDateClient, progress, startDate, status, text);
             $('#project-phase-table').append(`<tr>
                                                 <td scope="row" class="txt-center">${text}</td>
-                                                <td class="txt-center">${startDate}</td>
-                                                <td class="txt-center">${endDateClient}</td>
+                                                <td class="txt-center">${startDate.split('T')[0]}</td>
+                                                <td class="txt-center">${endDateClient.split('T')[0]}</td>
                                                 <td class="txt-center">${duration}</td>
                                                 <td class="txt-center" style="background: ${this.coloresEstatusProjectNumber[status]};font-weight: 500;">${$.i18n._(`elementStatusName_${status}`)}</td>
                                             </tr>`);
