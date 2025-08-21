@@ -133,7 +133,7 @@
                                     <div class="card-body p-1">
                                         <div class="col-md-12 p-0">
                                             <h5 class="media align-items-center font-weight-bold  mb-0 mt-0">
-                                                <span class="title-report">ACTINVER</span>
+                                                <span class="title-report" id="titleClient"></span>
                                             </h5>
                                         </div>
 
@@ -187,39 +187,12 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="row text-center">
-                                                    <div class="col-12">FASES DEL PROYECTO</div>
+                                                    <div class="col-12">@Localizer["ProjectPhase"]</div>
                                                 </div>
 
                                                 <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td scope="row" class="bg txt-center">Etapa</td>
-                                                            <td class="bg txt-center">Fecha planeada de inicio</td>
-                                                            <td class="bg txt-center">Fecha planeada de Fin</td>
-                                                            <td class="bg txt-center">Duracion (dias)</td>
-                                                            <td class="bg txt-center">Estatus</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td scope="row" class="txt-center">Inicio</td>
-                                                            <td class="txt-center">09/09/2021</td>
-                                                            <td class="txt-center">26/08/2021</td>
-                                                            <td class="txt-center">15 </td>
-                                                            <td class="txt-center" style="background: #4CAF50;font-weight: 500;">En Tiempo</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td scope="row" class="txt-center">Planeación</td>
-                                                            <td class="txt-center">09/09/2021</td>
-                                                            <td class="txt-center">09/10/2021</td>
-                                                            <td class="txt-center">15 </td>
-                                                            <td class="txt-center" style="background: #cacaca;font-weight: 500;">Cerrado</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td scope="row" class="txt-center">Planeación</td>
-                                                            <td class="txt-center">09/09/2021</td>
-                                                            <td class="txt-center">09/10/2021</td>
-                                                            <td class="txt-center">15 </td>
-                                                            <td class="txt-center" style="background: #cacaca;font-weight: 500;">Cerrado</td>
-                                                        </tr>
+                                                    <tbody id="project-phase-table">
+
                                                     </tbody>
                                                 </table>
 

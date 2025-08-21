@@ -433,6 +433,27 @@ namespace PMCTool.App.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        [Route("ActionsToMake/GetReportGanttActivitiesByID")]
+        public async Task<IActionResult> GetReportGanttActivitiesByID(Guid projectId)
+        {
+            List<ReportGanttActivitiesByID> result = new List<ReportGanttActivitiesByID>();
+            try
+            {
+                result = await restClient.Get<List<ReportGanttActivitiesByID>>(baseUrl, $"/api/v1/actionstomake/reportGanttActivitiesByID/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch(Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
     }
 
 }
