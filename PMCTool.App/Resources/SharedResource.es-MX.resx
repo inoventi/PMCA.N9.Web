@@ -925,7 +925,7 @@
     <value>Áreas de trabajo</value>
   </data>
   <data name="ProjectPhase" xml:space="preserve">
-    <value>Fase del proyecto</value>
+    <value>FASE DEL PROYECTO</value>
   </data>
   <data name="LoadTemplate" xml:space="preserve">
     <value>Cargar plantilla</value>
@@ -3091,10 +3091,10 @@
   <data name="MaximumContractAmount" xml:space="preserve">
     <value>Monto máximo del contrato</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Overview" xml:space="preserve">
     <value>Descripción general</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>
