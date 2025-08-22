@@ -40,10 +40,15 @@
     }
     construcGraphics({ activity, agreement, evidence, incident, milestone, risk }) {
         Highcharts.chart('container1', {
-            chart: { type: 'bar', backgroundColor: 'white' },
+            chart: {
+                type: 'bar',
+                backgroundColor: 'white',
+                spacingTop: 24, // más aire arriba; sube a 32 si alguna vez se corta
+            },
             title: { text: `${$.i18n._("Analytics1_003")}` },
             subtitle: {
-                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>'
+                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
+                y: 30
             },
 
             xAxis: {
@@ -65,7 +70,10 @@
                 min: 0,
                 title: { text: 'Total', align: 'high' },
                 labels: { overflow: 'justify', style: { color: 'black' } },
-                gridLineWidth: 0
+                gridLineWidth: 0,
+                tickmarkPlacement: 'between', // ← líneas ENTRE categorías
+                tickWidth: 0,
+                lineWidth: 0
             },
 
             tooltip: {
@@ -74,25 +82,31 @@
             },
 
             plotOptions: {
+                series: {
+                    borderWidth: 0,          // sin contorno
+                    borderColor: 'transparent',
+                    clip: false       // <-- evita que se “corte” la barra superior
+                },
                 bar: {
-                    borderRadius: 8,
+                    borderRadius: 10,
                     dataLabels: { enabled: true },
                     groupPadding: 0.15,
-                    pointPadding: 0,      // la barra queda ancha aunque haya varias series
-                    pointWidth: 18        // grosor fijo de cada barra (ajusta a gusto)
+                    pointPadding: 0,
+                    pointWidth: 20
                 }
             },
-
             legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -40,
-                y: 80,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor: 'var(--highcharts-background-color,rgb(255,255,255))',
-                shadow: true
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+                // texto negro y en negritas
+                itemStyle: {
+                    color: '#000',
+                    fontWeight: 'bold'
+                },
+                itemHoverStyle: {
+                    color: '#000'
+                }
             },
 
             credits: { enabled: false },
