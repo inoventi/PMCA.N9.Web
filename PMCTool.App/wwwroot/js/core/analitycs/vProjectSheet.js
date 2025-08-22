@@ -26,9 +26,131 @@
             LoaderShow();
             await this.requesDataReportProjectSheet(projectId);
             await this.requestGetReportGanttActivitiesById(projectId);
+            await this.requestGetProjectElementCountByParticipant(projectId);
             $('#report').removeAttr('hidden');
+
             LoaderHide();
+
         });
+    }
+    async requestGetProjectElementCountByParticipant(projectId) {
+        let resquest = await fetch(`/ActionsToMake/GetProjectElementCountByParticipant?projectId=${projectId}`);
+        let data = await resquest.json();
+        this.construcGraphics(data);
+    }
+    construcGraphics({ activity, agreement, evidence, incident, milestone, risk }) {
+        Highcharts.chart('container1', {
+            chart: { type: 'bar', backgroundColor: 'white' },
+            title: { text: `${$.i18n._("Analytics1_003")}` },
+            subtitle: {
+                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>'
+            },
+
+            xAxis: {
+                categories: [
+                    $.i18n._("activity"),
+                    $.i18n._("incident"),
+                    $.i18n._("evidence"),
+                    $.i18n._("risk"),
+                    $.i18n._("agreements"),
+                    $.i18n._("milestone")
+                ],
+                title: { text: null },
+                gridLineWidth: 1,
+                lineWidth: 0,
+                labels: { overflow: 'justify', style: { color: 'black' } }
+            },
+
+            yAxis: {
+                min: 0,
+                title: { text: 'Total', align: 'high' },
+                labels: { overflow: 'justify', style: { color: 'black' } },
+                gridLineWidth: 0
+            },
+
+            tooltip: {
+                // Muestra "Serie: valor"
+                pointFormat: '<span style="font-weight:600">{series.name}:</span> <b>{point.y}</b>'
+            },
+
+            plotOptions: {
+                bar: {
+                    borderRadius: 8,
+                    dataLabels: { enabled: true },
+                    groupPadding: 0.15,
+                    pointPadding: 0,      // la barra queda ancha aunque haya varias series
+                    pointWidth: 18        // grosor fijo de cada barra (ajusta a gusto)
+                }
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: 'var(--highcharts-background-color,rgb(255,255,255))',
+                shadow: true
+            },
+
+            credits: { enabled: false },
+
+            // Una serie por tipo, con datos "dispersos"
+            series: [
+                { name: $.i18n._("activity"), data: [activity, null, null, null, null, null] },
+                { name: $.i18n._("incident"), data: [null, incident, null, null, null, null] },
+                { name: $.i18n._("evidence"), data: [null, null, evidence, null, null, null] },
+                { name: $.i18n._("risk"), data: [null, null, null, risk, null, null] },
+                { name: $.i18n._("agreements"), data: [null, null, null, null, agreement, null] },
+                { name: $.i18n._("milestone"), data: [null, null, null, null, null, milestone] }
+            ]
+        });
+
+        //Highcharts.chart('container2', {
+        //    chart: {
+        //        type: 'column',
+        //        backgroundColor: 'white'
+        //    },
+        //    title: {
+        //        text: 'EQUIPOS POR PERFIL'
+        //    },
+        //    subtitle: {
+        //        text: 'Source: <a ' +
+        //            'href="https://www.pmc-tool.com/"' +
+        //            'target="_blank">PMC-tool.com</a>'
+
+        //    },
+        //    xAxis: {
+        //        categories: ['CPU', 'Laptops', 'Proyectores', 'Impresoras', 'Mouse', 'Otros'],
+        //        crosshair: true,
+        //        accessibility: {
+        //            description: 'Piezas'
+        //        }
+        //    },
+        //    yAxis: {
+        //        min: 0,
+        //        title: {
+        //            text: '1000 metric tons (MT)'
+        //        }
+        //    },
+        //    tooltip: {
+        //        valueSuffix: ' (1000 MT)'
+        //    },
+        //    plotOptions: {
+        //        column: {
+        //            pointPadding: 0.2,
+        //            borderWidth: 0
+        //        }
+        //    },
+        //    series: [
+        //        {
+        //            name: 'Total',
+        //            data: [387749, 280000, 129000, 64300, 54000, 34300]
+        //        }
+        //    ]
+        //});
     }
     async requesDataReportProjectSheet(projectId) {        
        

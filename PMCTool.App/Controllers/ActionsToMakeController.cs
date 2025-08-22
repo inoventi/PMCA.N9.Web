@@ -454,6 +454,37 @@ namespace PMCTool.App.Controllers
             }
             return Json(result);
         }
+        [HttpGet]
+        [Route("ActionsToMake/GetProjectElementCountByParticipant")]
+        public async Task<IActionResult> GetProjectElementCountByParticipant(Guid projectId)
+        {
+            GetProjectElementCount_ByParticipant result = new GetProjectElementCount_ByParticipant();
+            try
+            {
+                result = await restClient.Get<GetProjectElementCount_ByParticipant>(baseUrl, $"/api/v1/actionstomake/projectElementCountByParticipant/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
     }
 
 }
