@@ -51,10 +51,14 @@
                 backgroundColor: 'white',
                 spacingTop: 24, // más aire arriba; sube a 32 si alguna vez se corta
             },
-            title: { text: `${$.i18n._("Analytics1_003")}` },
+            title: {
+                text: `${$.i18n._("Analytics1_003")}`,
+                style: { color: '#000', fontWeight: 'bold' }
+            },
             subtitle: {
                 text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
-                y: 30
+                y: 30,
+                style: { color: '#000' }
             },
 
             xAxis: {
@@ -128,49 +132,57 @@
             ]
         });
     }
-    construcGraphic2({projectName,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15 }) {
+    construcGraphic2({ projectName, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15 }) {
         Highcharts.chart('container2', {
             chart: {
                 type: 'column',
                 backgroundColor: 'white'
             },
             title: {
-                text: `${projectName}`
+                text: `${projectName}`,
+                style: { color: '#000', fontWeight: 'bold' }   // negro
             },
             subtitle: {
-                text: 'Source: <a ' +
-                    'href="https://www.pmc-tool.com/"' +
-                    'target="_blank">PMC-tool.com</a>'
-
+                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
+                style: { color: '#000' }                        // negro
             },
             xAxis: {
-                categories: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6','C7','C8','C9','C10','C11','C12','C13','C14','C15'],
+                categories: [
+                    'LAPTOP', 'LAPTOP INTERMEDIA', 'LAPTOP CON DOCKING', 'LAPTOP', 'LAPTOP CON DOCKING',
+                    'APPLE MACBOOK AIR', 'EQUIPO APPLE DE ESCRITORIO IMAC', 'TABLETA LIGERA',
+                    'TABLETA ESPECIALIZADA', 'ESQUIPO DE ESCRITORIO INTERMEDIO',
+                    'EQUIPO DE ESCRITORIO ESPECIALIZADO', 'TECLADO Y MOUSE , P02 PERIFERICOS CONFERENCIA',
+                    'MONITOR', 'CANDADO PARA EQUIPO DE COMPUTO', 'VIDEO PROYECTOR'
+                ],
                 crosshair: true,
-                accessibility: {
-                    description: 'Piezas'
-                }
+                accessibility: { description: 'Piezas' },
+                labels: { style: { color: '#000', fontWeight: 'bold' } }, // letras negras (y en negrita)
+                lineColor: '#000',
+                tickColor: '#000'
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '1000 metric tons (MT)'
-                }
+                    text: '1000 metric tons (MT)',    
+                },
+                labels: { style: { color: '#000', fontWeight: 'bold' } },  // negro
+                gridLineColor: '#e6e6e6'
             },
-            tooltip: {
-                valueSuffix: ' (1000 MT)'
+            legend: {
+                itemStyle: { color: '#000', fontWeight: 'bold' }           // si hay leyenda
             },
+            tooltip: { valueSuffix: ' (1000 MT)' },
             plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
+                column: { pointPadding: 0.2, borderWidth: 0 }
+                // Si quieres que los números sobre las columnas también sean negros:
+                // , series: { dataLabels: { enabled: true, style: { color: '#000', textOutline: 'none', fontWeight: 'bold' } } }
             },
-            series: [
-                {
-                    name: 'Total',
-                    data: [parseInt(c1), parseInt(c2), parseInt(c3), parseInt(c4), parseInt(c5), parseInt(c6), parseInt(c7), parseInt(c8), parseInt(c9), parseInt(c10), parseInt(c11), parseInt(c12), parseInt(c13), parseInt(c14),parseInt(c15)]
-                }
-            ]
+            series: [{
+                name: 'Total',
+                data: [parseInt(c1), parseInt(c2), parseInt(c3), parseInt(c4), parseInt(c5),
+                parseInt(c6), parseInt(c7), parseInt(c8), parseInt(c9), parseInt(c10),
+                parseInt(c11), parseInt(c12), parseInt(c13), parseInt(c14), parseInt(c15)]
+            }]
         });
     }
     async requesDataReportProjectSheet(projectId) {        
