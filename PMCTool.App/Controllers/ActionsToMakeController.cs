@@ -485,6 +485,38 @@ namespace PMCTool.App.Controllers
             }
             return Json(result);
         }
+
+        [HttpGet]
+        [Route("ActionsToMake/reportGetProjectSheedById002")]
+        public async Task<IActionResult> reportGetProjectSheedById002(Guid projectId)
+        {
+            ReportGetProjectSheetByID002 result = new ReportGetProjectSheetByID002();
+            try
+            {
+                result = await restClient.Get<ReportGetProjectSheetByID002>(baseUrl, $"/api/v1/actionstomake/reportGetProjectSheedById002/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
     }
 
 }

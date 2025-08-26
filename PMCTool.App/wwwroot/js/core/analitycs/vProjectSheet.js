@@ -27,18 +27,24 @@
             await this.requesDataReportProjectSheet(projectId);
             await this.requestGetReportGanttActivitiesById(projectId);
             await this.requestGetProjectElementCountByParticipant(projectId);
+            await this.requestReportGetProjectSheedById002(projectId);
             $('#report').removeAttr('hidden');
 
             LoaderHide();
 
         });
     }
+    async requestReportGetProjectSheedById002(projectId) {
+        let resquest = await fetch(`/ActionsToMake/reportGetProjectSheedById002?projectId=${projectId}`);
+        let data = await resquest.json();
+        this.construcGraphic2(data);
+    }
     async requestGetProjectElementCountByParticipant(projectId) {
         let resquest = await fetch(`/ActionsToMake/GetProjectElementCountByParticipant?projectId=${projectId}`);
         let data = await resquest.json();
-        this.construcGraphics(data);
+        this.construcGraphic1(data);
     }
-    construcGraphics({ activity, agreement, evidence, incident, milestone, risk }) {
+    construcGraphic1({ activity, agreement, evidence, incident, milestone, risk }) {
         Highcharts.chart('container1', {
             chart: {
                 type: 'bar',
@@ -121,50 +127,51 @@
                 { name: $.i18n._("milestone"), data: [null, null, null, null, null, milestone] }
             ]
         });
+    }
+    construcGraphic2({projectName,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15 }) {
+        Highcharts.chart('container2', {
+            chart: {
+                type: 'column',
+                backgroundColor: 'white'
+            },
+            title: {
+                text: `${projectName}`
+            },
+            subtitle: {
+                text: 'Source: <a ' +
+                    'href="https://www.pmc-tool.com/"' +
+                    'target="_blank">PMC-tool.com</a>'
 
-        //Highcharts.chart('container2', {
-        //    chart: {
-        //        type: 'column',
-        //        backgroundColor: 'white'
-        //    },
-        //    title: {
-        //        text: 'EQUIPOS POR PERFIL'
-        //    },
-        //    subtitle: {
-        //        text: 'Source: <a ' +
-        //            'href="https://www.pmc-tool.com/"' +
-        //            'target="_blank">PMC-tool.com</a>'
-
-        //    },
-        //    xAxis: {
-        //        categories: ['CPU', 'Laptops', 'Proyectores', 'Impresoras', 'Mouse', 'Otros'],
-        //        crosshair: true,
-        //        accessibility: {
-        //            description: 'Piezas'
-        //        }
-        //    },
-        //    yAxis: {
-        //        min: 0,
-        //        title: {
-        //            text: '1000 metric tons (MT)'
-        //        }
-        //    },
-        //    tooltip: {
-        //        valueSuffix: ' (1000 MT)'
-        //    },
-        //    plotOptions: {
-        //        column: {
-        //            pointPadding: 0.2,
-        //            borderWidth: 0
-        //        }
-        //    },
-        //    series: [
-        //        {
-        //            name: 'Total',
-        //            data: [387749, 280000, 129000, 64300, 54000, 34300]
-        //        }
-        //    ]
-        //});
+            },
+            xAxis: {
+                categories: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6','C7','C8','C9','C10','C11','C12','C13','C14','C15'],
+                crosshair: true,
+                accessibility: {
+                    description: 'Piezas'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '1000 metric tons (MT)'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' (1000 MT)'
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: 'Total',
+                    data: [parseInt(c1), parseInt(c2), parseInt(c3), parseInt(c4), parseInt(c5), parseInt(c6), parseInt(c7), parseInt(c8), parseInt(c9), parseInt(c10), parseInt(c11), parseInt(c12), parseInt(c13), parseInt(c14),parseInt(c15)]
+                }
+            ]
+        });
     }
     async requesDataReportProjectSheet(projectId) {        
        
