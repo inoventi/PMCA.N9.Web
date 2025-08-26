@@ -367,6 +367,7 @@
     "Analytics5_022": "Global Status",
     "Analytics5_023": "Export to Excel",
     "Analytics5_024": "Select a project",
+    "Analytics5_025": "Duration (days)",
     "OnConfiguration": "On configuration",
     "Onsettings": "On settings",
     "Execution": "Execution",

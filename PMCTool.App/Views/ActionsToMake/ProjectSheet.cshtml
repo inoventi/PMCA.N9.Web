@@ -1,0 +1,249 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Acciones a realizar";
+    Layout = "_Layout";
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+
+}
+@section ScriptsHeader
+{
+    <link href="~/css/vcore/global-estatus.css" rel="stylesheet" asp-append-version="true" />
+}
+<style>
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 4px 4px;
+        vertical-align: middle;
+        border-color: #E3E3E3;
+    }
+
+    td, th { /* table cells */
+        padding: 10px;
+    }
+
+    table {
+        border-spacing: 3px;
+        border-collapse: separate;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 4px 4px;
+        vertical-align: middle;
+        border-color: #ffffff;
+    }
+
+    .bg {
+        font-weight: 600;
+        background: #d9d9d9;
+    }
+
+    .txt-center {
+        text-align: center;
+    }
+
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid var(--highcharts-neutral-color-10, #e6e6e6);
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: var(--highcharts-neutral-color-60, #666);
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tbody tr:nth-child(even) {
+        background: var(--highcharts-neutral-color-3, #f7f7f7);
+    }
+
+    .highcharts-description {
+        margin: 0.3rem 10px;
+    }
+
+</style>
+
+<div class="content bg-whitebg-white">
+    <div class="container-fluid">
+        <div class="col-md-12 card">
+            <div class="container-fluid flex-grow-1 container-p-y  pl-0 pr-0">
+                <div class="col-md-12 pt-4">
+                    <small class="font-weight-normal">Analytics</small>
+                    <h4 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                        <span class="title-report">Ficha de proyecto	</span>
+                    </h4>
+                </div>
+                <div class="">
+                    <!-- allow-->
+                    <div class="container-fluid pl-0 ml-0">
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-10 col-sm-10">
+                                        <div class="btn-group bootstrap-select">
+                                            <select name="projects" class="selectpicker sel-projects" id="selprojects" data-title="Proyectos" data-style="btn-default btn-outline" data-menu-style="dropdown-blue">
+                                                @foreach (var project in ViewBag.projects)
+                                                {
+                                                    <option value="@project.Key">@project.Value</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 col-sm-2 pt-2">
+                                        <button type="button" class="btn btn-default btn-default btn-report">
+                                            <i class="fas fa-file-pdf"></i> @Localizer["Search"]
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-1">
+
+                            <div class="col-md-12">
+                            </div>
+                            <div class="col-12 pt-4" id="report" hidden>
+                                <div class="card pt-2">
+                                    <div class="card-body p-1">
+                                        <div class="col-md-12 p-0">
+                                            <h5 class="media align-items-center font-weight-bold  mb-0 mt-0">
+                                                <span class="title-report" id="titleClient"></span>
+                                            </h5>
+                                        </div>
+
+                                        <div class="col-12 pt-4">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td scope="row" class="bg txt-center">@Localizer["Client"]</td>
+                                                        <td class="bg txt-center">@Localizer["Projectleader"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectIdentifier"]</td>
+                                                        <td class="bg txt-center">@Localizer["StartDate"]</td>
+                                                        <td class="bg txt-center">@Localizer["MinimumContractAmount"]</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" class="txt-center" id="clientRow"></td>
+                                                        <td class="txt-center" id="leaderRow"></td>
+                                                        <td class="txt-center" id="idProjectClientRow"></td>
+                                                        <td class="txt-center" id="startDateProjectRow"></td>
+                                                        <td class="txt-center" id="amountMinOfContractRow"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td scope="row" class="bg txt-center">@Localizer["Priority"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectAdministrator"]</td>
+                                                        <td class="bg txt-center">@Localizer["ProjectSize"]</td>
+                                                        <td class="bg txt-center">@Localizer["EndDate"]</td>
+                                                        <td class="bg txt-center">@Localizer["MaximumContractAmount"]</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" class="txt-center" id="priorityRow"></td>
+                                                        <td class="txt-center" id="projectManagerRow"></td>
+                                                        <td class="txt-center" id="projectDimensionRow"></td>
+                                                        <td class="txt-center" id="endDateProjectRow"></td>
+                                                        <td class="txt-center" id="maxContractAmountRow"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td scope="row" class="bg txt-center">@Localizer["Overview"]</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row" class="txt-center" id="projectOverviewRow"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="row text-center">
+                                                    <div class="col-12">@Localizer["ProjectPhase"]</div>
+                                                </div>
+
+                                                <table class="table">
+                                                    <tbody id="project-phase-table">
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row pt-4">
+                                            <div class="col-6  pt-4">
+                                                <figure class="highcharts-figure">
+                                                    <div id="container1"></div>
+                                                    <p class="highcharts-description"></p>
+                                                </figure>
+
+                                            </div>
+                                            <div class="col-6  pt-4">
+                                                <figure class="highcharts-figure">
+                                                    <div id="container2"></div>
+                                                    <p class="highcharts-description"></p>
+                                                </figure>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end allow-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Sección de scripts-->
+@section scripts
+{
+    <script src="~/js/plugins/bootstrap-datetimepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
+
+    <script src="~/js/core/analitycs/vProjectSheet.js" asp-append-version="true"></script>
+    
+}
+

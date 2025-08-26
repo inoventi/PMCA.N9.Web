@@ -368,6 +368,7 @@
     "Analytics5_022": "Estatus Global",
     "Analytics5_023": "Exportar a Excel",
     "Analytics5_024": "Seleccione un proyecto",
+    "Analytics5_025": "Duración (dias)",
     "OnConfiguration": "En Configuracion",
     "Onsettings": "En Ajustes",
     "Execution": "Ejecucion",
