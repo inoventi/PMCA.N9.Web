@@ -35,12 +35,12 @@
         });
     }
     async requestReportGetProjectSheedById002(projectId) {
-        let resquest = await fetch(`/ActionsToMake/reportGetProjectSheedById002?projectId=${projectId}`);
+        let resquest = await fetch(`/Project/reportGetProjectSheedById002?projectId=${projectId}`);
         let data = await resquest.json();
         this.construcGraphic2(data);
     }
     async requestGetProjectElementCountByParticipant(projectId) {
-        let resquest = await fetch(`/ActionsToMake/GetProjectElementCountByParticipant?projectId=${projectId}`);
+        let resquest = await fetch(`/Project/GetProjectElementCountByParticipant?projectId=${projectId}`);
         let data = await resquest.json();
         this.construcGraphic1(data);
     }
@@ -187,7 +187,7 @@
     }
     async requesDataReportProjectSheet(projectId) {        
        
-        let resquest = await fetch(`/ActionsToMake/ReportGetProjectSheetByID?projectId=${projectId}`);
+        let resquest = await fetch(`/Project/ReportGetProjectSheetByID?projectId=${projectId}`);
         let { amountMinOfContract, client, endDateProject, idProjectClient, leader, maxContractAmount, priority, projectDimension, projectName, projectOverview, projetManager, startDateProject } = await resquest.json();
         this.resetRows();
 
@@ -210,7 +210,7 @@
        
     }
     async requestGetReportGanttActivitiesById(projectId) {
-        let resquest = await fetch(`/ActionsToMake/GetReportGanttActivitiesByID?projectId=${projectId}`);
+        let resquest = await fetch(`/Project/GetReportGanttActivitiesByID?projectId=${projectId}`);
         let data = await resquest.json();
         $('#project-phase-table').empty();
         $('#project-phase-table').append(`<tr>
