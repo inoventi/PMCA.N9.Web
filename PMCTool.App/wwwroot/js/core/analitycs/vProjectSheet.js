@@ -132,7 +132,7 @@
             ]
         });
     }
-    construcGraphic2({ projectName, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15 }) {
+    construcGraphic2({ projectName, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26,c27,c28,c29,c30,c31,c32 }) {
         Highcharts.chart('container2', {
             chart: {
                 type: 'column',
@@ -148,11 +148,38 @@
             },
             xAxis: {
                 categories: [
-                    'LAPTOP', 'LAPTOP INTERMEDIA', 'LAPTOP CON DOCKING', 'LAPTOP', 'LAPTOP CON DOCKING',
-                    'APPLE MACBOOK AIR', 'EQUIPO APPLE DE ESCRITORIO IMAC', 'TABLETA LIGERA',
-                    'TABLETA ESPECIALIZADA', 'ESQUIPO DE ESCRITORIO INTERMEDIO',
-                    'EQUIPO DE ESCRITORIO ESPECIALIZADO', 'TECLADO Y MOUSE , P02 PERIFERICOS CONFERENCIA',
-                    'MONITOR', 'CANDADO PARA EQUIPO DE COMPUTO', 'VIDEO PROYECTOR'
+                    'D1 Computadora de escritorio básica',
+                    'D1 Computadora de escritorio básica con tarjeta de red inalámbrica',
+                    'D2 Computadora de escritorio ligera',
+                    'D2 Computadora de escritorio ligera con tarjeta de red inalámbrica',
+                    'D3 Equipo de escritorio intermedio',
+                    'D3 Computadora de escritorio ligera con tarjeta de red inalámbrica',
+                    'D4 Equipo de escritorio especializado',
+                    'D4 Equipo de escritorio especializado con tarjeta de red inalámbrica',
+                    'D5 Computadora de escritorio avanzada',
+                    'D5 Computadora de escritorio avanzada con tarjeta de red inalámbrica',
+                    'L1 Computadora portátil general (laptop ligera)',
+                    'L1 Computadora portátil general (laptop ligera) con estación de trabajo para laptop',
+                    'L2 Computadora portátil (laptop intermedia)',
+                    'L2 Computadora portátil (laptop intermedia) con estación de trabajo para laptop',
+                    'L3 Computadora portátil especializada (laptop Workstation)',
+                    'L3 Computadora portátil especializada (laptop Workstation) con estación de trabajo para laptop',
+                    'M1 Apple móvil Macbook Air',
+                    'M2 Apple de Escritorio iMac',
+                    'T1 Tableta (ligera)',
+                    'T2 Tableta (especializada)',
+                    'P01 Teclado y Mouse',
+                    'P02 Periféricos Conferencia',
+                    'P03 Monitor',
+                    'P04 Candado para equipo de cómputo de escritorio o portátil',
+                    'P05 Estación de trabajo para laptop',
+                    'P06 Lector DVD',
+                    'P07 Biométricos',
+                    'P08 Lector de código de barras',
+                    'P09 Video Proyector',
+                    'P10 NoBreak (TIPO I)',
+                    'P11 NoBreak (TIPO II)',
+                    'P12 Tarjeta de red inalámbrica',
                 ],
                 crosshair: true,
                 accessibility: { description: 'Piezas' },
@@ -180,8 +207,12 @@
             series: [{
                 name: 'Total',
                 data: [parseInt(c1), parseInt(c2), parseInt(c3), parseInt(c4), parseInt(c5),
-                parseInt(c6), parseInt(c7), parseInt(c8), parseInt(c9), parseInt(c10),
-                parseInt(c11), parseInt(c12), parseInt(c13), parseInt(c14), parseInt(c15)]
+                    parseInt(c6), parseInt(c7), parseInt(c8), parseInt(c9), parseInt(c10),
+                    parseInt(c11), parseInt(c12), parseInt(c13), parseInt(c14), parseInt(c15),
+                    parseInt(c16), parseInt(c17), parseInt(c18), parseInt(c19), parseInt(c20),
+                    parseInt(c21), parseInt(c22), parseInt(c23), parseInt(c24), parseInt(c25),
+                    parseInt(c26), parseInt(c27), parseInt(c28), parseInt(c29), parseInt(c30),
+                    parseInt(c31), parseInt(c32)]
             }]
         });
     }
