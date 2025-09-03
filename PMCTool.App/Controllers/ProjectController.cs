@@ -235,5 +235,15 @@ namespace PMCTool.App.Controllers
             }
             return Json(result);
         }
+
+        [PMCToolAuthentication]
+        public async Task<IActionResult> ProjectDetail()
+        {
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //SetActiveOption("4008");
+            //ViewBag.projects = projectTab;
+            ViewBag.baseUrlPmctool = baseUrlPMCTool;
+            return View();
+        }
     }
 }
