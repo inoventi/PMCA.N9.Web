@@ -56,7 +56,7 @@
                 style: { color: '#000', fontWeight: 'bold' }
             },
             subtitle: {
-                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
+                text: '',
                 y: 30,
                 style: { color: '#000' }
             },
@@ -139,11 +139,11 @@
                 backgroundColor: 'white'
             },
             title: {
-                text: `${projectName}`,
+                text: 'Equipos por perfil',
                 style: { color: '#000', fontWeight: 'bold' }   // negro
             },
             subtitle: {
-                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
+                text: '',
                 style: { color: '#000' }                        // negro
             },
             xAxis: {
@@ -190,7 +190,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: '1000 metric tons (MT)',    
+                    text: '',    
                 },
                 labels: { style: { color: '#000', fontWeight: 'bold' } },  // negro
                 gridLineColor: '#e6e6e6'
@@ -198,7 +198,7 @@
             legend: {
                 itemStyle: { color: '#000', fontWeight: 'bold' }           // si hay leyenda
             },
-            tooltip: { valueSuffix: ' (1000 MT)' },
+            tooltip: { valueSuffix: '' },
             plotOptions: {
                 column: { pointPadding: 0.2, borderWidth: 0 }
                 // Si quieres que los números sobre las columnas también sean negros:
@@ -252,17 +252,15 @@
                         <td class="bg txt-center">${$.i18n._('Analytics5_006')}</td>
                     </tr>`);
 
-        data.forEach(({ duration, endDateClient, progress, startDate, status, text }) => {
-            console.log(duration, endDateClient, progress, startDate, status, text);
+        data.forEach(({ duration, endDateClient, progress, startDate, status, text }) => { 
             $('#project-phase-table').append(`<tr>
                                                 <td scope="row" class="txt-center">${text}</td>
                                                 <td class="txt-center">${startDate.split('T')[0]}</td>
                                                 <td class="txt-center">${endDateClient.split('T')[0]}</td>
-                                                <td class="txt-center">${duration}</td>
+                                                <td class="txt-center"></td>
                                                 <td class="txt-center" style="background: ${this.coloresEstatusProjectNumber[status]};font-weight: 500;">${$.i18n._(`elementStatusName_${status}`)}</td>
                                             </tr>`);
-        });
-        console.log(data);
+        }); 
     }
     resetRows() {
         $('#clientRow').empty();
