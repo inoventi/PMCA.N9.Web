@@ -15,6 +15,9 @@
                 return;
             }
             await this.getIndividualReportPerProject(projectId);
+            await this.getControlChangesDatesParticipansByPorject(projectId);
+            await this.getElementsSummaryByProjectID(projectId);
+            await this.getProjectElementsByProjectID(projectId);
         });
     }
     async getIndividualReportPerProject(projectId) {
@@ -32,7 +35,21 @@
         $('.planned-progress').html(`${plannedProgress}%`);
         $('.graphic-planned-progress').css('width', `${plannedProgress}%`);
     }
-
+    async getControlChangesDatesParticipansByPorject(projectId) {
+        let request = await fetch(`/Project/controlChangesDatesParticipansByPorject?projectId=${projectId}`);
+        let data = await request.json();
+        //console.log(data);
+    }
+    async getElementsSummaryByProjectID(projectId) {
+        let request = await fetch(`/Project/elementsSumaryByProjecID?projectId=${projectId}`);
+        let data = await request.json();
+        //console.log(data);
+    }
+    async getProjectElementsByProjectID(projectId) {
+        let request = await fetch(`/Project/projectElementsByProject?projectId=${projectId}`);
+        let data = await request.json();
+        console.log(data);
+    }
 }
 
 

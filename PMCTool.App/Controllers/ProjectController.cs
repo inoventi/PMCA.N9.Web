@@ -277,5 +277,98 @@ namespace PMCTool.App.Controllers
             }
             return Json(result);
         }
+        [HttpGet]
+        [Route("Project/controlChangesDatesParticipansByPorject")]
+        public async Task<IActionResult> GetControlChangesDatesParticipans_ByPorject(Guid projectId)
+        {
+            GetControlChangesDatesParticipans_ByPorject result = new GetControlChangesDatesParticipans_ByPorject();
+            try
+            {
+                result = await restClient.Get<GetControlChangesDatesParticipans_ByPorject>(baseUrl, $"/api/v1/project/controlChangesDatesParticipansByPorject/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+        [HttpGet]
+        [Route("Project/elementsSumaryByProjecID")]
+        public async Task<IActionResult> GetElementsSummaryByProjectID(Guid projectId)
+        {
+            List<GetElementsSumary_ByProjecID> result = new List<GetElementsSumary_ByProjecID>();
+            try
+            {
+                result = await restClient.Get<List<GetElementsSumary_ByProjecID>>(baseUrl, $"/api/v1/project/elementsSumaryByProjecID/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+        [HttpGet]
+        [Route("Project/projectElementsByProject")]
+        public async Task<IActionResult> GetProjectElementsByProjectID(Guid projectId)
+        {
+            List<GetProjectElementsByProjectID> result = new List<GetProjectElementsByProjectID>();
+            try
+            {
+                result = await restClient.Get<List<GetProjectElementsByProjectID>>(baseUrl, $"/api/v1/project/projectElementsByProject/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
     }
 }
