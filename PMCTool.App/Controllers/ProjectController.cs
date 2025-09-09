@@ -239,11 +239,43 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication]
         public async Task<IActionResult> ProjectDetail()
         {
-            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            //SetActiveOption("4008");
-            //ViewBag.projects = projectTab;
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            SetActiveOption("4008");
+            ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;
             return View();
+        }
+
+        [HttpGet]
+        [Route("Project/individualReportPerProject")]
+        public async Task<IActionResult> GetIndividualReportPerProject(Guid projectId)
+        {
+            GetIndividualReportPerProject result = new GetIndividualReportPerProject();
+            try
+            {
+                result = await restClient.Get<GetIndividualReportPerProject>(baseUrl, $"/api/v1/project/individualReportPerProject/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
         }
     }
 }
