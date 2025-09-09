@@ -3094,4 +3094,22 @@
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="ElementsDelayedOrInProgress" xml:space="preserve">
+    <value>Elements delayed or in progress</value>
+  </data>
+  <data name="MitigatedRisks" xml:space="preserve">
+    <value>Mitigated risks</value>
+  </data>
+  <data name="IdentifiedRisks" xml:space="preserve">
+    <value>Identified risks</value>
+  </data>
+  <data name="ActivitiesWithDelay" xml:space="preserve">
+    <value>Activities with delay</value>
+  </data>
+  <data name="TotalActivities" xml:space="preserve">
+    <value>Total activities</value>
+  </data>
+  <data name="AssignedResources" xml:space="preserve">
+    <value>Assigned Resources</value>
+  </data>
 </root>

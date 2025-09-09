@@ -47,14 +47,14 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center mt-3 section" hidden>
             <div class="col-11 pl-2 pr-2">
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="page-title-right">
                             </div>
-                            <h4 class="page-title">Bienvenido a PMC-Tool</h4>
+                            <h4 class="page-title">@Localizer["Details"]</h4>
                         </div>
                     </div>
                 </div>
@@ -63,8 +63,8 @@
                         <div class="card shadow-none m-0">
                             <div class="card-body text-center">
                                 <i class="fas fa-server text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count tt-participants">9</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Recursos Asignados</h6>
+                                <h3><span class="Count tt-participants"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["AssignedResources"]</h6>
                             </div>
                         </div>
                     </div>
@@ -73,8 +73,8 @@
                         <div class="card shadow-none m-0 border-start">
                             <div class="card-body text-center">
                                 <i class="fas fa-tasks text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count tt-task">11</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Total de actividades</h6>
+                                <h3><span class="Count tt-task"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["TotalActivities"]</h6>
                             </div>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
                         <div class="card shadow-none m-0 border-start">
                             <div class="card-body text-center">
                                 <i class="fas fa-file-alt text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count  tt-task-delayed">7</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Actividades con retrazo</h6>
+                                <h3><span class="Count  tt-task-delayed"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["ActivitiesWithDelay"]</h6>
                             </div>
                         </div>
                     </div>
@@ -93,8 +93,8 @@
                         <div class="card shadow-none m-0 border-start">
                             <div class="card-body text-center">
                                 <i class="fas fa-chart-line text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count tt-risk">66</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Riesgos Identificados</h6>
+                                <h3><span class="Count tt-risk"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["IdentifiedRisks"]</h6>
                             </div>
                         </div>
                     </div>
@@ -103,8 +103,8 @@
                         <div class="card shadow-none m-0 border-start">
                             <div class="card-body text-center">
                                 <i class="fas fa-tasks text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count tt-risk-closed">1</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Riesgos Mitigados</h6>
+                                <h3><span class="Count tt-risk-closed"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["MitigatedRisks"]</h6>
                             </div>
                         </div>
                     </div>
@@ -113,36 +113,40 @@
                         <div class="card shadow-none m-0 border-start">
                             <div class="card-body text-center">
                                 <i class="fas fa-file-alt text-muted" style="font-size: 24px;"></i>
-                                <h3><span class="Count tt-changes">7</span></h3>
-                                <h6 class="text-muted font-15 mb-0">Control de cambios</h6>
+                                <h3><span class="Count tt-changes"></span></h3>
+                                <h6 class="text-muted font-15 mb-0">@Localizer["Analytics1_012"]</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row pt-2">
                     <div class="col-6">
-                        <div class="card">
+                        <div class="card" style="height: 456px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <b class="header-title">Cambios en proyectos</b>
+                                    <b class="header-title">@Localizer["Analytics1_002"]</b>
                                 </div>
                                 <div id="box-chart" style="height: 312px; max-height: 312px; position: relative; ">
-                                    <div id="chart">
-                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="container1"></div>
+                                        <p class="highcharts-description"></p>
+                                    </figure>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="card">
+                        <div class="card" style="height: 456px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <b class="header-title">Cambios en proyectos</b>
+                                    <b class="header-title">@Localizer["Analytics1_002"]</b>
 
                                 </div>
                                 <div id="box-chart" style="height: 312px; max-height: 312px; position: relative; ">
-                                    <div id="chart">
-                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="container2"></div>
+                                        <p class="highcharts-description"></p>
+                                    </figure>
                                 </div>
                             </div>
                         </div>
@@ -155,15 +159,15 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-md-6 text-center  small px-4  text-left">
-                                            <strong class="txt-blue"> Avance real <span class="underline-link real-progress"> 67.44 %</span> </strong>
+                                            <strong class="txt-blue"> @Localizer["RealProgress"] <span class="underline-link real-progress"> 0 %</span> </strong>
                                             <div class="progress" style="height: 15px;">
-                                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated graphic-real-progress" style="width:67.44%;"></div>
+                                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated graphic-real-progress" style="width:0%;"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6  text-center small px-4  text-left">
-                                            <strong class="txt-blue"> Avance planeado <span class="underline-link planned-progress"> 100.00 %</span> </strong>
+                                            <strong class="txt-blue"> @Localizer["PlannedProgress"] <span class="underline-link planned-progress"> 0 %</span> </strong>
                                             <div class="progress" style="height: 15px;">
-                                                <div class="progress-bar bg-default  progress-bar-striped progress-bar-animated graphic-planned-progress" style="width:100%"></div>
+                                                <div class="progress-bar bg-default  progress-bar-striped progress-bar-animated graphic-planned-progress" style="width:0%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -176,63 +180,21 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="background: #1a2545;color: white;">
-                                <b>Elementos Atrasados o En Curso</b>
+                                <b>@Localizer["ElementRelationship"]</b>
                             </div>
                             <div class="card-body">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-projects" width="100%">
-                                            <thead class="thead-light header-table-projects" stry>
+                                        <table class="table table-elements">
+                                            <thead>
                                                 <tr style="background: #c1c1c1;">
-                                                    <th style=" height: 50px;vertical-align: middle;">Elementos de Control</th>
-                                                    <th style=" height: 50px;vertical-align: middle;">Descripcion</th>
-                                                    <th style=" height: 50px;vertical-align: middle;">Fecha planeada de fin</th>
-                                                    <th style=" height: 50px;vertical-align: middle;">Estado</th>
+                                                    <th scope="col">@Localizer["Analytics2_015"]</th>
+                                                    <th scope="col">@Localizer["Description"]</th>
+                                                    <th scope="col">@Localizer["PlannedEndDate"]</th>
+                                                    <th scope="col">@Localizer["Status"]</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="body-table-projects">
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.3.1). Retiro del Servicio</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.4) - Cierre de Proyecto</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.4.1) - FO-MBT-DEP-10 Lecciones Aprendidad V01</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.3) - Entregables Finales</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.3.2) - Entregables Finales</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5) - Cierre</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Actividad</td>
-                                                    <td><a>(5.4.1) - FO-MBT-DEP-16 Acta de Cierre V01</a></td>
-                                                    <td>2025-03-31</td>
-                                                    <td><span class="badge ws badge-warning"><strong>Atrasado</strong></span></td>
-                                                </tr>
+                                            <tbody>
                                             </tbody>
                                         </table>
                                     </div>
@@ -245,6 +207,7 @@
         </div>
     </div>
 </div>
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
 <!--Sección de scripts-->
 @section scripts
 {
@@ -257,5 +220,10 @@
     <script src="https://code.highcharts.com/themes/adaptive.js"></script>
 
     <script src="~/js/core/analitycs/vProjectDetail.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            window.baseUrl = "@ViewBag.baseUrlPmctool";
+        });
+    </script>
 
 }

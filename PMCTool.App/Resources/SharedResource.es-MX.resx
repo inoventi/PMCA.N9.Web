@@ -3094,7 +3094,25 @@
   <data name="Overview" xml:space="preserve">
     <value>Descripción general</value>
   </data>
+  <data name="ElementsDelayedOrInProgress" xml:space="preserve">
+    <value>Elementos Atrasado o en curso</value>
+  </data>
+  <data name="MitigatedRisks" xml:space="preserve">
+    <value>Riesgos mitigados</value>
+  </data>
+  <data name="IdentifiedRisks" xml:space="preserve">
+    <value>Riesgos identificados</value>
+  </data>
   <data name="String1" xml:space="preserve">
     <value />
+  </data>
+  <data name="ActivitiesWithDelay" xml:space="preserve">
+    <value>Actividades con retrazo</value>
+  </data>
+  <data name="TotalActivities" xml:space="preserve">
+    <value>Total de actividades</value>
+  </data>
+  <data name="AssignedResources" xml:space="preserve">
+    <value>Recursos Asignados</value>
   </data>
 </root>
