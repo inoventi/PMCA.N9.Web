@@ -129,12 +129,10 @@
                 panKey: 'shift',
                 backgroundColor: 'white'
             },
+            title: { text: null },       // 
+            subtitle: { text: null },    // 
             tooltip: {
                 valueSuffix: ''
-            },
-            subtitle: {
-                text:
-                    ''
             },
             plotOptions: {
                 pie: {
@@ -212,11 +210,11 @@
                 spacingTop: 24, // más aire arriba; sube a 32 si alguna vez se corta
             },
             title: {
-                text: `${$.i18n._("Analytics1_003")}`,
+                text: `${$.i18n._("hoursByProject")}`,
                 style: { color: '#000', fontWeight: 'bold' }
             },
             subtitle: {
-                text: 'Source: <a href="https://www.pmc-tool.com/" target="_blank">PMC-tool.com</a>',
+                text: null,
                 y: 30,
                 style: { color: '#000' }
             },
