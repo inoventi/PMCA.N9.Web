@@ -1,40 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <EmbeddedResourceUseDependentUponConvention>false</EmbeddedResourceUseDependentUponConvention>
     <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <OutputType>WinExe</OutputType>
     <UserSecretsId>7987a9dc-d6c8-400f-afdd-53f24d382609</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Views\Shared\_ModalBulkIncidents.cshtml.cs" />
+    <PackageReference Include="ClosedXML" />
+    <PackageReference Include="CookieManager" />
+    <PackageReference Include="DHTMLX.Gantt" />
+    <PackageReference Include="EPPlusFree" />
+    <PackageReference Include="Haukcode.DinkToPdf" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.94.2" />
-    <PackageReference Include="CookieManager" Version="2.0.0" />
-    <PackageReference Include="DHTMLX.Gantt" Version="6.2.0" />
-    <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
-    <PackageReference Include="Haukcode.DinkToPdf" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="19.1.0.54" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.6.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Temp\" />
     <Folder Include="wwwroot\images\avatar\companies\" />
     <Folder Include="wwwroot\images\avatar\users\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
-
-
   <ItemGroup>
     <Reference Include="PMCTool.Common.RestConnector">
       <HintPath>References\PMCTool.Common.RestConnector\PMCTool.Common.RestConnector.dll</HintPath>
@@ -43,8 +34,6 @@
       <HintPath>References\PMCTool.Models\PMCTool.Models.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -57,5 +46,4 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
-
 </Project>

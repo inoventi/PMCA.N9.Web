@@ -551,6 +551,10 @@ namespace PMCTool.App.Controllers
             response.ValueString = null;
             return Json(response);
         }
+        public sealed class LoginResponse
+        {
+            public string Token { get; set; }
+        }
 
         #region P R I V A T E 
 
@@ -592,8 +596,9 @@ namespace PMCTool.App.Controllers
                 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 //User information 
                 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                var result = await restClient.Post<OkObjectResult, Login>(baseUrl, $"/api/v1/auth/login", login, null);
-                response.ValueString = result.Value.ToString();
+                var headers = new Dictionary<string, string> { ["Accept"] = "application/json" };
+                var result = await restClient.Post<LoginResponse, Login>(baseUrl, $"/api/v1/auth/login", login, headers);
+                response.ValueString = result.Token.ToString();
 
                 var handler = new JwtSecurityTokenHandler();
                 var token = handler.ReadJwtToken(response.ValueString);
