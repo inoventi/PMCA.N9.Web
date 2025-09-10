@@ -5,6 +5,12 @@
             '2': 'st-atrasado',
             '3': 'st-cimpacto'
         }
+        this.barIndicator = {
+            '1': 'bg-success',
+            '2': 'bg-warning',
+            '3': 'bg-danger',
+            '4': 'bg-dark'
+        };
         this.init();
     }
     init() {
@@ -100,7 +106,7 @@
     }
     async getIndividualReportPerProject(projectId) {
         let request = await fetch(`/Project/individualReportPerProject?projectId=${projectId}`);
-        let { plannedProgress, progress, totalChanges, totalParticipants, totalRisk, totalRiskClosed, totalTask, totalTaskDelayed } = await request.json();
+        let { plannedProgress, progress, totalChanges, totalParticipants, totalRisk, totalRiskClosed, totalTask, totalTaskDelayed, proyectStatus } = await request.json();
         $('.tt-participants').html(totalParticipants);
         $('.tt-task').html(totalTask);
         $('.tt-task-delayed').html(totalTaskDelayed);
@@ -108,10 +114,20 @@
         $('.tt-risk-closed').html(totalRiskClosed);
         $('.tt-changes').html(totalChanges);
 
-        $('.real-progress').html(`${progress}%`);
-        $('.graphic-real-progress').css('width', `${progress}%`);
-        $('.planned-progress').html(`${plannedProgress}%`);
-        $('.graphic-planned-progress').css('width', `${plannedProgress}%`);
+        //CLEAN CLASS PROGRESS
+        $('.graphic-real-progress').removeClass('bg-success');
+        $('.graphic-real-progress').removeClass('bg-warning');
+        $('.graphic-real-progress').removeClass('bg-danger');
+        $('.graphic-real-progress').removeClass('bg-dark');
+
+        $('.graphic-real-progress').addClass(this.barIndicator[proyectStatus]);
+        $('.real-progress').html(`${parseFloat(progress).toFixed(2)}%`);
+        $('.graphic-real-progress').css('width', `${parseFloat(progress).toFixed(2)}%`);
+
+        $('.planned-progress').html(`${parseFloat(plannedProgress).toFixed(2)}%`);
+        $('.graphic-planned-progress').css('width', `${parseFloat(plannedProgress).toFixed(2) }%`);
+
+
     }
     async getControlChangesDatesParticipansByPorject(projectId) {
         let request = await fetch(`/Project/controlChangesDatesParticipansByPorject?projectId=${projectId}`);
