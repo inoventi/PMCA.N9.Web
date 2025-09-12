@@ -3112,4 +3112,7 @@
   <data name="AssignedResources" xml:space="preserve">
     <value>Assigned Resources</value>
   </data>
+  <data name="hoursByProject" xml:space="preserve">
+    <value>Hours by project</value>
+  </data>
 </root>

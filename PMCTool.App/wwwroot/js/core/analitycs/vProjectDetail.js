@@ -226,7 +226,7 @@
                 spacingTop: 24, // más aire arriba; sube a 32 si alguna vez se corta
             },
             title: {
-                text: `${$.i18n._("hoursByProject")}`,
+                text: null,
                 style: { color: '#000', fontWeight: 'bold' }
             },
             subtitle: {
