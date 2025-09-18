@@ -1,0 +1,209 @@
+﻿@model PMCTool.Models.Core.Location
+@{
+    ViewData["Title"] = "Reporte individual de proyecto";
+    Layout = "_Layout";
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+}
+
+@Html.Hidden("Loading", Localizer["Loading"].ToString())
+@Html.Hidden("January", Localizer["January"].ToString())
+@Html.Hidden("February", Localizer["February"].ToString())
+@Html.Hidden("March", Localizer["March"].ToString())
+@Html.Hidden("April", Localizer["April"].ToString())
+@Html.Hidden("May", Localizer["May"].ToString())
+@Html.Hidden("June", Localizer["June"].ToString())
+@Html.Hidden("July", Localizer["July"].ToString())
+@Html.Hidden("August", Localizer["August"].ToString())
+@Html.Hidden("September", Localizer["September"].ToString())
+@Html.Hidden("October", Localizer["October"].ToString())
+@Html.Hidden("November", Localizer["November"].ToString())
+@Html.Hidden("December", Localizer["December"].ToString())
+@Html.Hidden("Sunday", Localizer["Sunday"].ToString())
+@Html.Hidden("Monday", Localizer["Monday"].ToString())
+@Html.Hidden("Tuesday", Localizer["Tuesday"].ToString())
+@Html.Hidden("Wednesday", Localizer["Wednesday"].ToString())
+@Html.Hidden("Thursday", Localizer["Thursday"].ToString())
+@Html.Hidden("Friday", Localizer["Friday"].ToString())
+@Html.Hidden("Saturday", Localizer["Saturday"].ToString())
+@Html.Hidden("Export", Localizer["Export"].ToString())
+@Html.Hidden("Import", Localizer["Import"].ToString())
+@Html.Hidden("From", Localizer["From"].ToString())
+@Html.Hidden("To", Localizer["To"].ToString())
+@Html.Hidden("Zoom", Localizer["Zoom"].ToString())
+@Html.Hidden("ViewFullScreen", Localizer["ViewFullScreen"].ToString())
+@Html.Hidden("ExitFullScreen", Localizer["ExitFullScreen"].ToString())
+@Html.Hidden("DownloadImage", Localizer["DownloadImage"].ToString())
+@Html.Hidden("Print", Localizer["Print"].ToString())
+@Html.Hidden("Reload", Localizer["Reload"].ToString())
+@Html.Hidden("Year", Localizer["Year"].ToString())
+@Html.Hidden("Month", Localizer["Month"].ToString())
+@Html.Hidden("Week", Localizer["Week"].ToString())
+@Html.Hidden("YTD", Localizer["YTD"].ToString())
+@Html.Hidden("All", Localizer["All"].ToString())
+@Html.Hidden("Start", Localizer["Start"].ToString())
+@Html.Hidden("End", Localizer["End"].ToString())
+
+<style>
+    .page-title-box .page-title {
+        font-size: 18px;
+        margin: 0;
+        line-height: 36px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: 700;
+        color: #607d8b;
+    }
+</style>
+
+<div class="content">
+    <div class="container-fluid pl-0 ml-0">
+        <div class="row justify-content-center mt-3">
+            <div class="col-11 pl-2 pr-2">
+                <div class="row g-0">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-10 col-sm-10">
+                                <div class="btn-group bootstrap-select">
+                                    <select name="projects" class="selectpicker sel-projects" id="selprojects"
+                                            data-title="Proyectos" data-style="btn-default btn-outline"
+                                            data-menu-style="dropdown-blue">
+                                        @foreach (var project in ViewBag.projects)
+                                        {
+                                            <option value="@project.Key">@project.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="btn-group col-2 col-sm-2 pt-2">
+                                <button type="button" class="btn btn-default btn-default btn-report">
+                                    <i class="fas fa-file-pdf"></i> @Localizer["Search"]
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección principal: arranca oculta hasta que se haga la búsqueda -->
+        <div class="row justify-content-center mt-3 section" hidden>
+            <div class="col-11 pl-2 pr-2">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Project Planner</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <!-- Pie: Cambios en proyectos -->
+                    <div class="col-3">
+                        <div class="card" style="height: 450px;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <b class="header-title">Cambios en proyectos</b>
+                                </div>
+                                <div id="box-chart-1" style="height: 312px; max-height: 312px; position: relative;">
+                                    <figure class="highcharts-figure mb-0">
+                                        <div id="container1"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gantt: Proyectos + paginación front -->
+                    <div class="col-9">
+                        <div class="card" style="height: 750px;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <b class="header-title">Proyectos</b>
+
+                                    <!-- Controles de paginación -->
+                                    <div class="d-flex align-items-center" id="gantt-pager">
+                                        <button id="gantt-prev" class="btn btn-sm btn-light border mr-2">«</button>
+                                        <span id="gantt-pageinfo" class="small mx-1">1/1</span>
+                                        <button id="gantt-next" class="btn btn-sm btn-light border ml-2 mr-3">»</button>
+                                        <select id="gantt-pagesize" class="form-select form-select-sm" style="width:auto">
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="20">20</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="box-chart-2" style="height: 312px; max-height: 312px; position: relative;">
+                                    <figure class="highcharts-figure mb-0">
+                                        <div id="proyectos"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla inferior -->
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header" style="background:#1a2545;color:white;">
+                                <b>Proyectos</b>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-projects">
+                                            <thead>
+                                                <tr style="background:#c1c1c1;">
+                                                    <th>Nombre del portafolio</th>
+                                                    <th>Nombre del programa</th>
+                                                    <th>Nombre del proyecto</th>
+                                                    <th>Fecha planeada de inicio</th>
+                                                    <th>Fecha planeada de fin</th>
+                                                    <th>Avance planeado</th>
+                                                    <th>Avance real</th>
+                                                    <th>Desviacion</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_DataTablesScriptsPartial.cshtml")
+
+@section scripts {
+    <script src="~/js/plugins/bootstrap-datetimepicker.js"></script>
+
+    <!-- Highcharts: SOLO Gantt + módulos necesarios -->
+    <script src="~/js/plugins/highcharts/gantt/highcharts-gantt.js"></script>
+    <script src="~/js/plugins/highcharts/modules/exporting.js"></script>
+    <script src="~/js/plugins/highcharts/modules/export-data.js"></script>
+    <script src="~/js/plugins/highcharts/modules/accessibility.js"></script>
+
+    <script src="~/js/plugins/bootstrap-selectpicker.js"></script>
+
+    <!-- Tu script -->
+    <script src="~/js/core/analitycs/vProjectPlanner.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          window.baseUrl = "@ViewBag.baseUrlPmctool";
+          // La clase se instancia dentro del propio vProjectPlanner.js
+        });
+    </script>
+}
