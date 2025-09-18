@@ -1,5 +1,10 @@
 ﻿class projectDetail {
     constructor() {
+        this.indicators = {
+            '1': 'st-entiempo',
+            '2': 'st-atrasado',
+            '3': 'st-cimpacto'
+        }
         $('.section').removeAttr('hidden');
         // Estado
         this.chartGantt = null;
@@ -11,13 +16,20 @@
 
         this.selectedProjectId = '00000000-0000-0000-0000-000000000000';
 
+        this.init();
+    }
+    async init() {
+        LoaderShow();
         // Eventos
         this.wirePaginationControls();
         this.bindReportButton();
 
         // Idioma Highcharts
-        this.setHighchartsLang();
-        this.getDataProjectsGantt();   // carga y pagina el gantt
+        await this.setHighchartsLang();
+        await this.getDataProjectsGantt();   // carga y pagina el gantt
+        await this.getDataProjectsControl();
+        await this.getDataProjectsControlTable();
+        LoaderHide();
     }
 
     // ---------------- UI & Eventos ----------------
@@ -30,11 +42,11 @@
             }
 
             LoaderShow();
-            $('.section').removeAttr('hidden');
 
             this.initDataTable();                // tabla inferior
-            await this.getProjectChangesControl(this.selectedProjectId); // pie
+            await this.getDataProjectsControl(); // pie
             await this.getDataProjectsGantt();   // carga y pagina el gantt
+            await this.getDataProjectsControlTable();
             LoaderHide();
         });
     }
@@ -102,6 +114,57 @@
     }
 
     // ---------------- Data & Charts ----------------
+    async getDataProjectsControl() {
+        const request = await fetch(`/Project/projectChangesControl?projectId=${this.selectedProjectId}`);
+        const data = await request.json();
+       
+        let series = data.map((x) => {
+            return {
+                name: x.projectName, y: x.total
+            };
+        });
+        this.getProjectChangesControl(series);
+    }
+    async getProjectChangesControl(serie) {
+        Highcharts.chart('container1', {
+            chart: {
+                type: 'pie',
+                backgroundColor: 'white',
+                zooming: { type: 'xy' },
+                panning: { enabled: true, type: 'xy' },
+                panKey: 'shift'
+            },
+            title: { text: null },
+            subtitle: { text: null },
+            tooltip: { valueSuffix: '' },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    borderColor: 'white',
+                    borderWidth: 0,
+                    slicedOffset: 10,
+                    states: { hover: { enabled: true, halo: false, brightness: 0 } },
+                    dataLabels: [
+                        { enabled: true, distance: 20 },
+                        { enabled: true, distance: -40, format: '{point.percentage:.1f}%', style: { fontSize: '1.2em', textOutline: 'none', opacity: 0.7 } }
+                    ]
+                }
+            },
+            series: [{
+                states: { inactive: { enabled: false } },
+                name: 'Cambios',
+                colorByPoint: true,
+                data: serie,
+                point: {
+                    events: {
+                        mouseOver: function () { this.slice(true); },
+                        mouseOut: function () { this.slice(false); }
+                    }
+                }
+            }]
+        });
+    }
     async getDataProjectsGantt() {
         const request = await fetch(`/Project/projectsGantt?projectId=${this.selectedProjectId}`);
         const data = await request.json();
@@ -193,7 +256,7 @@
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: (e) => location.href = '/Analytics/Project?projectId=' + e.point.proyectID
+                                click: (e) => location.href = `${window.baseUrl}/Analytics/Project?projectId=${e.point.proyectID}`
                             }
                         }
                     }
@@ -213,76 +276,53 @@
             this.chartGantt.series[0].setData(pageData, true, false, false);
         }
     }
-
-    async getProjectChangesControl(projectId) {
-        Highcharts.chart('container1', {
-            chart: {
-                type: 'pie',
-                backgroundColor: 'white',
-                zooming: { type: 'xy' },
-                panning: { enabled: true, type: 'xy' },
-                panKey: 'shift'
-            },
-            title: { text: null },
-            subtitle: { text: null },
-            tooltip: { valueSuffix: '' },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    borderColor: 'white',
-                    borderWidth: 0,
-                    slicedOffset: 10,
-                    states: { hover: { enabled: true, halo: false, brightness: 0 } },
-                    dataLabels: [
-                        { enabled: true, distance: 20 },
-                        { enabled: true, distance: -40, format: '{point.percentage:.1f}%', style: { fontSize: '1.2em', textOutline: 'none', opacity: 0.7 } }
-                    ]
-                }
-            },
-            series: [{
-                states: { inactive: { enabled: false } },
-                name: $.i18n?._("Analytics5_008") ?? 'Cambios',
-                colorByPoint: true,
-                data: [
-                    { name: 'Cambios en fechas', y: 1 },
-                    { name: 'Cambios en responsables', y: 2, color: 'black' }
-                ],
-                point: {
-                    events: {
-                        mouseOver: function () { this.slice(true); },
-                        mouseOut: function () { this.slice(false); }
-                    }
-                }
-            }]
-        });
+    async getDataProjectsControlTable() {
+        const request = await fetch(`/Project/projectsControlTable?projectId=${this.selectedProjectId}`);
+        const data = await request.json();
+        this.initDataTable(data);
     }
 
+
     // Tabla (puedes adaptar columnas/datos)
-    initDataTable() {
+    initDataTable(rows = []) {
+        if ($.fn.DataTable.isDataTable('.table-projects')) {
+            $('.table-projects').DataTable().clear().destroy();
+        }
+
         $('.table-projects').DataTable({
+            data: rows,
             destroy: true,
+            deferRender: true,
             paging: true,
             searching: true,
             processing: true,
-            responsive: true,
+            responsive: false,
             order: [],
             columns: [
-                { data: 'elementType' },
-                { data: 'description' },
-                { data: 'date' },
-                { data: 'status' }
+                { data: 'portfolio', defaultContent: '' },
+                { data: 'program', defaultContent: '' },
+                { data: 'projectName', defaultContent: '' },
+                { data: 'startDate', defaultContent: '', render: d => d ? d.split('T')[0] : '' },
+                { data: 'endDate', defaultContent: '', render: d => d ? d.split('T')[0] : '' },
+                { data: 'plannedProgress', defaultContent: '', render: d => d != null ? `${(d * 100).toFixed(2)}%` : '' },
+                { data: 'progress', defaultContent: '', render: d => d != null ? `${(d * 100).toFixed(2)}%` : '' },
+                { data: 'desviation', defaultContent: '', render: d => d != null ? `${d.toFixed(2)}` : '' }, // ← así viene en tu payload
+                {
+                    data: 'status', defaultContent: '',
+                    render: (status) =>
+                        `<span class="bold ${this.indicators[status]} font7em float-center">
+             ${$.i18n._("elementStatusName_" + status)}
+           </span>` }
             ],
             language: { url: "../json/" + Cookies.get('pmctool-lang-app') + ".json" },
             dom: 'Bfrtip',
             buttons: [{
                 extend: 'excelHtml5',
                 text: $.i18n._('Analytics5_023'),
-                exportOptions: {
-                    modifier: { page: 'all', search: 'applied' },
-                    columns: ':visible'
-                }
-            }]
+                exportOptions: { columns: ':visible', modifier: { page: 'all', search: 'applied' } }
+            }],
+            initComplete: function () { this.api().columns.adjust().responsive.recalc(); },
+            drawCallback: function () { this.api().columns.adjust().responsive.recalc(); }
         });
     }
 }

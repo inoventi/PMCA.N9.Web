@@ -1,6 +1,6 @@
 ﻿@model PMCTool.Models.Core.Location
 @{
-    ViewData["Title"] = "Reporte individual de proyecto";
+    ViewData["Title"] = "Control Proyectos";
     Layout = "_Layout";
     var envName = Context.Request.Cookies["pmctool-name-env"];
 }
@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box">
-                            <h4 class="page-title">Project Planner</h4>
+                            <h4 class="page-title">@Localizer["ProjectsControl"]</h4>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="background:#1a2545;color:white;">
-                                <b>Proyectos</b>
+                                <b>@Localizer["Projects"]</b>
                             </div>
                             <div class="card-body">
                                 <div class="col-12">
@@ -158,15 +158,15 @@
                                         <table class="table table-projects">
                                             <thead>
                                                 <tr style="background:#c1c1c1;">
-                                                    <th>Nombre del portafolio</th>
-                                                    <th>Nombre del programa</th>
-                                                    <th>Nombre del proyecto</th>
-                                                    <th>Fecha planeada de inicio</th>
-                                                    <th>Fecha planeada de fin</th>
-                                                    <th>Avance planeado</th>
-                                                    <th>Avance real</th>
-                                                    <th>Desviacion</th>
-                                                    <th>Estatus</th>
+                                                    <th>@Localizer["Portfolio"]</th>
+                                                    <th>@Localizer["Program"]</th>
+                                                    <th>@Localizer["Project"]</th>
+                                                    <th>@Localizer["PlannedStartDate"]</th>
+                                                    <th>@Localizer["PlannedEndDate"]</th>
+                                                    <th>@Localizer["PlannedProgress"]</th>
+                                                    <th>@Localizer["RealProgress"]</th>
+                                                    <th>@Localizer["Deviation"]</th>
+                                                    <th>@Localizer["Status"]</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>

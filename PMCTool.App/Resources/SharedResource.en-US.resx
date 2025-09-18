@@ -3115,4 +3115,7 @@
   <data name="hoursByProject" xml:space="preserve">
     <value>Hours by project</value>
   </data>
+  <data name="ProjectsControl" xml:space="preserve">
+    <value>Projects Control</value>
+  </data>
 </root>
