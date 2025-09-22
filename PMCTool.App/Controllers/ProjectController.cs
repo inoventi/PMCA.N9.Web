@@ -113,7 +113,9 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication]
         public async Task<IActionResult> ProjectSheet()
         {
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //No existe este endpoint
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;
