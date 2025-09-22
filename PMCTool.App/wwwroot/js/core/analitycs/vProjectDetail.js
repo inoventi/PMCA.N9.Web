@@ -121,6 +121,8 @@
         $('.graphic-real-progress').removeClass('bg-dark');
 
         $('.graphic-real-progress').addClass(this.barIndicator[proyectStatus]);
+        progress = (progress == null) ? 0 : progress;
+        plannedProgress = (plannedProgress == null) ? 0 : plannedProgress;
         $('.real-progress').html(`${parseFloat(progress).toFixed(2)}%`);
         $('.graphic-real-progress').css('width', `${parseFloat(progress).toFixed(2)}%`);
 
