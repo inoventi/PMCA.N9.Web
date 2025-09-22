@@ -1,6 +1,6 @@
 ﻿@model PMCTool.Models.Core.Location
 @{
-    ViewData["Title"] = "Detalle projecto";
+    ViewData["Title"] = "Reporte individual de proyecto";
     Layout = "_Layout";
     var envName = Context.Request.Cookies["pmctool-name-env"];
 
@@ -139,7 +139,7 @@
                         <div class="card" style="height: 456px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <b class="header-title">@Localizer["Analytics1_002"]</b>
+                                    <b class="header-title">@Localizer["hoursByProject"]</b>
 
                                 </div>
                                 <div id="box-chart" style="height: 312px; max-height: 312px; position: relative; ">
@@ -161,7 +161,7 @@
                                         <div class="col-md-6 text-center  small px-4  text-left">
                                             <strong class="txt-blue"> @Localizer["RealProgress"] <span class="underline-link real-progress"> 0 %</span> </strong>
                                             <div class="progress" style="height: 15px;">
-                                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated graphic-real-progress" style="width:0%;"></div>
+                                                <div class="progress-bar  progress-bar-striped progress-bar-animated graphic-real-progress" style="width:0%;"></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6  text-center small px-4  text-left">

@@ -23,7 +23,7 @@ namespace PMCTool.App.Controllers
     public class ProjectController : BaseController
     {
         private readonly IHostingEnvironment _hostingEnvironment;
-       
+
         public ProjectController(IOptions<AppSettingsModel> appSettings, IStringLocalizer<SharedResource> localizer, IHostingEnvironment hostingEnvironment) : base(appSettings, localizer)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -31,12 +31,12 @@ namespace PMCTool.App.Controllers
         // GET: ProjectController
         public ActionResult Index()
         {
-            return LocalRedirect("/Home/Index"); 
+            return LocalRedirect("/Home/Index");
 
-             
+
         }
 
-        [HttpGet] 
+        [HttpGet]
         [Route("Project/ReportEvidences")]
         public async Task<IActionResult> ReportEvidences()
         {
@@ -83,8 +83,9 @@ namespace PMCTool.App.Controllers
             try
             {
                 reportData = await restClient.Get<List<ReportEvidencesByProjecID006>>(baseUrl, $"/api/v1/actionstomake/reportEvidencesByProjecID006/{projectID}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-                ViewBag.Leader= reportData.First().LeaderName;
-                ViewBag.Pm= reportData.First().ProjectManagerName;
+                ViewBag.Leader = reportData.First().LeaderName;
+                ViewBag.Pm = reportData.First().ProjectManagerName;
+                ViewBag.ProjectName = reportData.First().ProjectName;
                 ViewBag.BaseUrlPmctool = baseUrlPMCTool;
                 //_response.Data = elements;
                 //_response.IsSuccess = true;
@@ -96,7 +97,7 @@ namespace PMCTool.App.Controllers
                 //_response.Data = null;
                 //_response.IsSuccess = false;
                 //_response.SuccessMessage = ex.Message.ToString();
-                
+
             }
             catch (Exception ex)
             {
@@ -112,7 +113,9 @@ namespace PMCTool.App.Controllers
         [PMCToolAuthentication]
         public async Task<IActionResult> ProjectSheet()
         {
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //No existe este endpoint
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;
@@ -348,6 +351,121 @@ namespace PMCTool.App.Controllers
             try
             {
                 result = await restClient.Get<List<GetProjectElementsByProjectID>>(baseUrl, $"/api/v1/project/projectElementsByProject/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+
+        [PMCToolAuthentication]
+        public async Task<IActionResult> ProjectsControl()
+        {
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            SetActiveOption("4008");
+            ViewBag.projects = projectTab;
+            ViewBag.baseUrlPmctool = baseUrlPMCTool;
+            return View();
+        }
+        [HttpGet]
+        [Route("Project/projectChangesControl")]
+        public async Task<IActionResult> GetProjectChangesControl(Guid projectId)
+        {
+            List<GetProjectChangesControl> result = new List<GetProjectChangesControl>();
+            try
+            {
+                if (projectId == Guid.Empty)
+                {
+                    projectId = new Guid("00000000-0000-0000-0000-000000000000");
+                }
+                result = await restClient.Get<List<GetProjectChangesControl>>(baseUrl, $"/api/v1/project/projectChangesControl/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+        [HttpGet]
+        [Route("Project/projectsGantt")]
+        public async Task<IActionResult> GetProjectsGantt(Guid projectId)
+        {
+            List<GetProjectsGantt> result = new List<GetProjectsGantt>();
+            try
+            {
+                if (projectId == Guid.Empty)
+                {
+                    projectId = new Guid("00000000-0000-0000-0000-000000000000");
+                }
+                result = await restClient.Get<List<GetProjectsGantt>>(baseUrl, $"/api/v1/project/projectsGantt/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            }
+            catch (HttpResponseException ex)
+            {
+                var apiError = GetApiError(ex.ServiceContent.ToString());
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorCode = apiError.ErrorCode,
+                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+                };
+                return Json(apiError);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel response = new ResponseModel
+                {
+                    ErrorMessage = ex.Source + ": " + ex.Message
+                };
+                if (ex.InnerException != null)
+                    response.ErrorMessage = response.ErrorMessage + ex.InnerException.ToString();
+                return Json(response);
+            }
+            return Json(result);
+        }
+        [HttpGet]
+        [Route("Project/projectsControlTable")]
+        public async Task<IActionResult> GetProjectsControlTable(Guid projectId)
+        {
+            List<GetProjectsControlTable> result = new List<GetProjectsControlTable>();
+            try
+            {
+                if (projectId == Guid.Empty)
+                {
+                    projectId = new Guid("00000000-0000-0000-0000-000000000000");
+                }
+                result = await restClient.Get<List<GetProjectsControlTable>>(baseUrl, $"/api/v1/project/projectsControlTable/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {

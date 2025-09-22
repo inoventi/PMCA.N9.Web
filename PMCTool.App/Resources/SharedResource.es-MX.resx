@@ -3103,9 +3103,6 @@
   <data name="IdentifiedRisks" xml:space="preserve">
     <value>Riesgos identificados</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="ActivitiesWithDelay" xml:space="preserve">
     <value>Actividades con retrazo</value>
   </data>
@@ -3114,5 +3111,14 @@
   </data>
   <data name="AssignedResources" xml:space="preserve">
     <value>Recursos Asignados</value>
+  </data>
+  <data name="hoursByProject" xml:space="preserve">
+    <value>Horas por proyecto</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ProjectsControl" xml:space="preserve">
+    <value>Control de Proyectos</value>
   </data>
 </root>
