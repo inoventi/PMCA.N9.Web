@@ -85,6 +85,7 @@ namespace PMCTool.App.Controllers
                 reportData = await restClient.Get<List<ReportEvidencesByProjecID006>>(baseUrl, $"/api/v1/actionstomake/reportEvidencesByProjecID006/{projectID}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
                 ViewBag.Leader = reportData.First().LeaderName;
                 ViewBag.Pm = reportData.First().ProjectManagerName;
+                ViewBag.ProjectName = reportData.First().ProjectName;
                 ViewBag.BaseUrlPmctool = baseUrlPMCTool;
                 //_response.Data = elements;
                 //_response.IsSuccess = true;
