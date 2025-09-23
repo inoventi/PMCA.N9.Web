@@ -5,6 +5,7 @@
             '2': 'st-atrasado',
             '3': 'st-cimpacto',
             '4': 'st-cerrado',
+            '5': 'st-cancelado',
         }
         $('.section').removeAttr('hidden');
         // Estado
@@ -297,8 +298,12 @@
             paging: true,
             searching: true,
             processing: true,
-            responsive: false,
+            responsive: true,
+            autoWidth: false,
             order: [],
+            columnDefs: [{
+                targets: -1, className: 'dt-head-nowrap dt-body-nowrap', width: '120px'
+            }],
             columns: [
                 { data: 'portfolio', defaultContent: '' },
                 { data: 'program', defaultContent: '' },
@@ -322,8 +327,6 @@
                 text: $.i18n._('Analytics5_023'),
                 exportOptions: { columns: ':visible', modifier: { page: 'all', search: 'applied' } }
             }],
-            initComplete: function () { this.api().columns.adjust().responsive.recalc(); },
-            drawCallback: function () { this.api().columns.adjust().responsive.recalc(); }
         });
     }
 }
