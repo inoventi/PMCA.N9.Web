@@ -3,7 +3,8 @@
         this.indicators = {
             '1': 'st-entiempo',
             '2': 'st-atrasado',
-            '3': 'st-cimpacto'
+            '3': 'st-cimpacto',
+            '4': 'st-cerrado',
         }
         $('.section').removeAttr('hidden');
         // Estado
