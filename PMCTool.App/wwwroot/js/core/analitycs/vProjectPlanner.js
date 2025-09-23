@@ -184,13 +184,13 @@
             }
             let name = p.projectName || '';
             if (name.length > 30) name = name.slice(0, 31) + '...';
-
+            let progress = Math.floor(p.progress * 100) / 100;
             return {
                 proyectID: p.projectId,
                 name,
                 start,
                 end,
-                completed: { amount: 0.71, fill },
+                completed: { amount: progress, fill },
                 color
             };
         }).filter(Boolean);
