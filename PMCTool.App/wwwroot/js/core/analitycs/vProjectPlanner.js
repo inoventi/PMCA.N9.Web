@@ -150,7 +150,8 @@
                     dataLabels: [
                         { enabled: true, distance: 20 },
                         { enabled: true, distance: -40, format: '{point.percentage:.1f}%', style: { fontSize: '1.2em', textOutline: 'none', opacity: 0.7 } }
-                    ]
+                    ],
+                    showInLegend: true
                 }
             },
             series: [{
@@ -258,7 +259,7 @@
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: (e) => location.href = `${window.baseUrl}/Analytics/Project?projectId=${e.point.proyectID}`
+                                click: (e) => location.href = `${window.baseUrl}/Execution/Project?id=${e.point.proyectID}`
                             }
                         }
                     }

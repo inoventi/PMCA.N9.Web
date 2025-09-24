@@ -54,6 +54,27 @@
         font-weight: 700;
         color: #607d8b;
     }
+
+    th {
+        text-wrap-mode: nowrap;
+    }
+    /* Header gris claro y texto negro */
+    .dt-header-light.dataTable thead th,
+    .dt-header-light.dataTable thead th.sorting,
+    .dt-header-light.dataTable thead th.sorting_asc,
+    .dt-header-light.dataTable thead th.sorting_desc {
+        background-color: #e9ecef; /* gris claro */
+        color: #111; /* negro */
+        font-weight: 600;
+        border-bottom: 1px solid #d5d5d5;
+    }
+
+        /* (opcional) mantener el mismo color al pasar el mouse */
+        .dt-header-light.dataTable thead th.sorting:hover,
+        .dt-header-light.dataTable thead th.sorting_asc:hover,
+        .dt-header-light.dataTable thead th.sorting_desc:hover {
+            background-color: #e9ecef;
+        }
 </style>
 
 <div class="content">
@@ -155,7 +176,7 @@
                             <div class="card-body">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-projects">
+                                        <table class="table table-projects dt-header-light">
                                             <thead>
                                                 <tr style="background:#c1c1c1;">
                                                     <th>@Localizer["Portfolio"]</th>
