@@ -42,7 +42,6 @@
                 Swal.fire({ type: 'error', text: $.i18n._("Analytics5_024") });
                 return;
             }
-
             LoaderShow();
 
             this.initDataTable();                // tabla inferior
@@ -226,10 +225,16 @@
         if (!this.chartGantt && createIfNeeded) {
             this.chartGantt = Highcharts.ganttChart('proyectos', {
                 title: { text: null },
+                chart: {
+                    events: {
+                        load() {
+                            // seleccionar "Todo" en el primer render
+                            this.rangeSelector.clickButton(5, true);
+                        }
+                    }
+                },
                 xAxis: [{
                     type: 'datetime',
-                    min: this.minX,
-                    max: this.maxX,
                     dateTimeLabelFormats: {
                         week: { list: [$("#Week").val() + '%W', $("#Week").val().substring(0, 1) + '%W'] }
                     }
@@ -243,7 +248,7 @@
                 scrollbar: { enabled: true },
                 rangeSelector: {
                     enabled: true,
-                    selected: 0,
+                    selected: 5,
                     buttons: [
                         { type: 'month', count: 1, text: '1' + $("#Month").val().toLowerCase().substring(0, 1) },
                         { type: 'month', count: 3, text: '3' + $("#Month").val().toLowerCase().substring(0, 1) },
