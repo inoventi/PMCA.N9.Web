@@ -257,7 +257,7 @@
                                                 <td scope="row" class="txt-center">${text}</td>
                                                 <td class="txt-center">${startDate.split('T')[0]}</td>
                                                 <td class="txt-center">${endDateClient.split('T')[0]}</td>
-                                                <td class="txt-center"></td>
+                                                <td class="txt-center">${duration}</td>
                                                 <td class="txt-center" style="background: ${this.coloresEstatusProjectNumber[status]};font-weight: 500;">${$.i18n._(`elementStatusName_${status}`)}</td>
                                             </tr>`);
         }); 
