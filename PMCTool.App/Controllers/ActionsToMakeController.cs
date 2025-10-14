@@ -31,9 +31,16 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> Index()
         {
             SetActiveOption("4008");
-            //List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            ViewBag.portfolios = portfolios;
+
+            //List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+            Participant participant = await GetParticipant();
+            Guid participantid = participant.ParticipantID;
+            //No existe este endpoint
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
+            ViewBag.portfolios = projectTab;
             //ViewBag.States = states;
             return View();
         }
@@ -349,7 +356,10 @@ namespace PMCTool.App.Controllers
 
         public async Task<IActionResult> ElementsToVerify()
         {
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            Participant participant = await GetParticipant();
+            Guid participantid = participant.ParticipantID;
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;

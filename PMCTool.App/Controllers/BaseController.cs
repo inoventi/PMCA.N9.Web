@@ -7,10 +7,12 @@ using Newtonsoft.Json;
 using PMCTool.App.Models;
 using PMCTool.Common.RestConnector;
 using PMCTool.Models.Core;
+using PMCTool.Models.Environment;
 using PMCTool.Models.Exceptions;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Pdf;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
@@ -150,6 +152,27 @@ namespace PMCTool.App.Controllers
             }
 
             return message.ToString();
+        }
+        public async Task<Participant> GetParticipant()
+        {
+
+            Participant result = new Participant();
+            try
+            {
+                string userId = GetTokenValue("UserId");
+                if (!string.IsNullOrWhiteSpace(userId))
+                {
+                    var participantUser = await restClient.Get<ParticipantUser>(baseUrl, $"/api/v1/participantusers/user/{userId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                    result = await restClient.Get<Participant>(baseUrl, $"/api/v1/participants/{participantUser.ParticipantID}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                    result.ParticipantUser.Image = participantUser.Image;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
         }
 
         protected DateTime DateTimeCultureInvariant(DateTime date)
