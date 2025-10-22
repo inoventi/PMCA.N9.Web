@@ -48,6 +48,7 @@
         $(document).on('click', '.btn-report-close', this.closeReport.bind(this));
         $(document).on('click', '.event-detail', this.eventDetailProgram.bind(this));
         this.initDataTableProject();
+        this.getPrograms();
     }
     /**
      * @description Inicializa la tabla de proyectos con datatable

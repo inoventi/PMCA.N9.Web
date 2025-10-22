@@ -40,11 +40,11 @@ namespace PMCTool.App.Controllers
         [Route("Project/ReportEvidences")]
         public async Task<IActionResult> ReportEvidences()
         {
-            Participant participant = await GetParticipant();
-            Guid participantid = participant.ParticipantID;
+            //Participant participant = await GetParticipant();
+            //Guid participantid = participant.ParticipantID;
             //No existe este endpoint
-            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
@@ -122,8 +122,8 @@ namespace PMCTool.App.Controllers
             Participant participant = await GetParticipant();
             Guid participantid = participant.ParticipantID;
             //No existe este endpoint
-            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;

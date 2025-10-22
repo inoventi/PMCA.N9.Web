@@ -31,16 +31,11 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> Index()
         {
             SetActiveOption("4008");
-
-            //List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-
-            Participant participant = await GetParticipant();
-            Guid participantid = participant.ParticipantID;
-            //No existe este endpoint
-            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList/withfilter", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-
-            ViewBag.portfolios = projectTab;
+            //Participant participant = await GetParticipant();
+           // Guid participantid = participant.ParticipantID;
+           List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios/participant/{participantid}/option/{1}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+             ViewBag.portfolios = portfolios; 
             //ViewBag.States = states;
             return View();
         }
@@ -49,9 +44,13 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> GetGlobalStatusSelectProgramsByPortfolioAsync(string idPortfolio)
         {
             List<SelectionListItem> programs = new List<SelectionListItem>();
+            Participant participant = await GetParticipant();
+            Guid participantid = participant.ParticipantID;
             try
             {
                 programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/programs/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                //programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios/participant/{participantid}/option/{2}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
             }
             catch (HttpResponseException ex)
             {
@@ -356,10 +355,10 @@ namespace PMCTool.App.Controllers
 
         public async Task<IActionResult> ElementsToVerify()
         {
-            Participant participant = await GetParticipant();
-            Guid participantid = participant.ParticipantID;
-            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //Participant participant = await GetParticipant();
+            //Guid participantid = participant.ParticipantID;
+            var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;
