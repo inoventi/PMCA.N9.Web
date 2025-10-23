@@ -1648,7 +1648,7 @@
     <value>¿Realmente desea archivar este registro?</value>
   </data>
   <data name="ElementRelationship" xml:space="preserve">
-    <value>Relación de elementos</value>
+    <value>Elementos en curso</value>
   </data>
   <data name="CustomizedReports" xml:space="preserve">
     <value>Reportes a la medida</value>

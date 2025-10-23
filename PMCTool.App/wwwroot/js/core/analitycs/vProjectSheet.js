@@ -64,11 +64,11 @@
             xAxis: {
                 categories: [
                     $.i18n._("activity"),
-                    $.i18n._("incident"),
+                    // $.i18n._("incident"), //quitar hitos, incidentes y acuerdos.
                     $.i18n._("evidence"),
                     $.i18n._("risk"),
-                    $.i18n._("agreements"),
-                    $.i18n._("milestone")
+                    //$.i18n._("agreements"),
+                    //$.i18n._("milestone")
                 ],
                 title: { text: null },
                 gridLineWidth: 1,
@@ -123,12 +123,12 @@
 
             // Una serie por tipo, con datos "dispersos"
             series: [
-                { name: $.i18n._("activity"), data: [activity, null, null, null, null, null] },
-                { name: $.i18n._("incident"), data: [null, incident, null, null, null, null] },
-                { name: $.i18n._("evidence"), data: [null, null, evidence, null, null, null] },
-                { name: $.i18n._("risk"), data: [null, null, null, risk, null, null] },
-                { name: $.i18n._("agreements"), data: [null, null, null, null, agreement, null] },
-                { name: $.i18n._("milestone"), data: [null, null, null, null, null, milestone] }
+                { name: $.i18n._("activity"), data: [activity, null, null] },
+                //{ name: $.i18n._("incident"), data: [null, incident, null, null, null, null] },
+                { name: $.i18n._("evidence"), data: [null, evidence, null] },
+                { name: $.i18n._("risk"), data: [null, null, risk] },
+                //{ name: $.i18n._("agreements"), data: [null, null, null, null, agreement, null] },
+                //{ name: $.i18n._("milestone"), data: [null, null, null, null, null, milestone] }
             ]
         });
     }
