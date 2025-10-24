@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div> 
-            <div class="col-12 pt-4">
+            <div class="col-12 pt-4 responsive">
                 <table id="table-projects" class="table pt-4 ">
                     <thead>
                         <tr> 
@@ -113,13 +113,16 @@
 
     <script>
         $(function () {
-            console.log("sdfsdf"); 
             $('#table-projects').DataTable({
                 paging: true,
                 searching: true,
                 processing: true,
                 responsive: true,
                 order: [],
+                autoWidth: false,
+                columnDefs: [
+                  { width: "120px", targets: -1 } // la última columna (Total Referencias Cargadas)
+                ],
                 language: {
                     url: "../json/" + Cookies.get('pmctool-lang-app') + ".json"
                 },
