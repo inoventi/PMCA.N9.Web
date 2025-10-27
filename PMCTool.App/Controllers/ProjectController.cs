@@ -415,7 +415,9 @@ namespace PMCTool.App.Controllers
                 {
                     projectId = new Guid("00000000-0000-0000-0000-000000000000");
                 }
-                result = await restClient.Get<List<GetProjectChangesControl>>(baseUrl, $"/api/v1/project/projectChangesControl/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                Participant participant = await GetParticipant();
+                Guid participantid = participant.ParticipantID;
+                result = await restClient.Get<List<GetProjectChangesControl>>(baseUrl, $"/api/v1/project/projectChangesControl/{projectId}/{participantid}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -450,7 +452,9 @@ namespace PMCTool.App.Controllers
                 {
                     projectId = new Guid("00000000-0000-0000-0000-000000000000");
                 }
-                result = await restClient.Get<List<GetProjectsGantt>>(baseUrl, $"/api/v1/project/projectsGantt/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                Participant participant = await GetParticipant();
+                Guid participantid = participant.ParticipantID;
+                result = await restClient.Get<List<GetProjectsGantt>>(baseUrl, $"/api/v1/project/projectsGantt/{projectId}/{participantid}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
@@ -485,7 +489,9 @@ namespace PMCTool.App.Controllers
                 {
                     projectId = new Guid("00000000-0000-0000-0000-000000000000");
                 }
-                result = await restClient.Get<List<GetProjectsControlTable>>(baseUrl, $"/api/v1/project/projectsControlTable/{projectId}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                Participant participant = await GetParticipant();
+                Guid participantid = participant.ParticipantID;
+                result = await restClient.Get<List<GetProjectsControlTable>>(baseUrl, $"/api/v1/project/projectsControlTable/{projectId}/{participantid}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             }
             catch (HttpResponseException ex)
             {
