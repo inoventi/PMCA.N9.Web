@@ -123,10 +123,10 @@
 
             // Una serie por tipo, con datos "dispersos"
             series: [
-                { name: $.i18n._("activity"), data: [activity, null, null] },
+                { name: $.i18n._("activity"), data: [activity, null] },
                 //{ name: $.i18n._("incident"), data: [null, incident, null, null, null, null] },
-                { name: $.i18n._("evidence"), data: [null, evidence, null] },
-                { name: $.i18n._("risk"), data: [null, null, risk] },
+                { name: $.i18n._("evidence"), data: [null, evidence] },
+                //{ name: $.i18n._("risk"), data: [null, null, risk] },
                 //{ name: $.i18n._("agreements"), data: [null, null, null, null, agreement, null] },
                 //{ name: $.i18n._("milestone"), data: [null, null, null, null, null, milestone] }
             ]
