@@ -11,8 +11,8 @@
     <PackageVersion Include="EPPlusFree" Version="4.5.3.8" />
     <PackageVersion Include="Haukcode.DinkToPdf" Version="1.1.2" />
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="19.1.0.54" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="6.6.0" />
   </ItemGroup>
