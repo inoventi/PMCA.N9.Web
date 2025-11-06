@@ -31,9 +31,11 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> Index()
         {
             SetActiveOption("4008");
-            //List<SelectionListState> states = await restClient.Get<List<SelectionListState>>(baseUrl, $"/api/v1/locations/states/selectionList/A2BED164-F5C9-45E8-BA20-4CD3AC810837", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-            ViewBag.portfolios = portfolios;
+            //Participant participant = await GetParticipant();
+           // Guid participantid = participant.ParticipantID;
+           List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //List<SelectionListItem> portfolios = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios/participant/{participantid}/option/{1}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+             ViewBag.portfolios = portfolios; 
             //ViewBag.States = states;
             return View();
         }
@@ -42,9 +44,13 @@ namespace PMCTool.App.Controllers
         public async Task<IActionResult> GetGlobalStatusSelectProgramsByPortfolioAsync(string idPortfolio)
         {
             List<SelectionListItem> programs = new List<SelectionListItem>();
+            Participant participant = await GetParticipant();
+            Guid participantid = participant.ParticipantID;
             try
             {
                 programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/programs/{idPortfolio}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+                //programs = await restClient.Get<List<SelectionListItem>>(baseUrl, $"api/v1/actionstomake/select/portfolios/participant/{participantid}/option/{2}", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+
             }
             catch (HttpResponseException ex)
             {
@@ -349,7 +355,10 @@ namespace PMCTool.App.Controllers
 
         public async Task<IActionResult> ElementsToVerify()
         {
+            //Participant participant = await GetParticipant();
+            //Guid participantid = participant.ParticipantID;
             var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+            //var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/ProjectTab/selector/tab/{participantid}/pp/", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
             SetActiveOption("4008");
             ViewBag.projects = projectTab;
             ViewBag.baseUrlPmctool = baseUrlPMCTool;

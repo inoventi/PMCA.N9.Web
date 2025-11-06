@@ -1,0 +1,74 @@
+﻿@using PMCTool.App.Helpers.Html;
+@{
+    var userName = Context.Request.Cookies["pmctool-name-app"];
+    var envName = Context.Request.Cookies["pmctool-name-env"];
+
+}
+@Html.Hidden("Loading", Localizer["Loading"].ToString())
+@Html.Hidden("January", Localizer["January"].ToString())
+@Html.Hidden("February", Localizer["February"].ToString())
+@Html.Hidden("March", Localizer["March"].ToString())
+@Html.Hidden("April", Localizer["April"].ToString())
+@Html.Hidden("May", Localizer["May"].ToString())
+@Html.Hidden("June", Localizer["June"].ToString())
+@Html.Hidden("July", Localizer["July"].ToString())
+@Html.Hidden("August", Localizer["August"].ToString())
+@Html.Hidden("September", Localizer["September"].ToString())
+@Html.Hidden("October", Localizer["October"].ToString())
+@Html.Hidden("November", Localizer["November"].ToString())
+@Html.Hidden("December", Localizer["December"].ToString())
+@Html.Hidden("Sunday", Localizer["Sunday"].ToString())
+@Html.Hidden("Monday", Localizer["Monday"].ToString())
+@Html.Hidden("Tuesday", Localizer["Tuesday"].ToString())
+@Html.Hidden("Wednesday", Localizer["Wednesday"].ToString())
+@Html.Hidden("Thursday", Localizer["Thursday"].ToString())
+@Html.Hidden("Friday", Localizer["Friday"].ToString())
+@Html.Hidden("Saturday", Localizer["Saturday"].ToString())
+@Html.Hidden("Export", Localizer["Export"].ToString())
+@Html.Hidden("Import", Localizer["Import"].ToString())
+@Html.Hidden("From", Localizer["From"].ToString())
+@Html.Hidden("To", Localizer["To"].ToString())
+@Html.Hidden("Zoom", Localizer["Zoom"].ToString())
+@Html.Hidden("ViewFullScreen", Localizer["ViewFullScreen"].ToString())
+@Html.Hidden("ExitFullScreen", Localizer["ExitFullScreen"].ToString())
+@Html.Hidden("DownloadImage", Localizer["DownloadImage"].ToString())
+@Html.Hidden("Print", Localizer["Print"].ToString())
+@Html.Hidden("Reload", Localizer["Reload"].ToString())
+@Html.Hidden("Year", Localizer["Year"].ToString())
+@Html.Hidden("Month", Localizer["Month"].ToString())
+@Html.Hidden("Week", Localizer["Week"].ToString())
+@Html.Hidden("YTD", Localizer["YTD"].ToString())
+@Html.Hidden("All", Localizer["All"].ToString())
+@Html.Hidden("Start", Localizer["Start"].ToString())
+@Html.Hidden("End", Localizer["End"].ToString())
+<link href="~/css/homet.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid bg-white">
+        <div class="row  justify-content-center pt-4">
+            <div class="col-md-12 pb-3">
+                <div class="header-text text-center">
+                    <h2 class="card-title mt-1 mb-0 txt-blue"><b>@Localizer["Welcome"]</b></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container-fluid pl-0 ml-0" style="height: 500px;">
+                <center>
+                    <div class="row pb-4 mb-4">
+                        <div class="col-md-12 pb-4 mb-4 text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <a href="/project/ProjectDetail" class="btn btn-default btn-wd col-sm">Detalle del proyecto</a>
+                                    <a href="/project/ProjectsControl" class="btn btn-default btn-wd col-sm">Control de proyectos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

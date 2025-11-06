@@ -3,7 +3,9 @@
         this.indicators = {
             '1': 'st-entiempo',
             '2': 'st-atrasado',
-            '3': 'st-cimpacto'
+            '3': 'st-cimpacto',
+            '4': 'st-cerrado',
+            '5': 'st-cancelado',
         }
         $('.section').removeAttr('hidden');
         // Estado
@@ -40,7 +42,6 @@
                 Swal.fire({ type: 'error', text: $.i18n._("Analytics5_024") });
                 return;
             }
-
             LoaderShow();
 
             this.initDataTable();                // tabla inferior
@@ -148,7 +149,8 @@
                     dataLabels: [
                         { enabled: true, distance: 20 },
                         { enabled: true, distance: -40, format: '{point.percentage:.1f}%', style: { fontSize: '1.2em', textOutline: 'none', opacity: 0.7 } }
-                    ]
+                    ],
+                    showInLegend: true
                 }
             },
             series: [{
@@ -184,13 +186,13 @@
             }
             let name = p.projectName || '';
             if (name.length > 30) name = name.slice(0, 31) + '...';
-
+            let progress = Math.floor(p.progress * 100) / 100;
             return {
                 proyectID: p.projectId,
                 name,
                 start,
                 end,
-                completed: { amount: 0.71, fill },
+                completed: { amount: progress, fill },
                 color
             };
         }).filter(Boolean);
@@ -223,10 +225,16 @@
         if (!this.chartGantt && createIfNeeded) {
             this.chartGantt = Highcharts.ganttChart('proyectos', {
                 title: { text: null },
+                chart: {
+                    events: {
+                        load() {
+                            // seleccionar "Todo" en el primer render
+                            this.rangeSelector.clickButton(5, true);
+                        }
+                    }
+                },
                 xAxis: [{
                     type: 'datetime',
-                    min: this.minX,
-                    max: this.maxX,
                     dateTimeLabelFormats: {
                         week: { list: [$("#Week").val() + '%W', $("#Week").val().substring(0, 1) + '%W'] }
                     }
@@ -240,7 +248,7 @@
                 scrollbar: { enabled: true },
                 rangeSelector: {
                     enabled: true,
-                    selected: 0,
+                    selected: 5,
                     buttons: [
                         { type: 'month', count: 1, text: '1' + $("#Month").val().toLowerCase().substring(0, 1) },
                         { type: 'month', count: 3, text: '3' + $("#Month").val().toLowerCase().substring(0, 1) },
@@ -256,7 +264,7 @@
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: (e) => location.href = `${window.baseUrl}/Analytics/Project?projectId=${e.point.proyectID}`
+                                click: (e) => location.href = `${window.baseUrl}/Execution/Project?id=${e.point.proyectID}`
                             }
                         }
                     }
@@ -296,8 +304,12 @@
             paging: true,
             searching: true,
             processing: true,
-            responsive: false,
+            responsive: true,
+            autoWidth: false,
             order: [],
+            columnDefs: [{
+                targets: -1, className: 'dt-head-nowrap dt-body-nowrap', width: '120px'
+            }],
             columns: [
                 { data: 'portfolio', defaultContent: '' },
                 { data: 'program', defaultContent: '' },
@@ -321,8 +333,6 @@
                 text: $.i18n._('Analytics5_023'),
                 exportOptions: { columns: ':visible', modifier: { page: 'all', search: 'applied' } }
             }],
-            initComplete: function () { this.api().columns.adjust().responsive.recalc(); },
-            drawCallback: function () { this.api().columns.adjust().responsive.recalc(); }
         });
     }
 }
