@@ -6,6 +6,8 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\bernardo.mendoza\Desktop\app</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\deploys\App-Analytics</_PublishTargetUrl>
+    <History>True|2025-11-06T23:33:24.3927242Z||;</History>
+    <LastFailureDetails />
   </PropertyGroup>
 </Project>
