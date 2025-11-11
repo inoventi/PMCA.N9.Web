@@ -50,65 +50,65 @@ namespace PMCTool.App.Controllers
             _configuration = configuration;
 
         }
-        [PMCToolAuthentication]
-        [HttpGet]
-        public async Task<IActionResult> Index(Guid? project)
-        {
-            SetActiveOption("4007");
-            ProjectTabViewModel p = new ProjectTabViewModel();
+        //[PMCToolAuthentication]
+        //[HttpGet]
+        //public async Task<IActionResult> Index(Guid? project)
+        //{
+        //    SetActiveOption("4007");
+        //    ProjectTabViewModel p = new ProjectTabViewModel();
 
-            try
-            {
-                var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/projecttaba/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
-                //if (project != null)
-                //{
-                //    ViewBag.Projects = projectTab.Where(c => c.Key == project).ToList();
-                //    var selectProject = projectTab.Where(c => c.Key == project).ToList();
-                //    p.ProjectID = selectProject[0].Key.Value;
-                //    p.ProjectName = selectProject[0].Value;
-                //}
-                //else
-                //{
+        //    try
+        //    {
+        //        var projectTab = await restClient.Get<List<SelectionListItem>>(baseUrl, $"/api/v1/projecttaba/selectionList", new Dictionary<string, string>() { { "Authorization", GetTokenValue("Token") } });
+        //        //if (project != null)
+        //        //{
+        //        //    ViewBag.Projects = projectTab.Where(c => c.Key == project).ToList();
+        //        //    var selectProject = projectTab.Where(c => c.Key == project).ToList();
+        //        //    p.ProjectID = selectProject[0].Key.Value;
+        //        //    p.ProjectName = selectProject[0].Value;
+        //        //}
+        //        //else
+        //        //{
 
-                    ViewBag.Projects = projectTab.OrderBy(c => c.Value).ToList();
-                    p.ProjectID = null;
-                    p.ProjectName = null;
-
-
-                //}
+        //            ViewBag.Projects = projectTab.OrderBy(c => c.Value).ToList();
+        //            p.ProjectID = null;
+        //            p.ProjectName = null;
 
 
-                ViewBag.ProjectSeleted = project;
-                var urlPath = _configuration.GetValue<string>("AppSettings:UrlLoginPoe");  
-                var httpClient = new HttpClient(new HttpClientHandler());
-                var values = new List<KeyValuePair<string, string>>
-                    {
-                    new KeyValuePair<string, string>("Token", "?KX06eTh]th0QD_dqtB="),
-                    };
-                HttpResponseMessage response = await httpClient.PostAsync(urlPath.ToString(), new FormUrlEncodedContent(values));
-
-                var responseString = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<QsToken>(responseString);
-                ViewBag.TokenQS = result.id_token;
+        //        //}
 
 
-                return View("~/Views/FactSheet/A/Index.cshtml", p);
-            }
-            catch (HttpResponseException ex)
-            {
+        //        ViewBag.ProjectSeleted = project;
+        //        var urlPath = _configuration.GetValue<string>("AppSettings:UrlLoginPoe");  
+        //        var httpClient = new HttpClient(new HttpClientHandler());
+        //        var values = new List<KeyValuePair<string, string>>
+        //            {
+        //            new KeyValuePair<string, string>("Token", "?KX06eTh]th0QD_dqtB="),
+        //            };
+        //        HttpResponseMessage response = await httpClient.PostAsync(urlPath.ToString(), new FormUrlEncodedContent(values));
 
-                var apiError = GetApiError(ex.ServiceContent.ToString());
-                ResponseModel response = new ResponseModel
-                {
-                    ErrorCode = apiError.ErrorCode,
-                    ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
-                };
-                return Json(response);
-            }
+        //        var responseString = await response.Content.ReadAsStringAsync();
+        //        var result = JsonConvert.DeserializeObject<QsToken>(responseString);
+        //        ViewBag.TokenQS = result.id_token;
+
+
+        //        return View("~/Views/FactSheet/A/Index.cshtml", p);
+        //    }
+        //    catch (HttpResponseException ex)
+        //    {
+
+        //        var apiError = GetApiError(ex.ServiceContent.ToString());
+        //        ResponseModel response = new ResponseModel
+        //        {
+        //            ErrorCode = apiError.ErrorCode,
+        //            ErrorMessage = localizer.GetString(apiError.ErrorCode.ToString())
+        //        };
+        //        return Json(response);
+        //    }
 
 
            
-        }
+        //}
         [PMCToolAuthentication]
         [HttpGet]
         public async Task<IActionResult> ProjectDetail(Guid? project)
