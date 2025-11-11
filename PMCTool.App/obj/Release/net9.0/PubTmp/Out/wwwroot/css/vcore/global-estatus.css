@@ -1,0 +1,13 @@
+﻿.highcharts-figure {
+    min-width: 320px;
+    max-width: 900px;
+    margin: 1em auto;
+}
+
+input[type="number"] {
+    min-width: 50px;
+}
+
+.highcharts-description {
+    margin: 0.3rem 10px;
+}

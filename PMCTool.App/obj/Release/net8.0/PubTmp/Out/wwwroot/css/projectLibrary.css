@@ -1,0 +1,34 @@
+﻿.ttable tbody tr td {
+    text-align: center;
+    padding-left: 15px;
+    padding: 5px 8px;
+    vertical-align: middle;
+    border-color: #E3E3E3;
+}
+
+.c-write {
+    color: white;
+}
+
+.bg-1 {
+    background-color: #bc945a;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bg-2 {
+    background-color: #245c4f
+}
+
+.bg-3 {
+    background-color: #bfbfbf;
+}
+
+.c-gray {
+    color: #bfbfbf;
+}
+table.ttable tr:hover {
+    background-color: #f7f7f7;
+}

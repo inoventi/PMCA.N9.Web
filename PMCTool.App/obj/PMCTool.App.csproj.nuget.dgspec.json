@@ -1,0 +1,146 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Repos\\PMCAnalytics.Application\\PMCTool.App\\PMCTool.App.csproj": {}
+  },
+  "projects": {
+    "C:\\Repos\\PMCAnalytics.Application\\PMCTool.App\\PMCTool.App.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Repos\\PMCAnalytics.Application\\PMCTool.App\\PMCTool.App.csproj",
+        "projectName": "PMCTool.App",
+        "projectPath": "C:\\Repos\\PMCAnalytics.Application\\PMCTool.App\\PMCTool.App.csproj",
+        "packagesPath": "C:\\Users\\ManuelCárdenas\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\PMCAnalytics.Application\\PMCTool.App\\obj\\",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "CentralPackageTransitivePinningEnabled": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ManuelCárdenas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "noWarn": [
+            "NU1507"
+          ],
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.94.2, )",
+              "versionCentrallyManaged": true
+            },
+            "CookieManager": {
+              "target": "Package",
+              "version": "[2.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "DHTMLX.Gantt": {
+              "target": "Package",
+              "version": "[6.2.0, )",
+              "versionCentrallyManaged": true
+            },
+            "EPPlusFree": {
+              "target": "Package",
+              "version": "[4.5.3.8, )",
+              "versionCentrallyManaged": true
+            },
+            "Haukcode.DinkToPdf": {
+              "target": "Package",
+              "version": "[1.1.2, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[5.2.7, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[9.0.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )",
+              "versionCentrallyManaged": true
+            },
+            "Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core": {
+              "target": "Package",
+              "version": "[19.1.0.54, )",
+              "versionCentrallyManaged": true
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.6.0, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "ClosedXML": "0.94.2",
+            "CookieManager": "2.0.0",
+            "DHTMLX.Gantt": "6.2.0",
+            "EPPlusFree": "4.5.3.8",
+            "Haukcode.DinkToPdf": "1.1.2",
+            "Microsoft.AspNet.WebApi.Client": "5.2.7",
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": "9.0.0",
+            "Newtonsoft.Json": "13.0.4",
+            "Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core": "19.1.0.54",
+            "System.IdentityModel.Tokens.Jwt": "6.6.0"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
