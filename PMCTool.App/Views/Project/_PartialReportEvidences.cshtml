@@ -65,7 +65,7 @@
                             string traduccionStatus = "EnumProjectElementStatus_" + item.Status;
                             string tt = item.PlannedEndDate.ToString();
                             string[] PlannedEndDate = tt.Split(" ");
-
+                            string urlIR = ViewBag.BaseUrlPmctool + item.urlEvidence;
                             switch (item.Status)
                             {
                                 case 1: // Por definir  
@@ -96,7 +96,7 @@
                                 <td class="txt-center"> @item.ResponsibleApprovalName</td>
                                 <td class="txt-center">@item.Weight</td>
                                 <td>@item.Comment</td>
-                                <td class="txt-center"><a href="@item.urlEvidence" target="_black">IR</a></td>
+                                <td class="txt-center"><a href=" @urlIR" target="_black">IR</a></td>
                                 <td class="txt-center">@item.TotalEvidences</td>
                             </tr>
                             traduccionStatus = ""; 
